@@ -12,6 +12,7 @@ from datetime import date, datetime, timedelta, timezone
 
 from .dune import run_sql
 from .net import get_json
+from . import reach
 from .queries import poly_leaders
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
@@ -118,6 +119,24 @@ def kalshi_board(category, period):
     return {"rows": rows, "pnl_only": pnl_only}
 
 
+def attach_reach(windows):
+    """Add opt-in contact channels (XMTP inbox, ENS/Farcaster/etc.) to each ranked wallet.
+    A lookup failure shouldn't block the leaderboard, so errors just leave rows without it."""
+    addrs = [r["address"] for w in windows.values() for r in w.get("rows", [])]
+    try:
+        cache = reach.update(addrs)
+    except Exception as e:
+        print(f"  reach lookup failed: {e}")
+        return
+    for w in windows.values():
+        for r in w.get("rows", []):
+            c = cache.get(r["address"].lower())
+            if c:
+                r["account"] = c["type"]
+                r["xmtp"] = c["signer"] if c["xmtp"] else None
+                r["profiles"] = c["profiles"]
+
+
 def update(today, force_all=False):
     data = _load(OUT, {"polymarket": {}, "kalshi": {}})
     data.setdefault("polymarket", {})
@@ -125,6 +144,7 @@ def update(today, force_all=False):
     # the 30-day ranking scans ~4x the data; refresh it weekly (Mondays) unless missing
     if force_all or today.weekday() == 0 or "30d" not in data["polymarket"]:
         data["polymarket"]["30d"] = poly_window(30, today)
+    attach_reach(data["polymarket"])
     data["kalshi"] = {
         f"{cat}|{per}": kalshi_board(cat, per)
         for cat in ("Crypto", "Financials")

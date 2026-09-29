@@ -511,12 +511,13 @@
       const w = L.polymarket?.[state.lbWindow];
       lede.textContent = `Wallets ranked by dollars traded in short-term price markets (all asset classes), ${w ? `${w.start} to ${w.end}` : ""}. PnL is realized on markets that resolved in the window: trade cashflows plus $1 per winning share, net of fees. “Maker %” is the share of a wallet's volume from resting orders; near 100% usually means a market maker. The X link appears when the trader has connected X to their Polymarket profile.`;
       rows = w?.rows || [];
-      const withX = rows.filter((r) => r.x).length;
-      lede.textContent += ` ${withX} of these ${rows.length} wallets have linked an X account.`;
+      const withX = rows.filter((r) => r.x).length, withXmtp = rows.filter((r) => r.xmtp).length;
+      const withProf = rows.filter((r) => r.profiles?.length).length, email = rows.filter((r) => r.account === "email").length;
+      lede.textContent += ` ${withX} of these ${rows.length} wallets link an X account, ${withXmtp} can be messaged over XMTP, and ${withProf} have a public ENS/Farcaster/Lens profile. ${email} use Polymarket's email login, whose custodied key can't hold either. Contact only shows channels traders opted into; nothing is traced or de-anonymized.`;
       cols = [
         { k: "rank", t: "#", num: true },
         { k: "name", t: "Trader", render: traderCell },
-        { k: "x", t: "X", render: (r) => r.x ? link(`https://x.com/${r.x}`, `@${r.x}`) : dash() },
+        { k: "x", t: "Contact", render: contactCell },
         { k: "volume", t: "Volume", num: true, f: fmtUsd },
         { k: "pnl", t: "Realized PnL", num: true, f: fmtUsd, cls: (r) => (r.pnl > 0 ? "pos" : r.pnl < 0 ? "neg" : "") },
         { k: "fills", t: "Fills", num: true, f: fmtInt },
@@ -563,6 +564,29 @@
     }
     if (!rows.length) box.innerHTML = `<div class="empty">No rows for this window.</div>`;
     else box.appendChild(t);
+  }
+  function contactCell(r) {
+    const d = document.createElement("div");
+    d.style.cssText = "display:flex;gap:8px;align-items:center;flex-wrap:wrap";
+    if (r.x) d.appendChild(link(`https://x.com/${r.x}`, `@${r.x}`));
+    for (const p of r.profiles || []) d.appendChild(link(p.url, p.name));
+    if (r.xmtp) {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "chip";
+      b.textContent = "XMTP";
+      b.title = `Copy ${r.xmtp}. Message it from any XMTP app (e.g. xmtp.chat, the Base app).`;
+      b.addEventListener("click", async () => {
+        try { await navigator.clipboard.writeText(r.xmtp); b.textContent = "Copied"; } catch (e) { b.textContent = r.xmtp; }
+        setTimeout(() => (b.textContent = "XMTP"), 1500);
+      });
+      d.appendChild(b);
+    }
+    if (!d.childNodes.length) {
+      const m = dash();
+      if (r.account === "email") { m.textContent = "email login"; m.title = "Polymarket email account: its signing key is custodied, so it can't hold XMTP or ENS"; }
+      d.appendChild(m);
+    }
+    return d;
   }
   function link(href, text) { const a = document.createElement("a"); a.href = href; a.target = "_blank"; a.rel = "noopener"; a.textContent = text; return a; }
   function dash() { const s = document.createElement("span"); s.className = "addr"; s.textContent = "–"; return s; }

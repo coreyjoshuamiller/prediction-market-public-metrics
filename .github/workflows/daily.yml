@@ -30,6 +30,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install XMTP reachability checker
+        run: npm ci --prefix tools/xmtp --silent
       - name: Refresh history from Dune
         env:
           DUNE_API_KEY: ${{ secrets.DUNE_API_KEY }}

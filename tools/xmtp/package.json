@@ -1,0 +1,7 @@
+{
+  "name": "xmtp-reach",
+  "private": true,
+  "type": "module",
+  "description": "Checks which addresses have an XMTP inbox (used by pipeline/reach.py)",
+  "dependencies": { "@xmtp/node-sdk": "6.1.0" }
+}

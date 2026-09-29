@@ -198,3 +198,8 @@ figure.card.is-empty .table-toggle { display: none; }
 
 footer { margin-top: 48px; color: var(--text-muted); font-size: 12px; border-top: 1px solid var(--border); padding-top: 14px; }
 footer p { margin: 4px 0; max-width: 980px; }
+.chip {
+  font: inherit; font-size: 11px; font-weight: 600; color: var(--text-secondary); background: var(--surface-2);
+  border: 1px solid var(--border); border-radius: 999px; padding: 1px 8px; cursor: pointer;
+}
+.chip:hover { color: var(--text-primary); }
