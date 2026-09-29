@@ -1,0 +1,51 @@
+name: Order book snapshots
+
+# Every hour: sample the live 15m Up/Down books once a minute for ~54 minutes, rebuild the
+# chart data, commit, and redeploy the site. GitHub cron can start a few minutes late, so
+# there's usually a short gap between runs.
+on:
+  schedule:
+    - cron: "2 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: orderbook
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  sample:
+    runs-on: ubuntu-latest
+    timeout-minutes: 62
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Sample order books
+        run: python -u -m pipeline.orderbook_snapshot --duration 3240 --interval 60
+      - name: Rebuild order book chart data
+        run: python -m pipeline.build_orderbook
+      - name: Commit
+        run: |
+          git config user.name "pm-metrics-bot"
+          git config user.email "pm-metrics-bot@users.noreply.github.com"
+          git add data/orderbook site/data/orderbook.json
+          if ! git diff --cached --quiet; then
+            git commit -q -m "orderbook snapshots $(date -u +%Y-%m-%dT%H:%MZ)"
+            for i in 1 2 3; do git pull -q --rebase && git push -q && break; sleep 5; done
+          fi
+          git pull -q --rebase  # deploy whatever is newest, including the other workflow's data
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deploy
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,52 @@
+name: Daily refresh
+
+# Pull the latest history from Dune (Polymarket trades, Kalshi daily reports), refresh the
+# leaderboards, rebuild the site data, commit, and redeploy. Kalshi's daily report for day D
+# usually lands on Dune the following morning; the job re-queries the last 10 days so a late
+# report is picked up on the next run.
+on:
+  schedule:
+    - cron: "40 13 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: daily
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Refresh history from Dune
+        env:
+          DUNE_API_KEY: ${{ secrets.DUNE_API_KEY }}
+        run: python -u -m pipeline.update --daily
+      - name: Commit
+        run: |
+          git config user.name "pm-metrics-bot"
+          git config user.email "pm-metrics-bot@users.noreply.github.com"
+          git add data/*.csv data/*.json site/data/metrics.json site/data/leaders.json
+          if ! git diff --cached --quiet; then
+            git commit -q -m "daily refresh $(date -u +%Y-%m-%d)"
+            for i in 1 2 3; do git pull -q --rebase && git push -q && break; sleep 5; done
+          fi
+          git pull -q --rebase  # deploy whatever is newest, including the other workflow's data
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deploy
+        uses: actions/deploy-pages@v4

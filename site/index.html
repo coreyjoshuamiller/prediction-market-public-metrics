@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Short-Term Price Markets</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/6.1.0/echarts.min.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>Short-Term Price Markets</h1>
+      <div class="sub">Polymarket vs Kalshi: Up/Down, strike and range contracts on crypto, equities, commodities and FX that resolve within a day</div>
+    </div>
+    <div class="updated" id="updated">Loading…</div>
+  </header>
+
+  <div class="filters" role="toolbar" aria-label="Filters">
+    <div><label>Range</label>
+      <span class="seg" id="f-range">
+        <button data-v="30">30D</button><button data-v="90">90D</button><button data-v="180">6M</button><button data-v="365">12M</button>
+      </span>
+    </div>
+    <div><label>Granularity</label>
+      <span class="seg" id="f-gran">
+        <button data-v="day">Day</button><button data-v="week">Week</button><button data-v="month">Month</button>
+      </span>
+    </div>
+    <div><label>Split by</label>
+      <span class="seg" id="f-group">
+        <button data-v="market">Market</button><button data-v="asset">Asset</button><button data-v="dur">Duration</button><button data-v="cls">Class</button><button data-v="ctype">Type</button>
+      </span>
+    </div>
+    <div><label>Asset class</label>
+      <select id="f-cls"><option value="">All</option><option>Crypto</option><option>Equities</option><option>Commodities</option><option>FX &amp; Rates</option></select>
+    </div>
+    <div><label>Measure</label>
+      <span class="seg" id="f-measure">
+        <button data-v="notional" title="Contracts/shares traded, each worth $1 at settlement">Notional</button><button data-v="cash" title="Dollars actually paid for contracts">Cash</button>
+      </span>
+    </div>
+  </div>
+
+  <section id="kpis">
+    <div class="tiles" id="tiles"></div>
+  </section>
+
+  <section id="volume">
+    <h2>Volume by market</h2>
+    <p class="lede">Traded volume per period, stacked by the split you choose. “Market” means asset × duration, e.g. BTC 15m, with Up/Down, strike and range contracts combined. The two venues are on separate scales.</p>
+    <div class="pair">
+      <figure class="card" data-chart="vol-polymarket"></figure>
+      <figure class="card" data-chart="vol-kalshi"></figure>
+    </div>
+  </section>
+
+  <section id="traders">
+    <h2>Traders per market</h2>
+    <p class="lede">Unique wallets that traded in the period, as makers or takers. A wallet active in two markets counts once in each, so the stack can exceed the overall unique count, shown as the line.</p>
+    <div class="pair">
+      <figure class="card" data-chart="tr-polymarket"></figure>
+      <figure class="card" data-chart="tr-kalshi"></figure>
+    </div>
+  </section>
+
+  <section id="share">
+    <h2>Share of total platform volume</h2>
+    <p class="lede">Short-term price markets as a percentage of all volume on each platform, in the selected measure and asset class. The right chart compares the two venues directly.</p>
+    <div class="pair">
+      <figure class="card" data-chart="share"></figure>
+      <figure class="card" data-chart="totals"></figure>
+    </div>
+  </section>
+
+  <section id="leaders">
+    <h2>Top traders</h2>
+    <p class="lede" id="leaders-lede"></p>
+    <div class="section-controls">
+      <span class="seg" id="f-lb-platform"><button data-v="polymarket">Polymarket</button><button data-v="kalshi">Kalshi</button></span>
+      <span class="seg" id="f-lb-window"></span>
+    </div>
+    <div class="table-card" id="leaders-table"></div>
+  </section>
+
+  <section id="liquidity">
+    <h2>Order book liquidity: live 15-minute markets</h2>
+    <p class="lede">Snapshots of the “Up” side of the currently-live 15m window, sampled about once a minute. Shows the dollars resting at the best bid and best offer, depth within 5¢ of the touch, and the spread. Snapshot history starts on <span id="ob-first">–</span>.</p>
+    <div class="section-controls">
+      <div><label>Asset</label> <span class="seg" id="f-ob-asset"><button data-v="BTC">BTC</button><button data-v="ETH">ETH</button><button data-v="SOL">SOL</button><button data-v="XRP">XRP</button></span></div>
+      <div><label>Resolution</label> <span class="seg" id="f-ob-res"><button data-v="recent">5-min (7D)</button><button data-v="history">Hourly (all)</button></span></div>
+    </div>
+    <div class="pair">
+      <figure class="card" data-chart="ob-top-polymarket"></figure>
+      <figure class="card" data-chart="ob-top-kalshi"></figure>
+      <figure class="card" data-chart="ob-depth-polymarket"></figure>
+      <figure class="card" data-chart="ob-depth-kalshi"></figure>
+      <figure class="card" data-chart="ob-spread"></figure>
+      <figure class="card" data-chart="ob-profile"></figure>
+    </div>
+  </section>
+
+  <footer id="notes"></footer>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

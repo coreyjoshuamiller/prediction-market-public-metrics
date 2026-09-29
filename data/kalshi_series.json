@@ -1,0 +1,1258 @@
+{
+ "AUDUSDH": {
+  "asset": "AUD/USD",
+  "asset_class": "FX & Rates",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "AUD/USD over/under",
+  "category": "Financials"
+ },
+ "BTC": {
+  "asset": "BTC",
+  "asset_class": "Crypto",
+  "duration": "1d",
+  "ctype": "Range",
+  "title": "Bitcoin range",
+  "category": "Crypto"
+ },
+ "BTCD": {
+  "asset": "BTC",
+  "asset_class": "Crypto",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "Bitcoin price Above/below",
+  "category": "Crypto"
+ },
+ "BTCD-B": {
+  "asset": "BTC",
+  "asset_class": "Crypto",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "Above/below",
+  "category": "Crypto"
+ },
+ "ETH": {
+  "asset": "ETH",
+  "asset_class": "Crypto",
+  "duration": "1d",
+  "ctype": "Range",
+  "title": "Ethereum range",
+  "category": "Crypto"
+ },
+ "ETHD": {
+  "asset": "ETH",
+  "asset_class": "Crypto",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "Ethereum price Above/below",
+  "category": "Crypto"
+ },
+ "EUROIMF": {
+  "asset": "EUR/USD",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "EUR/USD",
+  "category": "Financials"
+ },
+ "EURUSD": {
+  "asset": "EUR/USD",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Range",
+  "title": "EUR/USD daily range",
+  "category": "Financials"
+ },
+ "EURUSDH": {
+  "asset": "EUR/USD",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "EUR/USD over/under",
+  "category": "Financials"
+ },
+ "GBP": {
+  "asset": "GBP/USD",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "British Pound/US Dollar exchange rate ",
+  "category": "Financials"
+ },
+ "GBPUSD": {
+  "asset": "GBP/USD",
+  "asset_class": "FX & Rates",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "GBP/USD over/under",
+  "category": "Financials"
+ },
+ "GBPUSDH": {
+  "asset": "GBP/USD",
+  "asset_class": "FX & Rates",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "GBP/USD over/under",
+  "category": "Financials"
+ },
+ "GOLD": {
+  "asset": "Gold",
+  "asset_class": "Commodities",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "Price of gold",
+  "category": "Financials"
+ },
+ "INX": {
+  "asset": "S&P 500",
+  "asset_class": "Equities",
+  "duration": "1d",
+  "ctype": "Range",
+  "title": "S&P 500 range",
+  "category": "Financials"
+ },
+ "INXAB": {
+  "asset": "S&P 500",
+  "asset_class": "Equities",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "S&P 500 close above/below",
+  "category": "Financials"
+ },
+ "INXI": {
+  "asset": "S&P 500",
+  "asset_class": "Equities",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "S&P500 hourly",
+  "category": "Financials"
+ },
+ "INXU": {
+  "asset": "S&P 500",
+  "asset_class": "Equities",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "S&P 500 above/below",
+  "category": "Financials"
+ },
+ "INXZ": {
+  "asset": "S&P 500",
+  "asset_class": "Equities",
+  "duration": "1d",
+  "ctype": "Up/Down",
+  "title": "S&P 500 up",
+  "category": "Financials"
+ },
+ "JPY": {
+  "asset": "USD/JPY",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "U.S. Dollar/Japanese yen exchange rate",
+  "category": "Economics"
+ },
+ "KX10YRRATE15M": {
+  "asset": "UST Yields",
+  "asset_class": "FX & Rates",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "10-year Treasury yield 15-minute",
+  "category": "Financials"
+ },
+ "KX2YRRATE15M": {
+  "asset": "UST Yields",
+  "asset_class": "FX & Rates",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "2-year Treasury yield 15-minute",
+  "category": "Financials"
+ },
+ "KX30YRRATE15M": {
+  "asset": "UST Yields",
+  "asset_class": "FX & Rates",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "30-year Treasury yield 15-minute",
+  "category": "Financials"
+ },
+ "KX5YRRATE15M": {
+  "asset": "UST Yields",
+  "asset_class": "FX & Rates",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "5-year Treasury yield 15-minute",
+  "category": "Financials"
+ },
+ "KXADA15M": {
+  "asset": "ADA",
+  "asset_class": "Crypto",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "Cardano 15 Minute",
+  "category": "Crypto"
+ },
+ "KXAUDUSDAD": {
+  "asset": "AUD/USD",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "AUDUSD Daily",
+  "category": "Financials"
+ },
+ "KXAUDUSDAH": {
+  "asset": "AUD/USD",
+  "asset_class": "FX & Rates",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "AUDUSD Daily",
+  "category": "Financials"
+ },
+ "KXAUDUSDH": {
+  "asset": "AUD/USD",
+  "asset_class": "FX & Rates",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "AUD/USD over/under",
+  "category": "Financials"
+ },
+ "KXAVAX": {
+  "asset": "AVAX",
+  "asset_class": "Crypto",
+  "duration": "1d",
+  "ctype": "Range",
+  "title": "Avalanche range",
+  "category": "Crypto"
+ },
+ "KXAVAXD": {
+  "asset": "AVAX",
+  "asset_class": "Crypto",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "Avalanche price Above/below",
+  "category": "Crypto"
+ },
+ "KXBCH": {
+  "asset": "BCH",
+  "asset_class": "Crypto",
+  "duration": "1d",
+  "ctype": "Range",
+  "title": "Bitcoin cash range",
+  "category": "Crypto"
+ },
+ "KXBCH15M": {
+  "asset": "BCH",
+  "asset_class": "Crypto",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "Bitcoin Cash 15 Minute",
+  "category": "Crypto"
+ },
+ "KXBCHD": {
+  "asset": "BCH",
+  "asset_class": "Crypto",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "Bitcoin Cash price Above/below",
+  "category": "Crypto"
+ },
+ "KXBNB": {
+  "asset": "BNB",
+  "asset_class": "Crypto",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "BNB",
+  "category": "Crypto"
+ },
+ "KXBNB15M": {
+  "asset": "BNB",
+  "asset_class": "Crypto",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "BNB 15 Minute",
+  "category": "Crypto"
+ },
+ "KXBNBD": {
+  "asset": "BNB",
+  "asset_class": "Crypto",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "BNB Directional",
+  "category": "Crypto"
+ },
+ "KXBRENTD": {
+  "asset": "Brent Oil",
+  "asset_class": "Commodities",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "Brent Oil Daily",
+  "category": "Commodities"
+ },
+ "KXBTC": {
+  "asset": "BTC",
+  "asset_class": "Crypto",
+  "duration": "1h",
+  "ctype": "Range",
+  "title": "Bitcoin range",
+  "category": "Crypto"
+ },
+ "KXBTC15M": {
+  "asset": "BTC",
+  "asset_class": "Crypto",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "Bitcoin price up down",
+  "category": "Crypto"
+ },
+ "KXBTCD": {
+  "asset": "BTC",
+  "asset_class": "Crypto",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "Bitcoin price Above/below",
+  "category": "Crypto"
+ },
+ "KXCOPPER15M": {
+  "asset": "Copper",
+  "asset_class": "Commodities",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "Copper 15-minute",
+  "category": "Commodities"
+ },
+ "KXCOPPERD": {
+  "asset": "Copper",
+  "asset_class": "Commodities",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "Daily Copper",
+  "category": "Commodities"
+ },
+ "KXDJI": {
+  "asset": "Dow",
+  "asset_class": "Equities",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "DJI Hourly",
+  "category": "Financials"
+ },
+ "KXDOGE": {
+  "asset": "DOGE",
+  "asset_class": "Crypto",
+  "duration": "1h",
+  "ctype": "Range",
+  "title": "Dogecoin range",
+  "category": "Crypto"
+ },
+ "KXDOGE15M": {
+  "asset": "DOGE",
+  "asset_class": "Crypto",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "Dogecoin 15 Minute",
+  "category": "Crypto"
+ },
+ "KXDOGED": {
+  "asset": "DOGE",
+  "asset_class": "Crypto",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "Dogecoin price Above/below",
+  "category": "Crypto"
+ },
+ "KXDOT": {
+  "asset": "DOT",
+  "asset_class": "Crypto",
+  "duration": "1d",
+  "ctype": "Range",
+  "title": "Polkadot range",
+  "category": "Crypto"
+ },
+ "KXDOTD": {
+  "asset": "DOT",
+  "asset_class": "Crypto",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "Polkadot Above/below",
+  "category": "Crypto"
+ },
+ "KXETH": {
+  "asset": "ETH",
+  "asset_class": "Crypto",
+  "duration": "1h",
+  "ctype": "Range",
+  "title": "Ethereum range",
+  "category": "Crypto"
+ },
+ "KXETH15M": {
+  "asset": "ETH",
+  "asset_class": "Crypto",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "ETH 15M price up down",
+  "category": "Crypto"
+ },
+ "KXETHD": {
+  "asset": "ETH",
+  "asset_class": "Crypto",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "Ethereum price Above/below",
+  "category": "Crypto"
+ },
+ "KXEUROIMF": {
+  "asset": "EUR/USD",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "EUR/USD",
+  "category": "Financials"
+ },
+ "KXEURUSD": {
+  "asset": "EUR/USD",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Range",
+  "title": "EUR/USD daily range",
+  "category": "Financials"
+ },
+ "KXEURUSD15M": {
+  "asset": "EUR/USD",
+  "asset_class": "FX & Rates",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "15-minute EURUSD",
+  "category": "Financials"
+ },
+ "KXEURUSDAD": {
+  "asset": "EUR/USD",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "EURUSD daily ",
+  "category": "Financials"
+ },
+ "KXEURUSDAH": {
+  "asset": "EUR/USD",
+  "asset_class": "FX & Rates",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "EURUSD hourly ",
+  "category": "Financials"
+ },
+ "KXEURUSDD": {
+  "asset": "EUR/USD",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Up/Down",
+  "title": "EURUSD daily up down",
+  "category": "Financials"
+ },
+ "KXEURUSDH": {
+  "asset": "EUR/USD",
+  "asset_class": "FX & Rates",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "EUR/USD over/under",
+  "category": "Financials"
+ },
+ "KXEURUSDHA": {
+  "asset": "EUR/USD",
+  "asset_class": "FX & Rates",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "EURUSD Hourly",
+  "category": "Financials"
+ },
+ "KXGBP": {
+  "asset": "GBP/USD",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "British Pound/US Dollar exchange rate ",
+  "category": "Financials"
+ },
+ "KXGBPUSD": {
+  "asset": "GBP/USD",
+  "asset_class": "FX & Rates",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "GBP/USD over/under",
+  "category": "Financials"
+ },
+ "KXGBPUSD15M": {
+  "asset": "GBP/USD",
+  "asset_class": "FX & Rates",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "15-minute GBPUSD",
+  "category": "Financials"
+ },
+ "KXGBPUSDAD": {
+  "asset": "GBP/USD",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "GBPUSD Daily",
+  "category": "Financials"
+ },
+ "KXGBPUSDAH": {
+  "asset": "GBP/USD",
+  "asset_class": "FX & Rates",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "GBPUSD Hourly",
+  "category": "Financials"
+ },
+ "KXGBPUSDD": {
+  "asset": "GBP/USD",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Up/Down",
+  "title": "GBPUSD daily up down",
+  "category": "Financials"
+ },
+ "KXGBPUSDH": {
+  "asset": "GBP/USD",
+  "asset_class": "FX & Rates",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "GBP/USD over/under",
+  "category": "Financials"
+ },
+ "KXGOLD": {
+  "asset": "Gold",
+  "asset_class": "Commodities",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "Price of gold",
+  "category": "Financials"
+ },
+ "KXGOLD15M": {
+  "asset": "Gold",
+  "asset_class": "Commodities",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "Gold 15-minute",
+  "category": "Commodities"
+ },
+ "KXGOLDD": {
+  "asset": "Gold",
+  "asset_class": "Commodities",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "Gold Daily",
+  "category": "Commodities"
+ },
+ "KXGOLDH": {
+  "asset": "Gold",
+  "asset_class": "Commodities",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "Gold Hourly",
+  "category": "Commodities"
+ },
+ "KXHYPE": {
+  "asset": "HYPE",
+  "asset_class": "Crypto",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "Hype ",
+  "category": "Crypto"
+ },
+ "KXHYPE15M": {
+  "asset": "HYPE",
+  "asset_class": "Crypto",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "Hype 15 min",
+  "category": "Crypto"
+ },
+ "KXHYPED": {
+  "asset": "HYPE",
+  "asset_class": "Crypto",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "Hype Directional",
+  "category": "Crypto"
+ },
+ "KXINX": {
+  "asset": "S&P 500",
+  "asset_class": "Equities",
+  "duration": "1d",
+  "ctype": "Range",
+  "title": "S&P 500 range",
+  "category": "Financials"
+ },
+ "KXINX15M": {
+  "asset": "S&P 500",
+  "asset_class": "Equities",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "S&P 500 15-minute",
+  "category": "Financials"
+ },
+ "KXINXAB": {
+  "asset": "S&P 500",
+  "asset_class": "Equities",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "S&P 500 close above/below",
+  "category": "Financials"
+ },
+ "KXINXI": {
+  "asset": "S&P 500",
+  "asset_class": "Equities",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "S&P500 hourly",
+  "category": "Financials"
+ },
+ "KXINXU": {
+  "asset": "S&P 500",
+  "asset_class": "Equities",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "S&P 500 above/below",
+  "category": "Financials"
+ },
+ "KXINXZ": {
+  "asset": "S&P 500",
+  "asset_class": "Equities",
+  "duration": "1d",
+  "ctype": "Up/Down",
+  "title": "S&P 500 up",
+  "category": "Financials"
+ },
+ "KXJPY": {
+  "asset": "USD/JPY",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "U.S. Dollar/Japanese yen exchange rate",
+  "category": "Economics"
+ },
+ "KXKR200": {
+  "asset": "KOSPI",
+  "asset_class": "Equities",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "KOSPI",
+  "category": "Financials"
+ },
+ "KXLINK": {
+  "asset": "LINK",
+  "asset_class": "Crypto",
+  "duration": "1d",
+  "ctype": "Range",
+  "title": "Chainlink range",
+  "category": "Crypto"
+ },
+ "KXLINKD": {
+  "asset": "LINK",
+  "asset_class": "Crypto",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "Chainlink price Above/below",
+  "category": "Crypto"
+ },
+ "KXLTC": {
+  "asset": "LTC",
+  "asset_class": "Crypto",
+  "duration": "1d",
+  "ctype": "Range",
+  "title": "Litecoin range",
+  "category": "Crypto"
+ },
+ "KXLTCD": {
+  "asset": "LTC",
+  "asset_class": "Crypto",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "Litecoin price Above/below",
+  "category": "Crypto"
+ },
+ "KXNASDAQ100": {
+  "asset": "Nasdaq 100",
+  "asset_class": "Equities",
+  "duration": "1d",
+  "ctype": "Range",
+  "title": "Nasdaq range",
+  "category": "Financials"
+ },
+ "KXNASDAQ100U": {
+  "asset": "Nasdaq 100",
+  "asset_class": "Equities",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "Nasdaq above/below",
+  "category": "Financials"
+ },
+ "KXNASDAQ100Z": {
+  "asset": "Nasdaq 100",
+  "asset_class": "Equities",
+  "duration": "1d",
+  "ctype": "Up/Down",
+  "title": "Nasdaq up",
+  "category": "Financials"
+ },
+ "KXNATGAS15M": {
+  "asset": "Nat Gas",
+  "asset_class": "Commodities",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "Natural Gas 15-minute",
+  "category": "Commodities"
+ },
+ "KXNATGASD": {
+  "asset": "Nat Gas",
+  "asset_class": "Commodities",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "Natural Gas Daily",
+  "category": "Commodities"
+ },
+ "KXNDQ15M": {
+  "asset": "Nasdaq 100",
+  "asset_class": "Equities",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "Nasdaq 100 15-minute",
+  "category": "Financials"
+ },
+ "KXNEAR": {
+  "asset": "NEAR",
+  "asset_class": "Crypto",
+  "duration": "1h",
+  "ctype": "Range",
+  "title": "NEAR range",
+  "category": "Crypto"
+ },
+ "KXNEAR15M": {
+  "asset": "NEAR",
+  "asset_class": "Crypto",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "NEAR 15m",
+  "category": "Crypto"
+ },
+ "KXNEARD": {
+  "asset": "NEAR",
+  "asset_class": "Crypto",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "NEAR Directional",
+  "category": "Crypto"
+ },
+ "KXNEARH": {
+  "asset": "NEAR",
+  "asset_class": "Crypto",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "NEAR Directional",
+  "category": "Crypto"
+ },
+ "KXNKY": {
+  "asset": "Nikkei",
+  "asset_class": "Equities",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "NKY Hourly",
+  "category": "Financials"
+ },
+ "KXNZDUSDAD": {
+  "asset": "NZD/USD",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "NZDUSD Daily",
+  "category": "Financials"
+ },
+ "KXNZDUSDAH": {
+  "asset": "NZD/USD",
+  "asset_class": "FX & Rates",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "NZDUSD Hourly",
+  "category": "Financials"
+ },
+ "KXPALLADIUM15M": {
+  "asset": "Palladium",
+  "asset_class": "Commodities",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "Palladium 15-minute",
+  "category": "Commodities"
+ },
+ "KXPALLADIUMH": {
+  "asset": "Palladium",
+  "asset_class": "Commodities",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "Palladium Hourly",
+  "category": "Commodities"
+ },
+ "KXPLATINUM15M": {
+  "asset": "Platinum",
+  "asset_class": "Commodities",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "Platinum 15-minute",
+  "category": "Commodities"
+ },
+ "KXRIPPLE": {
+  "asset": "XRP",
+  "asset_class": "Crypto",
+  "duration": "1h",
+  "ctype": "Range",
+  "title": "Ripple range",
+  "category": "Crypto"
+ },
+ "KXRIPPLED": {
+  "asset": "XRP",
+  "asset_class": "Crypto",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "Ripple price Above/below",
+  "category": "Crypto"
+ },
+ "KXSHIBA": {
+  "asset": "SHIB",
+  "asset_class": "Crypto",
+  "duration": "1d",
+  "ctype": "Range",
+  "title": "Shiba range",
+  "category": "Crypto"
+ },
+ "KXSHIBAD": {
+  "asset": "SHIB",
+  "asset_class": "Crypto",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "Shiba price Above/below",
+  "category": "Crypto"
+ },
+ "KXSILVER15M": {
+  "asset": "Silver",
+  "asset_class": "Commodities",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "Silver 15-minute",
+  "category": "Commodities"
+ },
+ "KXSILVERD": {
+  "asset": "Silver",
+  "asset_class": "Commodities",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "Silver daily",
+  "category": "Commodities"
+ },
+ "KXSILVERH": {
+  "asset": "Silver",
+  "asset_class": "Commodities",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "Silver Hourly",
+  "category": "Commodities"
+ },
+ "KXSOL": {
+  "asset": "SOL",
+  "asset_class": "Crypto",
+  "duration": "1h",
+  "ctype": "Range",
+  "title": "Solana range",
+  "category": "Crypto"
+ },
+ "KXSOL15M": {
+  "asset": "SOL",
+  "asset_class": "Crypto",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "Solana 15 minutes",
+  "category": "Crypto"
+ },
+ "KXSOLD": {
+  "asset": "SOL",
+  "asset_class": "Crypto",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "SOL Directional",
+  "category": "Crypto"
+ },
+ "KXSOLE": {
+  "asset": "SOL",
+  "asset_class": "Crypto",
+  "duration": "1h",
+  "ctype": "Range",
+  "title": "SOL Range",
+  "category": "Crypto"
+ },
+ "KXTNOTED": {
+  "asset": "UST Yields",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "Treasury 10Y daily yield",
+  "category": "Financials"
+ },
+ "KXTON": {
+  "asset": "TON",
+  "asset_class": "Crypto",
+  "duration": "1h",
+  "ctype": "Range",
+  "title": "TON range",
+  "category": "Crypto"
+ },
+ "KXTON15M": {
+  "asset": "TON",
+  "asset_class": "Crypto",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "TON 15m",
+  "category": "Crypto"
+ },
+ "KXTOND": {
+  "asset": "TON",
+  "asset_class": "Crypto",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "TON Directional",
+  "category": "Crypto"
+ },
+ "KXTONH": {
+  "asset": "TON",
+  "asset_class": "Crypto",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "TON Directional",
+  "category": "Crypto"
+ },
+ "KXUSDBRLAD": {
+  "asset": "USD/BRL",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "USDBRL Daily ",
+  "category": "Financials"
+ },
+ "KXUSDBRLAH": {
+  "asset": "USD/BRL",
+  "asset_class": "FX & Rates",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "SDBRL Hourly",
+  "category": "Financials"
+ },
+ "KXUSDCADAD": {
+  "asset": "USD/CAD",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "USDCAD Daily",
+  "category": "Financials"
+ },
+ "KXUSDCADAH": {
+  "asset": "USD/CAD",
+  "asset_class": "FX & Rates",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "USDCAD Hourly",
+  "category": "Financials"
+ },
+ "KXUSDCHFAD": {
+  "asset": "USD/CHF",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "USDCHF Weekly",
+  "category": "Financials"
+ },
+ "KXUSDCHFAH": {
+  "asset": "USD/CHF",
+  "asset_class": "FX & Rates",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "USDCHF Hourly",
+  "category": "Financials"
+ },
+ "KXUSDINRAD": {
+  "asset": "USD/INR",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "USDINR Weekly",
+  "category": "Financials"
+ },
+ "KXUSDINRAH": {
+  "asset": "USD/INR",
+  "asset_class": "FX & Rates",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "USDINR Hourly",
+  "category": "Financials"
+ },
+ "KXUSDJPY": {
+  "asset": "USD/JPY",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Range",
+  "title": "USD/JPY daily range",
+  "category": "Financials"
+ },
+ "KXUSDJPY15M": {
+  "asset": "USD/JPY",
+  "asset_class": "FX & Rates",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "Fifteen-min USDJPY",
+  "category": "Financials"
+ },
+ "KXUSDJPYAD": {
+  "asset": "USD/JPY",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "USDJPY Daily",
+  "category": "Financials"
+ },
+ "KXUSDJPYD": {
+  "asset": "USD/JPY",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Up/Down",
+  "title": "USDJPY daily up down",
+  "category": "Financials"
+ },
+ "KXUSDJPYH": {
+  "asset": "USD/JPY",
+  "asset_class": "FX & Rates",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "USD/JPY daily over/under",
+  "category": "Financials"
+ },
+ "KXUSDNOKAD": {
+  "asset": "USD/NOK",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "USDNOK Daily ",
+  "category": "Financials"
+ },
+ "KXUSDNOKAH": {
+  "asset": "USD/NOK",
+  "asset_class": "FX & Rates",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "USDNOK Hourly",
+  "category": "Financials"
+ },
+ "KXUST10A": {
+  "asset": "UST Yields",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "UST 10 Year Weekly",
+  "category": "Economics"
+ },
+ "KXUST2A": {
+  "asset": "UST Yields",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "UST 2 Year Daily",
+  "category": "Economics"
+ },
+ "KXUST30A": {
+  "asset": "UST Yields",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "UST 30 Year Daily",
+  "category": "Economics"
+ },
+ "KXUST5A": {
+  "asset": "UST Yields",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "UST 5 Year Daily",
+  "category": "Economics"
+ },
+ "KXUST7A": {
+  "asset": "UST Yields",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "UST 7 Year Daily",
+  "category": "Economics"
+ },
+ "KXWTI": {
+  "asset": "WTI Oil",
+  "asset_class": "Commodities",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "WTI oil on day",
+  "category": "Commodities"
+ },
+ "KXWTI15M": {
+  "asset": "WTI Oil",
+  "asset_class": "Commodities",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "WTI 15-minute",
+  "category": "Commodities"
+ },
+ "KXWTIH": {
+  "asset": "WTI Oil",
+  "asset_class": "Commodities",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "WTI Hourly",
+  "category": "Commodities"
+ },
+ "KXXLM": {
+  "asset": "XLM",
+  "asset_class": "Crypto",
+  "duration": "1d",
+  "ctype": "Range",
+  "title": "XLM range",
+  "category": "Crypto"
+ },
+ "KXXLMD": {
+  "asset": "XLM",
+  "asset_class": "Crypto",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "XLM price Above/below",
+  "category": "Crypto"
+ },
+ "KXXRP": {
+  "asset": "XRP",
+  "asset_class": "Crypto",
+  "duration": "1h",
+  "ctype": "Range",
+  "title": "XRP Range",
+  "category": "Crypto"
+ },
+ "KXXRP15M": {
+  "asset": "XRP",
+  "asset_class": "Crypto",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "XRP 15 Minute",
+  "category": "Crypto"
+ },
+ "KXXRPD": {
+  "asset": "XRP",
+  "asset_class": "Crypto",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "XRP Price above/below",
+  "category": "Crypto"
+ },
+ "KXZEC": {
+  "asset": "ZEC",
+  "asset_class": "Crypto",
+  "duration": "1h",
+  "ctype": "Range",
+  "title": "Zcash Range",
+  "category": "Crypto"
+ },
+ "KXZEC15M": {
+  "asset": "ZEC",
+  "asset_class": "Crypto",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "Zcash 15min",
+  "category": "Crypto"
+ },
+ "KXZECD": {
+  "asset": "ZEC",
+  "asset_class": "Crypto",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "Zcash Directional",
+  "category": "Crypto"
+ },
+ "KXZECH": {
+  "asset": "ZEC",
+  "asset_class": "Crypto",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "Zcash Directional",
+  "category": "Crypto"
+ },
+ "NASDAQ100": {
+  "asset": "Nasdaq 100",
+  "asset_class": "Equities",
+  "duration": "1d",
+  "ctype": "Range",
+  "title": "Nasdaq range",
+  "category": "Financials"
+ },
+ "NASDAQ100I": {
+  "asset": "Nasdaq 100",
+  "asset_class": "Equities",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "Nasdaq-100 hourly",
+  "category": "Financials"
+ },
+ "NASDAQ100U": {
+  "asset": "Nasdaq 100",
+  "asset_class": "Equities",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "Nasdaq above/below",
+  "category": "Financials"
+ },
+ "NASDAQ100Z": {
+  "asset": "Nasdaq 100",
+  "asset_class": "Equities",
+  "duration": "1d",
+  "ctype": "Up/Down",
+  "title": "Nasdaq up",
+  "category": "Financials"
+ },
+ "TNOTED": {
+  "asset": "UST Yields",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "Treasury 10Y daily yield",
+  "category": "Financials"
+ },
+ "USDJPY": {
+  "asset": "USD/JPY",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Range",
+  "title": "USD/JPY daily range",
+  "category": "Financials"
+ },
+ "USDJPYH": {
+  "asset": "USD/JPY",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "USD/JPY daily over/under",
+  "category": "Financials"
+ },
+ "WTI": {
+  "asset": "WTI Oil",
+  "asset_class": "Commodities",
+  "duration": "1d",
+  "ctype": "Range",
+  "title": "WTI oil daily range",
+  "category": "Financials"
+ },
+ "WTIH": {
+  "asset": "WTI Oil",
+  "asset_class": "Commodities",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "WTI oil over/under",
+  "category": "Financials"
+ }
+}
