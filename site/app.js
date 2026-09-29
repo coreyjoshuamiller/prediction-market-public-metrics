@@ -163,24 +163,25 @@
   }
 
   // Tooltip: values lead, labels follow; line keys, sorted by value; skip zeros.
-  function tooltipFormatter(valueFmt, { total = true } = {}) {
+  // pct: also show each bar segment's share of the stacked total (only meaningful when parts are additive)
+  function tooltipFormatter(valueFmt, { total = true, pct = false } = {}) {
     return (params) => {
       const ps = [].concat(params);
       if (!ps.length) return "";
       const title = ps[0].axisValueLabel ?? ps[0].name;
-      let sum = 0;
-      const rows = ps
-        .filter((p) => p.value != null && p.value !== 0 && p.value !== "-")
-        .sort((a, b) => b.value - a.value)
-        .map((p) => {
-          if (p.seriesType === "bar") sum += p.value;
-          return `<div style="display:flex;align-items:center;gap:8px;min-width:170px">
+      const shown = ps.filter((p) => p.value != null && p.value !== 0 && p.value !== "-").sort((a, b) => b.value - a.value);
+      const sum = shown.filter((p) => p.seriesType === "bar").reduce((a, p) => a + p.value, 0);
+      const muted = css("--text-secondary");
+      const rows = shown.map((p) => {
+        const share = pct && sum && p.seriesType === "bar" ? `${((p.value / sum) * 100).toFixed(1)}%` : "";
+        return `<div style="display:flex;align-items:center;gap:8px;min-width:190px">
             <span style="width:12px;height:2px;background:${p.color};flex:none;border-radius:1px"></span>
             <b style="font-variant-numeric:tabular-nums">${valueFmt(p.value)}</b>
-            <span style="color:${css("--text-secondary")}">${escapeHtml(p.seriesName)}</span></div>`;
-        });
-      const tot = total && sum ? `<div style="margin-top:4px;padding-top:4px;border-top:1px solid ${css("--grid")}"><b>${valueFmt(sum)}</b> <span style="color:${css("--text-secondary")}">Total</span></div>` : "";
-      return `<div style="font-size:12px;color:${css("--text-secondary")};margin-bottom:4px">${escapeHtml(title)}</div>${rows.join("")}${tot}`;
+            <span style="color:${muted};flex:1">${escapeHtml(p.seriesName)}</span>
+            ${share ? `<span style="color:${muted};font-variant-numeric:tabular-nums;margin-left:12px">${share}</span>` : ""}</div>`;
+      });
+      const tot = total && sum ? `<div style="margin-top:4px;padding-top:4px;border-top:1px solid ${css("--grid")}"><b>${valueFmt(sum)}</b> <span style="color:${muted}">Total</span></div>` : "";
+      return `<div style="font-size:12px;color:${muted};margin-bottom:4px">${escapeHtml(title)}</div>${rows.join("")}${tot}`;
     };
   }
   const escapeHtml = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -352,7 +353,7 @@
       const opt = baseOption();
       opt.xAxis.data = cats;
       opt.yAxis.axisLabel.formatter = (v) => fmtUsd(v);
-      opt.tooltip.formatter = tooltipFormatter(fmtUsd);
+      opt.tooltip.formatter = tooltipFormatter(fmtUsd, { pct: true });
       opt.series = series;
       const table = { cols: ["Period", ...keys, "Total"], rows: tf.buckets.map((b, i) => [b, ...keys.map((k) => fmtUsd(agg[k][i])), fmtUsd(keys.reduce((a, k) => a + agg[k][i], 0))]) };
       const empty = keys.length ? null : `<strong>No ${PLATFORMS[p]} volume</strong><span>No markets in this asset class on ${PLATFORMS[p]} for the range.</span>`;
