@@ -12,7 +12,7 @@
   <header class="top">
     <div>
       <h1>Short-Term Price Markets</h1>
-      <div class="sub">Polymarket vs Kalshi: Up/Down, strike and range contracts on crypto, equities, commodities and FX that resolve within a day</div>
+      <div class="sub">Polymarket (Intl and US) vs Kalshi: Up/Down, strike and range contracts on crypto, equities, commodities and FX that resolve within a day</div>
     </div>
     <div class="updated" id="updated">Loading…</div>
   </header>
@@ -49,9 +49,10 @@
 
   <section id="volume">
     <h2>Volume by market</h2>
-    <p class="lede">Traded volume per period, stacked by the split you choose. “Market” means asset × duration, e.g. BTC 15m, with Up/Down, strike and range contracts combined. The two venues are on separate scales.</p>
-    <div class="pair">
+    <p class="lede">Traded volume per period, stacked by the split you choose. “Market” means asset × duration, e.g. BTC 15m, with Up/Down, strike and range contracts combined. Each venue has its own scale.</p>
+    <div class="trio">
       <figure class="card" data-chart="vol-polymarket"></figure>
+      <figure class="card" data-chart="vol-polymarket_us"></figure>
       <figure class="card" data-chart="vol-kalshi"></figure>
     </div>
   </section>
@@ -67,7 +68,7 @@
 
   <section id="share">
     <h2>Share of total platform volume</h2>
-    <p class="lede">Short-term price markets as a percentage of all volume on each platform, in the selected measure and asset class. The right chart compares the two venues directly.</p>
+    <p class="lede">Short-term price markets as a percentage of all volume on each platform, in the selected measure and asset class. A venue's line starts when it first listed these markets. The right chart compares the venues directly.</p>
     <div class="pair">
       <figure class="card" data-chart="share"></figure>
       <figure class="card" data-chart="totals"></figure>
@@ -78,7 +79,7 @@
     <h2>Top traders</h2>
     <p class="lede" id="leaders-lede"></p>
     <div class="section-controls">
-      <span class="seg" id="f-lb-platform"><button data-v="polymarket">Polymarket</button><button data-v="kalshi">Kalshi</button></span>
+      <span class="seg" id="f-lb-platform"><button data-v="polymarket">Polymarket Intl</button><button data-v="kalshi">Kalshi</button></span>
       <span class="seg" id="f-lb-window"></span>
     </div>
     <div class="table-card" id="leaders-table"></div>

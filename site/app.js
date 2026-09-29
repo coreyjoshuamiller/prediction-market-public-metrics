@@ -20,7 +20,20 @@
   // ~20 series, past the 8 base hues, so the palette extends to 3 tones of each hue (24 slots).
   const OTHER_MAX = 0.03;
   const PALETTE_SIZE = 24;
-  const PLATFORMS = { polymarket: "Polymarket", kalshi: "Kalshi" };
+  const PLATFORMS = { polymarket: "Polymarket Intl", polymarket_us: "Polymarket US", kalshi: "Kalshi" };
+  // venues with volume history (Polymarket US has no order-book or trader data)
+  const VENUES = ["polymarket", "polymarket_us", "kalshi"];
+  const VENUE_COLOR = { polymarket: "--poly", polymarket_us: "--poly-us", kalshi: "--kalshi" };
+  const venueColor = (p) => css(VENUE_COLOR[p]);
+  const hasVenue = (p) => !!M?.[p]?.series;
+  // first day a venue had any short-term price volume (Polymarket US only listed BTC Up/Down on 2026-09-22)
+  const firstScopeCache = {};
+  function firstScopeIdx(p) {
+    if (p in firstScopeCache) return firstScopeCache[p];
+    let first = Infinity;
+    for (const s of M[p].series) { const i = s.notional.findIndex((v) => v > 0); if (i >= 0 && i < first) first = i; }
+    return (firstScopeCache[p] = first);
+  }
   const GROUP_LABEL = { market: "market", asset: "asset", dur: "duration", cls: "asset class", ctype: "contract type" };
   const TRADER_DIM = { market: "market", asset: "asset", dur: "duration", cls: "class", ctype: "type" };
 
@@ -99,7 +112,7 @@
     const all = M.order[group] || [];
     if (!state.cls) return all;
     const present = new Set();
-    for (const p of ["polymarket", "kalshi"]) for (const s of M[p].series) if (inClass(s)) present.add(keyOf(s, group));
+    for (const p of VENUES.filter(hasVenue)) for (const s of M[p].series) if (inClass(s)) present.add(keyOf(s, group));
     return all.filter((k) => present.has(k));
   }
   // slot i: hue (i % 8), tone (i / 8): base, then a contrasting tone, then the opposite tone.
@@ -125,7 +138,7 @@
     return (k) => map[k] || css("--other");
   }
   // Largest entities in the current view (range, class, measure) until the remainder is <= OTHER_MAX.
-  function shownKeys(group, tf, platforms = ["polymarket", "kalshi"]) {
+  function shownKeys(group, tf, platforms = VENUES.filter(hasVenue)) {
     const keep = new Set();
     for (const p of platforms) {
       const tot = {};
@@ -349,21 +362,26 @@
     for (let i = Math.max(0, tf.from - state.range); i < tf.from; i++) { prevTf.idx.push(i); prevTf.dayToBucket[i] = 0; }
     const hasPrev = tf.from - state.range >= 0;
     const tiles = [];
-    for (const p of ["polymarket", "kalshi"]) {
-      const cur = sumRange(scopeTotal(p, tf), 0, n - 1);
-      const prev = hasPrev ? scopeTotal(p, prevTf)[0] : null;
-      const tot = sumRange(platformTotal(p, tf), 0, n - 1);
-      tiles.push({ label: `${PLATFORMS[p]} volume`, key: css(p === "polymarket" ? "--poly" : "--kalshi"), value: fmtUsd(cur), delta: prev ? (cur / prev - 1) * 100 : null });
-      tiles.push({ label: `${PLATFORMS[p]} share of platform`, key: css(p === "polymarket" ? "--poly" : "--kalshi"), value: fmtPct(tot ? (cur / tot) * 100 : null) });
+    for (const p of VENUES.filter(hasVenue)) {
+      const f0 = firstScopeIdx(p);
+      const launched = f0 > tf.from ? M.days[f0] : null; // listed mid-window: measure since launch
+      const vtf = launched ? { ...tf, idx: tf.idx.filter((i) => i >= f0) } : tf;
+      const cur = sumRange(scopeTotal(p, vtf), 0, n - 1);
+      const prev = hasPrev && !launched ? scopeTotal(p, prevTf)[0] : null;
+      const tot = sumRange(platformTotal(p, vtf), 0, n - 1);
+      const since = launched ? `since ${fmtDate(launched, "day")} launch` : null;
+      tiles.push({ label: `${PLATFORMS[p]} volume`, key: venueColor(p), value: fmtUsd(cur), delta: prev ? (cur / prev - 1) * 100 : null, note: since });
+      tiles.push({ label: `${PLATFORMS[p]} share of platform`, key: venueColor(p), value: fmtPct(tot ? (cur / tot) * 100 : null), note: since });
     }
     // Polymarket average daily unique traders in scope (total or class)
     const tr = M.polymarket.traders.day || {};
     const src = state.cls ? tr.class?.[state.cls] : tr.total?.All;
     let s = 0, c = 0;
     if (src) for (const i of tf.idx) { const v = src[M.days[i]]; if (v != null) { s += v; c++; } }
-    tiles.push({ label: "Polymarket avg daily traders", key: css("--poly"), value: c ? fmtInt(s / c) : "–" });
-    const pv = sumRange(scopeTotal("polymarket", tf), 0, n - 1), kv = sumRange(scopeTotal("kalshi", tf), 0, n - 1);
-    tiles.push({ label: "Kalshi : Polymarket volume", value: pv ? `${(kv / pv).toFixed(1)}×` : "–" });
+    tiles.push({ label: "Polymarket Intl avg daily traders", key: venueColor("polymarket"), value: c ? fmtInt(s / c) : "–" });
+    const pv = ["polymarket", "polymarket_us"].filter(hasVenue).reduce((a, p) => a + sumRange(scopeTotal(p, tf), 0, n - 1), 0);
+    const kv = sumRange(scopeTotal("kalshi", tf), 0, n - 1);
+    tiles.push({ label: "Kalshi : Polymarket (Intl + US)", value: pv ? `${(kv / pv).toFixed(1)}×` : "–" });
 
     box.innerHTML = "";
     for (const t of tiles) {
@@ -378,7 +396,7 @@
       if (t.delta != null && isFinite(t.delta)) {
         dl.classList.add(t.delta >= 0 ? "up" : "down");
         dl.textContent = `${t.delta >= 0 ? "▲" : "▼"} ${Math.abs(t.delta).toFixed(1)}% vs prior ${state.range}d`;
-      } else dl.textContent = `last ${state.range} days · ${state.measure}`;
+      } else dl.textContent = t.note || `last ${state.range} days · ${state.measure}`;
       el.appendChild(dl);
       box.appendChild(el);
     }
@@ -387,7 +405,7 @@
   function renderVolume(tf) {
     const color = colorFor(state.group, tf);
     const cats = bucketLabels(tf);
-    for (const p of ["polymarket", "kalshi"]) {
+    for (const p of VENUES.filter(hasVenue)) {
       const shown = shownKeys(state.group, tf, [p]);
       const agg = aggregate(p, tf, state.group, shown);
       const keys = [...shown.filter((k) => agg[k]), ...(agg.Other ? ["Other"] : [])];
@@ -399,7 +417,7 @@
       opt.series = series;
       const table = { cols: ["Period", ...keys, "Total"], rows: tf.buckets.map((b, i) => [b, ...keys.map((k) => fmtUsd(agg[k][i])), fmtUsd(keys.reduce((a, k) => a + agg[k][i], 0))]) };
       const empty = keys.length ? null : `<strong>No ${PLATFORMS[p]} volume</strong><span>No markets in this asset class on ${PLATFORMS[p]} for the range.</span>`;
-      renderChart(`vol-${p}`, { title: PLATFORMS[p], note: measureLabel(), keyColor: css(p === "polymarket" ? "--poly" : "--kalshi"), empty }, opt, table);
+      renderChart(`vol-${p}`, { title: PLATFORMS[p], note: measureLabel(), keyColor: venueColor(p), empty }, opt, table);
     }
   }
 
@@ -426,40 +444,42 @@
     const table = { cols: ["Period", ...keys, "All (unique)"], rows: tf.buckets.map((b) => [b, ...keys.map((k) => fmtInt(T[k][b])), fmtInt(totSrc?.[b])]) };
     const avail = entityOrder(state.group).filter((k) => T[k]).length;
     const hidden = keys.length < avail ? ` · ${keys.length} largest by volume` : "";
-    renderChart("tr-polymarket", { title: "Polymarket", note: `Unique wallets per ${period}${hidden}${classNote}`, keyColor: css("--poly"), empty: keys.length ? null : "<strong>No trader data for this selection</strong>" }, opt, table);
+    renderChart("tr-polymarket", { title: "Polymarket Intl", note: `Unique wallets per ${period}${hidden}${classNote}`, keyColor: css("--poly"), empty: keys.length ? null : "<strong>No trader data for this selection</strong>" }, opt, table);
     renderChart("tr-kalshi", {
       title: "Kalshi", keyColor: css("--kalshi"), note: "",
-      empty: `<strong>Not published by Kalshi</strong><span>Kalshi doesn't expose account IDs on trades, so trader counts per market can't be computed from public data.</span><span>See the Kalshi leaderboard in Top traders below.</span>`,
+      empty: `<strong>Not published by Kalshi or Polymarket US</strong><span>Neither exposes account IDs on trades, so trader counts per market can't be computed from public data.</span><span>See the Kalshi leaderboard in Top traders below.</span>`,
     });
   }
 
   function renderShare(tf) {
     const cats = bucketLabels(tf);
     const share = {}, scope = {};
-    for (const p of ["polymarket", "kalshi"]) {
+    const venues = VENUES.filter(hasVenue);
+    for (const p of venues) {
       scope[p] = scopeTotal(p, tf);
       const tot = platformTotal(p, tf);
-      share[p] = scope[p].map((v, i) => (tot[i] ? +((v / tot[i]) * 100).toFixed(2) : null));
+      const firstBucket = tf.dayToBucket[firstScopeIdx(p)] ?? (firstScopeIdx(p) > tf.last ? Infinity : 0);
+      share[p] = scope[p].map((v, i) => (tot[i] && i >= firstBucket ? +((v / tot[i]) * 100).toFixed(2) : null));
     }
     const opt = baseOption();
     opt.xAxis.data = cats; opt.xAxis.boundaryGap = false;
     opt.yAxis.axisLabel.formatter = (v) => `${v}%`;
     opt.tooltip.formatter = tooltipFormatter((v) => fmtPct(v), { total: false });
-    opt.series = ["polymarket", "kalshi"].map((p) => lineSeries(PLATFORMS[p], share[p], css(p === "polymarket" ? "--poly" : "--kalshi"), {
+    opt.series = venues.map((p) => lineSeries(PLATFORMS[p], share[p], venueColor(p), {
       endLabel: { show: true, formatter: (x) => fmtPct(x.value), color: css("--text-secondary"), fontSize: 11 },
     }));
     opt.grid.right = 48;
     renderChart("share", { title: "Share of platform volume", note: measureLabel() + (state.cls ? ` · ${state.cls}` : "") }, opt,
-      { cols: ["Period", "Polymarket", "Kalshi"], rows: tf.buckets.map((b, i) => [b, fmtPct(share.polymarket[i]), fmtPct(share.kalshi[i])]) });
+      { cols: ["Period", ...venues.map((p) => PLATFORMS[p])], rows: tf.buckets.map((b, i) => [b, ...venues.map((p) => fmtPct(share[p][i]))]) });
 
     const opt2 = baseOption();
     opt2.xAxis.data = cats; opt2.xAxis.boundaryGap = false;
     opt2.yAxis.axisLabel.formatter = (v) => fmtUsd(v);
     opt2.tooltip.formatter = tooltipFormatter(fmtUsd, { total: false });
-    opt2.series = ["polymarket", "kalshi"].map((p) => lineSeries(PLATFORMS[p], scope[p], css(p === "polymarket" ? "--poly" : "--kalshi"),
-      { areaStyle: { color: css(p === "polymarket" ? "--poly" : "--kalshi"), opacity: 0.08 } }));
-    renderChart("totals", { title: "Short-term price volume: Polymarket vs Kalshi", note: measureLabel() }, opt2,
-      { cols: ["Period", "Polymarket", "Kalshi"], rows: tf.buckets.map((b, i) => [b, fmtUsd(scope.polymarket[i]), fmtUsd(scope.kalshi[i])]) });
+    opt2.series = venues.map((p) => lineSeries(PLATFORMS[p], scope[p], venueColor(p),
+      { areaStyle: { color: venueColor(p), opacity: 0.08 } }));
+    renderChart("totals", { title: "Short-term price volume by venue", note: measureLabel() }, opt2,
+      { cols: ["Period", ...venues.map((p) => PLATFORMS[p])], rows: tf.buckets.map((b, i) => [b, ...venues.map((p) => fmtUsd(scope[p][i]))]) });
   }
 
   // ---------- leaders ----------
@@ -579,7 +599,7 @@
         : d.toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", timeZone: "UTC" });
     };
     const iso = (t) => new Date(t * 1000).toISOString().slice(0, 16);
-    const platColor = (p) => css(p === "polymarket" ? "--poly" : "--kalshi");
+    const platColor = venueColor;
     const depthKey = (c) => `${state.obSide}_${c}c_usd`;
     const maxOf = (arr) => Math.max(0, ...(arr || []).filter((v) => v != null));
     const pair = {};
@@ -689,9 +709,10 @@
   function renderNotes() {
     $("#notes").innerHTML = `
       <p><b>Scope.</b> Markets that settle on a financial price within one day: Polymarket Up/Down (5m, 15m, 1h, 4h, daily), “above X” strike ladders (hourly and daily), price-range and same-day “reach / dip to” markets; Kalshi 15-minute Up/Down plus hourly and daily above/below and range series. Covers crypto, equity indices and single stocks, commodities, and FX and Treasury yields. Weekly, monthly and longer-dated markets are excluded.</p>
-      <p><b>Volume.</b> <i>Notional</i> counts contracts traded, each paying $1 if it wins. For Polymarket that's shares on the taker side of each fill; for Kalshi it's contracts from Kalshi's daily market report. <i>Cash</i> is dollars paid: the taker's USDC on Polymarket, and yes-price × contracts on Kalshi. Polymarket's own site shows roughly 2× these numbers because it counts both sides of every trade.</p>
+      <p><b>Volume.</b> <i>Notional</i> counts contracts traded, each paying $1 if it wins. For Polymarket that's shares on the taker side of each fill; for Kalshi it's contracts from Kalshi's daily market report. <i>Cash</i> is dollars paid: the taker's USDC on Polymarket Intl, from on-chain fills. On Kalshi and Polymarket US it's the traded (yes-side) price × contracts, because neither publishes which side the taker was on. Polymarket's own site shows roughly 2× these numbers because it counts both sides of every trade.</p>
+      <p><b>Venues.</b> <i>Polymarket Intl</i> is the on-chain exchange (Polygon), read from Dune. <i>Polymarket US</i> is the CFTC-regulated US exchange; it trades off-chain, so it comes from the exchange's public daily time-and-sales files. Its only short-term price markets today are BTC Up/Down 15m and 1h. Those files have no account IDs or taker side, so Polymarket US has no trader counts or leaderboard, and its cash is price × quantity. Its sessions run 5pm–5pm ET, so the most recent UTC day fills in a day later.</p>
       <p><b>Traders.</b> Unique Polymarket wallets, makers and takers, from on-chain fills. Counts use approximate distinct counting, accurate to about 2%. Kalshi doesn't publish account-level trades.</p>
-      <p><b>Sources.</b> Polymarket on-chain trades and Kalshi daily reports via Dune; Polymarket profiles via the Gamma API; Kalshi series metadata and leaderboard via Kalshi's public API; order books from the Polymarket CLOB and Kalshi APIs. History refreshes daily and order-book snapshots hourly. Days are UTC; the current partial day is excluded.</p>`;
+      <p><b>Sources.</b> Polymarket Intl on-chain trades and Kalshi daily reports via Dune; Polymarket US time-and-sales files from polymarketexchange.com; Polymarket profiles via the Gamma API; Kalshi series metadata and leaderboard via Kalshi's public API; order books from the Polymarket CLOB and Kalshi APIs. History refreshes daily and order-book snapshots hourly. Days are UTC; the current partial day is excluded.</p>`;
   }
 
   async function load() {

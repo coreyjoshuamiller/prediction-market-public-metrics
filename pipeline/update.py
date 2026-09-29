@@ -9,7 +9,7 @@ import os
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date, datetime, timedelta, timezone
 
-from . import leaders
+from . import leaders, pmus
 from .dune import run_sql
 from .kalshi_series import build as build_kalshi_series
 from .queries import kalshi_series_daily, poly_activity, poly_totals
@@ -205,6 +205,7 @@ def daily(run_leaders=True):
     first_full_week = start if monday(start) == start else monday(start) + timedelta(days=7)
     poly_window(start, end, keep_days_from=start, keep_weeks_from=first_full_week, keep_months=keep_months)
     kalshi_window(end - timedelta(days=10), end)
+    pmus.update(last_n=3)
     if run_leaders:
         leaders.update(today)
 

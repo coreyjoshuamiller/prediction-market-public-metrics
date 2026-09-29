@@ -25,6 +25,7 @@ def f(x):
 
 def build():
     pv, pt, ptot, kv = rows("poly_volume_daily.csv"), rows("poly_traders.csv"), rows("poly_totals_daily.csv"), rows("kalshi_series_daily.csv")
+    us = rows("pmus_daily.csv")
     ks = load_kalshi_series()
     all_days = sorted({r["d"] for r in pv} | {r["d"] for r in kv if r["series"] == "__TOTAL__"} | {r["d"] for r in ptot})
     if not all_days:
@@ -58,6 +59,8 @@ def build():
         return m and (m["asset"], m["duration"], m["ctype"], m["asset_class"])
 
     kalshi_series = series_block(kv, kkey, {"notional": "contracts", "cash": "cash", "trades": "trades"})
+    us_series = series_block([r for r in us if not r["key"].startswith("__")], lambda r: tuple(r["key"].split("|")),
+                             {"notional": "notional", "cash": "cash", "trades": "trades"})
 
     def totals(src, filt, ncol, ccol):
         nt, ct, tr = [0.0] * n, [0.0] * n, [None] * n
@@ -73,6 +76,21 @@ def build():
     poly_totals = totals(ptot, lambda r: True, "notional", "cash")
     kalshi_totals = totals(kv, lambda r: r["series"] == "__TOTAL__", "contracts", "cash")
     kalshi_totals.pop("traders")
+    us_totals = totals(us, lambda r: r["key"] == "__TOTAL__", "notional", "cash")
+    us_totals.pop("traders")
+    us_combo = totals(us, lambda r: r["key"] == "__COMBO__", "notional", "cash")
+    us_totals["combo_notional"], us_totals["combo_cash"] = us_combo["notional"], us_combo["cash"]
+    # Polymarket US publishes 5pm-5pm ET sessions (file YYYYMMDD ends 21:00 UTC that day), so a
+    # UTC day is only complete once the next session's file exists. Blank the incomplete tail.
+    last_file = max((r["file"] for r in us), default=None)
+    if last_file:
+        lf = date(int(last_file[:4]), int(last_file[4:6]), int(last_file[6:8]))
+        complete = (lf - timedelta(days=1)).isoformat()
+        for arrs in [us_totals] + us_series:
+            for m in ("notional", "cash", "trades", "combo_notional", "combo_cash"):
+                if m in arrs:
+                    arrs[m] = [None if days[i] > complete else v for i, v in enumerate(arrs[m])]
+        us_totals["complete_through"] = complete
 
     # trader counts: {period: {dim: {key: {start: n}}}}
     traders = defaultdict(lambda: defaultdict(lambda: defaultdict(dict)))
@@ -82,9 +100,9 @@ def build():
     # stable ordering of entities by total notional across both platforms (drives color slots)
     def order(field):
         tot = defaultdict(float)
-        for s in poly_series + kalshi_series:
+        for s in poly_series + kalshi_series + us_series:
             k = f"{s['asset']} {s['dur']}" if field == "market" else s[field]
-            tot[k] += sum(s["notional"])
+            tot[k] += sum(v or 0 for v in s["notional"])
         keys = sorted(tot, key=lambda k: -tot[k])
         if field == "dur":
             keys = [d for d in DUR_ORDER if d in tot]
@@ -97,13 +115,14 @@ def build():
                   "cls": order("cls"), "ctype": order("ctype")},
         "polymarket": {"series": poly_series, "totals": poly_totals, "traders": traders},
         "kalshi": {"series": kalshi_series, "totals": kalshi_totals},
+        "polymarket_us": {"series": us_series, "totals": us_totals},
         "kalshi_series_map": ks,
     }
     os.makedirs(SITE, exist_ok=True)
     path = os.path.join(SITE, "metrics.json")
     with open(path, "w") as fh:
         json.dump(out, fh, separators=(",", ":"))
-    print(f"metrics.json: {len(days)} days, {len(poly_series)} poly + {len(kalshi_series)} kalshi series, "
+    print(f"metrics.json: {len(days)} days, {len(poly_series)} poly + {len(kalshi_series)} kalshi + {len(us_series)} poly US series, "
           f"{os.path.getsize(path)/1e6:.2f} MB")
     lp = os.path.join(DATA, "leaders.json")
     if os.path.exists(lp):
