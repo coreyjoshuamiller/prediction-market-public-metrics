@@ -5,7 +5,7 @@
   // ---------- state ----------
   const state = {
     range: 90, gran: "day", group: "market", cls: "", measure: "notional",
-    lbPlatform: "polymarket", lbWindow: "7d", obAsset: "BTC", obRes: "recent",
+    lbPlatform: "polymarket", lbWindow: "7d", obAsset: "BTC", obRes: "recent", obSide: "both", obBand: 2,
   };
   const PREF_KEY = "stpm-prefs";
   try { Object.assign(state, JSON.parse(localStorage.getItem(PREF_KEY) || "{}")); } catch (e) {}
@@ -16,7 +16,10 @@
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
   const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
-  const MAX_SERIES = 7; // + "Other" = 8 categorical slots
+  // Split charts list series until "Other" is <= OTHER_MAX of the view's volume. That can need
+  // ~20 series, past the 8 base hues, so the palette extends to 3 tones of each hue (24 slots).
+  const OTHER_MAX = 0.03;
+  const PALETTE_SIZE = 24;
   const PLATFORMS = { polymarket: "Polymarket", kalshi: "Kalshi" };
   const GROUP_LABEL = { market: "market", asset: "asset", dur: "duration", cls: "asset class", ctype: "contract type" };
   const TRADER_DIM = { market: "market", asset: "asset", dur: "duration", cls: "class", ctype: "type" };
@@ -99,16 +102,54 @@
     for (const p of ["polymarket", "kalshi"]) for (const s of M[p].series) if (inClass(s)) present.add(keyOf(s, group));
     return all.filter((k) => present.has(k));
   }
-  function colorFor(group) {
-    const order = entityOrder(group);
+  // slot i: hue (i % 8), tone (i / 8): base, then a contrasting tone, then the opposite tone.
+  // Consecutive slots always differ in hue, so neighbouring stack segments stay distinct.
+  function mixHex(a, b, t) {
+    const pa = a.match(/\w\w/g).map((h) => parseInt(h, 16)), pb = b.match(/\w\w/g).map((h) => parseInt(h, 16));
+    return "#" + pa.map((v, i) => Math.round(v + (pb[i] - v) * t).toString(16).padStart(2, "0")).join("");
+  }
+  function paletteColor(i) {
+    const base = css(`--series-${(i % 8) + 1}`);
+    const tier = Math.floor(i / 8);
+    if (!tier) return base;
+    const dark = document.documentElement.dataset.theme === "dark" ||
+      (document.documentElement.dataset.theme !== "light" && matchMedia("(prefers-color-scheme: dark)").matches);
+    const [toward, amt] = (tier === 1) === dark ? ["#ffffff", 0.42] : ["#000000", 0.38];
+    return mixHex(base, toward, amt);
+  }
+  // One color map per view, shared by both venues' charts: every listed entity (union across
+  // venues, in stable overall-rank order) gets its own slot, so the same market matches across panels.
+  function colorFor(group, tf) {
     const map = {};
-    order.slice(0, MAX_SERIES).forEach((k, i) => (map[k] = css(`--series-${i + 1}`)));
+    shownKeys(group, tf).forEach((k, i) => (map[k] = paletteColor(i)));
     return (k) => map[k] || css("--other");
   }
-  const shownKeys = (group) => entityOrder(group).slice(0, MAX_SERIES);
+  // Largest entities in the current view (range, class, measure) until the remainder is <= OTHER_MAX.
+  function shownKeys(group, tf, platforms = ["polymarket", "kalshi"]) {
+    const keep = new Set();
+    for (const p of platforms) {
+      const tot = {};
+      for (const s of M[p].series) {
+        if (!inClass(s)) continue;
+        const k = keyOf(s, group), vals = s[state.measure];
+        let v = 0;
+        for (const i of tf.idx) v += vals[i] || 0;
+        tot[k] = (tot[k] || 0) + v;
+      }
+      const all = Object.values(tot).reduce((a, b) => a + b, 0);
+      let rest = all;
+      for (const [k, v] of Object.entries(tot).sort((a, b) => b[1] - a[1])) {
+        if (!all || rest / all <= OTHER_MAX || keep.size >= PALETTE_SIZE) break;
+        if (v > 0) keep.add(k);
+        rest -= v;
+      }
+    }
+    // stable stacking order: the entity's overall rank, not its rank in this window
+    return entityOrder(group).filter((k) => keep.has(k));
+  }
 
-  function aggregate(platform, tf, group) {
-    const keep = new Set(shownKeys(group));
+  function aggregate(platform, tf, group, keys) {
+    const keep = new Set(keys);
     const out = {};
     const nb = tf.buckets.length;
     for (const s of M[platform].series) {
@@ -344,11 +385,12 @@
   }
 
   function renderVolume(tf) {
-    const color = colorFor(state.group);
+    const color = colorFor(state.group, tf);
     const cats = bucketLabels(tf);
     for (const p of ["polymarket", "kalshi"]) {
-      const agg = aggregate(p, tf, state.group);
-      const keys = [...shownKeys(state.group).filter((k) => agg[k]), ...(agg.Other ? ["Other"] : [])];
+      const shown = shownKeys(state.group, tf, [p]);
+      const agg = aggregate(p, tf, state.group, shown);
+      const keys = [...shown.filter((k) => agg[k]), ...(agg.Other ? ["Other"] : [])];
       const series = markPartial(roundTops(keys.map((k) => barSeries(k, agg[k].slice(), color(k)))), tf);
       const opt = baseOption();
       opt.xAxis.data = cats;
@@ -365,11 +407,12 @@
     const dimName = TRADER_DIM[state.group];
     const period = state.gran;
     const T = M.polymarket.traders?.[period]?.[dimName] || {};
-    const color = colorFor(state.group);
-    let keys = shownKeys(state.group).filter((k) => T[k]);
+    const color = colorFor(state.group, tf);
+    // same markets the Polymarket volume chart lists (no "Other": unique counts don't add up)
+    let keys = shownKeys(state.group, tf, ["polymarket"]).filter((k) => T[k]);
     // class filter can only be honoured when the split is by an entity that belongs to one class
     const classNote = state.cls && !["market", "asset", "cls"].includes(state.group) ? " · class filter not applied to this split" : "";
-    if (state.cls && !["market", "asset", "cls"].includes(state.group)) keys = (M.order[state.group] || []).filter((k) => T[k]).slice(0, MAX_SERIES);
+    if (state.cls && !["market", "asset", "cls"].includes(state.group)) keys = (M.order[state.group] || []).filter((k) => T[k]);
     const cats = bucketLabels(tf);
     const series = keys.map((k) => barSeries(k, tf.buckets.map((b) => T[k][b] ?? 0), color(k)));
     markPartial(roundTops(series), tf);
@@ -381,7 +424,8 @@
     opt.tooltip.formatter = tooltipFormatter(fmtInt, { total: false });
     opt.series = series;
     const table = { cols: ["Period", ...keys, "All (unique)"], rows: tf.buckets.map((b) => [b, ...keys.map((k) => fmtInt(T[k][b])), fmtInt(totSrc?.[b])]) };
-    const hidden = entityOrder(state.group).length > MAX_SERIES && ["market", "asset"].includes(state.group) ? ` · top ${MAX_SERIES} shown` : "";
+    const avail = entityOrder(state.group).filter((k) => T[k]).length;
+    const hidden = keys.length < avail ? ` · ${keys.length} largest by volume` : "";
     renderChart("tr-polymarket", { title: "Polymarket", note: `Unique wallets per ${period}${hidden}${classNote}`, keyColor: css("--poly"), empty: keys.length ? null : "<strong>No trader data for this selection</strong>" }, opt, table);
     renderChart("tr-kalshi", {
       title: "Kalshi", keyColor: css("--kalshi"), note: "",
@@ -515,47 +559,72 @@
   }
 
   // ---------- liquidity ----------
+  const BANDS = [1, 2, 5];
+  const SIDE_LABEL = { both: "bid + offer", bid: "bid", ask: "offer" };
+
   function renderLiquidity() {
     setPressed("#f-ob-asset", state.obAsset);
     setPressed("#f-ob-res", state.obRes);
-    $("#ob-first").textContent = OB?.first_sample ? OB.first_sample.slice(0, 16).replace("T", " ") + " UTC" : "–";
+    setPressed("#f-ob-side", state.obSide);
+    setPressed("#f-ob-band", state.obBand);
+    const fmtTs = (s) => (s ? s.slice(0, 16).replace("T", " ") + " UTC" : "–");
+    $("#ob-first").textContent = fmtTs(OB?.first_sample);
+    $("#ob-depth-first").textContent = fmtTs(OB?.first_depth_sample);
     const block = OB?.[state.obRes] || {};
+    const per = state.obRes === "recent" ? "5 min" : "hour";
     const tsFmt = (t) => {
       const d = new Date(t * 1000);
       return state.obRes === "recent"
         ? d.toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit", timeZone: "UTC" })
         : d.toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", timeZone: "UTC" });
     };
-    const bidC = css("--series-1"), askC = css("--series-2");
+    const iso = (t) => new Date(t * 1000).toISOString().slice(0, 16);
+    const platColor = (p) => css(p === "polymarket" ? "--poly" : "--kalshi");
+    const depthKey = (c) => `${state.obSide}_${c}c_usd`;
+    const maxOf = (arr) => Math.max(0, ...(arr || []).filter((v) => v != null));
     const pair = {};
     let yMaxTop = 0, yMaxDepth = 0;
     for (const p of ["polymarket", "kalshi"]) {
       pair[p] = block[`${p}|${state.obAsset}`];
       if (pair[p]) {
-        yMaxTop = Math.max(yMaxTop, ...pair[p].bid_usd, ...pair[p].ask_usd);
-        yMaxDepth = Math.max(yMaxDepth, ...pair[p].bid_depth5_usd, ...pair[p].ask_depth5_usd);
+        yMaxTop = Math.max(yMaxTop, maxOf(pair[p].bid_usd), maxOf(pair[p].ask_usd));
+        yMaxDepth = Math.max(yMaxDepth, ...BANDS.map((c) => maxOf(pair[p][depthKey(c)])));
       }
     }
     const noData = `<strong>No snapshots yet</strong><span>The collector samples every minute. Charts fill in as data accumulates.</span>`;
+    const timeOpt = (d, yMax) => {
+      const opt = baseOption();
+      opt.xAxis.data = d.t.map(tsFmt); opt.xAxis.boundaryGap = false;
+      opt.yAxis.max = Math.ceil(yMax * 1.05) || null;
+      opt.yAxis.axisLabel.formatter = (v) => fmtUsd(v);
+      opt.tooltip.formatter = tooltipFormatter(fmtUsd, { total: false });
+      opt.dataZoom = [{ type: "inside" }];
+      return opt;
+    };
+
     for (const p of ["polymarket", "kalshi"]) {
       const d = pair[p];
-      for (const [kind, bidK, askK, yMax, title] of [
-        ["top", "bid_usd", "ask_usd", yMaxTop, "$ at best bid / best offer"],
-        ["depth", "bid_depth5_usd", "ask_depth5_usd", yMaxDepth, "$ within 5¢ of best bid / offer"],
-      ]) {
-        const name = `ob-${kind}-${p}`;
-        if (!d) { renderChart(name, { title: `${PLATFORMS[p]}: ${title}`, keyColor: css(p === "polymarket" ? "--poly" : "--kalshi"), empty: noData }); continue; }
-        const opt = baseOption();
-        opt.xAxis.data = d.t.map(tsFmt); opt.xAxis.boundaryGap = false;
-        opt.yAxis.max = Math.ceil(yMax * 1.05) || null;
-        opt.yAxis.axisLabel.formatter = (v) => fmtUsd(v);
-        opt.tooltip.formatter = tooltipFormatter(fmtUsd, { total: false });
-        opt.dataZoom = [{ type: "inside" }];
-        opt.series = [lineSeries("Bid (buy Up)", d[bidK], bidC), lineSeries("Offer (sell Up)", d[askK], askC)];
-        renderChart(name, { title: `${PLATFORMS[p]}: ${title}`, note: `${state.obAsset} 15m · median per ${state.obRes === "recent" ? "5 min" : "hour"} · same scale`, keyColor: css(p === "polymarket" ? "--poly" : "--kalshi") }, opt,
-          { cols: ["Time (UTC)", "Bid $", "Offer $"], rows: d.t.map((t, i) => [new Date(t * 1000).toISOString().slice(0, 16), fmtUsd(d[bidK][i]), fmtUsd(d[askK][i])]) });
+      // top of book
+      const topTitle = `${PLATFORMS[p]}: $ at best bid / best offer`;
+      if (!d) renderChart(`ob-top-${p}`, { title: topTitle, keyColor: platColor(p), empty: noData });
+      else {
+        const opt = timeOpt(d, yMaxTop);
+        opt.series = [lineSeries("Bid (buy Up)", d.bid_usd, css("--series-1")), lineSeries("Offer (sell Up)", d.ask_usd, css("--series-2"))];
+        renderChart(`ob-top-${p}`, { title: topTitle, note: `${state.obAsset} 15m · median per ${per} · same scale`, keyColor: platColor(p) }, opt,
+          { cols: ["Time (UTC)", "Bid $", "Offer $"], rows: d.t.map((t, i) => [iso(t), fmtUsd(d.bid_usd[i]), fmtUsd(d.ask_usd[i])]) });
+      }
+      // depth within 1/2/5c of the midpoint, one line per band
+      const depthTitle = `${PLATFORMS[p]}: depth near mid`;
+      const hasDepth = d && BANDS.some((c) => (d[depthKey(c)] || []).some((v) => v != null));
+      if (!hasDepth) renderChart(`ob-depth-${p}`, { title: depthTitle, keyColor: platColor(p), empty: noData });
+      else {
+        const opt = timeOpt(d, yMaxDepth);
+        opt.series = BANDS.map((c, i) => lineSeries(`Within ${c}¢`, d[depthKey(c)], css(`--band-${i + 1}`)));
+        renderChart(`ob-depth-${p}`, { title: depthTitle, note: `${state.obAsset} 15m · ${SIDE_LABEL[state.obSide]} · per ${per}`, keyColor: platColor(p) }, opt,
+          { cols: ["Time (UTC)", ...BANDS.map((c) => `≤${c}¢ $`)], rows: d.t.map((t, i) => [iso(t), ...BANDS.map((c) => fmtUsd(d[depthKey(c)][i]))]) });
       }
     }
+
     // spread, both venues on one time axis
     const times = [...new Set(["polymarket", "kalshi"].flatMap((p) => pair[p]?.t || []))].sort((a, b) => a - b);
     if (!times.length) renderChart("ob-spread", { title: "Bid–offer spread", empty: noData });
@@ -567,14 +636,17 @@
       opt.dataZoom = [{ type: "inside" }];
       opt.series = ["polymarket", "kalshi"].map((p) => {
         const m = new Map((pair[p]?.t || []).map((t, i) => [t, pair[p].spread_c[i]]));
-        return lineSeries(PLATFORMS[p], times.map((t) => m.get(t) ?? null), css(p === "polymarket" ? "--poly" : "--kalshi"));
+        return lineSeries(PLATFORMS[p], times.map((t) => m.get(t) ?? null), platColor(p));
       });
       renderChart("ob-spread", { title: "Bid–offer spread", note: `${state.obAsset} 15m · cents` }, opt,
-        { cols: ["Time (UTC)", "Polymarket", "Kalshi"], rows: times.map((t, i) => [new Date(t * 1000).toISOString().slice(0, 16), opt.series[0].data[i] ?? "–", opt.series[1].data[i] ?? "–"]) });
+        { cols: ["Time (UTC)", "Polymarket", "Kalshi"], rows: times.map((t, i) => [iso(t), opt.series[0].data[i] ?? "–", opt.series[1].data[i] ?? "–"]) });
     }
-    // profile by minute into the 15m window
+
+    // how depth (selected band and side) evolves through the 15-minute window
+    const key = depthKey(state.obBand);
     const prof = ["polymarket", "kalshi"].map((p) => OB?.profile?.[`${p}|${state.obAsset}`]);
-    if (!prof[0] && !prof[1]) renderChart("ob-profile", { title: "Liquidity through the 15-minute window", empty: noData });
+    const profTitle = "Depth through the 15-minute window";
+    if (!prof.some((d) => d && (d[key] || []).some((v) => v != null))) renderChart("ob-profile", { title: profTitle, empty: noData });
     else {
       const mins = Array.from({ length: 15 }, (_, i) => i);
       const opt = baseOption();
@@ -586,10 +658,10 @@
       opt.tooltip.formatter = tooltipFormatter(fmtUsd, { total: false });
       opt.series = ["polymarket", "kalshi"].map((p, j) => {
         const d = prof[j];
-        const m = new Map((d?.minute || []).map((x, i) => [x, (d.bid_depth5_usd[i] + d.ask_depth5_usd[i]) / 2]));
-        return lineSeries(PLATFORMS[p], mins.map((x) => m.get(x) ?? null), css(p === "polymarket" ? "--poly" : "--kalshi"), { showSymbol: true });
+        const m = new Map((d?.minute || []).map((x, i) => [x, d[key]?.[i]]));
+        return lineSeries(PLATFORMS[p], mins.map((x) => m.get(x) ?? null), platColor(p), { showSymbol: true });
       });
-      renderChart("ob-profile", { title: "Liquidity through the 15-minute window", note: `${state.obAsset} · median of bid & offer depth within 5¢ · last 14d` }, opt,
+      renderChart("ob-profile", { title: profTitle, note: `${state.obAsset} · ${SIDE_LABEL[state.obSide]} within ${state.obBand}¢ of mid · median, last 14d` }, opt,
         { cols: ["Minute", "Polymarket", "Kalshi"], rows: mins.map((m, i) => [`${m}`, fmtUsd(opt.series[0].data[i]), fmtUsd(opt.series[1].data[i])]) });
     }
   }
@@ -641,6 +713,8 @@
   bindSeg("#f-lb-platform", "lbPlatform", renderLeaders);
   bindSeg("#f-ob-asset", "obAsset", renderLiquidity);
   bindSeg("#f-ob-res", "obRes", renderLiquidity);
+  bindSeg("#f-ob-side", "obSide", renderLiquidity);
+  bindSeg("#f-ob-band", "obBand", renderLiquidity, Number);
 
   window.addEventListener("resize", () => Object.values(charts).forEach((c) => c.resize()));
   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => { renderAll(); renderLiquidity(); });

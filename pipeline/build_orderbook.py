@@ -4,6 +4,9 @@ Output:
   recent:  5-minute medians for the last 7 days
   history: hourly medians for the last 180 days
   profile: median by minute-into-window (0-14) over the last 14 days — how books fill and drain
+
+Depth metrics are $ resting on each side within 1c / 2c / 5c of the midpoint. Samples taken
+before those columns existed simply have no depth values.
 """
 import csv
 import glob
@@ -15,7 +18,9 @@ from collections import defaultdict
 from datetime import datetime, timezone
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
-METRICS = ["bid_usd", "ask_usd", "bid_depth5_usd", "ask_depth5_usd", "spread_c"]
+BANDS = (1, 2, 5)
+DEPTH = [f"{side}_{c}c_usd" for c in BANDS for side in ("bid", "ask", "both")]
+METRICS = ["bid_usd", "ask_usd", *DEPTH, "spread_c"]
 
 
 def load_rows(since_ts):
@@ -32,10 +37,18 @@ def load_rows(since_ts):
                 r["t"] = t
                 r["spread_c"] = (float(r["best_ask"]) - float(r["best_bid"])) * 100
                 for m in METRICS[:-1]:
-                    r[m] = float(r[m])
+                    r[m] = float(r[m]) if r.get(m) not in (None, "") else None
+                for c in BANDS:  # combined depth, per sample (a median of sums, not a sum of medians)
+                    b, a = r[f"bid_{c}c_usd"], r[f"ask_{c}c_usd"]
+                    r[f"both_{c}c_usd"] = None if b is None or a is None else b + a
                 r["secs_into_window"] = int(r["secs_into_window"])
                 rows.append(r)
     return rows
+
+
+def _med(vals):
+    vals = [v for v in vals if v is not None]
+    return round(statistics.median(vals), 2) if vals else None
 
 
 def bucketed(rows, bucket):
@@ -48,7 +61,7 @@ def bucketed(rows, bucket):
         ts = sorted(by_t)
         out[key] = {"t": ts}
         for m in METRICS:
-            out[key][m] = [round(statistics.median(x[m] for x in by_t[t]), 2) for t in ts]
+            out[key][m] = [_med(x[m] for x in by_t[t]) for t in ts]
     return out
 
 
@@ -61,7 +74,7 @@ def profile(rows):
         mins = sorted(by_min)
         out[key] = {"minute": mins, "n": [len(by_min[m]) for m in mins]}
         for m in METRICS:
-            out[key][m] = [round(statistics.median(x[m] for x in by_min[mm]), 2) for mm in mins]
+            out[key][m] = [_med(x[m] for x in by_min[mm]) for mm in mins]
     return out
 
 
@@ -73,6 +86,7 @@ def main():
     out = {
         "updated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "first_sample": min((r["ts"] for r in hist_rows), default=None),
+        "first_depth_sample": min((r["ts"] for r in hist_rows if r["both_1c_usd"] is not None), default=None),
         "recent": bucketed(recent_rows, 300),
         "history": bucketed(hist_rows, 3600),
         "profile": profile(prof_rows),

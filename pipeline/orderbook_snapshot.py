@@ -1,7 +1,8 @@
 """Sample top-of-book liquidity for the live 15-minute Up/Down markets on Polymarket and Kalshi.
 
 Each sample records, for the "Up"/YES side of the currently-live 15m window:
-best bid/ask, $ resting at the best bid/ask, and $ resting within 5c of the best bid/ask.
+best bid/ask, $ resting at the best bid/ask, and $ resting on each side within 1c, 2c and 5c
+of the midpoint.
 
 Usage:
   python -m pipeline.orderbook_snapshot                 # one sample
@@ -19,11 +20,12 @@ from .net import get_json
 
 ASSETS = ["BTC", "ETH", "SOL", "XRP"]
 WINDOW = 900  # 15 minutes
-DEPTH_BAND = 0.05
+DEPTH_BANDS = (1, 2, 5)  # cents from the midpoint
 OUT_DIR = os.path.join(os.path.dirname(__file__), "..", "data", "orderbook")
 FIELDS = [
     "ts", "platform", "asset", "market", "window_start", "secs_into_window",
-    "best_bid", "best_ask", "bid_usd", "ask_usd", "bid_depth5_usd", "ask_depth5_usd",
+    "best_bid", "best_ask", "bid_usd", "ask_usd",
+    *[f"{side}_{c}c_usd" for c in DEPTH_BANDS for side in ("bid", "ask")],
 ]
 
 GAMMA = "https://gamma-api.polymarket.com"
@@ -40,14 +42,18 @@ def _summarize(bids, asks):
     if not bids or not asks:
         return None
     bb, ba = bids[0][0], asks[0][0]
-    return {
+    mid = (bb + ba) / 2
+    out = {
         "best_bid": round(bb, 4),
         "best_ask": round(ba, 4),
         "bid_usd": round(bids[0][0] * bids[0][1], 2),
         "ask_usd": round(asks[0][0] * asks[0][1], 2),
-        "bid_depth5_usd": round(sum(p * s for p, s in bids if p >= bb - DEPTH_BAND - 1e-9), 2),
-        "ask_depth5_usd": round(sum(p * s for p, s in asks if p <= ba + DEPTH_BAND + 1e-9), 2),
     }
+    for c in DEPTH_BANDS:
+        band = c / 100 + 1e-9
+        out[f"bid_{c}c_usd"] = round(sum(p * s for p, s in bids if p >= mid - band), 2)
+        out[f"ask_{c}c_usd"] = round(sum(p * s for p, s in asks if p <= mid + band), 2)
+    return out
 
 
 def polymarket_market(asset, window_start):
@@ -103,6 +109,22 @@ def kalshi_sample(asset, window_start):
     return s and {"market": ticker, **s}
 
 
+def _migrate_header(path):
+    """If today's file was started with an older column set, rewrite it with the current one
+    (columns it didn't have are left blank) so appended rows line up."""
+    if not os.path.exists(path):
+        return
+    with open(path) as f:
+        r = csv.DictReader(f)
+        if r.fieldnames == FIELDS:
+            return
+        old = list(r)
+    with open(path, "w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=FIELDS, extrasaction="ignore")
+        w.writeheader()
+        w.writerows(old)
+
+
 def sample_once():
     now = time.time()
     window_start = int(now // WINDOW * WINDOW)
@@ -127,6 +149,7 @@ def sample_once():
 
     os.makedirs(OUT_DIR, exist_ok=True)
     path = os.path.join(OUT_DIR, ts[:10] + ".csv")
+    _migrate_header(path)
     new = not os.path.exists(path)
     with open(path, "a", newline="") as f:
         w = csv.DictWriter(f, fieldnames=FIELDS)

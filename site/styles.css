@@ -23,6 +23,9 @@
   --other: #b5b3ab;
   --poly: #2a78d6;
   --kalshi: #1baf7a;
+  --band-1: #86b6ef;
+  --band-2: #2a78d6;
+  --band-3: #104281;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -50,6 +53,9 @@
     --other: #5c5b57;
     --poly: #3987e5;
     --kalshi: #199e70;
+    --band-1: #1c5cab;
+    --band-2: #3987e5;
+    --band-3: #9ec5f4;
   }
 }
 :root[data-theme="dark"] {
@@ -77,6 +83,9 @@
   --other: #5c5b57;
   --poly: #3987e5;
   --kalshi: #199e70;
+  --band-1: #1c5cab;
+  --band-2: #3987e5;
+  --band-3: #9ec5f4;
 }
 
 * { box-sizing: border-box; }
