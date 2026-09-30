@@ -132,19 +132,23 @@
   }
   // One color map per view, shared by both venues' charts: every listed entity (union across
   // venues, in stable overall-rank order) gets its own slot, so the same market matches across panels.
+  // Slots come from the volume view first, so a market keeps the same color in the fee charts;
+  // markets that only make the fee charts' cut get the next free slots.
   function colorFor(group, tf) {
     const map = {};
-    shownKeys(group, tf).forEach((k, i) => (map[k] = paletteColor(i)));
+    const keys = shownKeys(group, tf);
+    for (const k of shownKeys(group, tf, undefined, "fees")) if (!keys.includes(k)) keys.push(k);
+    keys.slice(0, PALETTE_SIZE).forEach((k, i) => (map[k] = paletteColor(i)));
     return (k) => map[k] || css("--other");
   }
   // Largest entities in the current view (range, class, measure) until the remainder is <= OTHER_MAX.
-  function shownKeys(group, tf, platforms = VENUES.filter(hasVenue)) {
+  function shownKeys(group, tf, platforms = VENUES.filter(hasVenue), measure = state.measure) {
     const keep = new Set();
     for (const p of platforms) {
       const tot = {};
       for (const s of M[p].series) {
         if (!inClass(s)) continue;
-        const k = keyOf(s, group), vals = s[state.measure];
+        const k = keyOf(s, group), vals = s[measure] || [];
         let v = 0;
         for (const i of tf.idx) v += vals[i] || 0;
         tot[k] = (tot[k] || 0) + v;
@@ -161,7 +165,7 @@
     return entityOrder(group).filter((k) => keep.has(k));
   }
 
-  function aggregate(platform, tf, group, keys) {
+  function aggregate(platform, tf, group, keys, measure = state.measure) {
     const keep = new Set(keys);
     const out = {};
     const nb = tf.buckets.length;
@@ -170,7 +174,7 @@
       let k = keyOf(s, group);
       if (!keep.has(k)) k = "Other";
       const arr = (out[k] ||= new Array(nb).fill(0));
-      const vals = s[state.measure];
+      const vals = s[measure] || [];
       for (const i of tf.idx) arr[tf.dayToBucket[i]] += vals[i] || 0;
     }
     return out;
@@ -179,13 +183,13 @@
     const arr = new Array(tf.buckets.length).fill(0);
     for (const s of M[platform].series) {
       if (!inClass(s)) continue;
-      for (const i of tf.idx) arr[tf.dayToBucket[i]] += s[measure][i] || 0;
+      for (const i of tf.idx) arr[tf.dayToBucket[i]] += (s[measure] || [])[i] || 0;
     }
     return arr;
   }
   function platformTotal(platform, tf, measure = state.measure) {
     const arr = new Array(tf.buckets.length).fill(0);
-    const vals = M[platform].totals[measure];
+    const vals = M[platform].totals[measure] || [];
     for (const i of tf.idx) arr[tf.dayToBucket[i]] += vals[i] || 0;
     return arr;
   }
@@ -354,6 +358,26 @@
   const rawVal = (v) => (v && typeof v === "object" ? v.value : v);
 
   // ---------- sections ----------
+  function drawTiles(box, tiles) {
+    box.innerHTML = "";
+    for (const t of tiles) {
+      const el = document.createElement("div");
+      el.className = "tile";
+      const lab = document.createElement("div"); lab.className = "label";
+      if (t.key) { const k = document.createElement("span"); k.className = "key"; k.style.background = t.key; lab.appendChild(k); }
+      lab.appendChild(document.createTextNode(t.label));
+      const val = document.createElement("div"); val.className = "value"; val.textContent = t.value;
+      el.append(lab, val);
+      const dl = document.createElement("div"); dl.className = "delta";
+      if (t.delta != null && isFinite(t.delta)) {
+        dl.classList.add(t.delta >= 0 ? "up" : "down");
+        dl.textContent = `${t.delta >= 0 ? "▲" : "▼"} ${Math.abs(t.delta).toFixed(1)}% vs prior ${state.range}d`;
+      } else dl.textContent = t.note || `last ${state.range} days · ${state.measure}`;
+      el.appendChild(dl);
+      box.appendChild(el);
+    }
+  }
+
   function renderTiles(tf) {
     const box = $("#tiles");
     const n = tf.buckets.length;
@@ -383,31 +407,15 @@
     const kv = sumRange(scopeTotal("kalshi", tf), 0, n - 1);
     tiles.push({ label: "Kalshi : Polymarket (Intl + US)", value: pv ? `${(kv / pv).toFixed(1)}×` : "–" });
 
-    box.innerHTML = "";
-    for (const t of tiles) {
-      const el = document.createElement("div");
-      el.className = "tile";
-      const lab = document.createElement("div"); lab.className = "label";
-      if (t.key) { const k = document.createElement("span"); k.className = "key"; k.style.background = t.key; lab.appendChild(k); }
-      lab.appendChild(document.createTextNode(t.label));
-      const val = document.createElement("div"); val.className = "value"; val.textContent = t.value;
-      el.append(lab, val);
-      const dl = document.createElement("div"); dl.className = "delta";
-      if (t.delta != null && isFinite(t.delta)) {
-        dl.classList.add(t.delta >= 0 ? "up" : "down");
-        dl.textContent = `${t.delta >= 0 ? "▲" : "▼"} ${Math.abs(t.delta).toFixed(1)}% vs prior ${state.range}d`;
-      } else dl.textContent = t.note || `last ${state.range} days · ${state.measure}`;
-      el.appendChild(dl);
-      box.appendChild(el);
-    }
+    drawTiles(box, tiles);
   }
 
-  function renderVolume(tf) {
+  function renderStacks(tf, prefix, measure, note, noun) {
     const color = colorFor(state.group, tf);
     const cats = bucketLabels(tf);
     for (const p of VENUES.filter(hasVenue)) {
-      const shown = shownKeys(state.group, tf, [p]);
-      const agg = aggregate(p, tf, state.group, shown);
+      const shown = shownKeys(state.group, tf, [p], measure);
+      const agg = aggregate(p, tf, state.group, shown, measure);
       const keys = [...shown.filter((k) => agg[k]), ...(agg.Other ? ["Other"] : [])];
       const series = markPartial(roundTops(keys.map((k) => barSeries(k, agg[k].slice(), color(k)))), tf);
       const opt = baseOption();
@@ -416,10 +424,11 @@
       opt.tooltip.formatter = tooltipFormatter(fmtUsd, { pct: true });
       opt.series = series;
       const table = { cols: ["Period", ...keys, "Total"], rows: tf.buckets.map((b, i) => [b, ...keys.map((k) => fmtUsd(agg[k][i])), fmtUsd(keys.reduce((a, k) => a + agg[k][i], 0))]) };
-      const empty = keys.length ? null : `<strong>No ${PLATFORMS[p]} volume</strong><span>No markets in this asset class on ${PLATFORMS[p]} for the range.</span>`;
-      renderChart(`vol-${p}`, { title: PLATFORMS[p], note: measureLabel(), keyColor: venueColor(p), empty }, opt, table);
+      const empty = keys.length ? null : `<strong>No ${PLATFORMS[p]} ${noun}</strong><span>No markets in this asset class on ${PLATFORMS[p]} for the range.</span>`;
+      renderChart(`${prefix}-${p}`, { title: PLATFORMS[p], note: typeof note === "function" ? note(p) : note, keyColor: venueColor(p), empty }, opt, table);
     }
   }
+  const renderVolume = (tf) => renderStacks(tf, "vol", state.measure, measureLabel(), "volume");
 
   function renderTraders(tf) {
     const dimName = TRADER_DIM[state.group];
@@ -451,13 +460,13 @@
     });
   }
 
-  function renderShare(tf) {
+  function renderShareLines(tf, measure, shareChart, shareTitle, totalsChart, totalsTitle, note) {
     const cats = bucketLabels(tf);
     const share = {}, scope = {};
     const venues = VENUES.filter(hasVenue);
     for (const p of venues) {
-      scope[p] = scopeTotal(p, tf);
-      const tot = platformTotal(p, tf);
+      scope[p] = scopeTotal(p, tf, measure);
+      const tot = platformTotal(p, tf, measure);
       const firstBucket = tf.dayToBucket[firstScopeIdx(p)] ?? (firstScopeIdx(p) > tf.last ? Infinity : 0);
       share[p] = scope[p].map((v, i) => (tot[i] && i >= firstBucket ? +((v / tot[i]) * 100).toFixed(2) : null));
     }
@@ -469,7 +478,7 @@
       endLabel: { show: true, formatter: (x) => fmtPct(x.value), color: css("--text-secondary"), fontSize: 11 },
     }));
     opt.grid.right = 48;
-    renderChart("share", { title: "Share of platform volume", note: measureLabel() + (state.cls ? ` · ${state.cls}` : "") }, opt,
+    renderChart(shareChart, { title: shareTitle, note: note + (state.cls ? ` · ${state.cls}` : "") }, opt,
       { cols: ["Period", ...venues.map((p) => PLATFORMS[p])], rows: tf.buckets.map((b, i) => [b, ...venues.map((p) => fmtPct(share[p][i]))]) });
 
     const opt2 = baseOption();
@@ -478,8 +487,37 @@
     opt2.tooltip.formatter = tooltipFormatter(fmtUsd, { total: false });
     opt2.series = venues.map((p) => lineSeries(PLATFORMS[p], scope[p], venueColor(p),
       { areaStyle: { color: venueColor(p), opacity: 0.08 } }));
-    renderChart("totals", { title: "Short-term price volume by venue", note: measureLabel() }, opt2,
+    renderChart(totalsChart, { title: totalsTitle, note }, opt2,
       { cols: ["Period", ...venues.map((p) => PLATFORMS[p])], rows: tf.buckets.map((b, i) => [b, ...venues.map((p) => fmtUsd(scope[p][i]))]) });
+  }
+  const renderShare = (tf) =>
+    renderShareLines(tf, state.measure, "share", "Share of platform volume", "totals", "Short-term price volume by venue", measureLabel());
+
+  // ---------- fees ----------
+  const FEE_BASIS = {
+    polymarket: "actual fees (on-chain)",
+    polymarket_us: "estimated from fee schedule",
+    kalshi: "estimated from fee schedule",
+  };
+  function renderFees(tf) {
+    const n = tf.buckets.length;
+    const tiles = [];
+    for (const p of VENUES.filter(hasVenue)) {
+      const f0 = firstScopeIdx(p);
+      const launched = f0 > tf.from ? M.days[f0] : null;
+      const vtf = launched ? { ...tf, idx: tf.idx.filter((i) => i >= f0) } : tf;
+      const fees = sumRange(scopeTotal(p, vtf, "fees"), 0, n - 1);
+      const allFees = sumRange(platformTotal(p, vtf, "fees"), 0, n - 1);
+      const cash = sumRange(scopeTotal(p, vtf, "cash"), 0, n - 1);
+      const since = launched ? `since ${fmtDate(launched, "day")} launch` : `last ${state.range} days`;
+      tiles.push({ label: `${PLATFORMS[p]} fees`, key: venueColor(p), value: fmtUsd(fees),
+        note: `${cash ? `$${((fees / cash) * 100).toFixed(2)} per $100 traded` : "–"} · ${since}` });
+      tiles.push({ label: `${PLATFORMS[p]} share of platform fees`, key: venueColor(p), value: fmtPct(allFees ? (fees / allFees) * 100 : null),
+        note: `of ${fmtUsd(allFees)} total · ${FEE_BASIS[p]}` });
+    }
+    drawTiles($("#fee-tiles"), tiles);
+    renderStacks(tf, "fee", "fees", (p) => `Fees · ${FEE_BASIS[p]}`, "fees");
+    renderShareLines(tf, "fees", "fee-share", "Share of platform fees", "fee-totals", "Short-term price fees by venue", "Fees");
   }
 
   // ---------- leaders ----------
@@ -728,6 +766,7 @@
     renderVolume(tf);
     renderTraders(tf);
     renderShare(tf);
+    renderFees(tf);
   }
 
   function renderNotes() {
@@ -735,6 +774,7 @@
       <p><b>Scope.</b> Markets that settle on a financial price within one day: Polymarket Up/Down (5m, 15m, 1h, 4h, daily), “above X” strike ladders (hourly and daily), price-range and same-day “reach / dip to” markets; Kalshi 15-minute Up/Down plus hourly and daily above/below and range series. Covers crypto, equity indices and single stocks, commodities, and FX and Treasury yields. Weekly, monthly and longer-dated markets are excluded.</p>
       <p><b>Volume.</b> <i>Notional</i> counts contracts traded, each paying $1 if it wins. For Polymarket that's shares on the taker side of each fill; for Kalshi it's contracts from Kalshi's daily market report. <i>Cash</i> is dollars paid: the taker's USDC on Polymarket Intl, from on-chain fills. On Kalshi and Polymarket US it's the traded (yes-side) price × contracts, because neither publishes which side the taker was on. Polymarket's own site shows roughly 2× these numbers because it counts both sides of every trade.</p>
       <p><b>Venues.</b> <i>Polymarket Intl</i> is the on-chain exchange (Polygon), read from Dune. <i>Polymarket US</i> is the CFTC-regulated US exchange; it trades off-chain, so it comes from the exchange's public daily time-and-sales files. Its only short-term price markets today are BTC Up/Down 15m and 1h. Those files have no account IDs or taker side, so Polymarket US has no trader counts or leaderboard, and its cash is price × quantity. Its sessions run 5pm–5pm ET, so the most recent UTC day fills in a day later.</p>
+      <p><b>Fees.</b> Polymarket Intl fees are the actual fees recorded on each on-chain fill. Takers pay them; makers pay none. Kalshi and Polymarket US don't publish fees, so they're estimated per trade from each venue's published formula, rate × contracts × price × (1 − price). Kalshi's rate is 7% for takers × the series' fee multiplier, plus 1.75% on series that also charge makers. Polymarket US uses its dated schedule, currently 6.95%. Both estimates slightly understate real fees: Kalshi rounds each order's fee up to the next cent, and neither estimate includes maker rebates or promotions. Kalshi's fee settings are today's, applied to all history. “Share of platform fees” divides short-term fees by the venue's total fees, calculated the same way.</p>
       <p><b>Traders.</b> Unique Polymarket wallets, makers and takers, from on-chain fills. Counts use approximate distinct counting, accurate to about 2%. Kalshi doesn't publish account-level trades.</p>
       <p><b>Sources.</b> Polymarket Intl on-chain trades and Kalshi daily reports via Dune; Polymarket US time-and-sales files from polymarketexchange.com; Polymarket profiles via the Gamma API; Kalshi series metadata and leaderboard via Kalshi's public API; order books from the Polymarket CLOB and Kalshi APIs. History refreshes daily and order-book snapshots hourly. Days are UTC; the current partial day is excluded.</p>`;
   }

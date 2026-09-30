@@ -1053,7 +1053,7 @@
   "duration": "1d",
   "ctype": "Strike",
   "title": "UST 10 Year Weekly",
-  "category": "Economics"
+  "category": "Financials"
  },
  "KXUST2A": {
   "asset": "UST Yields",
@@ -1061,7 +1061,7 @@
   "duration": "1d",
   "ctype": "Strike",
   "title": "UST 2 Year Daily",
-  "category": "Economics"
+  "category": "Financials"
  },
  "KXUST30A": {
   "asset": "UST Yields",
@@ -1069,7 +1069,7 @@
   "duration": "1d",
   "ctype": "Strike",
   "title": "UST 30 Year Daily",
-  "category": "Economics"
+  "category": "Financials"
  },
  "KXUST5A": {
   "asset": "UST Yields",
@@ -1077,7 +1077,7 @@
   "duration": "1d",
   "ctype": "Strike",
   "title": "UST 5 Year Daily",
-  "category": "Economics"
+  "category": "Financials"
  },
  "KXUST7A": {
   "asset": "UST Yields",
@@ -1085,7 +1085,7 @@
   "duration": "1d",
   "ctype": "Strike",
   "title": "UST 7 Year Daily",
-  "category": "Economics"
+  "category": "Financials"
  },
  "KXWTI": {
   "asset": "WTI Oil",

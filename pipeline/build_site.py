@@ -26,6 +26,7 @@ def f(x):
 def build():
     pv, pt, ptot, kv = rows("poly_volume_daily.csv"), rows("poly_traders.csv"), rows("poly_totals_daily.csv"), rows("kalshi_series_daily.csv")
     us = rows("pmus_daily.csv")
+    pf = rows("poly_fees_daily.csv")
     ks = load_kalshi_series()
     all_days = sorted({r["d"] for r in pv} | {r["d"] for r in kv if r["series"] == "__TOTAL__"} | {r["d"] for r in ptot})
     if not all_days:
@@ -45,35 +46,54 @@ def build():
                 continue
             s = out.setdefault(k, {"asset": k[0], "dur": k[1], "ctype": k[2], "cls": k[3], **{m: [0.0] * n for m in metrics}})
             for m, col in metrics.items():
-                s[m][idx[r["d"]]] += f(r[col])
+                s[m][idx[r["d"]]] += f(r.get(col))
         for s in out.values():
             for m in metrics:
                 s[m] = [round(v) for v in s[m]]
         return list(out.values())
 
-    poly_series = series_block(pv, lambda r: (r["asset"], r["dur"], r["ctype"], r["asset_class"]),
-                               {"notional": "notional", "cash": "cash", "trades": "trades"})
+    # volume rows and fee rows share the (asset, dur, type, class) key; each fills its own metrics
+    poly_series = series_block(pv + [r for r in pf if r["asset"] != "__TOTAL__"],
+                               lambda r: (r["asset"], r["dur"], r["ctype"], r["asset_class"]),
+                               {"notional": "notional", "cash": "cash", "trades": "trades", "fees": "fees"})
 
     def kkey(r):
         m = ks.get(r["series"])
         return m and (m["asset"], m["duration"], m["ctype"], m["asset_class"])
 
-    kalshi_series = series_block(kv, kkey, {"notional": "contracts", "cash": "cash", "trades": "trades"})
+    kalshi_series = series_block(kv, kkey, {"notional": "contracts", "cash": "cash", "trades": "trades", "fees": "fees"})
     us_series = series_block([r for r in us if not r["key"].startswith("__")], lambda r: tuple(r["key"].split("|")),
-                             {"notional": "notional", "cash": "cash", "trades": "trades"})
+                             {"notional": "notional", "cash": "cash", "trades": "trades", "fees": "fees"})
 
-    def totals(src, filt, ncol, ccol):
-        nt, ct, tr = [0.0] * n, [0.0] * n, [None] * n
+    def totals(src, filt, ncol, ccol, fcol="fees"):
+        nt, ct, ft, tr = [0.0] * n, [0.0] * n, [0.0] * n, [None] * n
         for r in src:
             if filt(r) and r["d"] in idx:
                 i = idx[r["d"]]
-                nt[i] += f(r[ncol])
-                ct[i] += f(r[ccol])
+                nt[i] += f(r.get(ncol))
+                ct[i] += f(r.get(ccol))
+                ft[i] += f(r.get(fcol))
                 if "traders" in r and r["traders"]:
                     tr[i] = int(float(r["traders"]))
-        return {"notional": [round(x) for x in nt], "cash": [round(x) for x in ct], "traders": tr}
+        return {"notional": [round(x) for x in nt], "cash": [round(x) for x in ct], "fees": [round(x) for x in ft], "traders": tr}
 
     poly_totals = totals(ptot, lambda r: True, "notional", "cash")
+    poly_totals["fees"] = totals(pf, lambda r: r["asset"] == "__TOTAL__", "", "")["fees"]
+    # Dune's Polymarket `fee` field over-reports before 2026-04-29 (18-40x, varying daily). For
+    # those days use DefiLlama's daily fee total and rescale the per-market split to match it.
+    calp = os.path.join(DATA, "poly_fee_calibration.json")
+    if os.path.exists(calp):
+        cal = json.load(open(calp))
+        poly_totals["fees_scaled_before"] = cal["cutoff"]
+        for d, true_total in cal["daily_total_fees"].items():
+            i = idx.get(d)
+            if i is None:
+                continue
+            raw = poly_totals["fees"][i]
+            k = true_total / raw if raw else 0
+            poly_totals["fees"][i] = round(true_total)
+            for s_ in poly_series:
+                s_["fees"][i] = round(s_["fees"][i] * k)
     kalshi_totals = totals(kv, lambda r: r["series"] == "__TOTAL__", "contracts", "cash")
     kalshi_totals.pop("traders")
     us_totals = totals(us, lambda r: r["key"] == "__TOTAL__", "notional", "cash")
@@ -87,7 +107,7 @@ def build():
         lf = date(int(last_file[:4]), int(last_file[4:6]), int(last_file[6:8]))
         complete = (lf - timedelta(days=1)).isoformat()
         for arrs in [us_totals] + us_series:
-            for m in ("notional", "cash", "trades", "combo_notional", "combo_cash"):
+            for m in ("notional", "cash", "trades", "fees", "combo_notional", "combo_cash"):
                 if m in arrs:
                     arrs[m] = [None if days[i] > complete else v for i, v in enumerate(arrs[m])]
         us_totals["complete_through"] = complete

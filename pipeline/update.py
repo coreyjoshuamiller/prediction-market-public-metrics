@@ -11,8 +11,8 @@ from datetime import date, datetime, timedelta, timezone
 
 from . import leaders, pmus
 from .dune import run_sql
-from .kalshi_series import build as build_kalshi_series
-from .queries import kalshi_series_daily, poly_activity, poly_totals
+from .kalshi_series import build as build_kalshi_series, build_fees as build_kalshi_fees
+from .queries import kalshi_series_daily, poly_activity, poly_fees, poly_totals
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
 DATA = os.path.join(ROOT, "data")
@@ -21,7 +21,8 @@ FILES = {
     "poly_volume": ("poly_volume_daily.csv", ["d", "asset", "asset_class", "dur", "ctype", "notional", "cash", "trades"], 5),
     "poly_traders": ("poly_traders.csv", ["period", "start", "dim", "key", "traders"], 4),
     "poly_totals": ("poly_totals_daily.csv", ["d", "notional", "cash", "traders"], 1),
-    "kalshi": ("kalshi_series_daily.csv", ["d", "series", "contracts", "cash", "trades"], 2),
+    "kalshi": ("kalshi_series_daily.csv", ["d", "series", "contracts", "cash", "fees", "trades"], 2),
+    "poly_fees": ("poly_fees_daily.csv", ["d", "asset", "asset_class", "dur", "ctype", "fees"], 5),
 }
 
 DUR_NORM = {"60m": "1h", "240m": "4h", "24h": "1d"}
@@ -123,18 +124,32 @@ def poly_totals_window(start, end):
 def kalshi_window(start, end):
     print(f"kalshi {start} -> {end}")
     series = build_kalshi_series()
-    rows = run_sql(kalshi_series_daily(start, end), label=f"kalshi {start}")
+    rows = run_sql(kalshi_series_daily(start, end, build_kalshi_fees()), label=f"kalshi {start}")
     keep, totals = [], {}
     for r in rows:
-        t = totals.setdefault(r["d"], [0.0, 0.0, 0])
+        t = totals.setdefault(r["d"], [0.0, 0.0, 0.0, 0])
         t[0] += r["contracts"] or 0
         t[1] += r["cash"] or 0
-        t[2] += r["trades"] or 0
+        t[2] += r["fees"] or 0
+        t[3] += r["trades"] or 0
         if r["series"] in series:
-            keep.append({"d": r["d"], "series": r["series"], "contracts": _r(r["contracts"]), "cash": _r(r["cash"]), "trades": r["trades"]})
-    for d, (c, cash, n) in totals.items():
-        keep.append({"d": d, "series": "__TOTAL__", "contracts": _r(c), "cash": _r(cash), "trades": n})
+            keep.append({"d": r["d"], "series": r["series"], "contracts": _r(r["contracts"]), "cash": _r(r["cash"]),
+                         "fees": _r(r["fees"]), "trades": r["trades"]})
+    for d, (c, cash, fees, n) in totals.items():
+        keep.append({"d": d, "series": "__TOTAL__", "contracts": _r(c), "cash": _r(cash), "fees": _r(fees), "trades": n})
     upsert("kalshi", keep, lambda x: str(start) <= x["d"] < str(end))
+
+
+def poly_fees_window(start, end):
+    print(f"polymarket fees {start} -> {end}")
+    _upsert_poly_fees(run_sql(poly_fees(start, end), label=f"poly fees {start}"), start, end)
+
+
+def _upsert_poly_fees(rows, start, end):
+    out = [{"d": r["d"], "asset": r["asset"], "asset_class": r["asset_class"] or "",
+            "dur": DUR_NORM.get(r["dur"], r["dur"]) if r["dur"] else "", "ctype": r["ctype"] or "", "fees": _r(r["fees"])}
+           for r in rows]
+    upsert("poly_fees", out, lambda x: str(start) <= x["d"] < str(end))
 
 
 # --- entry points -----------------------------------------------------------------------
@@ -163,6 +178,7 @@ def backfill(since):
     # platform totals, per quarter
     for i in range(0, len(months), 3):
         poly_totals_window(months[i], min(next_month(months[min(i + 2, len(months) - 1)]), today))
+        poly_fees_window(months[i], min(next_month(months[min(i + 2, len(months) - 1)]), today))
 
 
 def _apply_backfill(results):
@@ -194,6 +210,26 @@ def _key(r, cols):
     return r[cols[0]]
 
 
+def backfill_fees(since):
+    """Fee history without re-running the (costlier) activity/trader queries. Kalshi rows are
+    rewritten with the new fees column, which also refreshes their volumes."""
+    since = month_start(date.fromisoformat(since))
+    today = date.today()
+    starts = []
+    m = since
+    while m <= today:
+        starts.append(m)
+        m = next_month(next_month(next_month(m)))
+    spans = [(s, min(next_month(next_month(next_month(s))), today)) for s in starts]
+    # queries run in parallel; CSV writes happen one at a time (upsert rewrites the whole file)
+    with ThreadPoolExecutor(3) as ex:
+        results = list(ex.map(lambda sp: (sp, run_sql(poly_fees(*sp), label=f"poly fees {sp[0]}")), spans))
+    for (s0, e0), rows in results:
+        _upsert_poly_fees(rows, s0, e0)
+    for sp in spans:
+        kalshi_window(*sp)
+
+
 def daily(run_leaders=True):
     today = datetime.now(timezone.utc).date()
     end = today  # complete UTC days only
@@ -204,6 +240,7 @@ def daily(run_leaders=True):
         keep_months.add(start)
     first_full_week = start if monday(start) == start else monday(start) + timedelta(days=7)
     poly_window(start, end, keep_days_from=start, keep_weeks_from=first_full_week, keep_months=keep_months)
+    poly_fees_window(end - timedelta(days=10), end)
     kalshi_window(end - timedelta(days=10), end)
     pmus.update(last_n=3)
     if run_leaders:
@@ -215,11 +252,14 @@ def main():
     ap.add_argument("--backfill", help="YYYY-MM-DD start (month-aligned)")
     ap.add_argument("--daily", action="store_true")
     ap.add_argument("--no-leaders", action="store_true")
+    ap.add_argument("--backfill-fees", help="YYYY-MM-DD: backfill only fees (Polymarket, Kalshi) from this date")
     args = ap.parse_args()
     if args.backfill:
         backfill(args.backfill)
         if not args.no_leaders:
             leaders.update(date.today(), force_all=True)
+    if args.backfill_fees:
+        backfill_fees(args.backfill_fees)
     if args.daily:
         daily(run_leaders=not args.no_leaders)
     from .build_site import build

@@ -74,11 +74,20 @@ GROUP BY 1
 """
 
 
-def kalshi_series_daily(start, end):
-    """Per-series daily contracts (market_report) and cash volume (trade_report), all series.
+def kalshi_series_daily(start, end, fee_rates=None):
+    """Per-series daily contracts (market_report), cash volume and estimated fees (trade_report).
 
-    trade_report has one row per trade/price level: cash = yes price (cents) * contracts / 100.
+    trade_report has one row per trade: cash = yes price (cents) * contracts / 100.
+    fees = rate * contracts * P * (1 - P) with the series' rate (default 0.07); P(1-P) is the
+    same for either side, so the taker's side doesn't matter.
     """
+    rates = fee_rates or {}
+    fee_join = ""
+    rate_expr = "0.07"
+    if rates:
+        vals = ", ".join(f"('{k}', {v})" for k, v in rates.items())
+        fee_join = f"LEFT JOIN (VALUES {vals}) AS fr(series, rate) ON fr.series = split_part(tr.ticker_name, '-', 1)"
+        rate_expr = "coalesce(fr.rate, 0.07)"
     return f"""
 WITH v AS (
   SELECT date, report_ticker AS series, sum(cast(daily_volume AS double)) AS contracts
@@ -87,17 +96,38 @@ WITH v AS (
   GROUP BY 1, 2
 ),
 c AS (
-  SELECT date, split_part(ticker_name, '-', 1) AS series,
-    sum(cast(price AS double) * cast(contracts_traded AS double)) / 100 AS cash,
+  SELECT tr.date, split_part(tr.ticker_name, '-', 1) AS series,
+    sum(cast(tr.price AS double) * cast(tr.contracts_traded AS double)) / 100 AS cash,
+    sum({rate_expr} * cast(tr.contracts_traded AS double)
+        * (cast(tr.price AS double) / 100) * (1 - cast(tr.price AS double) / 100)) AS fees,
     count(*) AS trades
-  FROM kalshi.trade_report
-  WHERE date >= '{start}' AND date < '{end}'
+  FROM kalshi.trade_report tr
+  {fee_join}
+  WHERE tr.date >= '{start}' AND tr.date < '{end}'
   GROUP BY 1, 2
 )
 SELECT coalesce(v.date, c.date) AS d, coalesce(v.series, c.series) AS series,
-  coalesce(v.contracts, 0) AS contracts, coalesce(c.cash, 0) AS cash, coalesce(c.trades, 0) AS trades
+  coalesce(v.contracts, 0) AS contracts, coalesce(c.cash, 0) AS cash, coalesce(c.fees, 0) AS fees,
+  coalesce(c.trades, 0) AS trades
 FROM v FULL OUTER JOIN c ON v.date = c.date AND v.series = c.series
 WHERE coalesce(v.contracts, 0) > 0 OR coalesce(c.cash, 0) > 0
+"""
+
+
+def poly_fees(start, end):
+    """Daily fees (the on-chain `fee` field, charged to takers) for in-scope markets by
+    asset/duration/type, plus the platform total (asset = '__TOTAL__')."""
+    return f"""
+WITH {_poly_markets_cte()},
+t AS (
+  SELECT date(tr.block_time) AS d, cm.asset, cm.asset_class, cm.dur, cm.ctype, coalesce(tr.fee, 0) AS fee
+  FROM polymarket_polygon.market_trades tr
+  LEFT JOIN cm ON cm.condition_id = tr.condition_id
+  WHERE tr.block_time >= timestamp '{start}' AND tr.block_time < timestamp '{end}'
+)
+SELECT d, asset, asset_class, dur, ctype, sum(fee) AS fees FROM t WHERE asset IS NOT NULL GROUP BY 1, 2, 3, 4, 5
+UNION ALL
+SELECT d, '__TOTAL__', NULL, NULL, NULL, sum(fee) FROM t GROUP BY 1
 """
 
 

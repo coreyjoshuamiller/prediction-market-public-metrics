@@ -8,6 +8,25 @@ from .net import get_json
 KALSHI = "https://api.elections.kalshi.com/trade-api/v2"
 CATEGORIES = ["Crypto", "Financials", "Commodities", "Economics"]
 OUT = os.path.join(os.path.dirname(__file__), "..", "data", "kalshi_series.json")
+FEES_OUT = os.path.join(os.path.dirname(__file__), "..", "data", "kalshi_fees.json")
+
+# Kalshi's published fee formula: fee = rate x contracts x P x (1 - P), rounded up to the cent
+# per order. Taker rate is 7% x the series' fee_multiplier; series with maker fees also charge
+# makers 1.75% x multiplier (every trade has one maker, so both apply to each fill).
+TAKER_RATE, MAKER_RATE = 0.07, 0.0175
+
+
+def build_fees():
+    """-> {series: combined fee rate} for series that differ from the default 0.07."""
+    out = {}
+    for s in get_json(f"{KALSHI}/series").get("series", []):
+        mult = float(s.get("fee_multiplier") if s.get("fee_multiplier") is not None else 1)
+        rate = TAKER_RATE * mult + (MAKER_RATE * mult if "maker_fees" in (s.get("fee_type") or "") else 0)
+        if abs(rate - TAKER_RATE) > 1e-9:
+            out[s["ticker"]] = round(rate, 6)
+    with open(FEES_OUT, "w") as f:
+        json.dump(dict(sorted(out.items())), f, indent=0)
+    return out
 
 
 def build():
