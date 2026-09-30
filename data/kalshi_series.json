@@ -191,6 +191,14 @@
   "title": "Cardano 15 Minute",
   "category": "Crypto"
  },
+ "KXAUDUSD15M": {
+  "asset": "AUD/USD",
+  "asset_class": "FX & Rates",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "15-minute AUDUSD",
+  "category": "Financials"
+ },
  "KXAUDUSDAD": {
   "asset": "AUD/USD",
   "asset_class": "FX & Rates",
@@ -941,6 +949,14 @@
   "duration": "1h",
   "ctype": "Strike",
   "title": "SDBRL Hourly",
+  "category": "Financials"
+ },
+ "KXUSDCAD15M": {
+  "asset": "USD/CAD",
+  "asset_class": "FX & Rates",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "15-minute USDCAD",
   "category": "Financials"
  },
  "KXUSDCADAD": {
