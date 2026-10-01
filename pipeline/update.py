@@ -230,8 +230,8 @@ def backfill_fees(since):
         kalshi_window(*sp)
 
 
-def daily(run_leaders=True):
-    today = datetime.now(timezone.utc).date()
+def daily(run_leaders=True, today=None):
+    today = today or datetime.now(timezone.utc).date()
     end = today  # complete UTC days only
     start = min(month_start(end - timedelta(days=1)), monday(end) - timedelta(days=7))
     keep_months = {month_start(end - timedelta(days=1))}

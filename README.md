@@ -8,8 +8,11 @@ The site is static (`site/`) and served by GitHub Pages. Two GitHub Actions keep
 
 | Workflow | Schedule | What it does |
 |---|---|---|
-| `daily.yml` | 13:40 UTC daily | Pulls new history from Dune, refreshes leaderboards, rebuilds `site/data/metrics.json`, commits, and deploys |
-| `orderbook.yml` | hourly | Samples the live 15m BTC/ETH/SOL/XRP order books on both venues once a minute for ~54 minutes, commits, and deploys |
+| `daily.yml` | triggered from cron (13:40, 16:40, 19:40, 22:40 UTC) and by the order-book chain when data is stale | Runs `pipeline/refresh.py`, which picks **full** (first run of the UTC day: Dune history, fees, Kalshi, Polymarket US, leaderboards), **light** (a source is still missing yesterday: re-pull Kalshi and Polymarket US, ~1 credit, max 4 attempts/day) or **skip**. Then commits and deploys |
+| `orderbook.yml` | continuous: each run dispatches the next (cron every 3h restarts the chain if it breaks) | Samples the live 15m BTC/ETH/SOL/XRP order books once a minute for ~54 minutes, commits, deploys, and after 13:40 UTC triggers `daily.yml` if data is stale |
+| `deploy.yml` | on pushes to `site/` code | Redeploys the page |
+
+GitHub's cron is best-effort (runs can be hours late or dropped), which is why the daily refresh has several triggers and decides for itself whether to do anything. State lives in `data/refresh_state.json`. To force a run, use **Actions → Daily refresh → Run workflow** and pick a mode.
 
 ## What's on the page
 
@@ -65,5 +68,5 @@ No third-party Python packages are needed.
 
 ## Costs
 
-- **Dune:** about 10–25 credits a day, roughly 500–600 a month. The Monday run also refreshes the 30-day leaderboard.
+- **Dune:** about 30–35 credits for each day's full refresh (more on the 1st–3rd of a month, which re-finalizes the previous month), so roughly 1,000 a month. Light retries cost about 1 credit.
 - **GitHub Actions:** free, because the repo is public.

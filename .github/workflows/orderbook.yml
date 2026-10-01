@@ -51,6 +51,17 @@ jobs:
           path: site
       - id: deploy
         uses: actions/deploy-pages@v4
+      - name: Trigger the daily refresh if data is stale
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # after 13:40 UTC (when yesterday's Kalshi report is reliably on Dune), kick the daily
+          # workflow if today's full refresh hasn't run or a source is still behind
+          now=$(( $(date -u +%H) * 60 + $(date -u +%M) ))
+          if [ "$now" -ge $((13 * 60 + 40)) ] && python -m pipeline.refresh --check; then
+            gh workflow run daily.yml --ref main -R "$GITHUB_REPOSITORY"
+          fi
       - name: Start the next run
         if: always()
         env:
