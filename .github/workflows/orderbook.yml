@@ -1,11 +1,12 @@
 name: Order book snapshots
 
-# Every hour: sample the live 15m Up/Down books once a minute for ~54 minutes, rebuild the
-# chart data, commit, and redeploy the site. GitHub cron can start a few minutes late, so
-# there's usually a short gap between runs.
+# Continuous: each run samples the live 15m Up/Down books once a minute for ~54 minutes,
+# rebuilds the chart data, commits, redeploys, then dispatches the next run. GitHub's cron is
+# best-effort (runs get delayed by hours or dropped), so it's only a fallback that restarts the
+# chain if it ever breaks; the concurrency group keeps at most one run sampling at a time.
 on:
   schedule:
-    - cron: "2 * * * *"
+    - cron: "17 */3 * * *"
   workflow_dispatch:
 
 concurrency:
@@ -16,6 +17,7 @@ permissions:
   contents: write
   pages: write
   id-token: write
+  actions: write
 
 jobs:
   sample:
@@ -49,3 +51,8 @@ jobs:
           path: site
       - id: deploy
         uses: actions/deploy-pages@v4
+      - name: Start the next run
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run orderbook.yml --ref main -R "$GITHUB_REPOSITORY"

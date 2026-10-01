@@ -4,9 +4,15 @@ name: Daily refresh
 # leaderboards, rebuild the site data, commit, and redeploy. Kalshi's daily report for day D
 # usually lands on Dune the following morning; the job re-queries the last 10 days so a late
 # report is picked up on the next run.
+#
+# GitHub's cron is best-effort (runs can be hours late or dropped), so there are fallback
+# times; each run exits early if today's refresh has already been committed.
 on:
   schedule:
     - cron: "40 13 * * *"
+    - cron: "40 16 * * *"
+    - cron: "40 19 * * *"
+    - cron: "40 22 * * *"
   workflow_dispatch:
 
 concurrency:
@@ -27,31 +33,46 @@ jobs:
       url: ${{ steps.deploy.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 50
+      - name: Skip if today's refresh already ran
+        id: guard
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ] && git log --since="20 hours ago" --format=%s | grep -qx "daily refresh $(date -u +%Y-%m-%d)"; then
+            echo "already refreshed today"; echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
       - uses: actions/setup-python@v5
+        if: steps.guard.outputs.skip != 'true'
         with:
           python-version: "3.12"
       - uses: actions/setup-node@v4
+        if: steps.guard.outputs.skip != 'true'
         with:
           node-version: "22"
       - name: Install XMTP reachability checker
+        if: steps.guard.outputs.skip != 'true'
         run: npm ci --prefix tools/xmtp --silent
       - name: Refresh history from Dune
+        if: steps.guard.outputs.skip != 'true'
         env:
           DUNE_API_KEY: ${{ secrets.DUNE_API_KEY }}
         run: python -u -m pipeline.update --daily
       - name: Commit
+        if: steps.guard.outputs.skip != 'true'
         run: |
           git config user.name "pm-metrics-bot"
           git config user.email "pm-metrics-bot@users.noreply.github.com"
           git add data/*.csv data/*.json site/data/metrics.json site/data/leaders.json
-          if ! git diff --cached --quiet; then
-            git commit -q -m "daily refresh $(date -u +%Y-%m-%d)"
-            for i in 1 2 3; do git pull -q --rebase && git push -q && break; sleep 5; done
-          fi
+          # always commit (even if empty) so later fallback runs can see today's refresh happened
+          git commit -q --allow-empty -m "daily refresh $(date -u +%Y-%m-%d)"
+          for i in 1 2 3; do git pull -q --rebase && git push -q && break; sleep 5; done
           git pull -q --rebase  # deploy whatever is newest, including the other workflow's data
       - uses: actions/configure-pages@v5
+        if: steps.guard.outputs.skip != 'true'
       - uses: actions/upload-pages-artifact@v3
+        if: steps.guard.outputs.skip != 'true'
         with:
           path: site
       - id: deploy
+        if: steps.guard.outputs.skip != 'true'
         uses: actions/deploy-pages@v4
