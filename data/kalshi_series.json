@@ -343,6 +343,22 @@
   "title": "DJI Hourly",
   "category": "Financials"
  },
+ "KXDJIA15M": {
+  "asset": "Dow",
+  "asset_class": "Equities",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "Dow Jones 15-minute",
+  "category": "Financials"
+ },
+ "KXDJIAH": {
+  "asset": "Dow",
+  "asset_class": "Equities",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "Dow Jones hourly",
+  "category": "Financials"
+ },
  "KXDOGE": {
   "asset": "DOGE",
   "asset_class": "Crypto",
