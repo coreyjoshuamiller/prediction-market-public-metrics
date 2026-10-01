@@ -24009,7 +24009,7 @@ d,asset,asset_class,dur,ctype,notional,cash,trades
 2026-09-05,NFLX,Equities,1d,Up/Down,18.87,10.0,1
 2026-09-05,NVDA,Equities,1d,Strike,3.8,1.94,1
 2026-09-05,NVDA,Equities,1d,Up/Down,9.43,4.9,1
-2026-09-05,OPEN,Equities,1d,Strike,355.0,354.65,4
+2026-09-05,OPEN,Equities,1d,Strike,355.0,354.64,4
 2026-09-05,PLTR,Equities,1d,Up/Down,17.86,10.0,1
 2026-09-05,S&P 500,Equities,1d,Strike,493.82,317.83,15
 2026-09-05,S&P 500,Equities,1d,Up/Down,887.41,439.96,67
@@ -24071,7 +24071,7 @@ d,asset,asset_class,dur,ctype,notional,cash,trades
 2026-09-06,HYPE,Crypto,5m,Up/Down,42086.03,24872.24,26298
 2026-09-06,NFLX,Equities,1d,Strike,140.0,139.48,4
 2026-09-06,NVDA,Equities,1d,Up/Down,3.82,2.0,2
-2026-09-06,OPEN,Equities,1d,Strike,1170.47,1169.26,7
+2026-09-06,OPEN,Equities,1d,Strike,1170.46,1169.26,7
 2026-09-06,PLTR,Equities,1d,Strike,5.0,1.2,1
 2026-09-06,PLTR,Equities,1d,Up/Down,23.26,10.0,1
 2026-09-06,S&P 500,Equities,1d,Strike,132.36,130.3,5
@@ -24210,7 +24210,7 @@ d,asset,asset_class,dur,ctype,notional,cash,trades
 2026-09-08,ETH,Crypto,5m,Up/Down,1169733.55,673337.84,92076
 2026-09-08,EUR/USD,FX & Rates,1d,Up/Down,31.0,27.88,2
 2026-09-08,EWY,Equities,1d,Up/Down,326.53,269.64,11
-2026-09-08,FTSE 100,Equities,1d,Up/Down,33.0,32.51,3
+2026-09-08,FTSE 100,Equities,1d,Up/Down,33.0,32.5,3
 2026-09-08,GBP/USD,FX & Rates,1d,Up/Down,39.0,35.41,2
 2026-09-08,GOOGL,Equities,1d,Strike,1544.02,847.31,31
 2026-09-08,GOOGL,Equities,1d,Up/Down,3557.84,1627.05,69
@@ -25054,7 +25054,7 @@ d,asset,asset_class,dur,ctype,notional,cash,trades
 2026-09-17,ETH,Crypto,4h,Up/Down,25236.09,12243.82,832
 2026-09-17,ETH,Crypto,5m,Up/Down,1078348.5,600201.16,67229
 2026-09-17,EUR/USD,FX & Rates,1d,Up/Down,5.0,4.95,1
-2026-09-17,EWY,Equities,1d,Up/Down,63.0,53.15,10
+2026-09-17,EWY,Equities,1d,Up/Down,63.0,53.14,10
 2026-09-17,FTSE 100,Equities,1d,Up/Down,32.09,32.0,4
 2026-09-17,GBP/USD,FX & Rates,1d,Up/Down,5.0,4.95,1
 2026-09-17,GOOGL,Equities,1d,Strike,1405.04,780.67,31
@@ -25617,7 +25617,7 @@ d,asset,asset_class,dur,ctype,notional,cash,trades
 2026-09-23,NYSE Comp,Equities,1d,Up/Down,35.42,34.88,3
 2026-09-23,Nat Gas,Commodities,1d,Up/Down,7440.33,3230.5,81
 2026-09-23,OPEN,Equities,1d,Strike,65.0,59.48,2
-2026-09-23,OPEN,Equities,1d,Up/Down,380.0,283.09,7
+2026-09-23,OPEN,Equities,1d,Up/Down,380.0,283.08,7
 2026-09-23,PLTR,Equities,1d,Strike,175.57,79.85,6
 2026-09-23,PLTR,Equities,1d,Up/Down,6145.63,3724.63,45
 2026-09-23,RKLB,Equities,1d,Up/Down,1562.44,1029.88,18
@@ -25692,7 +25692,7 @@ d,asset,asset_class,dur,ctype,notional,cash,trades
 2026-09-24,ETH,Crypto,4h,Up/Down,16652.55,10291.23,510
 2026-09-24,ETH,Crypto,5m,Up/Down,1222071.62,699233.07,67090
 2026-09-24,EUR/USD,FX & Rates,1d,Up/Down,10.0,9.9,1
-2026-09-24,EWY,Equities,1d,Up/Down,131.25,125.88,4
+2026-09-24,EWY,Equities,1d,Up/Down,131.25,125.89,4
 2026-09-24,FTSE 100,Equities,1d,Up/Down,81.85,75.26,5
 2026-09-24,GBP/USD,FX & Rates,1d,Up/Down,10.0,9.9,1
 2026-09-24,GOOGL,Equities,1d,Strike,4320.32,2705.13,50
@@ -25817,7 +25817,7 @@ d,asset,asset_class,dur,ctype,notional,cash,trades
 2026-09-25,NVDA,Equities,1d,Up/Down,2320.5,1250.95,96
 2026-09-25,NYSE Comp,Equities,1d,Up/Down,10.0,9.9,1
 2026-09-25,Nat Gas,Commodities,1d,Up/Down,10686.75,2603.44,50
-2026-09-25,OPEN,Equities,1d,Strike,375.0,372.82,10
+2026-09-25,OPEN,Equities,1d,Strike,375.0,372.83,10
 2026-09-25,OPEN,Equities,1d,Up/Down,1003.05,598.9,25
 2026-09-25,PLTR,Equities,1d,Strike,301.25,295.96,14
 2026-09-25,PLTR,Equities,1d,Up/Down,116.13,56.92,6
@@ -25871,7 +25871,7 @@ d,asset,asset_class,dur,ctype,notional,cash,trades
 2026-09-26,BTC,Crypto,1d,Range,110157.25,35361.73,855
 2026-09-26,BTC,Crypto,1d,Strike,937871.03,367676.44,3224
 2026-09-26,BTC,Crypto,1d,Up/Down,134168.54,65768.66,1312
-2026-09-26,BTC,Crypto,1h,Strike,5685.35,5262.06,437
+2026-09-26,BTC,Crypto,1h,Strike,5685.34,5262.06,437
 2026-09-26,BTC,Crypto,1h,Up/Down,538809.23,277822.52,15422
 2026-09-26,BTC,Crypto,4h,Up/Down,82365.13,44315.75,2132
 2026-09-26,BTC,Crypto,5m,Up/Down,11370572.14,6029191.86,348485
@@ -26174,7 +26174,7 @@ d,asset,asset_class,dur,ctype,notional,cash,trades
 2026-09-29,OPEN,Equities,1d,Up/Down,324.98,178.71,13
 2026-09-29,PLTR,Equities,1d,Strike,42.78,11.17,4
 2026-09-29,PLTR,Equities,1d,Up/Down,2302.1,1529.86,37
-2026-09-29,RKLB,Equities,1d,Up/Down,130.0,60.54,8
+2026-09-29,RKLB,Equities,1d,Up/Down,130.0,60.55,8
 2026-09-29,Russell 2000,Equities,1d,Up/Down,2296.0,1486.11,14
 2026-09-29,S&P 500,Equities,1d,Strike,35738.51,25513.57,366
 2026-09-29,S&P 500,Equities,1d,Up/Down,92595.26,41048.43,1086
