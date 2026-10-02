@@ -1,0 +1,5 @@
+ts,platform,asset,market,window_start,secs_into_window,best_bid,best_ask,bid_usd,ask_usd,bid_1c_usd,ask_1c_usd,bid_2c_usd,ask_2c_usd,bid_5c_usd,ask_5c_usd
+2026-10-02T00:00:23Z,polymarket,BTC,btc-updown-15m-1790899200,1790899200,23,0.27,0.28,210.9,7.0,210.9,7.0,300.86,22.95,2040.73,921.52
+2026-10-02T00:00:23Z,polymarket,ETH,eth-updown-15m-1790899200,1790899200,23,0.26,0.27,11.7,158.83,11.7,158.83,54.2,192.15,175.99,1059.76
+2026-10-02T00:00:23Z,polymarket,SOL,sol-updown-15m-1790899200,1790899200,23,0.29,0.3,2.03,34.21,2.03,34.21,6.23,44.44,25.68,134.72
+2026-10-02T00:00:23Z,polymarket,XRP,xrp-updown-15m-1790899200,1790899200,23,0.32,0.33,5.76,8.25,5.76,8.25,34.28,22.87,343.29,59.82
