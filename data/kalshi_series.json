@@ -159,12 +159,28 @@
   "title": "10-year Treasury yield 15-minute",
   "category": "Financials"
  },
+ "KX10YRRATEH": {
+  "asset": "UST Yields",
+  "asset_class": "FX & Rates",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "US 10Y Treasury yield hourly",
+  "category": "Financials"
+ },
  "KX2YRRATE15M": {
   "asset": "UST Yields",
   "asset_class": "FX & Rates",
   "duration": "15m",
   "ctype": "Up/Down",
   "title": "2-year Treasury yield 15-minute",
+  "category": "Financials"
+ },
+ "KX2YRRATEH": {
+  "asset": "UST Yields",
+  "asset_class": "FX & Rates",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "US 2Y Treasury yield hourly",
   "category": "Financials"
  },
  "KX30YRRATE15M": {
@@ -175,12 +191,36 @@
   "title": "30-year Treasury yield 15-minute",
   "category": "Financials"
  },
+ "KX30YRRATEH": {
+  "asset": "UST Yields",
+  "asset_class": "FX & Rates",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "US 30Y Treasury yield hourly",
+  "category": "Financials"
+ },
  "KX5YRRATE15M": {
   "asset": "UST Yields",
   "asset_class": "FX & Rates",
   "duration": "15m",
   "ctype": "Up/Down",
   "title": "5-year Treasury yield 15-minute",
+  "category": "Financials"
+ },
+ "KX5YRRATEH": {
+  "asset": "UST Yields",
+  "asset_class": "FX & Rates",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "US 5Y Treasury yield hourly",
+  "category": "Financials"
+ },
+ "KX7YRRATEH": {
+  "asset": "UST Yields",
+  "asset_class": "FX & Rates",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "US 7Y Treasury yield hourly",
   "category": "Financials"
  },
  "KXADA15M": {

@@ -370,6 +370,13 @@
 "type": "email",
 "xmtp": false
 },
+"0x513b28f61acfe1999010e4cc861a80489242ade9": {
+"checked": "2026-10-06",
+"profiles": [],
+"signer": null,
+"type": "email",
+"xmtp": false
+},
 "0x55941ce9f9029293c4c5385fcfcec36e41dfb390": {
 "checked": "2026-10-01",
 "profiles": [],
@@ -456,6 +463,13 @@
 },
 "0x6940545d736920890c575cc73dbf0959a3831c6c": {
 "checked": "2026-09-29",
+"profiles": [],
+"signer": null,
+"type": "email",
+"xmtp": false
+},
+"0x6a88c5ecd262e2c42e78bad8e6db7ab3c4e4b859": {
+"checked": "2026-10-06",
 "profiles": [],
 "signer": null,
 "type": "email",
@@ -897,6 +911,13 @@
 },
 "0xcd30457c790d8b35a08bcf3f894ad6bb52bc2dd0": {
 "checked": "2026-09-29",
+"profiles": [],
+"signer": null,
+"type": "email",
+"xmtp": false
+},
+"0xcd917f26d0ecfe2b9f203868c505a8731b1a3d2b": {
+"checked": "2026-10-06",
 "profiles": [],
 "signer": null,
 "type": "email",
