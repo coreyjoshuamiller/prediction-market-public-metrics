@@ -7,11 +7,16 @@ from the continuous order-book chain. Each trigger runs this, which picks one mo
   light  it has, but a source is still missing yesterday   (~1 credit: Kalshi + Polymarket US)
   skip   data is current, or today's light retries are used up
 
+Kalshi days that Dune skipped or delivered partially can be queued for re-pulling with
+--kalshi-backfill; each full/light run re-pulls them until they're complete or the run budget
+(state["kalshi_backfill"]["runs_left"]) is spent.
+
 The decision uses data/refresh_state.json (committed by the workflow) and the data files
 themselves, not git history or the cron slot, and the run date is fixed once at the start.
 
   python -m pipeline.refresh --check            print the mode; exit 0 if a run is needed, 1 if not
   python -m pipeline.refresh --auto [--force M] decide (or force) and run; writes mode to $GITHUB_OUTPUT
+  python -m pipeline.refresh --kalshi-backfill 2026-10-03,2026-10-04 [--runs 5]   queue days to retry
 """
 import argparse
 import csv
@@ -63,6 +68,17 @@ def missing_sources(today):
     return missing
 
 
+def kalshi_incomplete(days):
+    """The given days that lack a Kalshi total with both contracts (market_report) and cash
+    (trade_report)."""
+    p = os.path.join(DATA, "kalshi_series_daily.csv")
+    done = set()
+    if os.path.exists(p):
+        done = {r["d"] for r in csv.DictReader(open(p))
+                if r["series"] == "__TOTAL__" and float(r["contracts"] or 0) > 0 and float(r["cash"] or 0) > 0}
+    return [d for d in days if d not in done]
+
+
 def decide(today, state=None):
     state = state if state is not None else load_state()
     if state.get("last_full") != today.isoformat():
@@ -75,11 +91,15 @@ def decide(today, state=None):
     return "light", missing
 
 
-def run(mode, today):
+def run(mode, today, backfill=()):
     from . import pmus
     from .build_site import build
     from .update import daily, kalshi_window, poly_fees_window, poly_totals_window
 
+    # both modes re-pull Kalshi from end - 10 days; older queued days need their own query
+    old = [d for d in backfill if date.fromisoformat(d) < today - timedelta(days=10)]
+    if mode != "skip" and old:
+        kalshi_window(date.fromisoformat(min(old)), today - timedelta(days=10))
     if mode == "full":
         daily(today=today)
     elif mode == "light":
@@ -99,10 +119,18 @@ def main():
     ap.add_argument("--auto", action="store_true")
     ap.add_argument("--force", choices=["full", "light", "skip"])
     ap.add_argument("--today", help="override the run date (testing)")
+    ap.add_argument("--kalshi-backfill", help="comma-separated YYYY-MM-DD Kalshi days to retry on upcoming runs")
+    ap.add_argument("--runs", type=int, default=5, help="how many runs to retry --kalshi-backfill days for")
     args = ap.parse_args()
     today = date.fromisoformat(args.today) if args.today else datetime.now(timezone.utc).date()
 
     state = load_state()
+    if args.kalshi_backfill:
+        days = sorted({date.fromisoformat(d.strip()).isoformat() for d in args.kalshi_backfill.split(",")})
+        state["kalshi_backfill"] = {"days": days, "runs_left": args.runs}
+        save_state(state)
+        print(f"kalshi backfill queued: {', '.join(days)} for the next {args.runs} runs")
+        return
     mode, missing = decide(today, state)
     if args.force:
         mode = args.force
@@ -115,11 +143,23 @@ def main():
     if args.check:
         sys.exit(0 if mode != "skip" else 1)
     if args.auto and mode != "skip":
-        run(mode, today)
+        backfill = state.get("kalshi_backfill") or {}
+        run(mode, today, backfill.get("days", []))
         state = load_state()
         if mode == "full":
             state["last_full"] = today.isoformat()
         state.setdefault("attempts", {})[today.isoformat()] = state.get("attempts", {}).get(today.isoformat(), 0) + 1
+        if backfill:
+            pending = kalshi_incomplete(backfill["days"])
+            runs_left = backfill["runs_left"] - 1
+            filled = sorted(set(backfill["days"]) - set(pending))
+            print(f"kalshi backfill: filled {', '.join(filled) or 'nothing'}; "
+                  + (f"still missing {', '.join(pending)}, {runs_left} runs left" if pending and runs_left > 0
+                     else f"giving up on {', '.join(pending)}" if pending else "done"))
+            if pending and runs_left > 0:
+                state["kalshi_backfill"] = {"days": pending, "runs_left": runs_left}
+            else:
+                state.pop("kalshi_backfill", None)
         save_state(state)
         left = missing_sources(today)
         print(f"refresh {today}: done ({mode})" + (f"; still missing: {', '.join(left)}" if left else "; all sources current"))
