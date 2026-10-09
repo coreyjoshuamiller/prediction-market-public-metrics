@@ -133,7 +133,7 @@
 "xmtp": false
 },
 "0x1b414826a2c991d5ae1669a754291626d0df0b56": {
-"checked": "2026-09-29",
+"checked": "2026-10-09",
 "profiles": [],
 "signer": null,
 "type": "email",
@@ -455,7 +455,7 @@
 "xmtp": false
 },
 "0x5e8e7771121f4f8f9f7739ddecfe2baa2d918212": {
-"checked": "2026-10-01",
+"checked": "2026-10-09",
 "profiles": [],
 "signer": null,
 "type": "email",
@@ -491,6 +491,13 @@
 },
 "0x6a88c5ecd262e2c42e78bad8e6db7ab3c4e4b859": {
 "checked": "2026-10-06",
+"profiles": [],
+"signer": null,
+"type": "email",
+"xmtp": false
+},
+"0x6c158caf6430a91a846ac4ea9652dcb23dd87d2d": {
+"checked": "2026-10-09",
 "profiles": [],
 "signer": null,
 "type": "email",
@@ -601,7 +608,7 @@
 "xmtp": false
 },
 "0x81c935efa4b16376d93c9d0a7970644643de94cd": {
-"checked": "2026-10-01",
+"checked": "2026-10-09",
 "profiles": [],
 "signer": null,
 "type": "email",
@@ -791,6 +798,13 @@
 },
 "0xae68447c01fc86864fd0e5e58aae986eeb8abf83": {
 "checked": "2026-10-07",
+"profiles": [],
+"signer": null,
+"type": "email",
+"xmtp": false
+},
+"0xaef68b9bbd746ffe4e582a687cf8a21f1c44134f": {
+"checked": "2026-10-09",
 "profiles": [],
 "signer": null,
 "type": "email",

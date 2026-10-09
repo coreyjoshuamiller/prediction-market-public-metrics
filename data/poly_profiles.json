@@ -152,7 +152,7 @@
 "x": ""
 },
 "0x1b414826a2c991d5ae1669a754291626d0df0b56": {
-"fetched": "2026-09-29",
+"fetched": "2026-10-09",
 "image": "",
 "name": "Kathod-Shi-14",
 "pseudonym": "Compassionate-Restriction-Junker",
@@ -520,7 +520,7 @@
 "x": ""
 },
 "0x5e8e7771121f4f8f9f7739ddecfe2baa2d918212": {
-"fetched": "2026-10-01",
+"fetched": "2026-10-09",
 "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/profile-image-9426116-7aecc2cc-20df-462e-adea-4609dffd107a.png",
 "name": "cryingbabydicer87",
 "pseudonym": "Infinite-Diaphragm-Federation",
@@ -564,6 +564,14 @@
 "image": "",
 "name": "pelik",
 "pseudonym": "Short-Convention",
+"verified": false,
+"x": ""
+},
+"0x6c158caf6430a91a846ac4ea9652dcb23dd87d2d": {
+"fetched": "2026-10-09",
+"image": "",
+"name": "minusalpha1",
+"pseudonym": "Talkative-Game",
 "verified": false,
 "x": ""
 },
@@ -680,7 +688,7 @@
 "x": ""
 },
 "0x81c935efa4b16376d93c9d0a7970644643de94cd": {
-"fetched": "2026-10-01",
+"fetched": "2026-10-09",
 "image": "",
 "name": "oreitre",
 "pseudonym": "Best-Million",
@@ -900,6 +908,14 @@
 "image": "",
 "name": "sdfljsegoisvn",
 "pseudonym": "Worn-Slip",
+"verified": false,
+"x": ""
+},
+"0xaef68b9bbd746ffe4e582a687cf8a21f1c44134f": {
+"fetched": "2026-10-09",
+"image": "",
+"name": "mensize",
+"pseudonym": "Weird-Id",
 "verified": false,
 "x": ""
 },
