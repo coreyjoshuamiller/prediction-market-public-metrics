@@ -128,7 +128,7 @@
 "x": ""
 },
 "0x18c18e0c8c3154360b4f730ec8b9d8013ceb2183": {
-"fetched": "2026-09-30",
+"fetched": "2026-10-10",
 "image": "",
 "name": "0x18C18e0c8c3154360B4F730eC8B9D8013Ceb2183-1766020654989",
 "pseudonym": "Humming-Mime",
@@ -356,6 +356,14 @@
 "image": "",
 "name": "antsaslyku",
 "pseudonym": "Periodic-Scrap",
+"verified": false,
+"x": ""
+},
+"0x404ea6b6591d2d140c9e29fd5417bc54c6014cd2": {
+"fetched": "2026-10-10",
+"image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/profile-image-7276177-b6b0b4bd-e746-4093-a140-119397eb3d0b.png",
+"name": "PM-MarketMaker",
+"pseudonym": "Stale-Timpani",
 "verified": false,
 "x": ""
 },
@@ -1176,7 +1184,7 @@
 "x": ""
 },
 "0xd8f1fbe130e2b33f32633bf568a08b85058e74a9": {
-"fetched": "2026-10-02",
+"fetched": "2026-10-10",
 "image": "",
 "name": "aaa221",
 "pseudonym": "Sharp-Pinto",
@@ -1348,6 +1356,14 @@
 "image": "",
 "name": "0xF8e3DA9376113B2c5C0BE45947445f868807e06b-1780222944310",
 "pseudonym": "Every-Thump-Story",
+"verified": false,
+"x": ""
+},
+"0xf9b7876ba2c35370e0bedb7f8ee772da722aa37c": {
+"fetched": "2026-10-10",
+"image": "",
+"name": "",
+"pseudonym": "",
 "verified": false,
 "x": ""
 },
