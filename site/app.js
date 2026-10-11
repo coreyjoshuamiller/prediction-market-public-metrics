@@ -6,12 +6,13 @@
   const state = {
     range: 90, gran: "day", group: "market", cls: "", measure: "notional",
     lbPlatform: "polymarket", lbWindow: "7d", obAsset: "BTC", obRes: "recent", obSide: "both", obBand: 2,
+    concWindow: "30d", concScale: "log",
   };
   const PREF_KEY = "stpm-prefs";
   try { Object.assign(state, JSON.parse(localStorage.getItem(PREF_KEY) || "{}")); } catch (e) {}
   const savePrefs = () => { try { localStorage.setItem(PREF_KEY, JSON.stringify(state)); } catch (e) {} };
 
-  let M = null, L = null, OB = null;
+  let M = null, L = null, OB = null, C = null;
   const charts = {};
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
@@ -520,6 +521,169 @@
     renderShareLines(tf, "fees", "fee-share", "Share of platform fees", "fee-totals", "Short-term price fees by venue", "Fees");
   }
 
+  // ---------- concentration ----------
+  const pctSmart = (v) => fmtPct(v, v != null && Math.abs(v) < 1 ? 2 : 1);
+  const POW10 = ["$1", "$10", "$100", "$1K", "$10K", "$100K", "$1M", "$10M", "$100M", "$1B"];
+  const bandLabel = (k) => (k === 0 ? "<$10" : `${POW10[k]}+`);
+  const bandRange = (k) => (k === 0 ? "under $10" : `${POW10[k]} to ${POW10[k + 1]}`);
+  // window end dates are exclusive
+  const windowLabel = (w) => {
+    const last = new Date(w.end + "T00:00:00Z"); last.setUTCDate(last.getUTCDate() - 1);
+    return `${fmtDate(w.start, "day")} – ${fmtDate(last.toISOString().slice(0, 10), "day")}`;
+  };
+  // volume of the top `rank` wallets, interpolated between curve points
+  function topVolume(w, rank) {
+    const c = w.curve;
+    if (rank <= c[0][0]) return c[0][1] * (rank / c[0][0]);
+    for (let i = 1; i < c.length; i++) {
+      if (rank <= c[i][0]) { const [r0, v0] = c[i - 1], [r1, v1] = c[i]; return v0 + ((v1 - v0) * (rank - r0)) / (r1 - r0); }
+    }
+    return w.volume;
+  }
+  // how many of the top wallets it takes to reach `share` (0–1) of volume
+  function walletsForShare(w, share) {
+    const target = share * w.volume, c = w.curve;
+    if (target <= c[0][1]) return c[0][0];
+    for (let i = 1; i < c.length; i++) {
+      if (c[i][1] >= target) { const [r0, v0] = c[i - 1], [r1, v1] = c[i]; return Math.ceil(r0 + ((r1 - r0) * (target - v0)) / (v1 - v0)); }
+    }
+    return w.wallets;
+  }
+  const tierSum = (w, from, to, k) => w.tiers.slice(from, to).reduce((a, t) => a + t[k], 0);
+
+  // horizontal grouped bars: share of wallets vs share of volume per group, largest wallets on top
+  function shareBars(name, title, note, w, groups, label, detail) {
+    const opt = baseOption();
+    const muted = css("--text-muted");
+    opt.yAxis = { type: "category", inverse: true, data: groups.map(label), axisLine: { lineStyle: { color: css("--axis") } }, axisTick: { show: false }, axisLabel: { color: muted, fontSize: 11 } };
+    opt.xAxis = { type: "value", max: 100, splitLine: { lineStyle: { color: css("--grid"), width: 1 } }, axisLabel: { color: muted, fontSize: 11, formatter: (v) => `${v}%` } };
+    opt.grid.right = 52;
+    opt.tooltip.axisPointer = { type: "shadow", shadowStyle: { color: css("--grid"), opacity: 0.4 } };
+    const bar = (nm, vals, color) => ({
+      ...barSeries(nm, vals, color, null), barGap: "10%", barMaxWidth: 14,
+      label: { show: true, position: "right", fontSize: 11, color: css("--text-secondary"), formatter: (p) => pctSmart(p.value) },
+    });
+    opt.series = [
+      bar("Share of wallets", groups.map((g) => (g.wallets / w.wallets) * 100), css("--other")),
+      bar("Share of volume", groups.map((g) => (g.volume / w.volume) * 100), css("--poly")),
+    ];
+    opt.tooltip.formatter = (ps) => {
+      const g = groups[[].concat(ps)[0].dataIndex], m = css("--text-secondary");
+      const row = (b, t) => `<div><b style="font-variant-numeric:tabular-nums">${b}</b> <span style="color:${m}">${t}</span></div>`;
+      return `<div style="font-size:12px;color:${m};margin-bottom:4px">${escapeHtml(detail(g))}</div>` +
+        row(fmtInt(g.wallets), `wallets (${pctSmart((g.wallets / w.wallets) * 100)})`) +
+        row(fmtUsd(g.volume), `traded (${pctSmart((g.volume / w.volume) * 100)} of volume)`) +
+        row(fmtUsd(g.volume / g.wallets), "average per wallet") +
+        row(fmtPct((g.maker_volume / g.volume) * 100, 0), "of it from resting (maker) orders");
+    };
+    renderChart(name, { title, note }, opt, {
+      cols: ["Group", "Wallets", "% of wallets", "Volume", "% of volume", "Avg per wallet", "Maker %"],
+      rows: groups.map((g) => [label(g), fmtInt(g.wallets), pctSmart((g.wallets / w.wallets) * 100), fmtUsd(g.volume),
+        pctSmart((g.volume / w.volume) * 100), fmtUsd(g.volume / g.wallets), fmtPct((g.maker_volume / g.volume) * 100, 0)]),
+    });
+  }
+
+  function renderConcentration() {
+    setPressed("#f-conc-window", state.concWindow);
+    setPressed("#f-conc-scale", state.concScale);
+    const w = C?.windows?.[state.concWindow];
+    const none = "<strong>Concentration data not built yet</strong><span>It's refreshed weekly by the daily pipeline.</span>";
+    if (!w) {
+      $("#conc-tiles").innerHTML = "";
+      for (const c of ["conc-curve", "conc-tiers", "conc-bands", "conc-weekly"]) renderChart(c, { title: "", empty: none });
+      return;
+    }
+    const n = w.wallets, span = windowLabel(w);
+    const top1 = tierSum(w, 0, 2, "volume") / w.volume, top1n = tierSum(w, 0, 2, "wallets");
+    const top10 = tierSum(w, 0, 4, "volume") / w.volume, top10n = tierSum(w, 0, 4, "wallets");
+    const bottom = w.tiers[w.tiers.length - 1];
+    const k90 = walletsForShare(w, 0.9), k50 = walletsForShare(w, 0.5);
+    const top1Maker = tierSum(w, 0, 2, "maker_volume") / tierSum(w, 0, 2, "volume");
+
+    $("#conc-lede").textContent = `How dollars traded in short-term price markets are spread across wallets. ` +
+      `From ${span}, ${fmtInt(n)} wallets traded ${fmtUsd(w.volume)}. Half of it came from just ${fmtInt(k50)} wallets (${pctSmart((k50 / n) * 100)}). ` +
+      `The top 1% (${fmtInt(top1n)} wallets) traded ${fmtPct(top1 * 100)}, and ${fmtPct(top1Maker * 100, 0)} of their volume came from resting (maker) orders, the signature of market makers. ` +
+      `Half of all wallets traded under ${fmtUsd(bottom.max)} each and together made up ${pctSmart((bottom.volume / w.volume) * 100)} of volume. ` +
+      `Polymarket Intl only: Kalshi and Polymarket US don't publish account-level trades.`;
+
+    drawTiles($("#conc-tiles"), [
+      { label: "Wallets that traded", value: fmtInt(n), note: `${fmtUsd(w.volume)} traded · ${span}` },
+      { label: "Top 1% of wallets", value: fmtPct(top1 * 100), note: `of volume · ${fmtInt(top1n)} wallets, ≥ ${fmtUsd(w.tiers[1].min)} each` },
+      { label: "Top 10% of wallets", value: fmtPct(top10 * 100), note: `of volume · ${fmtInt(top10n)} wallets, ≥ ${fmtUsd(w.tiers[3].min)} each` },
+      { label: "Bottom 50% of wallets", value: pctSmart((bottom.volume / w.volume) * 100), note: `of volume · ${fmtInt(bottom.wallets)} wallets, < ${fmtUsd(bottom.max)} each` },
+      { label: "90% of volume came from", value: `top ${pctSmart((k90 / n) * 100)}`, note: `of wallets · ${fmtInt(k90)} wallets` },
+      { label: "Gini coefficient", value: w.gini.toFixed(2), note: "0 = every wallet trades the same, 1 = one wallet trades it all" },
+    ]);
+
+    // cumulative share of volume vs top % of wallets
+    const log = state.concScale === "log";
+    const pts = w.curve.map(([r, v]) => [(r / n) * 100, (v / w.volume) * 100]);
+    const xmin = log ? Math.pow(10, Math.floor(Math.log10(100 / n))) : 0;
+    const marks = (log ? [0.1, 1, 10] : [5, 20, 50]).map((p) => [p, (topVolume(w, (p / 100) * n) / w.volume) * 100]);
+    const muted = css("--text-muted"), poly = css("--poly");
+    const opt = baseOption();
+    opt.xAxis = {
+      type: log ? "log" : "value", min: xmin, max: 100,
+      name: "Top % of wallets, ranked by volume", nameLocation: "middle", nameGap: 26, nameTextStyle: { color: muted, fontSize: 11 },
+      axisLine: { lineStyle: { color: css("--axis") } }, axisTick: { show: false }, splitLine: { show: false },
+      axisLabel: { color: muted, fontSize: 11, formatter: (v) => `${+v.toPrecision(2)}%` },
+    };
+    opt.grid.bottom = 28;
+    opt.yAxis.max = 100;
+    opt.yAxis.axisLabel.formatter = (v) => `${v}%`;
+    opt.series = [
+      lineSeries("Share of volume", pts, poly, { areaStyle: { color: poly, opacity: 0.08 } }),
+      lineSeries("Equal split", [[xmin || 100 / n, xmin || 100 / n], ...pts.map(([x]) => [x, x])], muted,
+        { lineStyle: { width: 1.5, color: muted, type: "dashed" } }),
+      { name: "marks", type: "scatter", data: marks, noLegend: true, silent: true, z: 5, symbolSize: 8,
+        itemStyle: { color: poly, borderColor: css("--surface-1"), borderWidth: 2 },
+        // the curve is concave: left of a point (log) or below-right of it (linear) is empty space
+        label: { show: true, position: log ? "left" : [8, 10], distance: 8, fontSize: 11, color: css("--text-secondary"),
+          formatter: (p) => `Top ${p.value[0]}% → ${p.value[1].toFixed(0)}%` } },
+    ];
+    opt.tooltip.formatter = (params) => {
+      const p = [].concat(params).find((x) => x.seriesName === "Share of volume");
+      if (!p) return "";
+      const [x, y] = p.value, m = css("--text-secondary");
+      return `<div style="font-size:12px;color:${m};margin-bottom:4px">Top ${pctSmart(x)} of wallets (${fmtInt((x / 100) * n)})</div>
+        <div><b>${fmtPct(y)}</b> <span style="color:${m}">of volume · ${fmtUsd((y / 100) * w.volume)}</span></div>`;
+    };
+    renderChart("conc-curve", { title: "Share of volume by the top wallets", note: `${span} · ${log ? "log" : "linear"} wallet axis` }, opt, {
+      cols: ["Top % of wallets", "Wallets", "% of volume"],
+      rows: [0.01, 0.1, 0.5, 1, 2, 5, 10, 20, 50, 100].filter((p) => (p / 100) * n >= 1)
+        .map((p) => [`${p}%`, fmtInt((p / 100) * n), fmtPct((topVolume(w, (p / 100) * n) / w.volume) * 100)]),
+    });
+
+    shareBars("conc-tiers", "Volume by wallet percentile", `Wallets ranked by volume · ${span}`, w, w.tiers, (t) => t.label,
+      (t) => `${t.label} of wallets · ${fmtUsd(t.min)} to ${fmtUsd(t.max)} each`);
+    shareBars("conc-bands", "Volume by wallet size", `Dollars each wallet traded · ${span}`, w, w.bands, (b) => bandLabel(b.k),
+      (b) => `Wallets that traded ${bandRange(b.k)}`);
+
+    // trend: share of each week's volume from the top wallets, over the selected range
+    const from = M ? bucketOf(M.days[Math.max(0, M.days.length - state.range)], "week") : "";
+    const weeks = (C.weekly || []).filter((x) => x.week >= from);
+    const wopt = baseOption();
+    wopt.xAxis.data = weeks.map((x) => fmtDate(x.week, "day"));
+    wopt.xAxis.boundaryGap = false;
+    wopt.yAxis.max = 100;
+    wopt.yAxis.axisLabel.formatter = (v) => `${v}%`;
+    const lines = [["Top 10%", "top10", 3], ["Top 5%", "top5", 2], ["Top 1%", "top1", 1], ["Top 10 wallets", "top10w", 4]];
+    wopt.series = lines.map(([nm, k, c]) => lineSeries(nm, weeks.map((x) => +(x[k] * 100).toFixed(2)), css(`--series-${c}`)));
+    const base = tooltipFormatter((v) => fmtPct(v), { total: false });
+    wopt.tooltip.formatter = (ps) => {
+      const x = weeks[[].concat(ps)[0].dataIndex], m = css("--text-secondary");
+      return base(ps) + `<div style="margin-top:4px;padding-top:4px;border-top:1px solid ${css("--grid")};color:${m}">
+        ${fmtInt(x.wallets)} wallets · ${fmtUsd(x.volume)} · Gini ${x.gini.toFixed(3)}</div>`;
+    };
+    renderChart("conc-weekly", {
+      title: "Concentration over time", note: "Share of each week's volume · weeks start Monday",
+      empty: weeks.length ? null : "<strong>No complete weeks in this range</strong>",
+    }, wopt, {
+      cols: ["Week", "Wallets", "Volume", "Top 1%", "Top 5%", "Top 10%", "Top 10 wallets", "Gini"],
+      rows: weeks.map((x) => [x.week, fmtInt(x.wallets), fmtUsd(x.volume), ...["top1", "top5", "top10", "top10w"].map((k) => fmtPct(x[k] * 100)), x.gini.toFixed(3)]),
+    });
+  }
+
   // ---------- leaders ----------
   const LB_WINDOWS = {
     polymarket: [["7d", "7 days"], ["30d", "30 days"]],
@@ -767,6 +931,7 @@
     renderTraders(tf);
     renderShare(tf);
     renderFees(tf);
+    renderConcentration();
   }
 
   function renderNotes() {
@@ -776,12 +941,13 @@
       <p><b>Venues.</b> <i>Polymarket Intl</i> is the on-chain exchange (Polygon), read from Dune. <i>Polymarket US</i> is the CFTC-regulated US exchange; it trades off-chain, so it comes from the exchange's public daily time-and-sales files. Its only short-term price markets today are BTC Up/Down 15m and 1h. Those files have no account IDs or taker side, so Polymarket US has no trader counts or leaderboard, and its cash is price × quantity. Its sessions run 5pm–5pm ET, so the most recent UTC day fills in a day later.</p>
       <p><b>Fees.</b> Polymarket Intl fees are the actual fees recorded on each on-chain fill. Takers pay them; makers pay none. Kalshi and Polymarket US don't publish fees, so they're estimated per trade from each venue's published formula, rate × contracts × price × (1 − price). Kalshi's rate is 7% for takers × the series' fee multiplier, plus 1.75% on series that also charge makers. Polymarket US uses its dated schedule, currently 6.95%. Both estimates slightly understate real fees: Kalshi rounds each order's fee up to the next cent, and neither estimate includes maker rebates or promotions. Kalshi's fee settings are today's, applied to all history. “Share of platform fees” divides short-term fees by the venue's total fees, calculated the same way.</p>
       <p><b>Traders.</b> Unique Polymarket wallets, makers and takers, from on-chain fills. Counts use approximate distinct counting, accurate to about 2%. Kalshi doesn't publish account-level trades.</p>
+      <p><b>Concentration.</b> Each Polymarket Intl wallet's volume is the dollars (USDC) it paid or received on its own side of every fill in these markets, as maker or taker, the same measure as the Top traders table. Every fill has two sides, so wallet volumes add up to about 2× the taker-side cash shown in the volume charts. Wallets are ranked by exact volume; percentile tiers round up, so the top 1% of 250 wallets is 3. A wallet isn't necessarily a person: one trader can run several wallets, which would make true concentration higher. The Gini coefficient is exact over all wallets. The 7-day and 30-day windows end on the date shown and refresh weekly; the trend uses complete Monday–Sunday weeks.</p>
       <p><b>Sources.</b> Polymarket Intl on-chain trades and Kalshi daily reports via Dune; Polymarket US time-and-sales files from polymarketexchange.com; Polymarket profiles via the Gamma API; Kalshi series metadata and leaderboard via Kalshi's public API; order books from the Polymarket CLOB and Kalshi APIs. History refreshes daily and order-book snapshots hourly. Days are UTC; the current partial day is excluded.</p>`;
   }
 
   async function load() {
     const get = (u) => fetch(u, { cache: "no-cache" }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
-    [M, L, OB] = await Promise.all([get("data/metrics.json"), get("data/leaders.json"), get("data/orderbook.json")]);
+    [M, L, OB, C] = await Promise.all([get("data/metrics.json"), get("data/leaders.json"), get("data/orderbook.json"), get("data/concentration.json")]);
     const upd = [M?.updated, OB?.updated].filter(Boolean).map((s) => s.replace("T", " ").slice(0, 16) + " UTC");
     $("#updated").textContent = M ? `History updated ${upd[0]}${upd[1] ? ` · order books ${upd[1]}` : ""}` : "No data yet";
     renderNotes();
@@ -795,6 +961,8 @@
   bindSeg("#f-group", "group", renderAll);
   bindSeg("#f-measure", "measure", renderAll);
   $("#f-cls").addEventListener("change", (e) => { state.cls = e.target.value; savePrefs(); renderAll(); });
+  bindSeg("#f-conc-window", "concWindow", renderConcentration);
+  bindSeg("#f-conc-scale", "concScale", renderConcentration);
   bindSeg("#f-lb-platform", "lbPlatform", renderLeaders);
   bindSeg("#f-ob-asset", "obAsset", renderLiquidity);
   bindSeg("#f-ob-res", "obRes", renderLiquidity);

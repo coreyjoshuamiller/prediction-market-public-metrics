@@ -19,6 +19,7 @@ GitHub's cron is best-effort (runs can be hours late or dropped), which is why t
 - **Volume by market**: stacked by market (asset × duration), asset, duration, asset class or contract type. Day, week or month buckets, over the last 30 days to 12 months.
 - **Traders per market**: unique Polymarket wallets, makers and takers, per period. Kalshi doesn't publish account-level trades.
 - **Share of platform volume**: in-scope volume as a % of each venue's total (Polymarket Intl, Polymarket US, Kalshi), plus a head-to-head of the venues.
+- **Volume concentration**: how Polymarket Intl volume is spread across wallets (7d and 30d windows): share of volume by the top X% of wallets, percentile tiers, wallet-size bands, Gini, and a weekly trend of top 1% / 5% / 10% share. Refreshed weekly by `pipeline/concentration.py`.
 - **Top traders**: Polymarket wallets ranked from on-chain fills (7d daily, 30d weekly), with realized PnL, maker %, and linked X handles from Polymarket profiles. Kalshi uses its public Crypto and Financials leaderboards.
 - **Order book liquidity**: dollars at the best bid and offer, depth within 5¢, spread, and how depth evolves through the 15-minute window.
 
@@ -69,4 +70,5 @@ No third-party Python packages are needed.
 ## Costs
 
 - **Dune:** about 30–35 credits for each day's full refresh (more on the 1st–3rd of a month, which re-finalizes the previous month), so roughly 1,000 a month. Light retries cost about 1 credit.
+- **Volume concentration:** about 16 credits on Mondays (7d and 30d windows) plus about 1 per new week, so roughly 70 a month. The one-time weekly backfill from 2025-09-01 cost about 25.
 - **GitHub Actions:** free, because the repo is public.

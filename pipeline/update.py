@@ -9,7 +9,7 @@ import os
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date, datetime, timedelta, timezone
 
-from . import leaders, pmus
+from . import concentration, leaders, pmus
 from .dune import run_sql
 from .kalshi_series import build as build_kalshi_series, build_fees as build_kalshi_fees
 from .queries import kalshi_series_daily, poly_activity, poly_fees, poly_totals
@@ -245,6 +245,10 @@ def daily(run_leaders=True, today=None):
     pmus.update(last_n=3)
     if run_leaders:
         leaders.update(today)
+        try:  # a new, non-essential section: don't let it fail the refresh
+            concentration.update(today)
+        except Exception as e:
+            print(f"  concentration update failed: {e}")
 
 
 def main():

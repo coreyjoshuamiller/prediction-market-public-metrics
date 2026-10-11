@@ -131,6 +131,87 @@ SELECT d, '__TOTAL__', NULL, NULL, NULL, sum(fee) FROM t GROUP BY 1
 """
 
 
+def _poly_wallet_volume(start, end, by_week=False):
+    """CTEs ending in `w`: dollars each wallet traded in in-scope markets over [start, end),
+    counting its own side of every fill (maker or taker), so wallets sum to 2x taker cash."""
+    wk = "date(date_trunc('week', tr.block_time)) AS wk, " if by_week else ""
+    return f"""
+WITH {_poly_markets_cte()},
+t AS (
+  SELECT {wk}tr.maker AS trader, tr.amount, tr.is_taker_side
+  FROM polymarket_polygon.market_trades tr
+  JOIN cm ON cm.condition_id = tr.condition_id
+  WHERE tr.block_time >= timestamp '{start}' AND tr.block_time < timestamp '{end}'
+),
+w AS (
+  SELECT {"wk, " if by_week else ""}trader, sum(amount) AS vol, coalesce(sum(amount) FILTER (WHERE NOT is_taker_side), 0) AS maker_vol
+  FROM t GROUP BY {"1, 2" if by_week else "1"}
+  HAVING sum(amount) > 0
+)"""
+
+
+# percentile tiers for the concentration breakdown: (label, upper bound as a fraction of wallets)
+CONC_TIERS = [("Top 0.1%", 0.001), ("0.1–1%", 0.01), ("1–5%", 0.05), ("5–10%", 0.10),
+              ("10–25%", 0.25), ("25–50%", 0.50), ("Bottom 50%", 1.0)]
+
+
+def poly_concentration(start, end):
+    """How volume is spread across wallets in in-scope markets over [start, end).
+
+    One result set, told apart by `kind`:
+      curve  cumulative volume of the top `rn` wallets (by volume) at ~40 log-spaced ranks per decade
+      tier   wallets / volume / maker volume per percentile tier (CONC_TIERS)
+      band   wallets / volume / maker volume per order of magnitude of dollars traded (k = floor(log10))
+      stats  wallet count, total volume and the exact Gini coefficient
+    """
+    tier = " ".join(f"WHEN rn <= greatest(1, ceil(n * {p})) THEN '{label}'" for label, p in CONC_TIERS)
+    return f"""
+{_poly_wallet_volume(start, end)},
+r AS (
+  SELECT vol, maker_vol,
+    row_number() OVER (ORDER BY vol DESC) AS rn,
+    count(*) OVER () AS n,
+    sum(vol) OVER (ORDER BY vol DESC ROWS UNBOUNDED PRECEDING) AS cum
+  FROM w
+),
+pts AS (SELECT DISTINCT cast(ceil(power(10, x / 40.0)) AS bigint) AS rn FROM unnest(sequence(0, 320)) AS s(x))
+SELECT 'curve' AS kind, cast(r.rn AS varchar) AS k, r.rn, r.n, r.cum AS vol, NULL AS maker_vol, NULL AS wallets, NULL AS lo, NULL AS hi
+FROM r WHERE r.rn IN (SELECT rn FROM pts) OR r.rn = r.n
+UNION ALL
+SELECT 'tier', CASE {tier} END, NULL, max(n), sum(vol), sum(maker_vol), count(*), min(vol), max(vol)
+FROM r GROUP BY 2
+UNION ALL
+SELECT 'band', cast(cast(floor(log10(greatest(vol, 1))) AS integer) AS varchar), NULL, max(n), sum(vol), sum(maker_vol), count(*), min(vol), max(vol)
+FROM r GROUP BY 2
+UNION ALL
+-- Gini over wallets in ascending order i = n - rn + 1: 2*sum(i*x) / (n*sum(x)) - (n+1)/n
+SELECT 'stats', 'all', NULL, max(n), sum(vol), sum(maker_vol), count(*),
+  2 * sum((n - rn + 1) * vol) / (max(n) * sum(vol)) - (max(n) + 1.0) / max(n), NULL
+FROM r
+"""
+
+
+def poly_concentration_weekly(start, end):
+    """Per week (Monday start) in [start, end): wallets, volume, the share of it traded by the
+    top 1% / 5% / 10% of wallets and the top 10 wallets, and the Gini coefficient."""
+    return f"""
+{_poly_wallet_volume(start, end, by_week=True)},
+r AS (
+  SELECT wk, vol,
+    row_number() OVER (PARTITION BY wk ORDER BY vol DESC) AS rn,
+    count(*) OVER (PARTITION BY wk) AS n
+  FROM w
+)
+SELECT wk, max(n) AS wallets, sum(vol) AS vol,
+  sum(vol) FILTER (WHERE rn <= greatest(1, ceil(n * 0.01))) / sum(vol) AS top1,
+  sum(vol) FILTER (WHERE rn <= greatest(1, ceil(n * 0.05))) / sum(vol) AS top5,
+  sum(vol) FILTER (WHERE rn <= greatest(1, ceil(n * 0.10))) / sum(vol) AS top10,
+  sum(vol) FILTER (WHERE rn <= 10) / sum(vol) AS top10w,
+  2 * sum((n - rn + 1) * vol) / (max(n) * sum(vol)) - (max(n) + 1.0) / max(n) AS gini
+FROM r GROUP BY 1
+"""
+
+
 def poly_leaders(start, end, limit=150):
     """Top traders in in-scope markets over [start, end): volume, trades, maker share,
     and realized PnL on markets that have resolved (cashflows + $1 per winning share held)."""

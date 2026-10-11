@@ -1,4 +1,4 @@
-"""Build site/data/metrics.json (+ copy leaders.json) from the CSVs in data/."""
+"""Build site/data/metrics.json (+ copy leaders.json, concentration.json) from the CSVs in data/."""
 import csv
 import json
 import os
@@ -144,9 +144,10 @@ def build():
         json.dump(out, fh, separators=(",", ":"))
     print(f"metrics.json: {len(days)} days, {len(poly_series)} poly + {len(kalshi_series)} kalshi + {len(us_series)} poly US series, "
           f"{os.path.getsize(path)/1e6:.2f} MB")
-    lp = os.path.join(DATA, "leaders.json")
-    if os.path.exists(lp):
-        shutil.copy(lp, os.path.join(SITE, "leaders.json"))
+    for name in ("leaders.json", "concentration.json"):
+        src = os.path.join(DATA, name)
+        if os.path.exists(src):
+            shutil.copy(src, os.path.join(SITE, name))
 
 
 if __name__ == "__main__":
