@@ -240,7 +240,7 @@
 "x": ""
 },
 "0x2a54d7c965b3284964fdb13a132129d50f62f4ae": {
-"fetched": "2026-10-03",
+"fetched": "2026-10-11",
 "image": "",
 "name": "0x2a54d7c965b3284964FDB13a132129D50F62F4AE-1777904781392",
 "pseudonym": "Impeccable-Sake",
@@ -567,11 +567,27 @@
 "verified": false,
 "x": ""
 },
+"0x69720b2a8f434a1cec463a45c649b7896db1ebcc": {
+"fetched": "2026-10-11",
+"image": "",
+"name": "stonefield56",
+"pseudonym": "Stained-Meaning",
+"verified": false,
+"x": ""
+},
 "0x6a88c5ecd262e2c42e78bad8e6db7ab3c4e4b859": {
 "fetched": "2026-10-06",
 "image": "",
 "name": "pelik",
 "pseudonym": "Short-Convention",
+"verified": false,
+"x": ""
+},
+"0x6bfcdf6d90886487e1c70b84776f148dba73b939": {
+"fetched": "2026-10-11",
+"image": "",
+"name": "asyncio",
+"pseudonym": "Smart-Trainer",
 "verified": false,
 "x": ""
 },
@@ -720,7 +736,7 @@
 "x": ""
 },
 "0x85a186d1a0be8593bf7eb5d323f96d932bc991b9": {
-"fetched": "2026-10-03",
+"fetched": "2026-10-11",
 "image": "",
 "name": "lkojihfafaf",
 "pseudonym": "Imperturbable-Photographer-Intentionality",
@@ -912,7 +928,7 @@
 "x": ""
 },
 "0xae68447c01fc86864fd0e5e58aae986eeb8abf83": {
-"fetched": "2026-09-29",
+"fetched": "2026-10-11",
 "image": "",
 "name": "sdfljsegoisvn",
 "pseudonym": "Worn-Slip",
