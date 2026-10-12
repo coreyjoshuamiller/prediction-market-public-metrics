@@ -14,6 +14,7 @@ import json
 import os
 import subprocess
 import time
+from concurrent.futures import ThreadPoolExecutor
 from datetime import date, timedelta
 
 from .net import get_json, post_json
@@ -86,11 +87,23 @@ def update(addresses):
     cutoff = (date.today() - timedelta(days=TTL_DAYS)).isoformat()
     todo = [a for a in dict.fromkeys(a.lower() for a in addresses) if cache.get(a, {}).get("checked", "") < cutoff]
     print(f"reach: checking {len(todo)} wallets")
-    for a in todo:
-        kind, signer = account_signer(a)
-        cache[a] = {"type": kind, "signer": signer, "profiles": web3bio_profiles(signer) if signer else [],
-                    "xmtp": False, "checked": date.today().isoformat()}
+
+    def check(a):
+        try:
+            kind, signer = account_signer(a)
+            profiles = web3bio_profiles(signer) if signer else []
+        except Exception as e:  # leave it uncached so the next run retries it
+            print(f"  reach {a}: {e}")
+            return a, None
         time.sleep(0.3)  # be gentle with the free profile API
+        return a, {"type": kind, "signer": signer, "profiles": profiles, "xmtp": False, "checked": date.today().isoformat()}
+
+    # a few at a time: the first run after widening the leaderboard checks hundreds of wallets
+    with ThreadPoolExecutor(4) as ex:
+        for a, entry in ex.map(check, todo):
+            if entry:
+                cache[a] = entry
+    todo = [a for a in todo if a in cache]
     xm = xmtp_reachable([cache[a]["signer"] for a in todo if cache[a]["signer"]])
     for a in todo:
         s = cache[a]["signer"]

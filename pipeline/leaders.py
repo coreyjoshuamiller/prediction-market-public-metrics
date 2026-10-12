@@ -20,6 +20,7 @@ OUT = os.path.join(ROOT, "data", "leaders.json")
 PROFILES = os.path.join(ROOT, "data", "poly_profiles.json")
 KALSHI_SOCIAL = "https://api.elections.kalshi.com/v1/social"
 PROFILE_TTL_DAYS = 7
+POLY_TOP = 500  # wallets ranked per Polymarket window
 
 
 def _load(path, default):
@@ -59,7 +60,7 @@ def poly_profiles(addresses):
 def poly_window(days, today):
     end = today
     start = end - timedelta(days=days)
-    rows = run_sql(poly_leaders(start, end, limit=100), label=f"leaders {days}d")
+    rows = run_sql(poly_leaders(start, end, limit=POLY_TOP), label=f"leaders {days}d")
     profs = poly_profiles([r["trader"] for r in rows])
     out = []
     for i, r in enumerate(rows, 1):
