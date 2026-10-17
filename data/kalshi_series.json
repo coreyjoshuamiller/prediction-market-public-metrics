@@ -863,6 +863,14 @@
   "title": "Platinum 15-minute",
   "category": "Commodities"
  },
+ "KXPLATINUMH": {
+  "asset": "Platinum",
+  "asset_class": "Commodities",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "Platinum Hourly",
+  "category": "Commodities"
+ },
  "KXRIPPLE": {
   "asset": "XRP",
   "asset_class": "Crypto",
