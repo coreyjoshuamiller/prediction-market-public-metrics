@@ -28358,3 +28358,101 @@ d,asset,asset_class,dur,ctype,fees
 2026-10-18,ZEC,Crypto,4h,Up/Down,0.05
 2026-10-18,ZEC,Crypto,5m,Up/Down,6.43
 2026-10-18,__TOTAL__,,,,1449148.53
+2026-10-19,AAPL,Equities,1d,Strike,46.61
+2026-10-19,AAPL,Equities,1d,Up/Down,35.29
+2026-10-19,ABNB,Equities,1d,Up/Down,2.38
+2026-10-19,AMZN,Equities,1d,Strike,87.64
+2026-10-19,AMZN,Equities,1d,Up/Down,3.1
+2026-10-19,BNB,Crypto,15m,Up/Down,598.14
+2026-10-19,BNB,Crypto,1d,Up/Down,3.02
+2026-10-19,BNB,Crypto,1h,Up/Down,44.4
+2026-10-19,BNB,Crypto,4h,Up/Down,12.48
+2026-10-19,BNB,Crypto,5m,Up/Down,426.5
+2026-10-19,BTC,Crypto,15m,Up/Down,29121.5
+2026-10-19,BTC,Crypto,1d,Range,891.08
+2026-10-19,BTC,Crypto,1d,Strike,5274.28
+2026-10-19,BTC,Crypto,1d,Up/Down,1416.13
+2026-10-19,BTC,Crypto,1h,Strike,57.83
+2026-10-19,BTC,Crypto,1h,Up/Down,7675.28
+2026-10-19,BTC,Crypto,4h,Up/Down,739.15
+2026-10-19,BTC,Crypto,5m,Up/Down,125698.6
+2026-10-19,COIN,Equities,1d,Up/Down,2.75
+2026-10-19,DAX,Equities,1d,Up/Down,0.05
+2026-10-19,DOGE,Crypto,15m,Up/Down,560.31
+2026-10-19,DOGE,Crypto,1d,Up/Down,1.73
+2026-10-19,DOGE,Crypto,1h,Up/Down,9.32
+2026-10-19,DOGE,Crypto,4h,Up/Down,11.41
+2026-10-19,DOGE,Crypto,5m,Up/Down,604.71
+2026-10-19,DXY,FX & Rates,1d,Up/Down,2.06
+2026-10-19,Dow,Equities,1d,Up/Down,77.58
+2026-10-19,ETH,Crypto,15m,Up/Down,4284.79
+2026-10-19,ETH,Crypto,1d,Range,431.34
+2026-10-19,ETH,Crypto,1d,Strike,1927.49
+2026-10-19,ETH,Crypto,1d,Up/Down,386.99
+2026-10-19,ETH,Crypto,1h,Strike,39.5
+2026-10-19,ETH,Crypto,1h,Up/Down,994.61
+2026-10-19,ETH,Crypto,4h,Up/Down,173.98
+2026-10-19,ETH,Crypto,5m,Up/Down,10696.74
+2026-10-19,EUR/USD,FX & Rates,1d,Up/Down,0.02
+2026-10-19,EWY,Equities,1d,Up/Down,0.13
+2026-10-19,FTSE 100,Equities,1d,Up/Down,0.08
+2026-10-19,GOOGL,Equities,1d,Strike,59.41
+2026-10-19,GOOGL,Equities,1d,Up/Down,17.79
+2026-10-19,Gold,Commodities,1d,Up/Down,39.05
+2026-10-19,HOOD,Equities,1d,Up/Down,1.22
+2026-10-19,HYPE,Crypto,15m,Up/Down,341.26
+2026-10-19,HYPE,Crypto,1d,Up/Down,0.15
+2026-10-19,HYPE,Crypto,1h,Up/Down,1.1
+2026-10-19,HYPE,Crypto,4h,Up/Down,2.11
+2026-10-19,HYPE,Crypto,5m,Up/Down,200.69
+2026-10-19,META,Equities,1d,Strike,1.32
+2026-10-19,META,Equities,1d,Up/Down,22.09
+2026-10-19,MSFT,Equities,1d,Strike,34.8
+2026-10-19,MSFT,Equities,1d,Up/Down,28.79
+2026-10-19,MU,Equities,1d,Up/Down,4.58
+2026-10-19,NFLX,Equities,1d,Strike,0.11
+2026-10-19,NFLX,Equities,1d,Up/Down,4.87
+2026-10-19,NVDA,Equities,1d,Strike,100.92
+2026-10-19,NVDA,Equities,1d,Up/Down,43.34
+2026-10-19,NYSE Comp,Equities,1d,Up/Down,0.01
+2026-10-19,Nat Gas,Commodities,1d,Up/Down,1.3
+2026-10-19,OPEN,Equities,1d,Strike,0.03
+2026-10-19,OPEN,Equities,1d,Up/Down,3.12
+2026-10-19,PLTR,Equities,1d,Up/Down,2.22
+2026-10-19,RKLB,Equities,1d,Up/Down,1.79
+2026-10-19,Russell 2000,Equities,1d,Up/Down,10.46
+2026-10-19,S&P 500,Equities,1d,Strike,57.73
+2026-10-19,S&P 500,Equities,1d,Up/Down,979.14
+2026-10-19,SOL,Crypto,15m,Up/Down,1297.73
+2026-10-19,SOL,Crypto,1d,Range,109.59
+2026-10-19,SOL,Crypto,1d,Strike,77.37
+2026-10-19,SOL,Crypto,1d,Up/Down,47.3
+2026-10-19,SOL,Crypto,1h,Up/Down,193.49
+2026-10-19,SOL,Crypto,4h,Up/Down,21.25
+2026-10-19,SOL,Crypto,5m,Up/Down,3289.4
+2026-10-19,SPCX,Equities,1d,Strike,4.57
+2026-10-19,SPCX,Equities,1d,Up/Down,21.86
+2026-10-19,Silver,Commodities,1d,Up/Down,23.93
+2026-10-19,TSLA,Equities,1d,Strike,55.31
+2026-10-19,TSLA,Equities,1d,Up/Down,31.47
+2026-10-19,USD/BRL,FX & Rates,1d,Up/Down,0.0
+2026-10-19,USD/CHF,FX & Rates,1d,Up/Down,0.0
+2026-10-19,USD/JPY,FX & Rates,1d,Up/Down,0.01
+2026-10-19,USD/KRW,FX & Rates,1d,Up/Down,0.0
+2026-10-19,USD/MXN,FX & Rates,1d,Up/Down,0.01
+2026-10-19,USD/NOK,FX & Rates,1d,Up/Down,0.01
+2026-10-19,USD/SEK,FX & Rates,1d,Up/Down,0.0
+2026-10-19,USD/ZAR,FX & Rates,1d,Up/Down,0.0
+2026-10-19,WTI Oil,Commodities,1d,Strike,139.16
+2026-10-19,WTI Oil,Commodities,1d,Up/Down,101.93
+2026-10-19,XRP,Crypto,15m,Up/Down,847.15
+2026-10-19,XRP,Crypto,1d,Range,2.35
+2026-10-19,XRP,Crypto,1d,Strike,21.19
+2026-10-19,XRP,Crypto,1d,Up/Down,20.02
+2026-10-19,XRP,Crypto,1h,Up/Down,45.88
+2026-10-19,XRP,Crypto,4h,Up/Down,48.44
+2026-10-19,XRP,Crypto,5m,Up/Down,1231.98
+2026-10-19,ZEC,Crypto,15m,Up/Down,5.35
+2026-10-19,ZEC,Crypto,4h,Up/Down,0.02
+2026-10-19,ZEC,Crypto,5m,Up/Down,2.55
+2026-10-19,__TOTAL__,,,,735370.16
