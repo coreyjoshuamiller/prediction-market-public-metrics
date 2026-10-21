@@ -327,6 +327,14 @@
   "title": "BNB Directional",
   "category": "Crypto"
  },
+ "KXBRENT15M": {
+  "asset": "Brent Oil",
+  "asset_class": "Commodities",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "Brent 15-minute",
+  "category": "Commodities"
+ },
  "KXBRENTD": {
   "asset": "Brent Oil",
   "asset_class": "Commodities",
@@ -527,6 +535,14 @@
   "title": "EURUSD Hourly",
   "category": "Financials"
  },
+ "KXFTSED": {
+  "asset": "FTSE 100",
+  "asset_class": "Equities",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "FTSE 100 daily close",
+  "category": "Financials"
+ },
  "KXGBP": {
   "asset": "GBP/USD",
   "asset_class": "FX & Rates",
@@ -614,6 +630,14 @@
   "ctype": "Strike",
   "title": "Gold Hourly",
   "category": "Commodities"
+ },
+ "KXHSID": {
+  "asset": "Hang Seng",
+  "asset_class": "Equities",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "Hang Seng Index daily close",
+  "category": "Financials"
  },
  "KXHYPE": {
   "asset": "HYPE",
@@ -887,6 +911,14 @@
   "title": "Ripple price Above/below",
   "category": "Crypto"
  },
+ "KXRUTD": {
+  "asset": "Russell 2000",
+  "asset_class": "Equities",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "Russell 2000 daily close",
+  "category": "Financials"
+ },
  "KXSHIBA": {
   "asset": "SHIB",
   "asset_class": "Crypto",
@@ -958,6 +990,14 @@
   "ctype": "Range",
   "title": "SOL Range",
   "category": "Crypto"
+ },
+ "KXSX5ED": {
+  "asset": "EUR/USD",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "EURO STOXX 50 daily close",
+  "category": "Financials"
  },
  "KXTNOTED": {
   "asset": "UST Yields",
