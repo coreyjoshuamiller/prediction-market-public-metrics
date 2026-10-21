@@ -21,10 +21,12 @@
   // ~20 series, past the 8 base hues, so the palette extends to 3 tones of each hue (24 slots).
   const OTHER_MAX = 0.03;
   const PALETTE_SIZE = 24;
-  const PLATFORMS = { polymarket: "Polymarket Intl", polymarket_us: "Polymarket US", kalshi: "Kalshi" };
+  const PLATFORMS = { polymarket: "Polymarket Intl", polymarket_us: "Polymarket US", kalshi: "Kalshi", predict: "Predict.fun" };
   // venues with volume history (Polymarket US has no order-book or trader data)
-  const VENUES = ["polymarket", "polymarket_us", "kalshi"];
-  const VENUE_COLOR = { polymarket: "--poly", polymarket_us: "--poly-us", kalshi: "--kalshi" };
+  const VENUES = ["polymarket", "polymarket_us", "kalshi", "predict"];
+  // venues with on-chain fills, so unique-wallet counts
+  const TRADER_VENUES = ["polymarket", "predict"];
+  const VENUE_COLOR = { polymarket: "--poly", polymarket_us: "--poly-us", kalshi: "--kalshi", predict: "--predict" };
   const venueColor = (p) => css(VENUE_COLOR[p]);
   const hasVenue = (p) => !!M?.[p]?.series;
   // first day a venue had any short-term price volume (Polymarket US only listed BTC Up/Down on 2026-09-22)
@@ -398,12 +400,14 @@
       tiles.push({ label: `${PLATFORMS[p]} volume`, key: venueColor(p), value: fmtUsd(cur), delta: prev ? (cur / prev - 1) * 100 : null, note: since });
       tiles.push({ label: `${PLATFORMS[p]} share of platform`, key: venueColor(p), value: fmtPct(tot ? (cur / tot) * 100 : null), note: since });
     }
-    // Polymarket average daily unique traders in scope (total or class)
-    const tr = M.polymarket.traders.day || {};
-    const src = state.cls ? tr.class?.[state.cls] : tr.total?.All;
-    let s = 0, c = 0;
-    if (src) for (const i of tf.idx) { const v = src[M.days[i]]; if (v != null) { s += v; c++; } }
-    tiles.push({ label: "Polymarket Intl avg daily traders", key: venueColor("polymarket"), value: c ? fmtInt(s / c) : "–" });
+    // average daily unique traders in scope (total or class), for venues with on-chain fills
+    for (const p of TRADER_VENUES.filter(hasVenue)) {
+      const tr = M[p].traders?.day || {};
+      const src = state.cls ? tr.class?.[state.cls] : tr.total?.All;
+      let s = 0, c = 0;
+      if (src) for (const i of tf.idx) { const v = src[M.days[i]]; if (v != null) { s += v; c++; } }
+      tiles.push({ label: `${PLATFORMS[p]} avg daily traders`, key: venueColor(p), value: c ? fmtInt(s / c) : "–" });
+    }
     const pv = ["polymarket", "polymarket_us"].filter(hasVenue).reduce((a, p) => a + sumRange(scopeTotal(p, tf), 0, n - 1), 0);
     const kv = sumRange(scopeTotal("kalshi", tf), 0, n - 1);
     tiles.push({ label: "Kalshi : Polymarket (Intl + US)", value: pv ? `${(kv / pv).toFixed(1)}×` : "–" });
@@ -434,31 +438,30 @@
   function renderTraders(tf) {
     const dimName = TRADER_DIM[state.group];
     const period = state.gran;
-    const T = M.polymarket.traders?.[period]?.[dimName] || {};
     const color = colorFor(state.group, tf);
-    // same markets the Polymarket volume chart lists (no "Other": unique counts don't add up)
-    let keys = shownKeys(state.group, tf, ["polymarket"]).filter((k) => T[k]);
     // class filter can only be honoured when the split is by an entity that belongs to one class
-    const classNote = state.cls && !["market", "asset", "cls"].includes(state.group) ? " · class filter not applied to this split" : "";
-    if (state.cls && !["market", "asset", "cls"].includes(state.group)) keys = (M.order[state.group] || []).filter((k) => T[k]);
+    const classOff = state.cls && !["market", "asset", "cls"].includes(state.group);
+    const classNote = classOff ? " · class filter not applied to this split" : "";
     const cats = bucketLabels(tf);
-    const series = keys.map((k) => barSeries(k, tf.buckets.map((b) => T[k][b] ?? 0), color(k)));
-    markPartial(roundTops(series), tf);
-    const totSrc = state.cls ? M.polymarket.traders?.[period]?.class?.[state.cls] : M.polymarket.traders?.[period]?.total?.All;
-    if (totSrc) series.push({ ...lineSeries("All (unique)", tf.buckets.map((b) => totSrc[b] ?? null), css("--text-secondary")), stack: null, noLegend: false });
-    const opt = baseOption();
-    opt.xAxis.data = cats;
-    opt.yAxis.axisLabel.formatter = (v) => fmtCompact(v);
-    opt.tooltip.formatter = tooltipFormatter(fmtInt, { total: false });
-    opt.series = series;
-    const table = { cols: ["Period", ...keys, "All (unique)"], rows: tf.buckets.map((b) => [b, ...keys.map((k) => fmtInt(T[k][b])), fmtInt(totSrc?.[b])]) };
-    const avail = entityOrder(state.group).filter((k) => T[k]).length;
-    const hidden = keys.length < avail ? ` · ${keys.length} largest by volume` : "";
-    renderChart("tr-polymarket", { title: "Polymarket Intl", note: `Unique wallets per ${period}${hidden}${classNote}`, keyColor: css("--poly"), empty: keys.length ? null : "<strong>No trader data for this selection</strong>" }, opt, table);
-    renderChart("tr-kalshi", {
-      title: "Kalshi", keyColor: css("--kalshi"), note: "",
-      empty: `<strong>Not published by Kalshi or Polymarket US</strong><span>Neither exposes account IDs on trades, so trader counts per market can't be computed from public data.</span><span>See the Kalshi leaderboard in Top traders below.</span>`,
-    });
+    for (const p of TRADER_VENUES.filter(hasVenue)) {
+      const T = M[p].traders?.[period]?.[dimName] || {};
+      // same markets the venue's volume chart lists (no "Other": unique counts don't add up)
+      let keys = shownKeys(state.group, tf, [p]).filter((k) => T[k]);
+      if (classOff) keys = (M.order[state.group] || []).filter((k) => T[k]);
+      const series = keys.map((k) => barSeries(k, tf.buckets.map((b) => T[k][b] ?? 0), color(k)));
+      markPartial(roundTops(series), tf);
+      const totSrc = state.cls ? M[p].traders?.[period]?.class?.[state.cls] : M[p].traders?.[period]?.total?.All;
+      if (totSrc) series.push({ ...lineSeries("All (unique)", tf.buckets.map((b) => totSrc[b] ?? null), css("--text-secondary")), stack: null, noLegend: false });
+      const opt = baseOption();
+      opt.xAxis.data = cats;
+      opt.yAxis.axisLabel.formatter = (v) => fmtCompact(v);
+      opt.tooltip.formatter = tooltipFormatter(fmtInt, { total: false });
+      opt.series = series;
+      const table = { cols: ["Period", ...keys, "All (unique)"], rows: tf.buckets.map((b) => [b, ...keys.map((k) => fmtInt(T[k][b])), fmtInt(totSrc?.[b])]) };
+      const avail = entityOrder(state.group).filter((k) => T[k]).length;
+      const hidden = keys.length < avail ? ` · ${keys.length} largest by volume` : "";
+      renderChart(`tr-${p}`, { title: PLATFORMS[p], note: `Unique wallets per ${period}${hidden}${classNote}`, keyColor: venueColor(p), empty: keys.length ? null : "<strong>No trader data for this selection</strong>" }, opt, table);
+    }
   }
 
   function renderShareLines(tf, measure, shareChart, shareTitle, totalsChart, totalsTitle, note) {
@@ -499,6 +502,7 @@
     polymarket: "actual fees (on-chain)",
     polymarket_us: "estimated from fee schedule",
     kalshi: "estimated from fee schedule",
+    predict: "actual fees (on-chain)",
   };
   function renderFees(tf) {
     const n = tf.buckets.length;
@@ -936,13 +940,13 @@
 
   function renderNotes() {
     $("#notes").innerHTML = `
-      <p><b>Scope.</b> Markets that settle on a financial price within one day: Polymarket Up/Down (5m, 15m, 1h, 4h, daily), “above X” strike ladders (hourly and daily), price-range and same-day “reach / dip to” markets; Kalshi 15-minute Up/Down plus hourly and daily above/below and range series. Covers crypto, equity indices and single stocks, commodities, and FX and Treasury yields. Weekly, monthly and longer-dated markets are excluded.</p>
-      <p><b>Volume.</b> <i>Notional</i> counts contracts traded, each paying $1 if it wins. For Polymarket that's shares on the taker side of each fill; for Kalshi it's contracts from Kalshi's daily market report. <i>Cash</i> is dollars paid: the taker's USDC on Polymarket Intl, from on-chain fills. On Kalshi and Polymarket US it's the traded (yes-side) price × contracts, because neither publishes which side the taker was on. Polymarket's own site shows roughly 2× these numbers because it counts both sides of every trade.</p>
-      <p><b>Venues.</b> <i>Polymarket Intl</i> is the on-chain exchange (Polygon), read from Dune. <i>Polymarket US</i> is the CFTC-regulated US exchange; it trades off-chain, so it comes from the exchange's public daily time-and-sales files. Its only short-term price markets today are BTC Up/Down 15m and 1h. Those files have no account IDs or taker side, so Polymarket US has no trader counts or leaderboard, and its cash is price × quantity. Its sessions run 5pm–5pm ET, so the most recent UTC day fills in a day later.</p>
-      <p><b>Fees.</b> Polymarket Intl fees are the actual fees recorded on each on-chain fill. Takers pay them; makers pay none. Kalshi and Polymarket US don't publish fees, so they're estimated per trade from each venue's published formula, rate × contracts × price × (1 − price). Kalshi's rate is 7% for takers × the series' fee multiplier, plus 1.75% on series that also charge makers. Polymarket US uses its dated schedule, currently 6.95%. Both estimates slightly understate real fees: Kalshi rounds each order's fee up to the next cent, and neither estimate includes maker rebates or promotions. Kalshi's fee settings are today's, applied to all history. “Share of platform fees” divides short-term fees by the venue's total fees, calculated the same way.</p>
-      <p><b>Traders.</b> Unique Polymarket wallets, makers and takers, from on-chain fills. Counts use approximate distinct counting, accurate to about 2%. Kalshi doesn't publish account-level trades.</p>
+      <p><b>Scope.</b> Markets that settle on a financial price within one day: Polymarket Up/Down (5m, 15m, 1h, 4h, daily), “above X” strike ladders (hourly and daily), price-range and same-day “reach / dip to” markets; Kalshi 15-minute Up/Down plus hourly and daily above/below and range series; every Predict.fun Up/Down market (5m, 15m, 1h, daily). Covers crypto, equity indices and single stocks, commodities, and FX and Treasury yields. Weekly, monthly and longer-dated markets are excluded.</p>
+      <p><b>Volume.</b> <i>Notional</i> counts contracts traded, each paying $1 if it wins. For Polymarket and Predict.fun that's shares on the taker side of each fill; for Kalshi it's contracts from Kalshi's daily market report. <i>Cash</i> is dollars paid: the taker's USDC on Polymarket Intl and USDT on Predict.fun, from on-chain fills. On Kalshi and Polymarket US it's the traded (yes-side) price × contracts, because neither publishes which side the taker was on. Polymarket's own site shows roughly 2× these numbers because it counts both sides of every trade.</p>
+      <p><b>Venues.</b> <i>Polymarket Intl</i> is the on-chain exchange (Polygon), read from Dune. <i>Polymarket US</i> is the CFTC-regulated US exchange; it trades off-chain, so it comes from the exchange's public daily time-and-sales files. Its only short-term price markets today are BTC Up/Down 15m and 1h. Those files have no account IDs or taker side, so Polymarket US has no trader counts or leaderboard, and its cash is price × quantity. Its sessions run 5pm–5pm ET, so the most recent UTC day fills in a day later. <i>Predict.fun</i> is an on-chain exchange on BNB Chain, built on the same contract design as Polymarket and read from Dune. Its markets are identified on-chain: 5m and 15m rounds from its Chainlink Up/Down contract (by price feed), hourly and daily markets from the title stored with each UMA question. History starts with its first Up/Down market in November 2025; its 15m BTC series stopped on April 2, 2026 and relaunched on Chainlink pricing on April 27.</p>
+      <p><b>Fees.</b> Polymarket Intl and Predict.fun fees are the actual fees recorded on each on-chain fill. Takers pay them; makers pay none. Predict.fun charges a buyer's fee in shares, valued here at the fill price. Kalshi and Polymarket US don't publish fees, so they're estimated per trade from each venue's published formula, rate × contracts × price × (1 − price). Kalshi's rate is 7% for takers × the series' fee multiplier, plus 1.75% on series that also charge makers. Polymarket US uses its dated schedule, currently 6.95%. Both estimates slightly understate real fees: Kalshi rounds each order's fee up to the next cent, and neither estimate includes maker rebates or promotions. Kalshi's fee settings are today's, applied to all history. “Share of platform fees” divides short-term fees by the venue's total fees, calculated the same way.</p>
+      <p><b>Traders.</b> Unique Polymarket Intl and Predict.fun wallets, makers and takers, from on-chain fills. Counts use approximate distinct counting, accurate to about 2%. Kalshi doesn't publish account-level trades.</p>
       <p><b>Concentration.</b> Each Polymarket Intl wallet's volume is the dollars (USDC) it paid or received on its own side of every fill in these markets, as maker or taker, the same measure as the Top traders table. Every fill has two sides, so wallet volumes add up to about 2× the taker-side cash shown in the volume charts. Wallets are ranked by exact volume; percentile tiers round up, so the top 1% of 250 wallets is 3. A wallet isn't necessarily a person: one trader can run several wallets, which would make true concentration higher. The Gini coefficient is exact over all wallets. The 7-day and 30-day windows end on the date shown and refresh weekly; the trend uses complete Monday–Sunday weeks.</p>
-      <p><b>Sources.</b> Polymarket Intl on-chain trades and Kalshi daily reports via Dune; Polymarket US time-and-sales files from polymarketexchange.com; Polymarket profiles via the Gamma API; Kalshi series metadata and leaderboard via Kalshi's public API; order books from the Polymarket CLOB and Kalshi APIs. History refreshes daily and order-book snapshots hourly. Days are UTC; the current partial day is excluded.</p>`;
+      <p><b>Sources.</b> Polymarket Intl and Predict.fun on-chain trades and Kalshi daily reports via Dune; Polymarket US time-and-sales files from polymarketexchange.com; Polymarket profiles via the Gamma API; Kalshi series metadata and leaderboard via Kalshi's public API; order books from the Polymarket CLOB and Kalshi APIs. History refreshes daily and order-book snapshots hourly. Days are UTC; the current partial day is excluded.</p>`;
   }
 
   async function load() {

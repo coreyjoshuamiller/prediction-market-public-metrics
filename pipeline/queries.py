@@ -1,5 +1,7 @@
 """SQL builders for the Dune queries."""
-from .markets import assets_values_sql, poly_classify_sql
+from datetime import date, timedelta
+
+from .markets import assets_values_sql, poly_classify_sql, predict_assets_values_sql
 
 SLUG = "regexp_extract(polymarket_link, 'event/([^/?''\"]+)', 1)"
 
@@ -263,4 +265,138 @@ LEFT JOIN pnl p ON p.trader = a.trader
 LEFT JOIN fav f ON f.trader = a.trader AND f.rn = 1
 ORDER BY a.volume DESC
 LIMIT {limit}
+"""
+
+
+# --- predict.fun (BNB Chain) ------------------------------------------------------------
+# A Polymarket CTF-exchange fork; Dune decodes it as predict_bnb.*. Up/Down markets come from
+# two kinds of oracle (see markets.PREDICT_FEEDS): the Chainlink Up/Down adapter's rounds and
+# UMA questions whose title says "Up or Down". Question -> condition (ConditionPreparation on
+# either conditional-tokens contract) -> outcome tokens (TokenRegistered) -> fills.
+# Amounts are 18-decimal (BSC USDT). Regexes are kept out of f-strings to spare the braces.
+# Markets are created at most ~a week before they trade, so metadata is read from
+# PREDICT_META_LOOKBACK days before the window instead of all history (cuts the fixed cost).
+PREDICT_META_LOOKBACK = 45
+
+_PREDICT_UMA_DUR = r"""CASE
+      WHEN regexp_like(title, '\d(?::\d{2})?\s*(?:AM|PM)?\s*-\s*\d{1,2}(?::\d{2})?\s*(?:AM|PM) ET') THEN
+        CASE ((CAST(regexp_extract(title, '(\d{1,2})(?::(\d{2}))?\s*(?:AM|PM)?\s*-\s*(\d{1,2})(?::(\d{2}))?\s*(?:AM|PM) ET', 3) AS integer) * 60
+               + CAST(coalesce(regexp_extract(title, '(\d{1,2})(?::(\d{2}))?\s*(?:AM|PM)?\s*-\s*(\d{1,2})(?::(\d{2}))?\s*(?:AM|PM) ET', 4), '0') AS integer))
+              - (CAST(regexp_extract(title, '(\d{1,2})(?::(\d{2}))?\s*(?:AM|PM)?\s*-\s*(\d{1,2})(?::(\d{2}))?\s*(?:AM|PM) ET', 1) AS integer) * 60
+               + CAST(coalesce(regexp_extract(title, '(\d{1,2})(?::(\d{2}))?\s*(?:AM|PM)?\s*-\s*(\d{1,2})(?::(\d{2}))?\s*(?:AM|PM) ET', 2), '0') AS integer))
+              + 720) % 720
+          WHEN 5 THEN '5m' WHEN 15 THEN '15m' WHEN 60 THEN '1h' WHEN 240 THEN '4h' END
+      WHEN regexp_like(title, ',\s*\d{1,2}\s*(?:AM|PM) ET$') OR regexp_like(title, 'Up or Down Hour \d+') THEN '1h'
+      WHEN regexp_like(title, 'Up or Down on [A-Z][a-z]+ \d') THEN '1d'
+    END"""
+
+_PREDICT_MARKETS = r"""
+__ASSETS__,
+cl AS (  -- Chainlink adapter rounds
+  SELECT contract_address AS oracle, questionID AS qid, 'feed:' || lower(CAST(feedId AS varchar)) AS k,
+    CASE interval WHEN 300 THEN '5m' WHEN 900 THEN '15m' WHEN 3600 THEN '1h' WHEN 14400 THEN '4h' WHEN 86400 THEN '1d' END AS dur
+  FROM predict_bnb.chainlinkupdownadapter_evt_chainlinkupdownadapter__roundcreated
+  WHERE evt_block_date >= DATE '__SINCE__'
+),
+uq AS (  -- UMA questions titled "... Up or Down ..."
+  SELECT contract_address AS oracle, questionID AS qid,
+    trim(regexp_extract(from_utf8(ancillaryData), 'q: title: (.*?), description:', 1)) AS title
+  FROM predict_bnb.umacompatiblectfadapter_evt_questioninitialized
+  WHERE evt_block_date >= DATE '__SINCE__' AND strpos(from_utf8(ancillaryData), 'Up or Down') > 0
+),
+uma AS (
+  SELECT oracle, qid, 'title:' || lower(regexp_extract(title, '^([A-Za-z0-9&]+)', 1)) AS k, __UMA_DUR__ AS dur
+  FROM uq WHERE regexp_like(title, '^\S.*?\sUp or Down\s')
+),
+q AS (SELECT * FROM cl UNION ALL SELECT * FROM uma),
+cond AS (
+  SELECT p.conditionId, q.k, q.dur
+  FROM (
+    SELECT conditionId, oracle, questionId FROM predict_bnb.conditionaltokens_evt_conditionpreparation WHERE evt_block_date >= DATE '__SINCE__'
+    UNION ALL
+    SELECT conditionId, oracle, questionId FROM predict_bnb.yieldbearingconditionaltokens_evt_conditionpreparation WHERE evt_block_date >= DATE '__SINCE__'
+  ) p JOIN q ON p.questionId = q.qid AND p.oracle = q.oracle
+  WHERE q.dur IS NOT NULL
+),
+tok AS (
+  SELECT DISTINCT token, conditionId FROM (
+    SELECT token0 AS token, conditionId FROM predict_bnb.ctfexchange_evt_tokenregistered WHERE evt_block_date >= DATE '__SINCE__'
+    UNION ALL
+    SELECT token1, conditionId FROM predict_bnb.ctfexchange_evt_tokenregistered WHERE evt_block_date >= DATE '__SINCE__'
+  )
+),
+mk AS (  -- one row per outcome token of an in-scope market
+  SELECT tok.token, coalesce(pa.asset, cond.k) AS asset, coalesce(pa.asset_class, 'Other') AS asset_class,
+    cond.dur, 'Up/Down' AS ctype
+  FROM tok JOIN cond ON cond.conditionId = tok.conditionId
+  LEFT JOIN pa ON pa.k = cond.k
+)"""
+
+# columns shared by both fill queries; fee is charged in the asset the order receives, so a
+# buyer's fee is in shares and is valued at the fill price
+_PREDICT_FILL_COLS = """
+    f.maker AS trader, f.taker = f.contract_address AS is_taker,
+    CAST(IF(f.makerAssetId = 0, f.takerAmountFilled, f.makerAmountFilled) AS double) / 1e18 AS shares,
+    CAST(IF(f.makerAssetId = 0, f.makerAmountFilled, f.takerAmountFilled) AS double) / 1e18 AS amount,
+    CAST(f.fee AS double) / 1e18 * IF(f.makerAssetId = 0,
+      CAST(f.makerAmountFilled AS double) / nullif(CAST(f.takerAmountFilled AS double), 0), 1) AS fee"""
+
+
+def predict_activity(start, end):
+    """Like poly_activity for predict.fun Up/Down markets, plus fees, over [start, end).
+
+    Every OrderFilled is one order's side of a fill and `maker` is that order's owner; the
+    taker order's event has taker = the exchange. Notional/cash/trades count taker events
+    only; traders count every side; fees sum every side (makers pay none today).
+    """
+    dims = ["asset, dur", "asset", "dur", "asset_class", "ctype", ""]
+    sets = [f"({p}{', ' + dset if dset else ''})" for p in ("d", "w", "mo") for dset in dims]
+    sets.append("(d, asset, asset_class, dur, ctype)")
+    since = date.fromisoformat(str(start)) - timedelta(days=PREDICT_META_LOOKBACK)
+    markets = (_PREDICT_MARKETS.replace("__ASSETS__", predict_assets_values_sql())
+               .replace("__UMA_DUR__", _PREDICT_UMA_DUR).replace("__SINCE__", str(since)))
+    return f"""
+WITH {markets},
+t AS (
+  SELECT
+    date(f.evt_block_time) AS d,
+    date(date_trunc('week', f.evt_block_time)) AS w,
+    date(date_trunc('month', f.evt_block_time)) AS mo,
+    mk.asset, mk.asset_class, mk.dur, mk.ctype,{_PREDICT_FILL_COLS}
+  FROM predict_bnb.ctfexchange_evt_orderfilled f
+  JOIN mk ON mk.token = IF(f.makerAssetId = 0, f.takerAssetId, f.makerAssetId)
+  WHERE f.evt_block_date >= DATE '{start}' AND f.evt_block_date < DATE '{end}'
+)
+SELECT
+  d, w, mo, asset, asset_class, dur, ctype,
+  grouping(d, w, mo, asset, asset_class, dur, ctype) AS gid,
+  sum(shares) FILTER (WHERE is_taker) AS notional,
+  sum(amount) FILTER (WHERE is_taker) AS cash,
+  sum(fee) AS fees,
+  count(*) FILTER (WHERE is_taker) AS trades,
+  approx_distinct(trader) AS traders
+FROM t
+GROUP BY GROUPING SETS ({', '.join(sets)})
+"""
+
+
+def predict_totals(start, end):
+    """Whole-platform daily notional / cash / fees / unique traders (all four exchanges)."""
+    return f"""
+WITH f AS (
+  SELECT evt_block_time, contract_address, maker, taker, makerAssetId, takerAssetId, makerAmountFilled, takerAmountFilled, fee
+  FROM predict_bnb.ctfexchange_evt_orderfilled
+  WHERE evt_block_date >= DATE '{start}' AND evt_block_date < DATE '{end}'
+  UNION ALL
+  SELECT evt_block_time, contract_address, maker, taker, makerAssetId, takerAssetId, makerAmountFilled, takerAmountFilled, fee
+  FROM predict_bnb.negriskctfexchange_evt_orderfilled
+  WHERE evt_block_date >= DATE '{start}' AND evt_block_date < DATE '{end}'
+),
+t AS (SELECT date(f.evt_block_time) AS d,{_PREDICT_FILL_COLS} FROM f)
+SELECT d,
+  sum(shares) FILTER (WHERE is_taker) AS notional,
+  sum(amount) FILTER (WHERE is_taker) AS cash,
+  sum(fee) AS fees,
+  approx_distinct(trader) AS traders
+FROM t GROUP BY 1
 """

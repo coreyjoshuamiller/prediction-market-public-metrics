@@ -4,7 +4,8 @@ GitHub's cron is best-effort, so the daily workflow is triggered from several cr
 from the continuous order-book chain. Each trigger runs this, which picks one mode:
 
   full   today's full refresh hasn't happened yet          (~30-35 Dune credits)
-  light  it has, but a source is still missing yesterday   (~1 credit: Kalshi + Polymarket US)
+  light  it has, but a source is still missing yesterday   (~1 credit: Kalshi + Polymarket US;
+         ~5-13 more if predict.fun is the one missing)
   skip   data is current, or today's light retries are used up
 
 Kalshi days that Dune skipped or delivered partially can be queued for re-pulling with
@@ -65,6 +66,8 @@ def missing_sources(today):
     # (published ~00:10 UTC today) is the one we expect
     if f"{y.replace('-', '')}-time-and-sales.csv" not in _days("pmus_daily.csv", "file"):
         missing.append("polymarket_us")
+    if y not in _days("predict_totals_daily.csv", "d"):
+        missing.append("predict")
     return missing
 
 
@@ -94,7 +97,7 @@ def decide(today, state=None):
 def run(mode, today, backfill=()):
     from . import pmus
     from .build_site import build
-    from .update import daily, kalshi_window, poly_fees_window, poly_totals_window
+    from .update import daily, kalshi_window, poly_fees_window, poly_totals_window, predict_daily
 
     # both modes re-pull Kalshi from end - 10 days; older queued days need their own query
     old = [d for d in backfill if date.fromisoformat(d) < today - timedelta(days=10)]
@@ -106,9 +109,12 @@ def run(mode, today, backfill=()):
         end = today
         kalshi_window(end - timedelta(days=10), end)
         pmus.update(last_n=3)
-        if "polymarket" in missing_sources(today):
+        missing = missing_sources(today)
+        if "polymarket" in missing:
             poly_totals_window(end - timedelta(days=3), end)
             poly_fees_window(end - timedelta(days=3), end)
+        if "predict" in missing:
+            predict_daily(today)
     if mode != "skip":
         build()
 

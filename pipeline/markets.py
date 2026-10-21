@@ -145,3 +145,53 @@ def kalshi_classify(series):
     else:
         ctype = "Strike"
     return {"asset": asset[0], "asset_class": asset[1], "duration": dur, "ctype": ctype}
+
+
+# --- predict.fun: classify Up/Down markets on-chain --------------------------------------
+# 5m/15m rounds (Apr 2026+) come from the Chainlink Up/Down adapter, keyed by Chainlink Data
+# Streams feed ID. Hourly/daily markets (and 15m BTC before the adapter) are UMA questions,
+# keyed by the first word of their title ("Bitcoin Up or Down - October 23, 5PM ET").
+# Each key maps to an ASSETS token, or straight to (label, class) for names ASSETS lacks.
+# A new feed or title shows up as an "Other"-class asset and a warning in the refresh log;
+# find its name via the market's oracleQuestionId (graphql.predict.fun) and add it here.
+PREDICT_FEEDS = {
+    "0x0003ef42b4d20a19409a187c39670a6f5be7ce17fc78c290d25eb45bbf769d37": "btc",
+    "0x0003543336278a459ac24c2f239ffa36f279cadc71f4babc9f8126c6ff10011d": "eth",
+    "0x00035c9310fe33d312e347dcbf4e5ad90f5c04c4c5906e91fe78b53b82116d1b": "bnb",
+    "0x00037ea46df8151220bcc35cc2a49d4e8d12a99b7d63a2c4f4e1d0a70a6482ff": "cl",
+    "0x00033266140dfe07bafeccb4aa76b30adb226c7a6058a654797a46002749a926": "xauusd",
+    "0x0003dfc3f64f4136938077e7a626042e7e022307abd2e0e9d58327d0b6db2a81": "amzn",
+    "0x0003cb21cfb6c1923ab32d75b251a8ce46fe38681d87a1dfaadb6a31aae5446b": "avgo",
+    "0x0003a36a9127b2ec01ec8776c4d252ab5cbf7256e202381a65001f7e50cad127": "googl",
+    "0x0003c763ede01c669f2ceb3cc50a4833127ce6e167b435ee208c25b0fef1b450": "meta",
+    "0x00031350137f77072d2ea4661769b3bc536bf2fee4e6f98b81f44d0198e7f266": "msft",
+    "0x0003952f3b20c5eb2c8d0691632a4856e0132867dc66ae157142f084c0d68d9d": "mu",
+    "0x0003769678f55bfe60197c679384e3de8db4091adf996e8e564358fcd1d93f38": "nvda",
+    "0x0003ec0f419739672f4dc76cc60c9f0518c1dbf1654e930f085e26344dc7b88c": "qqq",
+    "0x00035b0e56c158ce4fc0a2a7955462fcbf5c3ba1871a77612e713fcf5ccdd1c0": "spy",
+    "0x00036cb94fa3facfcd023e7045fb47a589ed8041fd9a81bf1aae7c8ede91cf58": "skhy",
+    "0x0003ccf879d3174c6fc4e26ff3390fef77159114e3557e9980d0eea438c984bb": ("SNDK", "Equities"),
+    "0x00032aaedac29896c9fd8a0d2961a97657268a34f6c4a3fe56af8ee54792daca": "spcx",
+    "0x00038a1c96483d74c2e8302628959dd51a94051f47529bbc3b1497b2c65ac460": ("TSM", "Equities"),
+    "0x0003c1cc66225d491dc5fa4591ae8e730466fd35bfce263eab48094071469b80": ("Unitree", "Equities"),
+    "0x00034472315bf23bc34593586127346ca228659ac81771752ba45a9d2e703ddf": ("Zhipu", "Equities"),
+}
+# first word of a UMA question title, lowercased
+PREDICT_TITLE_WORDS = {
+    "btc": "btc", "bitcoin": "btc", "eth": "eth", "ethereum": "eth", "bnb": "bnb",
+    "aapl": "aapl", "s&p": "spx", "nasdaq": "ndx", "dax": "dax", "hang": "hsi", "sk": "skhy",
+    "kospi": ("KOSPI", "Equities"), "sse": ("SSE Composite", "Equities"),
+    "unitree": ("Unitree", "Equities"), "cxmt": ("CXMT", "Equities"), "shein": ("SHEIN", "Equities"),
+}
+
+
+def _predict_asset(v):
+    return ASSETS[v] if isinstance(v, str) else v
+
+
+def predict_assets_values_sql():
+    """VALUES table pa(k, asset, asset_class), k = 'feed:<feed id>' or 'title:<first word>'."""
+    keys = [(f"feed:{k}", _predict_asset(v)) for k, v in PREDICT_FEEDS.items()]
+    keys += [(f"title:{k}", _predict_asset(v)) for k, v in PREDICT_TITLE_WORDS.items()]
+    rows = ",\n    ".join(f"('{k}', '{a.replace(chr(39), '')}', '{c}')" for k, (a, c) in keys)
+    return f"pa(k, asset, asset_class) AS (VALUES\n    {rows}\n)"

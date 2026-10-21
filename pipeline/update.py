@@ -12,7 +12,7 @@ from datetime import date, datetime, timedelta, timezone
 from . import concentration, leaders, pmus
 from .dune import run_sql
 from .kalshi_series import build as build_kalshi_series, build_fees as build_kalshi_fees
-from .queries import kalshi_series_daily, poly_activity, poly_fees, poly_totals
+from .queries import kalshi_series_daily, poly_activity, poly_fees, poly_totals, predict_activity, predict_totals
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
 DATA = os.path.join(ROOT, "data")
@@ -23,6 +23,9 @@ FILES = {
     "poly_totals": ("poly_totals_daily.csv", ["d", "notional", "cash", "traders"], 1),
     "kalshi": ("kalshi_series_daily.csv", ["d", "series", "contracts", "cash", "fees", "trades"], 2),
     "poly_fees": ("poly_fees_daily.csv", ["d", "asset", "asset_class", "dur", "ctype", "fees"], 5),
+    "predict_volume": ("predict_volume_daily.csv", ["d", "asset", "asset_class", "dur", "ctype", "notional", "cash", "fees", "trades"], 5),
+    "predict_traders": ("predict_traders.csv", ["period", "start", "dim", "key", "traders"], 4),
+    "predict_totals": ("predict_totals_daily.csv", ["d", "notional", "cash", "fees", "traders"], 1),
 }
 
 DUR_NORM = {"60m": "1h", "240m": "4h", "24h": "1d"}
@@ -82,7 +85,8 @@ def _split(rows, day_ok, week_ok, month_ok):
         if r.get("d") and len(cols) == 4:
             if day_ok(r["d"]):
                 vol.append({"d": r["d"], "asset": r["asset"], "asset_class": r["asset_class"], "dur": r["dur"],
-                            "ctype": r["ctype"], "notional": _r(r["notional"]), "cash": _r(r["cash"]), "trades": r["trades"]})
+                            "ctype": r["ctype"], "notional": _r(r["notional"]), "cash": _r(r["cash"]), "fees": _r(r.get("fees")),
+                            "trades": r["trades"]})
             continue
         if r.get("d"):
             period, s, ok = "day", r["d"], day_ok(r["d"])
@@ -117,6 +121,48 @@ def poly_totals_window(start, end):
     tot = run_sql(poly_totals(start, end), label=f"poly totals {start}")
     upsert("poly_totals", [{"d": r["d"], "notional": _r(r["notional"]), "cash": _r(r["cash"]), "traders": r["traders"]} for r in tot],
            lambda x: str(start) <= x["d"] < str(end))
+
+
+# --- predict.fun ------------------------------------------------------------------------
+
+def predict_window(start, end, keep_days_from, keep_weeks_from, keep_months):
+    """predict.fun counterpart of poly_window (same grains, plus fees on the volume rows)."""
+    print(f"predict.fun {start} -> {end}")
+    rows = run_sql(predict_activity(start, end), label=f"predict {start}")
+    months = {str(m) for m in keep_months}
+    vol, trd = _split(rows, lambda d: d >= str(keep_days_from), lambda w: w >= str(keep_weeks_from), lambda m: m in months)
+    _warn_unmapped(vol)
+    kept = {(t["period"], t["start"]) for t in trd}
+    upsert("predict_volume", vol, lambda x: str(keep_days_from) <= x["d"] < str(end))
+    upsert("predict_traders", trd, lambda x: (x["period"], x["start"]) in kept)
+    predict_totals_window(keep_days_from, end)
+
+
+def predict_totals_window(start, end):
+    tot = run_sql(predict_totals(start, end), label=f"predict totals {start}")
+    upsert("predict_totals", [{"d": r["d"], "notional": _r(r["notional"]), "cash": _r(r["cash"]), "fees": _r(r["fees"]),
+                               "traders": r["traders"]} for r in tot],
+           lambda x: str(start) <= x["d"] < str(end))
+
+
+def _warn_unmapped(vol):
+    """New predict.fun feeds/titles land in the 'Other' class, labelled with their raw key."""
+    new = sorted({r["asset"] for r in vol if r["asset_class"] == "Other"})
+    if new:
+        print(f"  WARNING predict.fun Up/Down markets with no asset name (add to markets.PREDICT_FEEDS / PREDICT_TITLE_WORDS): {', '.join(new)}")
+
+
+def backfill_predict(since):
+    """predict.fun history, one month per query (weeks widened like the Polymarket backfill)."""
+    months = _months(since)
+    today = date.today()
+    plans = [_month_plan(m, today) for m in months]
+    with ThreadPoolExecutor(3) as ex:
+        results = list(ex.map(lambda p: (p, run_sql(predict_activity(p[1], p[2]), label=f"predict {p[0]}")), plans))
+    _apply_backfill(results, "predict_volume", "predict_traders")
+    _warn_unmapped(read("predict_volume"))
+    for i in range(0, len(months), 3):
+        predict_totals_window(months[i], min(next_month(months[min(i + 2, len(months) - 1)]), today))
 
 
 # --- Kalshi -----------------------------------------------------------------------------
@@ -154,24 +200,29 @@ def _upsert_poly_fees(rows, start, end):
 
 # --- entry points -----------------------------------------------------------------------
 
-def backfill(since):
-    since = month_start(date.fromisoformat(since))
-    today = date.today()
-    months = []
-    m = since
+def _months(since):
+    m, today, out = month_start(date.fromisoformat(since)), date.today(), []
     while m <= today:
-        months.append(m)
+        out.append(m)
         m = next_month(m)
+    return out
+
+
+def _month_plan(m, today):
+    """(month, query start, query end): from the Monday on/before the 1st through the end of the
+    last week that starts inside the month (weeks belong to the month of their Monday)."""
+    m_end = next_month(m)
+    return m, monday(m), min(monday(m_end - timedelta(days=1)) + timedelta(days=7), today)
+
+
+def backfill(since):
+    today = date.today()
+    months = _months(since)
     # Kalshi is cheap: one query per quarter-ish
     for i in range(0, len(months), 3):
         kalshi_window(months[i], min(next_month(months[min(i + 2, len(months) - 1)]), today))
     # Polymarket: one month per query, widened to whole weeks; run a few in parallel
-    def one(m):
-        # widen to whole weeks: from the Monday on/before the 1st through the end of the
-        # last week that starts inside the month (weeks belong to the month of their Monday)
-        m_end = next_month(m)
-        return m, monday(m), min(monday(m_end - timedelta(days=1)) + timedelta(days=7), today)
-    plans = [one(m) for m in months]
+    plans = [_month_plan(m, today) for m in months]
     with ThreadPoolExecutor(3) as ex:
         results = list(ex.map(lambda p: (p, run_sql(poly_activity(p[1], p[2]), label=f"poly {p[0]}")), plans))
     _apply_backfill(results)
@@ -181,7 +232,7 @@ def backfill(since):
         poly_fees_window(months[i], min(next_month(months[min(i + 2, len(months) - 1)]), today))
 
 
-def _apply_backfill(results):
+def _apply_backfill(results, vol_name="poly_volume", trd_name="poly_traders"):
     vol, trd = [], []
     for (m, _start, _end), rows in results:
         lo, hi = str(m), str(next_month(m))
@@ -190,8 +241,8 @@ def _apply_backfill(results):
         v, t = _split(rows, lambda d: lo <= d < hi, lambda w: lo <= w < hi, lambda mo: mo == lo)
         vol += v
         trd += t
-    upsert("poly_volume", vol, lambda x: True)
-    upsert("poly_traders", trd, lambda x: True)
+    upsert(vol_name, vol, lambda x: True)
+    upsert(trd_name, trd, lambda x: True)
 
 
 def _dim(cols):
@@ -230,8 +281,9 @@ def backfill_fees(since):
         kalshi_window(*sp)
 
 
-def daily(run_leaders=True, today=None):
-    today = today or datetime.now(timezone.utc).date()
+def _daily_window(today):
+    """The incremental window: month to date (or the last ~2 weeks, if longer), so this
+    month's and this week's unique-trader counts can be recomputed. Returns (start, end, kwargs)."""
     end = today  # complete UTC days only
     start = min(month_start(end - timedelta(days=1)), monday(end) - timedelta(days=7))
     keep_months = {month_start(end - timedelta(days=1))}
@@ -239,10 +291,27 @@ def daily(run_leaders=True, today=None):
         start = month_start(month_start(end) - timedelta(days=1))
         keep_months.add(start)
     first_full_week = start if monday(start) == start else monday(start) + timedelta(days=7)
-    poly_window(start, end, keep_days_from=start, keep_weeks_from=first_full_week, keep_months=keep_months)
+    return start, end, {"keep_days_from": start, "keep_weeks_from": first_full_week, "keep_months": keep_months}
+
+
+def predict_daily(today):
+    """predict.fun's incremental refresh. A new source: log failures instead of failing the run
+    (refresh.py sees the missing day and retries it in light mode)."""
+    start, end, keep = _daily_window(today)
+    try:
+        predict_window(start, end, **keep)
+    except Exception as e:
+        print(f"  predict.fun update failed: {e}")
+
+
+def daily(run_leaders=True, today=None):
+    today = today or datetime.now(timezone.utc).date()
+    start, end, keep = _daily_window(today)
+    poly_window(start, end, **keep)
     poly_fees_window(end - timedelta(days=10), end)
     kalshi_window(end - timedelta(days=10), end)
     pmus.update(last_n=3)
+    predict_daily(today)
     if run_leaders:
         leaders.update(today)
         try:  # a new, non-essential section: don't let it fail the refresh
@@ -257,6 +326,7 @@ def main():
     ap.add_argument("--daily", action="store_true")
     ap.add_argument("--no-leaders", action="store_true")
     ap.add_argument("--backfill-fees", help="YYYY-MM-DD: backfill only fees (Polymarket, Kalshi) from this date")
+    ap.add_argument("--backfill-predict", help="YYYY-MM-DD: backfill predict.fun (month-aligned; it launched 2025-11)")
     args = ap.parse_args()
     if args.backfill:
         backfill(args.backfill)
@@ -264,6 +334,8 @@ def main():
             leaders.update(date.today(), force_all=True)
     if args.backfill_fees:
         backfill_fees(args.backfill_fees)
+    if args.backfill_predict:
+        backfill_predict(args.backfill_predict)
     if args.daily:
         daily(run_leaders=not args.no_leaders)
     from .build_site import build

@@ -24,6 +24,7 @@
   --poly: #2a78d6;
   --poly-us: #4a3aa7;
   --kalshi: #1baf7a;
+  --predict: #eda100;
   --band-1: #86b6ef;
   --band-2: #2a78d6;
   --band-3: #104281;
@@ -55,6 +56,8 @@
     --poly: #3987e5;
     --poly-us: #9085e9;
     --kalshi: #199e70;
+  --predict: #c98500;
+    --predict: #c98500;
     --band-1: #1c5cab;
     --band-2: #3987e5;
     --band-3: #9ec5f4;
@@ -86,6 +89,7 @@
   --poly: #3987e5;
   --poly-us: #9085e9;
   --kalshi: #199e70;
+  --predict: #c98500;
   --band-1: #1c5cab;
   --band-2: #3987e5;
   --band-3: #9ec5f4;
