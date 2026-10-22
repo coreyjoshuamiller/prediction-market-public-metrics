@@ -1151,6 +1151,22 @@
   "title": "USD/JPY daily over/under",
   "category": "Financials"
  },
+ "KXUSDMXN15M": {
+  "asset": "USD/MXN",
+  "asset_class": "FX & Rates",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "15-minute USDMXN",
+  "category": "Financials"
+ },
+ "KXUSDMXNAD": {
+  "asset": "USD/MXN",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "USDMXN Daily",
+  "category": "Financials"
+ },
  "KXUSDNOKAD": {
   "asset": "USD/NOK",
   "asset_class": "FX & Rates",
