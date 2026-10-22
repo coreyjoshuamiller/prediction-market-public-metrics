@@ -719,7 +719,7 @@
     let cols, rows;
     if (state.lbPlatform === "polymarket") {
       const w = L.polymarket?.[state.lbWindow];
-      lede.textContent = `Wallets ranked by dollars traded in short-term price markets (all asset classes), ${w ? `${w.start} to ${w.end}` : ""}. PnL is realized on markets that resolved in the window: trade cashflows plus $1 per winning share, net of fees. “Maker %” is the share of a wallet's volume from resting orders; near 100% usually means a market maker. The X link appears when the trader has connected X to their Polymarket profile.`;
+      lede.textContent = `Wallets ranked by dollars traded in short-term price markets (all asset classes), ${w ? `${w.start} to ${w.end}` : ""}. “Volume” is the USDC the wallet paid or received on its own side of every fill, buys and sells, as maker or taker; “Contracts” is the shares on those fills, each worth $1 at settlement, so a wallet buying cheap contracts has far more contracts than dollars. PnL is realized on markets that resolved in the window: trade cashflows plus $1 per winning share, net of fees. “Maker %” is the share of a wallet's volume from resting orders; near 100% usually means a market maker. The X link appears when the trader has connected X to their Polymarket profile.`;
       rows = w?.rows || [];
       const withX = rows.filter((r) => r.x).length, withXmtp = rows.filter((r) => r.xmtp).length;
       const withProf = rows.filter((r) => r.profiles?.length).length, email = rows.filter((r) => r.account === "email").length;
@@ -729,6 +729,7 @@
         { k: "name", t: "Trader", render: traderCell },
         { k: "x", t: "Contact", render: contactCell },
         { k: "volume", t: "Volume", num: true, f: fmtUsd },
+        { k: "notional", t: "Contracts", num: true, f: fmtCompact },
         { k: "pnl", t: "Realized PnL", num: true, f: fmtUsd, cls: (r) => (r.pnl > 0 ? "pos" : r.pnl < 0 ? "neg" : "") },
         { k: "fills", t: "Fills", num: true, f: fmtInt },
         { k: "markets", t: "Markets", num: true, f: fmtInt },
@@ -739,12 +740,13 @@
       const w = L.predict?.[state.lbWindow];
       rows = w?.rows || [];
       const withX = rows.filter((r) => r.x).length, named = rows.filter((r) => r.name).length;
-      lede.textContent = `Wallets ranked by dollars (USDT) traded in Predict.fun's Up/Down markets, ${w ? `${w.start} to ${w.end}` : ""}. PnL is realized on markets that resolved: trade cashflows plus $1 per winning share, net of fees, with each share's outcome read from the order Predict.fun mints them in. “Maker %” is the share of a wallet's volume from resting orders. Names and X handles are what traders set on their Predict.fun accounts (${named} of these ${rows.length} have a name, ${withX} link X). The trader link opens the wallet on BscScan.`;
+      lede.textContent = `Wallets ranked by dollars (USDT) traded in Predict.fun's Up/Down markets, ${w ? `${w.start} to ${w.end}` : ""}, counting the wallet's own side of every fill, buys and sells; “Contracts” is the shares on those fills, each worth $1 at settlement. PnL is realized on markets that resolved: trade cashflows plus $1 per winning share, net of fees, with each share's outcome read from the order Predict.fun mints them in. “Maker %” is the share of a wallet's volume from resting orders. Names and X handles are what traders set on their Predict.fun accounts (${named} of these ${rows.length} have a name, ${withX} link X). The trader link opens the wallet on BscScan.`;
       cols = [
         { k: "rank", t: "#", num: true },
         { k: "name", t: "Trader", render: traderCell },
         { k: "x", t: "X", render: (r) => (r.x ? link(`https://x.com/${r.x}`, `@${r.x}`) : dash()) },
         { k: "volume", t: "Volume", num: true, f: fmtUsd },
+        { k: "notional", t: "Contracts", num: true, f: fmtCompact },
         { k: "pnl", t: "Realized PnL", num: true, f: fmtUsd, cls: (r) => (r.pnl > 0 ? "pos" : r.pnl < 0 ? "neg" : "") },
         { k: "fills", t: "Fills", num: true, f: fmtInt },
         { k: "markets", t: "Markets", num: true, f: fmtInt },
