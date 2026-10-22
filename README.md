@@ -20,7 +20,7 @@ GitHub's cron is best-effort (runs can be hours late or dropped), which is why t
 - **Traders per market**: unique Polymarket Intl and Predict.fun wallets, makers and takers, per period. Kalshi and Polymarket US don't publish account-level trades.
 - **Share of platform volume**: in-scope volume as a % of each venue's total (Polymarket Intl, Polymarket US, Kalshi, Predict.fun), plus a head-to-head of the venues.
 - **Volume concentration**: how Polymarket Intl and Predict.fun volume is spread across wallets (7d and 30d windows): share of volume by the top X% of wallets, percentile tiers, wallet-size bands, Gini, and a weekly trend of top 1% / 5% / 10% share. Refreshed weekly by `pipeline/concentration.py`.
-- **Top traders**: Polymarket and Predict.fun wallets ranked from on-chain fills (7d daily, 30d weekly), with realized PnL, maker %, and names / linked X handles from each venue's profiles. Kalshi uses its public Crypto and Financials leaderboards. Predict.fun has no outcome table on Dune, so its PnL reads each token's outcome from mint order (the exchange splits collateral as [Up, Down]; see `queries.predict_leaders`).
+- **Top traders**: Polymarket and Predict.fun wallets ranked from on-chain fills, with realized PnL, contracts, maker %, and names / linked X handles from each venue's profiles. 7d (daily) and 30d (weekly) are exact rolling queries; 8 weeks, 13 weeks and all time are sums of stored weekly top-2,000 lists (`data/leaders_weekly/`, each week queried once when it completes), so a wallet's weeks outside a week's top 2,000 aren't counted (the page shows the largest such cut-off). Kalshi uses its public Crypto and Financials leaderboards. Predict.fun has no outcome table on Dune, so its PnL reads each token's outcome from mint order (the exchange splits collateral as [Up, Down]; see `queries.predict_leaders`).
 - **Order book liquidity**: dollars at the best bid and offer, depth within 5¢, spread, and how depth evolves through the 15-minute window.
 
 ## Data sources
@@ -74,5 +74,6 @@ No third-party Python packages are needed.
 ## Costs
 
 - **Dune:** about 30–35 credits for each day's full refresh (more on the 1st–3rd of a month, which re-finalizes the previous month), plus 4–13 for Predict.fun (it re-reads month to date for unique-trader counts, so it grows through the month), so roughly 1,250 a month. Light retries cost about 1 credit.
+- **Top traders, long windows:** each completed week costs about 4 credits (Polymarket) + 2 (Predict.fun), about 25 a month. The one-time weekly backfill (Polymarket from 2025-09-01, Predict.fun from 2025-11-24) cost about 240.
 - **Volume concentration:** about 16 credits on Mondays (7d and 30d windows) plus about 1 per new week, so roughly 70 a month. The one-time weekly backfill from 2025-09-01 cost about 25. Predict.fun adds a similar amount; its snapshot pulls the wallet list once and computes the stats in Python, because Dune re-runs a CTE for every reference.
 - **GitHub Actions:** free, because the repo is public.

@@ -693,11 +693,17 @@
 
   // ---------- leaders ----------
   const LB_WINDOWS = {
-    polymarket: [["7d", "7 days"], ["30d", "30 days"]],
-    predict: [["7d", "7 days"], ["30d", "30 days"]],
+    polymarket: [["7d", "7 days"], ["30d", "30 days"], ["8w", "8 weeks"], ["13w", "13 weeks"], ["all", "All time"]],
+    predict: [["7d", "7 days"], ["30d", "30 days"], ["8w", "8 weeks"], ["13w", "13 weeks"], ["all", "All time"]],
     kalshi: [["Crypto|monthly", "Crypto · month"], ["Crypto|all_time", "Crypto · all time"], ["Financials|monthly", "Financials · month"], ["Financials|all_time", "Financials · all time"]],
   };
   let lbSort = { key: "volume", dir: -1 };
+  // long windows are sums of stored weekly top lists (pipeline/leaders.py)
+  function weeklyNote(w) {
+    if (!w?.weekly) return "";
+    const last = new Date(w.end + "T00:00:00Z"); last.setUTCDate(last.getUTCDate() - 1);
+    return ` This window adds up ${w.weekly.weeks} complete Monday–Sunday weeks, ${w.start} to ${last.toISOString().slice(0, 10)}. Each week keeps its top ${fmtInt(w.weekly.per_week)} wallets, so a wallet's weeks outside that list aren't counted; that's at most ${fmtUsd(w.weekly.max_unlisted_week_volume)} in any one week, which only matters near the bottom of the table.`;
+  }
 
   function renderLeaders() {
     const seg = $("#f-lb-window");
@@ -723,7 +729,7 @@
       rows = w?.rows || [];
       const withX = rows.filter((r) => r.x).length, withXmtp = rows.filter((r) => r.xmtp).length;
       const withProf = rows.filter((r) => r.profiles?.length).length, email = rows.filter((r) => r.account === "email").length;
-      lede.textContent += ` ${withX} of these ${rows.length} wallets link an X account, ${withXmtp} can be messaged over XMTP, and ${withProf} have a public ENS/Farcaster/Lens profile. ${email} use Polymarket's email login, whose custodied key can't hold either. Contact only shows channels traders opted into; nothing is traced or de-anonymized.`;
+      lede.textContent += ` ${withX} of these ${rows.length} wallets link an X account, ${withXmtp} can be messaged over XMTP, and ${withProf} have a public ENS/Farcaster/Lens profile. ${email} use Polymarket's email login, whose custodied key can't hold either. Contact only shows channels traders opted into; nothing is traced or de-anonymized.` + weeklyNote(w);
       cols = [
         { k: "rank", t: "#", num: true },
         { k: "name", t: "Trader", render: traderCell },
@@ -740,7 +746,7 @@
       const w = L.predict?.[state.lbWindow];
       rows = w?.rows || [];
       const withX = rows.filter((r) => r.x).length, named = rows.filter((r) => r.name).length;
-      lede.textContent = `Wallets ranked by dollars (USDT) traded in Predict.fun's Up/Down markets, ${w ? `${w.start} to ${w.end}` : ""}, counting the wallet's own side of every fill, buys and sells; “Contracts” is the shares on those fills, each worth $1 at settlement. PnL is realized on markets that resolved: trade cashflows plus $1 per winning share, net of fees, with each share's outcome read from the order Predict.fun mints them in. “Maker %” is the share of a wallet's volume from resting orders. Names and X handles are what traders set on their Predict.fun accounts (${named} of these ${rows.length} have a name, ${withX} link X). The trader link opens the wallet on BscScan.`;
+      lede.textContent = `Wallets ranked by dollars (USDT) traded in Predict.fun's Up/Down markets, ${w ? `${w.start} to ${w.end}` : ""}, counting the wallet's own side of every fill, buys and sells; “Contracts” is the shares on those fills, each worth $1 at settlement. PnL is realized on markets that resolved: trade cashflows plus $1 per winning share, net of fees, with each share's outcome read from the order Predict.fun mints them in. “Maker %” is the share of a wallet's volume from resting orders. Names and X handles are what traders set on their Predict.fun accounts (${named} of these ${rows.length} have a name, ${withX} link X). The trader link opens the wallet on BscScan.` + weeklyNote(w);
       cols = [
         { k: "rank", t: "#", num: true },
         { k: "name", t: "Trader", render: traderCell },

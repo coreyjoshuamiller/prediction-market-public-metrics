@@ -279,6 +279,56 @@ LIMIT {limit}
 """
 
 
+def poly_leaders_weekly(start, end, per_week=2000):
+    """poly_leaders per Monday-start week in [start, end): each week's top `per_week` wallets,
+    with maker and top-market volume (not shares) so weeks can be added up into longer windows.
+    PnL is linear in fills and these markets resolve within a day, so weekly PnL sums too."""
+    return f"""
+WITH {_poly_markets_cte()},
+res AS (
+  SELECT from_hex(substr(condition_id, 3)) AS condition_id, lower(token_outcome) AS tok_out,
+    max(cast(settlement_value AS double)) AS payout
+  FROM polymarket_polygon.market_details
+  WHERE settlement_value IS NOT NULL
+  GROUP BY 1, 2
+),
+t AS (
+  SELECT date(date_trunc('week', tr.block_time)) AS wk, tr.maker AS trader, tr.condition_id, lower(tr.token_outcome) AS tok_out,
+    cm.asset, cm.dur, tr.is_taker_side, tr.maker_side, tr.shares, tr.amount, coalesce(tr.fee, 0) AS fee
+  FROM polymarket_polygon.market_trades tr
+  JOIN cm ON cm.condition_id = tr.condition_id
+  WHERE tr.block_time >= timestamp '{start}' AND tr.block_time < timestamp '{end}'
+),
+pos AS (
+  SELECT wk, trader, condition_id, tok_out,
+    sum(CASE WHEN maker_side = 'BUY' THEN -amount ELSE amount END) - sum(fee) AS cashflow,
+    sum(CASE WHEN maker_side = 'BUY' THEN shares ELSE -shares END) AS net_shares
+  FROM t GROUP BY 1, 2, 3, 4
+),
+pnl AS (
+  SELECT p.wk, p.trader, sum(p.cashflow + p.net_shares * r.payout) AS realized_pnl
+  FROM pos p JOIN res r ON r.condition_id = p.condition_id AND r.tok_out = p.tok_out
+  GROUP BY 1, 2
+),
+agg AS (
+  SELECT wk, trader, sum(amount) AS volume, sum(shares) AS notional, count(*) AS fills,
+    count(DISTINCT condition_id) AS markets, coalesce(sum(amount) FILTER (WHERE NOT is_taker_side), 0) AS maker_vol,
+    row_number() OVER (PARTITION BY wk ORDER BY sum(amount) DESC) AS rk
+  FROM t GROUP BY 1, 2
+),
+fav AS (
+  SELECT wk, trader, asset || ' ' || dur AS top_market, sum(amount) AS top_market_vol,
+    row_number() OVER (PARTITION BY wk, trader ORDER BY sum(amount) DESC) AS rn
+  FROM t GROUP BY wk, trader, asset, dur
+)
+SELECT a.wk, a.rk, a.trader, a.volume, a.notional, a.fills, a.markets, a.maker_vol, p.realized_pnl, f.top_market, f.top_market_vol
+FROM agg a
+LEFT JOIN pnl p ON p.wk = a.wk AND p.trader = a.trader
+LEFT JOIN fav f ON f.wk = a.wk AND f.trader = a.trader AND f.rn = 1
+WHERE a.rk <= {per_week}
+"""
+
+
 # --- predict.fun (BNB Chain) ------------------------------------------------------------
 # A Polymarket CTF-exchange fork; Dune decodes it as predict_bnb.*. Up/Down markets come from
 # two kinds of oracle (see markets.PREDICT_FEEDS): the Chainlink Up/Down adapter's rounds and
@@ -496,4 +546,60 @@ FROM j
 GROUP BY 1
 ORDER BY volume DESC
 LIMIT {limit}
+"""
+
+
+def predict_leaders_weekly(start, end, per_week=2000):
+    """predict_leaders per Monday-start week in [start, end), each week's top `per_week`
+    wallets, with maker and top-market volume so weeks add up (see poly_leaders_weekly)."""
+    zero = "0x0000000000000000000000000000000000000000"
+    mint_since = date.fromisoformat(str(start)) - timedelta(days=3)
+    extra = ",\n    f.makerAssetId = 0 AS is_buy, CAST(f.fee AS double) / 1e18 AS fee_raw"
+    return f"""{_predict_fills(start, end, extra=extra)},
+tt AS (
+  SELECT w AS wk, trader, token, conditionId, asset || ' ' || dur AS market,
+    sum(amount) AS vol, sum(shares) AS notional, count(*) AS fills,
+    coalesce(sum(amount) FILTER (WHERE NOT is_taker), 0) AS maker_vol,
+    sum(IF(is_buy, -amount, amount - fee_raw)) AS cashflow,
+    sum(IF(is_buy, shares - fee_raw, -shares)) AS net_shares
+  FROM t GROUP BY 1, 2, 3, 4, 5
+),
+mints AS (
+  SELECT ids FROM predict_bnb.conditionaltokens_evt_transferbatch
+  WHERE evt_block_date >= DATE '{mint_since}' AND evt_block_date < DATE '{end}' AND "from" = {zero} AND cardinality(ids) = 2
+  UNION ALL
+  SELECT ids FROM predict_bnb.yieldbearingconditionaltokens_evt_transferbatch
+  WHERE evt_block_date >= DATE '{mint_since}' AND evt_block_date < DATE '{end}' AND "from" = {zero} AND cardinality(ids) = 2
+),
+idx AS (
+  SELECT token, min(i) AS i FROM (
+    SELECT ids[1] AS token, 1 AS i FROM mints UNION ALL SELECT ids[2], 2 FROM mints
+  ) GROUP BY 1
+),
+res AS (
+  SELECT conditionId, max_by(p, ts) AS p FROM (
+    SELECT conditionId, evt_block_time AS ts, transform(payoutNumerators, x -> CAST(x AS double)) AS p
+    FROM predict_bnb.conditionaltokens_evt_conditionresolution
+    UNION ALL
+    SELECT conditionId, evt_block_time, transform(payoutNumerators, x -> CAST(x AS double))
+    FROM predict_bnb.yieldbearingconditionaltokens_evt_conditionresolution
+  ) GROUP BY 1
+),
+j AS (
+  SELECT tt.*, element_at(r.p, idx.i) / nullif(reduce(r.p, 0e0, (a, x) -> a + x, a -> a), 0) AS payout
+  FROM tt
+  LEFT JOIN idx ON idx.token = tt.token
+  LEFT JOIN res r ON r.conditionId = tt.conditionId
+),
+agg AS (
+  SELECT wk, trader,
+    sum(vol) AS volume, sum(notional) AS notional, sum(fills) AS fills,
+    count(DISTINCT conditionId) AS markets, sum(maker_vol) AS maker_vol,
+    sum(cashflow + net_shares * payout) FILTER (WHERE payout IS NOT NULL) AS realized_pnl,
+    max_by(market, vol) AS top_market, max(vol) AS top_market_vol,
+    row_number() OVER (PARTITION BY wk ORDER BY sum(vol) DESC) AS rk
+  FROM j GROUP BY 1, 2
+)
+SELECT wk, rk, trader, volume, notional, fills, markets, maker_vol, realized_pnl, top_market, top_market_vol
+FROM agg WHERE rk <= {per_week}
 """
