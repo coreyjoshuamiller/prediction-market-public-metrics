@@ -42,14 +42,21 @@ def run_sql(sql, performance="medium", timeout=1800, label=""):
     ex = _req("/sql/execute", {"sql": sql, "performance": performance})
     eid = ex["execution_id"]
     delay = 2
-    while True:
-        st = _req(f"/execution/{eid}/status")
-        if st.get("is_execution_finished"):
-            break
-        if time.time() - t0 > timeout:
-            raise TimeoutError(f"Dune query {label or eid} still running after {timeout}s")
-        time.sleep(delay)
-        delay = min(delay * 1.5, 15)
+    try:
+        while True:
+            st = _req(f"/execution/{eid}/status")
+            if st.get("is_execution_finished"):
+                break
+            if time.time() - t0 > timeout:
+                raise TimeoutError(f"Dune query {label or eid} still running after {timeout}s")
+            time.sleep(delay)
+            delay = min(delay * 1.5, 15)
+    except BaseException:  # timeout, Ctrl-C, killed job: stop paying for the abandoned run
+        try:
+            _req(f"/execution/{eid}/cancel", {})
+        except Exception:
+            pass
+        raise
     if st.get("state") != "QUERY_STATE_COMPLETED":
         raise RuntimeError(f"Dune query {label or eid} failed: {json.dumps(st.get('error') or st)[:800]}")
     rows, offset = [], 0

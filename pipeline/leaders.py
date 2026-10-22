@@ -4,6 +4,8 @@ Polymarket: ranked from Dune over in-scope short-term price markets (7d daily, 3
 enriched with the public profile (name, avatar, linked X account).
 Kalshi: account-level trades aren't public, so this uses Kalshi's public leaderboard
 (Crypto and Financials categories), which is the closest available cut.
+predict.fun: ranked from Dune like Polymarket (Up/Down markets), with the account name and X
+handle from predict.fun's public GraphQL API.
 """
 import json
 import os
@@ -13,11 +15,13 @@ from datetime import date, datetime, timedelta, timezone
 from .dune import run_sql
 from .net import get_json
 from . import reach
-from .queries import poly_leaders
+from .predict_api import checksum_address, gql
+from .queries import poly_leaders, predict_leaders
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
 OUT = os.path.join(ROOT, "data", "leaders.json")
 PROFILES = os.path.join(ROOT, "data", "poly_profiles.json")
+PREDICT_PROFILES = os.path.join(ROOT, "data", "predict_profiles.json")
 KALSHI_SOCIAL = "https://api.elections.kalshi.com/v1/social"
 PROFILE_TTL_DAYS = 7
 POLY_TOP = 500  # wallets ranked per Polymarket window
@@ -76,6 +80,60 @@ def poly_window(days, today):
             "verified": p.get("verified", False),
             "image": p.get("image", ""),
             "url": f"https://polymarket.com/profile/{r['trader']}",
+            "volume": round(r["volume"] or 0),
+            "notional": round(r["notional"] or 0),
+            "pnl": None if r["realized_pnl"] is None else round(r["realized_pnl"]),
+            "fills": r["fills"],
+            "markets": r["markets"],
+            "maker_share": None if r["maker_share"] is None else round(r["maker_share"], 3),
+            "top_market": r["top_market"],
+        })
+    return {"start": str(start), "end": str(end), "rows": out}
+
+
+PREDICT_ACCOUNT = "query($a: Address!) { account(address: $a) { name twitterUsername imageUrl } }"
+
+
+def predict_profiles(addresses):
+    """Account name / X handle per wallet. The API only matches checksummed addresses."""
+    cache = _load(PREDICT_PROFILES, {})
+    cutoff = (date.today() - timedelta(days=PROFILE_TTL_DAYS)).isoformat()
+    todo = [a for a in addresses if cache.get(a, {}).get("fetched", "") < cutoff]
+
+    def fetch(addr):
+        try:
+            p = gql(PREDICT_ACCOUNT, {"a": checksum_address(addr)}, retries=2).get("account") or {}
+        except Exception:
+            p = {}
+        return addr, {"name": p.get("name") or "", "x": p.get("twitterUsername") or "",
+                      "image": p.get("imageUrl") or "", "fetched": date.today().isoformat()}
+
+    with ThreadPoolExecutor(4) as ex:  # their API is shared with the website; stay gentle
+        for addr, prof in ex.map(fetch, todo):
+            cache[addr] = prof
+    with open(PREDICT_PROFILES, "w") as f:
+        json.dump(cache, f, indent=0, sort_keys=True)
+    return cache
+
+
+def predict_window(days, today):
+    end = today
+    start = end - timedelta(days=days)
+    rows = run_sql(predict_leaders(start, end, limit=POLY_TOP), label=f"predict leaders {days}d")
+    profs = predict_profiles([r["trader"] for r in rows])
+    out = []
+    for i, r in enumerate(rows, 1):
+        p = profs.get(r["trader"], {})
+        name = p.get("name") or ""
+        if name.lower().startswith("0x"):
+            name = ""
+        out.append({
+            "rank": i,
+            "address": r["trader"],
+            "name": name,
+            "x": p.get("x", ""),
+            "image": p.get("image", ""),
+            "url": f"https://bscscan.com/address/{checksum_address(r['trader'])}",
             "volume": round(r["volume"] or 0),
             "notional": round(r["notional"] or 0),
             "pnl": None if r["realized_pnl"] is None else round(r["realized_pnl"]),
@@ -146,6 +204,13 @@ def update(today, force_all=False):
     if force_all or today.weekday() == 0 or "30d" not in data["polymarket"]:
         data["polymarket"]["30d"] = poly_window(30, today)
     attach_reach(data["polymarket"])
+    try:  # a newer source: don't let it fail the rest of the leaderboard
+        data.setdefault("predict", {})
+        data["predict"]["7d"] = predict_window(7, today)
+        if force_all or today.weekday() == 0 or "30d" not in data["predict"]:
+            data["predict"]["30d"] = predict_window(30, today)
+    except Exception as e:
+        print(f"  predict.fun leaders failed: {e}")
     data["kalshi"] = {
         f"{cat}|{per}": kalshi_board(cat, per)
         for cat in ("Crypto", "Financials")

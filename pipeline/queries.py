@@ -157,7 +157,18 @@ CONC_TIERS = [("Top 0.1%", 0.001), ("0.1–1%", 0.01), ("1–5%", 0.05), ("5–1
               ("10–25%", 0.25), ("25–50%", 0.50), ("Bottom 50%", 1.0)]
 
 
-def poly_concentration(start, end):
+def _predict_wallet_volume(start, end, by_week=False):
+    """predict.fun counterpart of _poly_wallet_volume: USDT each wallet paid or received on its
+    own side of every in-scope fill."""
+    return f"""{_predict_fills(start, end)},
+w AS (
+  SELECT {"w AS wk, " if by_week else ""}trader, sum(amount) AS vol, coalesce(sum(amount) FILTER (WHERE NOT is_taker), 0) AS maker_vol
+  FROM t GROUP BY {"1, 2" if by_week else "1"}
+  HAVING sum(amount) > 0
+)"""
+
+
+def poly_concentration(start, end, wallets=None):
     """How volume is spread across wallets in in-scope markets over [start, end).
 
     One result set, told apart by `kind`:
@@ -168,7 +179,7 @@ def poly_concentration(start, end):
     """
     tier = " ".join(f"WHEN rn <= greatest(1, ceil(n * {p})) THEN '{label}'" for label, p in CONC_TIERS)
     return f"""
-{_poly_wallet_volume(start, end)},
+{wallets or _poly_wallet_volume(start, end)},
 r AS (
   SELECT vol, maker_vol,
     row_number() OVER (ORDER BY vol DESC) AS rn,
@@ -193,11 +204,11 @@ FROM r
 """
 
 
-def poly_concentration_weekly(start, end):
+def poly_concentration_weekly(start, end, wallets=None):
     """Per week (Monday start) in [start, end): wallets, volume, the share of it traded by the
     top 1% / 5% / 10% of wallets and the top 10 wallets, and the Gini coefficient."""
     return f"""
-{_poly_wallet_volume(start, end, by_week=True)},
+{wallets or _poly_wallet_volume(start, end, by_week=True)},
 r AS (
   SELECT wk, vol,
     row_number() OVER (PARTITION BY wk ORDER BY vol DESC) AS rn,
@@ -326,7 +337,7 @@ tok AS (
   )
 ),
 mk AS (  -- one row per outcome token of an in-scope market
-  SELECT tok.token, coalesce(pa.asset, cond.k) AS asset, coalesce(pa.asset_class, 'Other') AS asset_class,
+  SELECT tok.token, tok.conditionId, coalesce(pa.asset, cond.k) AS asset, coalesce(pa.asset_class, 'Other') AS asset_class,
     cond.dur, 'Up/Down' AS ctype
   FROM tok JOIN cond ON cond.conditionId = tok.conditionId
   LEFT JOIN pa ON pa.k = cond.k
@@ -342,6 +353,28 @@ _PREDICT_FILL_COLS = """
       CAST(f.makerAmountFilled AS double) / nullif(CAST(f.takerAmountFilled AS double), 0), 1) AS fee"""
 
 
+def _predict_markets_cte(start):
+    since = date.fromisoformat(str(start)) - timedelta(days=PREDICT_META_LOOKBACK)
+    return (_PREDICT_MARKETS.replace("__ASSETS__", predict_assets_values_sql())
+            .replace("__UMA_DUR__", _PREDICT_UMA_DUR).replace("__SINCE__", str(since)))
+
+
+def _predict_fills(start, end, extra=""):
+    """CTE `t`: every in-scope fill side in [start, end), one row per OrderFilled."""
+    return f"""
+WITH {_predict_markets_cte(start)},
+t AS (
+  SELECT
+    date(f.evt_block_time) AS d,
+    date(date_trunc('week', f.evt_block_time)) AS w,
+    date(date_trunc('month', f.evt_block_time)) AS mo,
+    mk.token, mk.conditionId, mk.asset, mk.asset_class, mk.dur, mk.ctype,{_PREDICT_FILL_COLS}{extra}
+  FROM predict_bnb.ctfexchange_evt_orderfilled f
+  JOIN mk ON mk.token = IF(f.makerAssetId = 0, f.takerAssetId, f.makerAssetId)
+  WHERE f.evt_block_date >= DATE '{start}' AND f.evt_block_date < DATE '{end}'
+)"""
+
+
 def predict_activity(start, end):
     """Like poly_activity for predict.fun Up/Down markets, plus fees, over [start, end).
 
@@ -352,21 +385,7 @@ def predict_activity(start, end):
     dims = ["asset, dur", "asset", "dur", "asset_class", "ctype", ""]
     sets = [f"({p}{', ' + dset if dset else ''})" for p in ("d", "w", "mo") for dset in dims]
     sets.append("(d, asset, asset_class, dur, ctype)")
-    since = date.fromisoformat(str(start)) - timedelta(days=PREDICT_META_LOOKBACK)
-    markets = (_PREDICT_MARKETS.replace("__ASSETS__", predict_assets_values_sql())
-               .replace("__UMA_DUR__", _PREDICT_UMA_DUR).replace("__SINCE__", str(since)))
-    return f"""
-WITH {markets},
-t AS (
-  SELECT
-    date(f.evt_block_time) AS d,
-    date(date_trunc('week', f.evt_block_time)) AS w,
-    date(date_trunc('month', f.evt_block_time)) AS mo,
-    mk.asset, mk.asset_class, mk.dur, mk.ctype,{_PREDICT_FILL_COLS}
-  FROM predict_bnb.ctfexchange_evt_orderfilled f
-  JOIN mk ON mk.token = IF(f.makerAssetId = 0, f.takerAssetId, f.makerAssetId)
-  WHERE f.evt_block_date >= DATE '{start}' AND f.evt_block_date < DATE '{end}'
-)
+    return f"""{_predict_fills(start, end)}
 SELECT
   d, w, mo, asset, asset_class, dur, ctype,
   grouping(d, w, mo, asset, asset_class, dur, ctype) AS gid,
@@ -399,4 +418,82 @@ SELECT d,
   sum(fee) AS fees,
   approx_distinct(trader) AS traders
 FROM t GROUP BY 1
+"""
+
+
+def predict_concentration_weekly(start, end):
+    return poly_concentration_weekly(start, end, wallets=_predict_wallet_volume(start, end, by_week=True))
+
+
+def predict_wallets(start, end):
+    """Every wallet's USDT volume (own side, maker or taker) and maker volume in in-scope
+    markets over [start, end), largest first. The concentration stats are computed from this in
+    Python: Dune re-runs a CTE for every reference, and the fills scan is the expensive part."""
+    return f"""{_predict_wallet_volume(start, end)}
+SELECT trader, vol, maker_vol FROM w ORDER BY vol DESC
+"""
+
+
+def predict_leaders(start, end, limit=150):
+    """predict.fun counterpart of poly_leaders, in one pass over the fills (Dune re-runs a CTE
+    for every reference, so everything is derived from one (wallet, token) aggregate).
+
+    Realized PnL needs each token's outcome index, which no table records. The exchange mints
+    a market's two tokens by splitting collateral with partition [1, 2], and the CTF mints them
+    in that order (TransferBatch from 0x0), so ids[1] is outcome 1 ("Up") and ids[2] outcome 2.
+    ConditionResolution's payoutNumerators then give each token's payout. Cashflows are net of
+    fees: a buyer's fee comes out of the shares received, a seller's out of the USDT.
+    "Most traded" is the market of the wallet's largest single-outcome position.
+    """
+    zero = "0x0000000000000000000000000000000000000000"
+    mint_since = date.fromisoformat(str(start)) - timedelta(days=3)  # tokens are minted as they trade
+    extra = ",\n    f.makerAssetId = 0 AS is_buy, CAST(f.fee AS double) / 1e18 AS fee_raw"
+    return f"""{_predict_fills(start, end, extra=extra)},
+tt AS (  -- per wallet and outcome token
+  SELECT trader, token, conditionId, asset || ' ' || dur AS market,
+    sum(amount) AS vol, sum(shares) AS notional, count(*) AS fills,
+    coalesce(sum(amount) FILTER (WHERE NOT is_taker), 0) AS maker_vol,
+    sum(IF(is_buy, -amount, amount - fee_raw)) AS cashflow,
+    sum(IF(is_buy, shares - fee_raw, -shares)) AS net_shares
+  FROM t GROUP BY 1, 2, 3, 4
+),
+mints AS (
+  SELECT ids FROM predict_bnb.conditionaltokens_evt_transferbatch
+  WHERE evt_block_date >= DATE '{mint_since}' AND evt_block_date < DATE '{end}' AND "from" = {zero} AND cardinality(ids) = 2
+  UNION ALL
+  SELECT ids FROM predict_bnb.yieldbearingconditionaltokens_evt_transferbatch
+  WHERE evt_block_date >= DATE '{mint_since}' AND evt_block_date < DATE '{end}' AND "from" = {zero} AND cardinality(ids) = 2
+),
+idx AS (  -- outcome index (1-based) of each token
+  SELECT token, min(i) AS i FROM (
+    SELECT ids[1] AS token, 1 AS i FROM mints UNION ALL SELECT ids[2], 2 FROM mints
+  ) GROUP BY 1
+),
+res AS (
+  SELECT conditionId, max_by(p, ts) AS p FROM (
+    SELECT conditionId, evt_block_time AS ts, transform(payoutNumerators, x -> CAST(x AS double)) AS p
+    FROM predict_bnb.conditionaltokens_evt_conditionresolution
+    UNION ALL
+    SELECT conditionId, evt_block_time, transform(payoutNumerators, x -> CAST(x AS double))
+    FROM predict_bnb.yieldbearingconditionaltokens_evt_conditionresolution
+  ) GROUP BY 1
+),
+j AS (
+  SELECT tt.*, element_at(r.p, idx.i) / nullif(reduce(r.p, 0e0, (a, x) -> a + x, a -> a), 0) AS payout
+  FROM tt
+  LEFT JOIN idx ON idx.token = tt.token
+  LEFT JOIN res r ON r.conditionId = tt.conditionId
+)
+SELECT trader,
+  sum(vol) AS volume,
+  sum(notional) AS notional,
+  sum(fills) AS fills,
+  count(DISTINCT conditionId) AS markets,
+  sum(maker_vol) / nullif(sum(vol), 0) AS maker_share,
+  sum(cashflow + net_shares * payout) FILTER (WHERE payout IS NOT NULL) AS realized_pnl,
+  max_by(market, vol) AS top_market
+FROM j
+GROUP BY 1
+ORDER BY volume DESC
+LIMIT {limit}
 """

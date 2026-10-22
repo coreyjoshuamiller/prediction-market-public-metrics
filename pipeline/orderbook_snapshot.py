@@ -1,4 +1,5 @@
-"""Sample top-of-book liquidity for the live 15-minute Up/Down markets on Polymarket and Kalshi.
+"""Sample top-of-book liquidity for the live 15-minute Up/Down markets on Polymarket, Kalshi
+and predict.fun.
 
 Each sample records, for the "Up"/YES side of the currently-live 15m window:
 best bid/ask, $ resting at the best bid/ask, and $ resting on each side within 1c, 2c and 5c
@@ -17,8 +18,10 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 
 from .net import get_json
+from .predict_api import gql
 
-ASSETS = ["BTC", "ETH", "SOL", "XRP"]
+ASSETS = ["BTC", "ETH", "SOL", "XRP", "BNB"]
+PLATFORM_ASSETS = {"predict": ["BTC", "ETH", "BNB"]}  # venues that don't list every asset
 WINDOW = 900  # 15 minutes
 DEPTH_BANDS = (1, 2, 5)  # cents from the midpoint
 OUT_DIR = os.path.join(os.path.dirname(__file__), "..", "data", "orderbook")
@@ -109,6 +112,26 @@ def kalshi_sample(asset, window_start):
     return s and {"market": ticker, **s}
 
 
+PREDICT_BOOK = """query($id: ID!) { category(id: $id) { markets { edges { node { id
+  orderbook { asks bids } } } } } }"""
+
+
+def predict_sample(asset, window_start):
+    # categories are addressable by slug; the book is quoted for the first outcome, "Up"
+    slug = f"{asset.lower()}-updown-15m-{window_start}"
+    cat = gql(PREDICT_BOOK, {"id": slug}).get("category")
+    edges = (cat or {}).get("markets", {}).get("edges") or []
+    if not edges:
+        return None
+    ob = edges[0]["node"].get("orderbook") or {}
+    s = _summarize([(float(p), float(q)) for p, q in ob.get("bids") or []],
+                   [(float(p), float(q)) for p, q in ob.get("asks") or []])
+    return s and {"market": slug, **s}
+
+
+SAMPLERS = {"polymarket": polymarket_sample, "kalshi": kalshi_sample, "predict": predict_sample}
+
+
 def _migrate_header(path):
     """If today's file was started with an older column set, rewrite it with the current one
     (columns it didn't have are left blank) so appended rows line up."""
@@ -129,11 +152,11 @@ def sample_once():
     now = time.time()
     window_start = int(now // WINDOW * WINDOW)
     ts = datetime.fromtimestamp(now, timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-    jobs = [(p, a) for p in ("polymarket", "kalshi") for a in ASSETS]
+    jobs = [(p, a) for p in SAMPLERS for a in PLATFORM_ASSETS.get(p, ASSETS)]
 
     def run(job):
         platform, asset = job
-        fn = polymarket_sample if platform == "polymarket" else kalshi_sample
+        fn = SAMPLERS[platform]
         try:
             r = fn(asset, window_start)
         except Exception as e:  # one flaky venue shouldn't kill the whole sample

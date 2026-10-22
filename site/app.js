@@ -6,7 +6,7 @@
   const state = {
     range: 90, gran: "day", group: "market", cls: "", measure: "notional",
     lbPlatform: "polymarket", lbWindow: "7d", obAsset: "BTC", obRes: "recent", obSide: "both", obBand: 2,
-    concWindow: "30d", concScale: "log",
+    concWindow: "30d", concScale: "log", concVenue: "polymarket",
   };
   const PREF_KEY = "stpm-prefs";
   try { Object.assign(state, JSON.parse(localStorage.getItem(PREF_KEY) || "{}")); } catch (e) {}
@@ -569,7 +569,7 @@
     });
     opt.series = [
       bar("Share of wallets", groups.map((g) => (g.wallets / w.wallets) * 100), css("--other")),
-      bar("Share of volume", groups.map((g) => (g.volume / w.volume) * 100), css("--poly")),
+      bar("Share of volume", groups.map((g) => (g.volume / w.volume) * 100), venueColor(state.concVenue)),
     ];
     opt.tooltip.formatter = (ps) => {
       const g = groups[[].concat(ps)[0].dataIndex], m = css("--text-secondary");
@@ -590,7 +590,10 @@
   function renderConcentration() {
     setPressed("#f-conc-window", state.concWindow);
     setPressed("#f-conc-scale", state.concScale);
-    const w = C?.windows?.[state.concWindow];
+    setPressed("#f-conc-venue", state.concVenue);
+    // Polymarket Intl sits at the top level of concentration.json, other venues under their key
+    const CV = state.concVenue === "polymarket" ? C : C?.[state.concVenue];
+    const w = CV?.windows?.[state.concWindow];
     const none = "<strong>Concentration data not built yet</strong><span>It's refreshed weekly by the daily pipeline.</span>";
     if (!w) {
       $("#conc-tiles").innerHTML = "";
@@ -608,7 +611,7 @@
       `From ${span}, ${fmtInt(n)} wallets traded ${fmtUsd(w.volume)}. Half of it came from just ${fmtInt(k50)} wallets (${pctSmart((k50 / n) * 100)}). ` +
       `The top 1% (${fmtInt(top1n)} wallets) traded ${fmtPct(top1 * 100)}, and ${fmtPct(top1Maker * 100, 0)} of their volume came from resting (maker) orders, the signature of market makers. ` +
       `Half of all wallets traded under ${fmtUsd(bottom.max)} each and together made up ${pctSmart((bottom.volume / w.volume) * 100)} of volume. ` +
-      `Polymarket Intl only: Kalshi and Polymarket US don't publish account-level trades.`;
+      `${PLATFORMS[state.concVenue]}. Kalshi and Polymarket US don't publish account-level trades.`;
 
     drawTiles($("#conc-tiles"), [
       { label: "Wallets that traded", value: fmtInt(n), note: `${fmtUsd(w.volume)} traded · ${span}` },
@@ -624,7 +627,7 @@
     const pts = w.curve.map(([r, v]) => [(r / n) * 100, (v / w.volume) * 100]);
     const xmin = log ? Math.pow(10, Math.floor(Math.log10(100 / n))) : 0;
     const marks = (log ? [0.1, 1, 10] : [5, 20, 50]).map((p) => [p, (topVolume(w, (p / 100) * n) / w.volume) * 100]);
-    const muted = css("--text-muted"), poly = css("--poly");
+    const muted = css("--text-muted"), poly = venueColor(state.concVenue);
     const opt = baseOption();
     opt.xAxis = {
       type: log ? "log" : "value", min: xmin, max: 100,
@@ -665,7 +668,7 @@
 
     // trend: share of each week's volume from the top wallets, over the selected range
     const from = M ? bucketOf(M.days[Math.max(0, M.days.length - state.range)], "week") : "";
-    const weeks = (C.weekly || []).filter((x) => x.week >= from);
+    const weeks = (CV.weekly || []).filter((x) => x.week >= from);
     const wopt = baseOption();
     wopt.xAxis.data = weeks.map((x) => fmtDate(x.week, "day"));
     wopt.xAxis.boundaryGap = false;
@@ -691,6 +694,7 @@
   // ---------- leaders ----------
   const LB_WINDOWS = {
     polymarket: [["7d", "7 days"], ["30d", "30 days"]],
+    predict: [["7d", "7 days"], ["30d", "30 days"]],
     kalshi: [["Crypto|monthly", "Crypto · month"], ["Crypto|all_time", "Crypto · all time"], ["Financials|monthly", "Financials · month"], ["Financials|all_time", "Financials · all time"]],
   };
   let lbSort = { key: "volume", dir: -1 };
@@ -724,6 +728,22 @@
         { k: "rank", t: "#", num: true },
         { k: "name", t: "Trader", render: traderCell },
         { k: "x", t: "Contact", render: contactCell },
+        { k: "volume", t: "Volume", num: true, f: fmtUsd },
+        { k: "pnl", t: "Realized PnL", num: true, f: fmtUsd, cls: (r) => (r.pnl > 0 ? "pos" : r.pnl < 0 ? "neg" : "") },
+        { k: "fills", t: "Fills", num: true, f: fmtInt },
+        { k: "markets", t: "Markets", num: true, f: fmtInt },
+        { k: "maker_share", t: "Maker %", num: true, f: (v) => (v == null ? "–" : `${Math.round(v * 100)}%`) },
+        { k: "top_market", t: "Most traded", f: (v) => v || "–" },
+      ];
+    } else if (state.lbPlatform === "predict") {
+      const w = L.predict?.[state.lbWindow];
+      rows = w?.rows || [];
+      const withX = rows.filter((r) => r.x).length, named = rows.filter((r) => r.name).length;
+      lede.textContent = `Wallets ranked by dollars (USDT) traded in Predict.fun's Up/Down markets, ${w ? `${w.start} to ${w.end}` : ""}. PnL is realized on markets that resolved: trade cashflows plus $1 per winning share, net of fees, with each share's outcome read from the order Predict.fun mints them in. “Maker %” is the share of a wallet's volume from resting orders. Names and X handles are what traders set on their Predict.fun accounts (${named} of these ${rows.length} have a name, ${withX} link X). The trader link opens the wallet on BscScan.`;
+      cols = [
+        { k: "rank", t: "#", num: true },
+        { k: "name", t: "Trader", render: traderCell },
+        { k: "x", t: "X", render: (r) => (r.x ? link(`https://x.com/${r.x}`, `@${r.x}`) : dash()) },
         { k: "volume", t: "Volume", num: true, f: fmtUsd },
         { k: "pnl", t: "Realized PnL", num: true, f: fmtUsd, cls: (r) => (r.pnl > 0 ? "pos" : r.pnl < 0 ? "neg" : "") },
         { k: "fills", t: "Fills", num: true, f: fmtInt },
@@ -810,6 +830,8 @@
 
   // ---------- liquidity ----------
   const BANDS = [1, 2, 5];
+  const OB_VENUES = ["polymarket", "kalshi", "predict"];
+  const OB_ASSETS = { predict: ["BTC", "ETH", "BNB"] }; // venues without a 15m market for every asset
   const SIDE_LABEL = { both: "bid + offer", bid: "bid", ask: "offer" };
 
   function renderLiquidity() {
@@ -834,7 +856,7 @@
     const maxOf = (arr) => Math.max(0, ...(arr || []).filter((v) => v != null));
     const pair = {};
     let yMaxTop = 0, yMaxDepth = 0;
-    for (const p of ["polymarket", "kalshi"]) {
+    for (const p of OB_VENUES) {
       pair[p] = block[`${p}|${state.obAsset}`];
       if (pair[p]) {
         yMaxTop = Math.max(yMaxTop, maxOf(pair[p].bid_usd), maxOf(pair[p].ask_usd));
@@ -852,11 +874,13 @@
       return opt;
     };
 
-    for (const p of ["polymarket", "kalshi"]) {
+    const notListed = (p) => `<strong>No ${state.obAsset} 15m market on ${PLATFORMS[p]}</strong><span>It lists 15-minute Up/Down markets on ${OB_ASSETS[p].join(", ")}.</span>`;
+    for (const p of OB_VENUES) {
       const d = pair[p];
+      const missing = OB_ASSETS[p] && !OB_ASSETS[p].includes(state.obAsset) ? notListed(p) : noData;
       // top of book
       const topTitle = `${PLATFORMS[p]}: $ at best bid / best offer`;
-      if (!d) renderChart(`ob-top-${p}`, { title: topTitle, keyColor: platColor(p), empty: noData });
+      if (!d) renderChart(`ob-top-${p}`, { title: topTitle, keyColor: platColor(p), empty: missing });
       else {
         const opt = timeOpt(d, yMaxTop);
         opt.series = [lineSeries("Bid (buy Up)", d.bid_usd, css("--series-1")), lineSeries("Offer (sell Up)", d.ask_usd, css("--series-2"))];
@@ -866,7 +890,7 @@
       // depth within 1/2/5c of the midpoint, one line per band
       const depthTitle = `${PLATFORMS[p]}: depth near mid`;
       const hasDepth = d && BANDS.some((c) => (d[depthKey(c)] || []).some((v) => v != null));
-      if (!hasDepth) renderChart(`ob-depth-${p}`, { title: depthTitle, keyColor: platColor(p), empty: noData });
+      if (!hasDepth) renderChart(`ob-depth-${p}`, { title: depthTitle, keyColor: platColor(p), empty: missing });
       else {
         const opt = timeOpt(d, yMaxDepth);
         opt.series = BANDS.map((c, i) => lineSeries(`Within ${c}¢`, d[depthKey(c)], css(`--band-${i + 1}`)));
@@ -875,8 +899,9 @@
       }
     }
 
-    // spread, both venues on one time axis
-    const times = [...new Set(["polymarket", "kalshi"].flatMap((p) => pair[p]?.t || []))].sort((a, b) => a - b);
+    // spread, all venues on one time axis
+    const obShown = OB_VENUES.filter((p) => pair[p]);
+    const times = [...new Set(obShown.flatMap((p) => pair[p].t))].sort((a, b) => a - b);
     if (!times.length) renderChart("ob-spread", { title: "Bid–offer spread", empty: noData });
     else {
       const opt = baseOption();
@@ -884,17 +909,17 @@
       opt.yAxis.axisLabel.formatter = (v) => `${v}¢`;
       opt.tooltip.formatter = tooltipFormatter((v) => `${(+v).toFixed(1)}¢`, { total: false });
       opt.dataZoom = [{ type: "inside" }];
-      opt.series = ["polymarket", "kalshi"].map((p) => {
-        const m = new Map((pair[p]?.t || []).map((t, i) => [t, pair[p].spread_c[i]]));
+      opt.series = obShown.map((p) => {
+        const m = new Map(pair[p].t.map((t, i) => [t, pair[p].spread_c[i]]));
         return lineSeries(PLATFORMS[p], times.map((t) => m.get(t) ?? null), platColor(p));
       });
       renderChart("ob-spread", { title: "Bid–offer spread", note: `${state.obAsset} 15m · cents` }, opt,
-        { cols: ["Time (UTC)", "Polymarket", "Kalshi"], rows: times.map((t, i) => [iso(t), opt.series[0].data[i] ?? "–", opt.series[1].data[i] ?? "–"]) });
+        { cols: ["Time (UTC)", ...obShown.map((p) => PLATFORMS[p])], rows: times.map((t, i) => [iso(t), ...opt.series.map((x) => x.data[i] ?? "–")]) });
     }
 
     // how depth (selected band and side) evolves through the 15-minute window
     const key = depthKey(state.obBand);
-    const prof = ["polymarket", "kalshi"].map((p) => OB?.profile?.[`${p}|${state.obAsset}`]);
+    const prof = OB_VENUES.map((p) => OB?.profile?.[`${p}|${state.obAsset}`]);
     const profTitle = "Depth through the 15-minute window";
     if (!prof.some((d) => d && (d[key] || []).some((v) => v != null))) renderChart("ob-profile", { title: profTitle, empty: noData });
     else {
@@ -906,13 +931,13 @@
       opt.grid.bottom = 28;
       opt.yAxis.axisLabel.formatter = (v) => fmtUsd(v);
       opt.tooltip.formatter = tooltipFormatter(fmtUsd, { total: false });
-      opt.series = ["polymarket", "kalshi"].map((p, j) => {
-        const d = prof[j];
-        const m = new Map((d?.minute || []).map((x, i) => [x, d[key]?.[i]]));
+      const profShown = OB_VENUES.map((p, j) => [p, prof[j]]).filter(([, d]) => d);
+      opt.series = profShown.map(([p, d]) => {
+        const m = new Map(d.minute.map((x, i) => [x, d[key]?.[i]]));
         return lineSeries(PLATFORMS[p], mins.map((x) => m.get(x) ?? null), platColor(p), { showSymbol: true });
       });
       renderChart("ob-profile", { title: profTitle, note: `${state.obAsset} · ${SIDE_LABEL[state.obSide]} within ${state.obBand}¢ of mid · median, last 14d` }, opt,
-        { cols: ["Minute", "Polymarket", "Kalshi"], rows: mins.map((m, i) => [`${m}`, fmtUsd(opt.series[0].data[i]), fmtUsd(opt.series[1].data[i])]) });
+        { cols: ["Minute", ...profShown.map(([p]) => PLATFORMS[p])], rows: mins.map((m, i) => [`${m}`, ...opt.series.map((x) => fmtUsd(x.data[i]))]) });
     }
   }
 
@@ -945,8 +970,8 @@
       <p><b>Venues.</b> <i>Polymarket Intl</i> is the on-chain exchange (Polygon), read from Dune. <i>Polymarket US</i> is the CFTC-regulated US exchange; it trades off-chain, so it comes from the exchange's public daily time-and-sales files. Its only short-term price markets today are BTC Up/Down 15m and 1h. Those files have no account IDs or taker side, so Polymarket US has no trader counts or leaderboard, and its cash is price × quantity. Its sessions run 5pm–5pm ET, so the most recent UTC day fills in a day later. <i>Predict.fun</i> is an on-chain exchange on BNB Chain, built on the same contract design as Polymarket and read from Dune. Its markets are identified on-chain: 5m and 15m rounds from its Chainlink Up/Down contract (by price feed), hourly and daily markets from the title stored with each UMA question. History starts with its first Up/Down market in November 2025; its 15m BTC series stopped on April 2, 2026 and relaunched on Chainlink pricing on April 27.</p>
       <p><b>Fees.</b> Polymarket Intl and Predict.fun fees are the actual fees recorded on each on-chain fill. Takers pay them; makers pay none. Predict.fun charges a buyer's fee in shares, valued here at the fill price. Kalshi and Polymarket US don't publish fees, so they're estimated per trade from each venue's published formula, rate × contracts × price × (1 − price). Kalshi's rate is 7% for takers × the series' fee multiplier, plus 1.75% on series that also charge makers. Polymarket US uses its dated schedule, currently 6.95%. Both estimates slightly understate real fees: Kalshi rounds each order's fee up to the next cent, and neither estimate includes maker rebates or promotions. Kalshi's fee settings are today's, applied to all history. “Share of platform fees” divides short-term fees by the venue's total fees, calculated the same way.</p>
       <p><b>Traders.</b> Unique Polymarket Intl and Predict.fun wallets, makers and takers, from on-chain fills. Counts use approximate distinct counting, accurate to about 2%. Kalshi doesn't publish account-level trades.</p>
-      <p><b>Concentration.</b> Each Polymarket Intl wallet's volume is the dollars (USDC) it paid or received on its own side of every fill in these markets, as maker or taker, the same measure as the Top traders table. Every fill has two sides, so wallet volumes add up to about 2× the taker-side cash shown in the volume charts. Wallets are ranked by exact volume; percentile tiers round up, so the top 1% of 250 wallets is 3. A wallet isn't necessarily a person: one trader can run several wallets, which would make true concentration higher. The Gini coefficient is exact over all wallets. The 7-day and 30-day windows end on the date shown and refresh weekly; the trend uses complete Monday–Sunday weeks.</p>
-      <p><b>Sources.</b> Polymarket Intl and Predict.fun on-chain trades and Kalshi daily reports via Dune; Polymarket US time-and-sales files from polymarketexchange.com; Polymarket profiles via the Gamma API; Kalshi series metadata and leaderboard via Kalshi's public API; order books from the Polymarket CLOB and Kalshi APIs. History refreshes daily and order-book snapshots hourly. Days are UTC; the current partial day is excluded.</p>`;
+      <p><b>Concentration.</b> Each Polymarket Intl or Predict.fun wallet's volume is the dollars (USDC or USDT) it paid or received on its own side of every fill in these markets, as maker or taker, the same measure as the Top traders table. Every fill has two sides, so wallet volumes add up to about 2× the taker-side cash shown in the volume charts. Wallets are ranked by exact volume; percentile tiers round up, so the top 1% of 250 wallets is 3. A wallet isn't necessarily a person: one trader can run several wallets, which would make true concentration higher. The Gini coefficient is exact over all wallets. The 7-day and 30-day windows end on the date shown and refresh weekly; the trend uses complete Monday–Sunday weeks.</p>
+      <p><b>Sources.</b> Polymarket Intl and Predict.fun on-chain trades and Kalshi daily reports via Dune; Polymarket US time-and-sales files from polymarketexchange.com; Polymarket profiles via the Gamma API; Kalshi series metadata and leaderboard via Kalshi's public API; order books from the Polymarket CLOB and Kalshi APIs and Predict.fun's public GraphQL API, which also supplies Predict.fun account names. History refreshes daily and order-book snapshots hourly. Days are UTC; the current partial day is excluded.</p>`;
   }
 
   async function load() {
@@ -966,6 +991,7 @@
   bindSeg("#f-measure", "measure", renderAll);
   $("#f-cls").addEventListener("change", (e) => { state.cls = e.target.value; savePrefs(); renderAll(); });
   bindSeg("#f-conc-window", "concWindow", renderConcentration);
+  bindSeg("#f-conc-venue", "concVenue", renderConcentration);
   bindSeg("#f-conc-scale", "concScale", renderConcentration);
   bindSeg("#f-lb-platform", "lbPlatform", renderLeaders);
   bindSeg("#f-ob-asset", "obAsset", renderLiquidity);

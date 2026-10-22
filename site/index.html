@@ -93,9 +93,10 @@
   </section>
 
   <section id="concentration">
-    <h2>Volume concentration: Polymarket Intl</h2>
-    <p class="lede" id="conc-lede">How dollars traded in short-term price markets are spread across wallets: what share of volume the most active wallets account for. Kalshi and Polymarket US don't publish account-level trades, so this covers Polymarket Intl only.</p>
+    <h2>Volume concentration</h2>
+    <p class="lede" id="conc-lede">How dollars traded in short-term price markets are spread across wallets: what share of volume the most active wallets account for. Kalshi and Polymarket US don't publish account-level trades, so this covers the on-chain venues, Polymarket Intl and Predict.fun.</p>
     <div class="section-controls">
+      <div><label>Venue</label> <span class="seg" id="f-conc-venue"><button data-v="polymarket">Polymarket Intl</button><button data-v="predict">Predict.fun</button></span></div>
       <div><label>Window</label> <span class="seg" id="f-conc-window"><button data-v="7d">7 days</button><button data-v="30d">30 days</button></span></div>
       <div><label>Wallet axis</label> <span class="seg" id="f-conc-scale"><button data-v="log">Log</button><button data-v="linear">Linear</button></span></div>
     </div>
@@ -112,7 +113,7 @@
     <h2>Top traders</h2>
     <p class="lede" id="leaders-lede"></p>
     <div class="section-controls">
-      <span class="seg" id="f-lb-platform"><button data-v="polymarket">Polymarket Intl</button><button data-v="kalshi">Kalshi</button></span>
+      <span class="seg" id="f-lb-platform"><button data-v="polymarket">Polymarket Intl</button><button data-v="predict">Predict.fun</button><button data-v="kalshi">Kalshi</button></span>
       <span class="seg" id="f-lb-window"></span>
     </div>
     <div class="table-card" id="leaders-table"></div>
@@ -122,16 +123,20 @@
     <h2>Order book liquidity: live 15-minute markets</h2>
     <p class="lede">Snapshots of the “Up” side of the currently-live 15m window, sampled about once a minute. Top of book is the dollars resting at the best bid and best offer. Depth is the dollars resting within 1¢, 2¢ and 5¢ of the midpoint: how much you could trade before moving the price that far. Snapshot history starts on <span id="ob-first">–</span>; depth bands start on <span id="ob-depth-first">–</span>.</p>
     <div class="section-controls">
-      <div><label>Asset</label> <span class="seg" id="f-ob-asset"><button data-v="BTC">BTC</button><button data-v="ETH">ETH</button><button data-v="SOL">SOL</button><button data-v="XRP">XRP</button></span></div>
+      <div><label>Asset</label> <span class="seg" id="f-ob-asset"><button data-v="BTC">BTC</button><button data-v="ETH">ETH</button><button data-v="SOL">SOL</button><button data-v="XRP">XRP</button><button data-v="BNB">BNB</button></span></div>
       <div><label>Resolution</label> <span class="seg" id="f-ob-res"><button data-v="recent">5-min (7D)</button><button data-v="history">Hourly (all)</button></span></div>
       <div><label>Depth side</label> <span class="seg" id="f-ob-side"><button data-v="both">Bid + offer</button><button data-v="bid">Bid</button><button data-v="ask">Offer</button></span></div>
       <div><label>Profile band</label> <span class="seg" id="f-ob-band"><button data-v="1">1¢</button><button data-v="2">2¢</button><button data-v="5">5¢</button></span></div>
     </div>
-    <div class="pair">
+    <div class="trio">
       <figure class="card" data-chart="ob-top-polymarket"></figure>
       <figure class="card" data-chart="ob-top-kalshi"></figure>
+      <figure class="card" data-chart="ob-top-predict"></figure>
       <figure class="card" data-chart="ob-depth-polymarket"></figure>
       <figure class="card" data-chart="ob-depth-kalshi"></figure>
+      <figure class="card" data-chart="ob-depth-predict"></figure>
+    </div>
+    <div class="pair" style="margin-top:12px">
       <figure class="card" data-chart="ob-spread"></figure>
       <figure class="card" data-chart="ob-profile"></figure>
     </div>

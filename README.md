@@ -9,7 +9,7 @@ The site is static (`site/`) and served by GitHub Pages. Two GitHub Actions keep
 | Workflow | Schedule | What it does |
 |---|---|---|
 | `daily.yml` | triggered from cron (13:40, 16:40, 19:40, 22:40 UTC) and by the order-book chain when data is stale | Runs `pipeline/refresh.py`, which picks **full** (first run of the UTC day: Dune history, fees, Kalshi, Polymarket US, Predict.fun, leaderboards), **light** (a source is still missing yesterday: re-pull Kalshi and Polymarket US, ~1 credit, plus Predict.fun if it's the one missing; max 4 attempts/day) or **skip**. Then commits and deploys |
-| `orderbook.yml` | continuous: each run dispatches the next (cron every 3h restarts the chain if it breaks) | Samples the live 15m BTC/ETH/SOL/XRP order books once a minute for ~54 minutes, commits, deploys, and after 13:40 UTC triggers `daily.yml` if data is stale |
+| `orderbook.yml` | continuous: each run dispatches the next (cron every 3h restarts the chain if it breaks) | Samples the live 15m BTC/ETH/SOL/XRP/BNB order books (Polymarket, Kalshi, Predict.fun) once a minute for ~54 minutes, commits, deploys, and after 13:40 UTC triggers `daily.yml` if data is stale |
 | `deploy.yml` | on pushes to `site/` code | Redeploys the page |
 
 GitHub's cron is best-effort (runs can be hours late or dropped), which is why the daily refresh has several triggers and decides for itself whether to do anything. State lives in `data/refresh_state.json`. To force a run, use **Actions → Daily refresh → Run workflow** and pick a mode.
@@ -19,8 +19,8 @@ GitHub's cron is best-effort (runs can be hours late or dropped), which is why t
 - **Volume by market**: stacked by market (asset × duration), asset, duration, asset class or contract type. Day, week or month buckets, over the last 30 days to 12 months.
 - **Traders per market**: unique Polymarket Intl and Predict.fun wallets, makers and takers, per period. Kalshi and Polymarket US don't publish account-level trades.
 - **Share of platform volume**: in-scope volume as a % of each venue's total (Polymarket Intl, Polymarket US, Kalshi, Predict.fun), plus a head-to-head of the venues.
-- **Volume concentration**: how Polymarket Intl volume is spread across wallets (7d and 30d windows): share of volume by the top X% of wallets, percentile tiers, wallet-size bands, Gini, and a weekly trend of top 1% / 5% / 10% share. Refreshed weekly by `pipeline/concentration.py`.
-- **Top traders**: Polymarket wallets ranked from on-chain fills (7d daily, 30d weekly), with realized PnL, maker %, and linked X handles from Polymarket profiles. Kalshi uses its public Crypto and Financials leaderboards.
+- **Volume concentration**: how Polymarket Intl and Predict.fun volume is spread across wallets (7d and 30d windows): share of volume by the top X% of wallets, percentile tiers, wallet-size bands, Gini, and a weekly trend of top 1% / 5% / 10% share. Refreshed weekly by `pipeline/concentration.py`.
+- **Top traders**: Polymarket and Predict.fun wallets ranked from on-chain fills (7d daily, 30d weekly), with realized PnL, maker %, and names / linked X handles from each venue's profiles. Kalshi uses its public Crypto and Financials leaderboards. Predict.fun has no outcome table on Dune, so its PnL reads each token's outcome from mint order (the exchange splits collateral as [Up, Down]; see `queries.predict_leaders`).
 - **Order book liquidity**: dollars at the best bid and offer, depth within 5¢, spread, and how depth evolves through the 15-minute window.
 
 ## Data sources
@@ -34,7 +34,8 @@ GitHub's cron is best-effort (runs can be hours late or dropped), which is why t
 | Kalshi series metadata | `api.elections.kalshi.com/trade-api/v2/series` |
 | Kalshi leaderboard | `api.elections.kalshi.com/v1/social/leaderboard` (unofficial) |
 | Polymarket profiles (name, X handle) | `gamma-api.polymarket.com/public-profile` |
-| Order books | Polymarket CLOB `/book`, Kalshi `/markets/{ticker}/orderbook` |
+| Order books | Polymarket CLOB `/book`, Kalshi `/markets/{ticker}/orderbook`, Predict.fun GraphQL `category(id: slug) { markets { orderbook } }` |
+| Predict.fun account names, X handles | `graphql.predict.fun` `account(address:)` (needs an EIP-55 checksummed address; `pipeline/predict_api.py`) |
 
 ## Definitions
 
@@ -73,5 +74,5 @@ No third-party Python packages are needed.
 ## Costs
 
 - **Dune:** about 30–35 credits for each day's full refresh (more on the 1st–3rd of a month, which re-finalizes the previous month), plus 4–13 for Predict.fun (it re-reads month to date for unique-trader counts, so it grows through the month), so roughly 1,250 a month. Light retries cost about 1 credit.
-- **Volume concentration:** about 16 credits on Mondays (7d and 30d windows) plus about 1 per new week, so roughly 70 a month. The one-time weekly backfill from 2025-09-01 cost about 25.
+- **Volume concentration:** about 16 credits on Mondays (7d and 30d windows) plus about 1 per new week, so roughly 70 a month. The one-time weekly backfill from 2025-09-01 cost about 25. Predict.fun adds a similar amount; its snapshot pulls the wallet list once and computes the stats in Python, because Dune re-runs a CTE for every reference.
 - **GitHub Actions:** free, because the repo is public.
