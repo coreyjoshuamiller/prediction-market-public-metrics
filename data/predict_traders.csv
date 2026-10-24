@@ -7077,6 +7077,76 @@ day,2026-10-22,market,WTI Oil 15m,227
 day,2026-10-22,market,Zhipu 15m,53
 day,2026-10-22,total,All,12194
 day,2026-10-22,type,Up/Down,12194
+day,2026-10-23,asset,AMZN,71
+day,2026-10-23,asset,AVGO,37
+day,2026-10-23,asset,BNB,1013
+day,2026-10-23,asset,BTC,11022
+day,2026-10-23,asset,CXMT,42
+day,2026-10-23,asset,ETH,1723
+day,2026-10-23,asset,GOOGL,61
+day,2026-10-23,asset,Gold,275
+day,2026-10-23,asset,Hang Seng,42
+day,2026-10-23,asset,KOSPI,15
+day,2026-10-23,asset,META,62
+day,2026-10-23,asset,MSFT,60
+day,2026-10-23,asset,MU,326
+day,2026-10-23,asset,NVDA,168
+day,2026-10-23,asset,Nasdaq 100,77
+day,2026-10-23,asset,S&P 500,49
+day,2026-10-23,asset,SHEIN,14
+day,2026-10-23,asset,SKHY,89
+day,2026-10-23,asset,SNDK,73
+day,2026-10-23,asset,SPCX,257
+day,2026-10-23,asset,SSE Composite,102
+day,2026-10-23,asset,TSM,108
+day,2026-10-23,asset,Unitree,82
+day,2026-10-23,asset,WTI Oil,174
+day,2026-10-23,asset,Zhipu,33
+day,2026-10-23,class,Commodities,369
+day,2026-10-23,class,Crypto,11515
+day,2026-10-23,class,Equities,781
+day,2026-10-23,duration,15m,3244
+day,2026-10-23,duration,1d,788
+day,2026-10-23,duration,1h,1284
+day,2026-10-23,duration,5m,10668
+day,2026-10-23,market,AMZN 15m,71
+day,2026-10-23,market,AVGO 15m,37
+day,2026-10-23,market,BNB 15m,272
+day,2026-10-23,market,BNB 1d,184
+day,2026-10-23,market,BNB 1h,179
+day,2026-10-23,market,BNB 5m,716
+day,2026-10-23,market,BTC 15m,2539
+day,2026-10-23,market,BTC 1d,457
+day,2026-10-23,market,BTC 1h,1147
+day,2026-10-23,market,BTC 5m,10276
+day,2026-10-23,market,CXMT 1d,42
+day,2026-10-23,market,ETH 15m,600
+day,2026-10-23,market,ETH 1d,145
+day,2026-10-23,market,ETH 1h,319
+day,2026-10-23,market,ETH 5m,1294
+day,2026-10-23,market,GOOGL 15m,61
+day,2026-10-23,market,Gold 15m,275
+day,2026-10-23,market,Hang Seng 1d,42
+day,2026-10-23,market,KOSPI 1d,15
+day,2026-10-23,market,META 15m,62
+day,2026-10-23,market,MSFT 15m,60
+day,2026-10-23,market,MU 15m,326
+day,2026-10-23,market,NVDA 15m,168
+day,2026-10-23,market,Nasdaq 100 15m,77
+day,2026-10-23,market,S&P 500 15m,49
+day,2026-10-23,market,SHEIN 1d,14
+day,2026-10-23,market,SKHY 15m,70
+day,2026-10-23,market,SKHY 1d,23
+day,2026-10-23,market,SNDK 15m,73
+day,2026-10-23,market,SPCX 15m,257
+day,2026-10-23,market,SSE Composite 1d,102
+day,2026-10-23,market,TSM 15m,108
+day,2026-10-23,market,Unitree 15m,45
+day,2026-10-23,market,Unitree 1d,41
+day,2026-10-23,market,WTI Oil 15m,174
+day,2026-10-23,market,Zhipu 15m,33
+day,2026-10-23,total,All,11745
+day,2026-10-23,type,Up/Down,11745
 month,2025-11-01,asset,AAPL,2
 month,2025-11-01,class,Equities,2
 month,2025-11-01,duration,1d,2
@@ -7320,76 +7390,76 @@ month,2026-09-01,market,TSM 15m,481
 month,2026-09-01,market,Unitree 1d,322
 month,2026-09-01,total,All,63871
 month,2026-09-01,type,Up/Down,63871
-month,2026-10-01,asset,AMZN,386
-month,2026-10-01,asset,AVGO,308
-month,2026-10-01,asset,BNB,7548
-month,2026-10-01,asset,BTC,55294
-month,2026-10-01,asset,CXMT,259
-month,2026-10-01,asset,ETH,12542
-month,2026-10-01,asset,GOOGL,444
-month,2026-10-01,asset,Gold,651
-month,2026-10-01,asset,Hang Seng,189
-month,2026-10-01,asset,KOSPI,206
-month,2026-10-01,asset,META,450
-month,2026-10-01,asset,MSFT,357
-month,2026-10-01,asset,MU,1899
-month,2026-10-01,asset,NVDA,2112
-month,2026-10-01,asset,Nasdaq 100,473
-month,2026-10-01,asset,S&P 500,324
-month,2026-10-01,asset,SHEIN,126
-month,2026-10-01,asset,SKHY,298
-month,2026-10-01,asset,SNDK,123
-month,2026-10-01,asset,SPCX,2329
-month,2026-10-01,asset,SSE Composite,354
-month,2026-10-01,asset,TSM,959
-month,2026-10-01,asset,Unitree,290
-month,2026-10-01,asset,WTI Oil,362
-month,2026-10-01,asset,Zhipu,90
-month,2026-10-01,class,Commodities,776
-month,2026-10-01,class,Crypto,56289
-month,2026-10-01,class,Equities,5138
-month,2026-10-01,duration,15m,18542
-month,2026-10-01,duration,1d,5168
-month,2026-10-01,duration,1h,8532
-month,2026-10-01,duration,5m,54070
-month,2026-10-01,market,AMZN 15m,386
-month,2026-10-01,market,AVGO 15m,308
-month,2026-10-01,market,BNB 15m,2421
-month,2026-10-01,market,BNB 1d,1256
-month,2026-10-01,market,BNB 1h,1593
-month,2026-10-01,market,BNB 5m,5954
-month,2026-10-01,market,BTC 15m,14935
-month,2026-10-01,market,BTC 1d,3607
-month,2026-10-01,market,BTC 1h,7461
-month,2026-10-01,market,BTC 5m,53359
-month,2026-10-01,market,CXMT 1d,259
-month,2026-10-01,market,ETH 15m,4836
-month,2026-10-01,market,ETH 1d,1606
-month,2026-10-01,market,ETH 1h,2563
-month,2026-10-01,market,ETH 5m,10536
-month,2026-10-01,market,GOOGL 15m,444
-month,2026-10-01,market,Gold 15m,651
-month,2026-10-01,market,Hang Seng 1d,189
-month,2026-10-01,market,KOSPI 1d,206
-month,2026-10-01,market,META 15m,450
-month,2026-10-01,market,MSFT 15m,357
-month,2026-10-01,market,MU 15m,1899
-month,2026-10-01,market,NVDA 15m,2112
-month,2026-10-01,market,Nasdaq 100 15m,473
-month,2026-10-01,market,S&P 500 15m,324
-month,2026-10-01,market,SHEIN 1d,126
-month,2026-10-01,market,SKHY 15m,123
-month,2026-10-01,market,SKHY 1d,180
-month,2026-10-01,market,SNDK 15m,123
-month,2026-10-01,market,SPCX 15m,2329
-month,2026-10-01,market,SSE Composite 1d,354
-month,2026-10-01,market,TSM 15m,959
-month,2026-10-01,market,Unitree 15m,98
-month,2026-10-01,market,Unitree 1d,207
-month,2026-10-01,market,WTI Oil 15m,362
-month,2026-10-01,market,Zhipu 15m,90
-month,2026-10-01,total,All,56986
-month,2026-10-01,type,Up/Down,56986
+month,2026-10-01,asset,AMZN,411
+month,2026-10-01,asset,AVGO,320
+month,2026-10-01,asset,BNB,7792
+month,2026-10-01,asset,BTC,57150
+month,2026-10-01,asset,CXMT,265
+month,2026-10-01,asset,ETH,12901
+month,2026-10-01,asset,GOOGL,464
+month,2026-10-01,asset,Gold,813
+month,2026-10-01,asset,Hang Seng,195
+month,2026-10-01,asset,KOSPI,208
+month,2026-10-01,asset,META,473
+month,2026-10-01,asset,MSFT,375
+month,2026-10-01,asset,MU,2102
+month,2026-10-01,asset,NVDA,2188
+month,2026-10-01,asset,Nasdaq 100,492
+month,2026-10-01,asset,S&P 500,340
+month,2026-10-01,asset,SHEIN,129
+month,2026-10-01,asset,SKHY,344
+month,2026-10-01,asset,SNDK,161
+month,2026-10-01,asset,SPCX,2462
+month,2026-10-01,asset,SSE Composite,375
+month,2026-10-01,asset,TSM,1014
+month,2026-10-01,asset,Unitree,319
+month,2026-10-01,asset,WTI Oil,455
+month,2026-10-01,asset,Zhipu,108
+month,2026-10-01,class,Commodities,983
+month,2026-10-01,class,Crypto,58300
+month,2026-10-01,class,Equities,5472
+month,2026-10-01,duration,15m,19178
+month,2026-10-01,duration,1d,5338
+month,2026-10-01,duration,1h,8911
+month,2026-10-01,duration,5m,55723
+month,2026-10-01,market,AMZN 15m,411
+month,2026-10-01,market,AVGO 15m,320
+month,2026-10-01,market,BNB 15m,2488
+month,2026-10-01,market,BNB 1d,1328
+month,2026-10-01,market,BNB 1h,1661
+month,2026-10-01,market,BNB 5m,6177
+month,2026-10-01,market,BTC 15m,15392
+month,2026-10-01,market,BTC 1d,3729
+month,2026-10-01,market,BTC 1h,7762
+month,2026-10-01,market,BTC 5m,55008
+month,2026-10-01,market,CXMT 1d,265
+month,2026-10-01,market,ETH 15m,5025
+month,2026-10-01,market,ETH 1d,1637
+month,2026-10-01,market,ETH 1h,2638
+month,2026-10-01,market,ETH 5m,10794
+month,2026-10-01,market,GOOGL 15m,464
+month,2026-10-01,market,Gold 15m,813
+month,2026-10-01,market,Hang Seng 1d,195
+month,2026-10-01,market,KOSPI 1d,208
+month,2026-10-01,market,META 15m,473
+month,2026-10-01,market,MSFT 15m,375
+month,2026-10-01,market,MU 15m,2102
+month,2026-10-01,market,NVDA 15m,2188
+month,2026-10-01,market,Nasdaq 100 15m,492
+month,2026-10-01,market,S&P 500 15m,340
+month,2026-10-01,market,SHEIN 1d,129
+month,2026-10-01,market,SKHY 15m,170
+month,2026-10-01,market,SKHY 1d,185
+month,2026-10-01,market,SNDK 15m,161
+month,2026-10-01,market,SPCX 15m,2462
+month,2026-10-01,market,SSE Composite 1d,375
+month,2026-10-01,market,TSM 15m,1014
+month,2026-10-01,market,Unitree 15m,125
+month,2026-10-01,market,Unitree 1d,215
+month,2026-10-01,market,WTI Oil 15m,455
+month,2026-10-01,market,Zhipu 15m,108
+month,2026-10-01,total,All,59032
+month,2026-10-01,type,Up/Down,59032
 week,2025-11-24,asset,AAPL,2
 week,2025-11-24,class,Equities,2
 week,2025-11-24,duration,1d,2
@@ -8447,73 +8517,73 @@ week,2026-10-12,market,WTI Oil 15m,12
 week,2026-10-12,market,Zhipu 15m,7
 week,2026-10-12,total,All,28105
 week,2026-10-12,type,Up/Down,28105
-week,2026-10-19,asset,AMZN,147
-week,2026-10-19,asset,AVGO,113
-week,2026-10-19,asset,BNB,2178
-week,2026-10-19,asset,BTC,21386
-week,2026-10-19,asset,CXMT,133
-week,2026-10-19,asset,ETH,3731
-week,2026-10-19,asset,GOOGL,162
-week,2026-10-19,asset,Gold,634
-week,2026-10-19,asset,Hang Seng,79
-week,2026-10-19,asset,KOSPI,103
-week,2026-10-19,asset,META,175
-week,2026-10-19,asset,MSFT,147
-week,2026-10-19,asset,MU,662
-week,2026-10-19,asset,NVDA,720
-week,2026-10-19,asset,Nasdaq 100,183
-week,2026-10-19,asset,S&P 500,126
-week,2026-10-19,asset,SHEIN,32
-week,2026-10-19,asset,SKHY,200
-week,2026-10-19,asset,SNDK,118
-week,2026-10-19,asset,SPCX,731
-week,2026-10-19,asset,SSE Composite,199
-week,2026-10-19,asset,TSM,314
-week,2026-10-19,asset,Unitree,188
-week,2026-10-19,asset,WTI Oil,355
-week,2026-10-19,asset,Zhipu,85
-week,2026-10-19,class,Commodities,757
-week,2026-10-19,class,Crypto,21947
-week,2026-10-19,class,Equities,1908
-week,2026-10-19,duration,15m,6610
-week,2026-10-19,duration,1d,1650
-week,2026-10-19,duration,1h,2778
-week,2026-10-19,duration,5m,20335
-week,2026-10-19,market,AMZN 15m,147
-week,2026-10-19,market,AVGO 15m,113
-week,2026-10-19,market,BNB 15m,679
-week,2026-10-19,market,BNB 1d,403
-week,2026-10-19,market,BNB 1h,453
-week,2026-10-19,market,BNB 5m,1593
-week,2026-10-19,market,BTC 15m,5043
-week,2026-10-19,market,BTC 1d,1074
-week,2026-10-19,market,BTC 1h,2449
-week,2026-10-19,market,BTC 5m,19899
-week,2026-10-19,market,CXMT 1d,133
-week,2026-10-19,market,ETH 15m,1256
-week,2026-10-19,market,ETH 1d,430
-week,2026-10-19,market,ETH 1h,825
-week,2026-10-19,market,ETH 5m,2957
-week,2026-10-19,market,GOOGL 15m,162
-week,2026-10-19,market,Gold 15m,634
-week,2026-10-19,market,Hang Seng 1d,79
-week,2026-10-19,market,KOSPI 1d,103
-week,2026-10-19,market,META 15m,175
-week,2026-10-19,market,MSFT 15m,147
-week,2026-10-19,market,MU 15m,662
-week,2026-10-19,market,NVDA 15m,720
-week,2026-10-19,market,Nasdaq 100 15m,183
-week,2026-10-19,market,S&P 500 15m,126
-week,2026-10-19,market,SHEIN 1d,32
-week,2026-10-19,market,SKHY 15m,119
-week,2026-10-19,market,SKHY 1d,87
-week,2026-10-19,market,SNDK 15m,118
-week,2026-10-19,market,SPCX 15m,731
-week,2026-10-19,market,SSE Composite 1d,199
-week,2026-10-19,market,TSM 15m,314
-week,2026-10-19,market,Unitree 15m,93
-week,2026-10-19,market,Unitree 1d,109
-week,2026-10-19,market,WTI Oil 15m,355
-week,2026-10-19,market,Zhipu 15m,85
-week,2026-10-19,total,All,22362
-week,2026-10-19,type,Up/Down,22362
+week,2026-10-19,asset,AMZN,178
+week,2026-10-19,asset,AVGO,126
+week,2026-10-19,asset,BNB,2605
+week,2026-10-19,asset,BTC,24331
+week,2026-10-19,asset,CXMT,143
+week,2026-10-19,asset,ETH,4393
+week,2026-10-19,asset,GOOGL,185
+week,2026-10-19,asset,Gold,797
+week,2026-10-19,asset,Hang Seng,92
+week,2026-10-19,asset,KOSPI,106
+week,2026-10-19,asset,META,200
+week,2026-10-19,asset,MSFT,169
+week,2026-10-19,asset,MU,912
+week,2026-10-19,asset,NVDA,809
+week,2026-10-19,asset,Nasdaq 100,210
+week,2026-10-19,asset,S&P 500,145
+week,2026-10-19,asset,SHEIN,37
+week,2026-10-19,asset,SKHY,251
+week,2026-10-19,asset,SNDK,157
+week,2026-10-19,asset,SPCX,893
+week,2026-10-19,asset,SSE Composite,226
+week,2026-10-19,asset,TSM,383
+week,2026-10-19,asset,Unitree,221
+week,2026-10-19,asset,WTI Oil,448
+week,2026-10-19,asset,Zhipu,103
+week,2026-10-19,class,Commodities,964
+week,2026-10-19,class,Crypto,25053
+week,2026-10-19,class,Equities,2339
+week,2026-10-19,duration,15m,7692
+week,2026-10-19,duration,1d,1976
+week,2026-10-19,duration,1h,3274
+week,2026-10-19,duration,5m,23591
+week,2026-10-19,market,AMZN 15m,178
+week,2026-10-19,market,AVGO 15m,126
+week,2026-10-19,market,BNB 15m,783
+week,2026-10-19,market,BNB 1d,504
+week,2026-10-19,market,BNB 1h,527
+week,2026-10-19,market,BNB 5m,1902
+week,2026-10-19,market,BTC 15m,5842
+week,2026-10-19,market,BTC 1d,1258
+week,2026-10-19,market,BTC 1h,2903
+week,2026-10-19,market,BTC 5m,22963
+week,2026-10-19,market,CXMT 1d,143
+week,2026-10-19,market,ETH 15m,1518
+week,2026-10-19,market,ETH 1d,480
+week,2026-10-19,market,ETH 1h,937
+week,2026-10-19,market,ETH 5m,3435
+week,2026-10-19,market,GOOGL 15m,185
+week,2026-10-19,market,Gold 15m,797
+week,2026-10-19,market,Hang Seng 1d,92
+week,2026-10-19,market,KOSPI 1d,106
+week,2026-10-19,market,META 15m,200
+week,2026-10-19,market,MSFT 15m,169
+week,2026-10-19,market,MU 15m,912
+week,2026-10-19,market,NVDA 15m,809
+week,2026-10-19,market,Nasdaq 100 15m,210
+week,2026-10-19,market,S&P 500 15m,145
+week,2026-10-19,market,SHEIN 1d,37
+week,2026-10-19,market,SKHY 15m,166
+week,2026-10-19,market,SKHY 1d,93
+week,2026-10-19,market,SNDK 15m,157
+week,2026-10-19,market,SPCX 15m,893
+week,2026-10-19,market,SSE Composite 1d,226
+week,2026-10-19,market,TSM 15m,383
+week,2026-10-19,market,Unitree 15m,120
+week,2026-10-19,market,Unitree 1d,120
+week,2026-10-19,market,WTI Oil 15m,448
+week,2026-10-19,market,Zhipu 15m,103
+week,2026-10-19,total,All,25687
+week,2026-10-19,type,Up/Down,25687
