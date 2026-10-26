@@ -35,7 +35,7 @@ KALSHI_SOCIAL = "https://api.elections.kalshi.com/v1/social"
 PROFILE_TTL_DAYS = 7
 POLY_TOP = 500  # wallets ranked per window
 WEEKLY_DIR = os.path.join(ROOT, "data", "leaders_weekly")
-PER_WEEK = 2000
+PER_WEEK = 1000  # weeks stored before 2026-10-26 have 2,000; Dune bills every row returned
 WEEKS_PER_QUERY = 5  # a month-ish per Dune query: the market metadata is a fixed cost per query
 WEEKLY_START = {"polymarket": date(2025, 9, 1), "predict": date(2025, 11, 24)}  # first weeks in scope
 WEEKLY_QUERY = {"polymarket": poly_leaders_weekly, "predict": predict_leaders_weekly}
@@ -221,7 +221,7 @@ def long_window(venue, weeks, n_weeks):
     cutoff = 0.0  # the most volume a wallet could have in a week without making that week's list
     for w in keys:
         rows = weeks[w]
-        if len(rows) >= PER_WEEK:
+        if len(rows) >= PER_WEEK:  # a truncated week: an unlisted wallet traded at most its last row's volume
             cutoff = max(cutoff, float(rows[-1]["volume"]))
         for r in rows:
             a = acc[r["trader"]]

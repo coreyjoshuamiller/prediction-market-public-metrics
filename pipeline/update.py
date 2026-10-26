@@ -108,7 +108,7 @@ def poly_window(start, end, keep_days_from, keep_weeks_from, keep_months):
     keep_months: set of month-start dates whose rows to keep
     """
     print(f"polymarket {start} -> {end}")
-    rows = run_sql(poly_activity(start, end), label=f"poly {start}")
+    rows = run_sql(poly_activity(start, end, days_from=keep_days_from), label=f"poly {start}")
     months = {str(m) for m in keep_months}
     vol, trd = _split(rows, lambda d: d >= str(keep_days_from), lambda w: w >= str(keep_weeks_from), lambda m: m in months)
     kept = {(t["period"], t["start"]) for t in trd}
@@ -128,7 +128,7 @@ def poly_totals_window(start, end):
 def predict_window(start, end, keep_days_from, keep_weeks_from, keep_months):
     """predict.fun counterpart of poly_window (same grains, plus fees on the volume rows)."""
     print(f"predict.fun {start} -> {end}")
-    rows = run_sql(predict_activity(start, end), label=f"predict {start}")
+    rows = run_sql(predict_activity(start, end, days_from=keep_days_from), label=f"predict {start}")
     months = {str(m) for m in keep_months}
     vol, trd = _split(rows, lambda d: d >= str(keep_days_from), lambda w: w >= str(keep_weeks_from), lambda m: m in months)
     _warn_unmapped(vol)
@@ -170,19 +170,10 @@ def backfill_predict(since):
 def kalshi_window(start, end):
     print(f"kalshi {start} -> {end}")
     series = build_kalshi_series()
-    rows = run_sql(kalshi_series_daily(start, end, build_kalshi_fees()), label=f"kalshi {start}")
-    keep, totals = [], {}
-    for r in rows:
-        t = totals.setdefault(r["d"], [0.0, 0.0, 0.0, 0])
-        t[0] += r["contracts"] or 0
-        t[1] += r["cash"] or 0
-        t[2] += r["fees"] or 0
-        t[3] += r["trades"] or 0
-        if r["series"] in series:
-            keep.append({"d": r["d"], "series": r["series"], "contracts": _r(r["contracts"]), "cash": _r(r["cash"]),
-                         "fees": _r(r["fees"]), "trades": r["trades"]})
-    for d, (c, cash, fees, n) in totals.items():
-        keep.append({"d": d, "series": "__TOTAL__", "contracts": _r(c), "cash": _r(cash), "fees": _r(fees), "trades": n})
+    # in-scope series plus a per-day '__TOTAL__' row over all series, both computed in SQL
+    rows = run_sql(kalshi_series_daily(start, end, build_kalshi_fees(), series=list(series)), label=f"kalshi {start}")
+    keep = [{"d": r["d"], "series": r["series"], "contracts": _r(r["contracts"]), "cash": _r(r["cash"]),
+             "fees": _r(r["fees"]), "trades": r["trades"]} for r in rows]
     upsert("kalshi", keep, lambda x: str(start) <= x["d"] < str(end))
 
 
@@ -291,7 +282,9 @@ def _daily_window(today):
         start = month_start(month_start(end) - timedelta(days=1))
         keep_months.add(start)
     first_full_week = start if monday(start) == start else monday(start) + timedelta(days=7)
-    return start, end, {"keep_days_from": start, "keep_weeks_from": first_full_week, "keep_months": keep_months}
+    # day rows only for the last week: older days in the month are final, and Dune bills result rows
+    recent = max(start, end - timedelta(days=7))
+    return start, end, {"keep_days_from": recent, "keep_weeks_from": first_full_week, "keep_months": keep_months}
 
 
 def predict_daily(today):

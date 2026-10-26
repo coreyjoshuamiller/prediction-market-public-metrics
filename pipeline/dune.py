@@ -34,7 +34,15 @@ def _req(path, body=None):
         with urllib.request.urlopen(r, timeout=120) as resp:
             return json.load(resp)
     except urllib.error.HTTPError as e:
-        raise RuntimeError(f"Dune {path}: HTTP {e.code} {e.read().decode()[:500]}") from None
+        body = e.read().decode()[:500]
+        if e.code == 402:  # the account's spend limit for the billing cycle is used up
+            raise DuneLimitError(f"Dune refused {path}: the account's credit/datapoint limit for this billing cycle is "
+                                 f"reached. Raise it in dune.com subscription settings or wait for the cycle to reset. ({body})") from None
+        raise RuntimeError(f"Dune {path}: HTTP {e.code} {body}") from None
+
+
+class DuneLimitError(RuntimeError):
+    pass
 
 
 def run_sql(sql, performance="medium", timeout=1800, label=""):
@@ -67,8 +75,13 @@ def run_sql(sql, performance="medium", timeout=1800, label=""):
         if not res.get("next_offset"):
             break
         offset = res["next_offset"]
+    # Dune also bills the results pulled through the API (rows x columns, or MB, by plan), on
+    # top of execution_cost_credits; log both so big result sets are visible
     cost = st.get("execution_cost_credits")
-    print(f"  dune[{label}] {len(rows)} rows in {time.time()-t0:.0f}s" + (f", {cost} credits" if cost else ""))
+    cells = len(rows) * len(rows[0]) if rows else 0
+    mb = len(json.dumps(rows, default=str)) / 1e6
+    print(f"  dune[{label}] {len(rows)} rows ({cells / 1000:.1f}k datapoints, {mb:.2f} MB) in {time.time()-t0:.0f}s"
+          + (f", {cost} execution credits" if cost else ""))
     return rows
 
 

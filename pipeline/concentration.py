@@ -14,12 +14,11 @@ missing): ~5 credits for the 7d window, ~10 for 30d, ~1 per new week (predict.fu
 """
 import argparse
 import json
-import math
 import os
 from datetime import date, datetime, timedelta, timezone
 
 from .dune import run_sql
-from .queries import CONC_TIERS, poly_concentration, poly_concentration_weekly, predict_concentration_weekly, predict_wallets
+from .queries import CONC_TIERS, poly_concentration, poly_concentration_weekly, predict_concentration, predict_concentration_weekly
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
 OUT = os.path.join(ROOT, "data", "concentration.json")
@@ -27,45 +26,29 @@ HISTORY_START = date(2025, 9, 1)
 PREDICT_HISTORY_START = date(2025, 12, 1)  # its first Up/Down volume
 
 
-def conc_rows(wallets):
-    """poly_concentration's result rows (curve / tier / band / stats), computed in Python from
-    [{vol, maker_vol}] sorted by vol descending. Used where the fills scan is too costly to
-    repeat for every CTE reference."""
-    n = len(wallets)
-    if not n:
-        return []
-    pts = {math.ceil(10 ** (x / 40)) for x in range(321)} | {n}
-    rows, cum, gsum = [], 0.0, 0.0
-    tiers, bands = {}, {}
-    for rn, w in enumerate(wallets, 1):
-        v, mv = float(w["vol"]), float(w["maker_vol"] or 0)
-        cum += v
-        gsum += (n - rn + 1) * v
-        if rn in pts:
-            rows.append({"kind": "curve", "k": str(rn), "rn": rn, "n": n, "vol": cum})
-        label = next(lb for lb, p in CONC_TIERS if rn <= max(1, math.ceil(n * p)))
-        for grp, k in ((tiers, label), (bands, str(math.floor(math.log10(max(v, 1)))))):
-            g = grp.setdefault(k, {"vol": 0.0, "maker_vol": 0.0, "wallets": 0, "lo": v, "hi": v})
-            g["vol"] += v
-            g["maker_vol"] += mv
-            g["wallets"] += 1
-            g["lo"], g["hi"] = min(g["lo"], v), max(g["hi"], v)
-    rows += [{"kind": "tier", "k": k, "n": n, **g} for k, g in tiers.items()]
-    rows += [{"kind": "band", "k": k, "n": n, **g} for k, g in bands.items()]
-    total = sum(float(w["vol"]) for w in wallets)
-    rows.append({"kind": "stats", "k": "all", "n": n, "vol": total, "wallets": n,
-                 "maker_vol": sum(float(w["maker_vol"] or 0) for w in wallets),
-                 "lo": 2 * gsum / (n * total) - (n + 1) / n, "hi": None})
-    return rows
-
-
-def predict_concentration(start, end):
-    return run_sql(predict_wallets(start, end), label=f"predict wallets {start}")
+def grouped_rows(rows):
+    """predict_concentration's GROUPING SETS rows -> poly_concentration's row shape."""
+    out = []
+    for r in rows:
+        g, n = r["g"], r["n"]
+        if g == 3:
+            out.append({"kind": "tier", "k": r["tier"], "n": n, "vol": r["vol"], "maker_vol": r["maker_vol"],
+                        "wallets": r["wallets"], "lo": r["lo"], "hi": r["hi"]})
+        elif g == 5:
+            out.append({"kind": "band", "k": str(r["band"]), "n": n, "vol": r["vol"], "maker_vol": r["maker_vol"],
+                        "wallets": r["wallets"], "lo": r["lo"], "hi": r["hi"]})
+        elif g == 6:
+            out.append({"kind": "curve", "k": str(r["rn"]), "rn": r["rn"], "n": n, "vol": r["cum"]})
+        elif g == 7:
+            out.append({"kind": "stats", "k": "all", "n": n, "vol": r["vol"], "maker_vol": r["maker_vol"], "wallets": r["wallets"],
+                        "lo": 2 * r["gsum"] / (n * r["vol"]) - (n + 1) / n, "hi": None})
+    return out
 
 
 VENUES = {  # venue -> (window rows, weekly query, first week)
     "polymarket": (lambda a, b: run_sql(poly_concentration(a, b), label=f"polymarket concentration {a}"), poly_concentration_weekly, HISTORY_START),
-    "predict": (lambda a, b: conc_rows(predict_concentration(a, b)), predict_concentration_weekly, PREDICT_HISTORY_START),
+    "predict": (lambda a, b: grouped_rows(run_sql(predict_concentration(a, b), label=f"predict concentration {a}")),
+                predict_concentration_weekly, PREDICT_HISTORY_START),
 }
 
 

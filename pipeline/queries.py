@@ -25,7 +25,14 @@ cm AS (
 )"""
 
 
-def poly_activity(start, end):
+def _recent_days(days_from):
+    """HAVING clause that drops day-grain rows before `days_from` (week/month rows have d NULL):
+    the daily window re-reads month to date for the trader counts, but only recent days change,
+    and Dune bills every row returned."""
+    return f"HAVING d IS NULL OR d >= DATE '{days_from}'" if days_from else ""
+
+
+def poly_activity(start, end, days_from=None):
     """Volume + unique traders for in-scope markets, plus platform totals, over [start, end).
 
     Each row of market_trades is one trader's side of a fill: `maker` is that trader.
@@ -60,6 +67,7 @@ SELECT
   approx_distinct(trader) AS traders
 FROM t
 GROUP BY GROUPING SETS ({', '.join(sets)})
+{_recent_days(days_from)}
 """
 
 
@@ -76,8 +84,12 @@ GROUP BY 1
 """
 
 
-def kalshi_series_daily(start, end, fee_rates=None):
+def kalshi_series_daily(start, end, fee_rates=None, series=None):
     """Per-series daily contracts (market_report), cash volume and estimated fees (trade_report).
+
+    With `series`, only those series come back, plus one row per day with series '__TOTAL__'
+    summed over every series (the platform total): Dune bills result rows, and only the
+    in-scope ones are kept.
 
     trade_report has one row per trade: cash = yes price (cents) * contracts / 100.
     fees = rate * contracts * P * (1 - P) with the series' rate (default 0.07); P(1-P) is the
@@ -108,12 +120,27 @@ c AS (
   WHERE tr.date >= '{start}' AND tr.date < '{end}'
   GROUP BY 1, 2
 )
-SELECT coalesce(v.date, c.date) AS d, coalesce(v.series, c.series) AS series,
+{_kalshi_select(series)}
+"""
+
+
+def _kalshi_select(series):
+    rows = """SELECT coalesce(v.date, c.date) AS d, coalesce(v.series, c.series) AS series,
   coalesce(v.contracts, 0) AS contracts, coalesce(c.cash, 0) AS cash, coalesce(c.fees, 0) AS fees,
   coalesce(c.trades, 0) AS trades
 FROM v FULL OUTER JOIN c ON v.date = c.date AND v.series = c.series
-WHERE coalesce(v.contracts, 0) > 0 OR coalesce(c.cash, 0) > 0
-"""
+WHERE coalesce(v.contracts, 0) > 0 OR coalesce(c.cash, 0) > 0"""
+    if not series:
+        return rows
+    vals = ", ".join("('" + s.replace("'", "") + "')" for s in sorted(series))
+    return f"""SELECT d, IF(grouping(series) = 1, '__TOTAL__', series) AS series,
+  sum(contracts) AS contracts, sum(cash) AS cash, sum(fees) AS fees, sum(trades) AS trades
+FROM (
+  SELECT r.*, k.series IS NOT NULL AS in_scope
+  FROM ({rows}) r LEFT JOIN (VALUES {vals}) AS k(series) ON k.series = r.series
+)
+GROUP BY GROUPING SETS ((d, series, in_scope), (d))
+HAVING grouping(series) = 1 OR in_scope"""
 
 
 def poly_fees(start, end):
@@ -425,7 +452,7 @@ t AS (
 )"""
 
 
-def predict_activity(start, end):
+def predict_activity(start, end, days_from=None):
     """Like poly_activity for predict.fun Up/Down markets, plus fees, over [start, end).
 
     Every OrderFilled is one order's side of a fill and `maker` is that order's owner; the
@@ -446,6 +473,7 @@ SELECT
   approx_distinct(trader) AS traders
 FROM t
 GROUP BY GROUPING SETS ({', '.join(sets)})
+{_recent_days(days_from)}
 """
 
 
@@ -475,12 +503,35 @@ def predict_concentration_weekly(start, end):
     return poly_concentration_weekly(start, end, wallets=_predict_wallet_volume(start, end, by_week=True))
 
 
-def predict_wallets(start, end):
-    """Every wallet's USDT volume (own side, maker or taker) and maker volume in in-scope
-    markets over [start, end), largest first. The concentration stats are computed from this in
-    Python: Dune re-runs a CTE for every reference, and the fills scan is the expensive part."""
-    return f"""{_predict_wallet_volume(start, end)}
-SELECT trader, vol, maker_vol FROM w ORDER BY vol DESC
+def predict_concentration(start, end):
+    """poly_concentration's figures for predict.fun in one pass: Dune re-runs a CTE for every
+    reference (the fills scan is the costly part) and bills every result row, so instead of
+    UNIONing four views of the ranked wallets, one GROUPING SETS query returns ~200 rows:
+      g = 3  per percentile tier          g = 5  per order of magnitude of dollars (band)
+      g = 6  per curve bucket: wallets up to the next ~40-per-decade rank; (max rn, max cum)
+             is a point on the cumulative-volume curve
+      g = 7  totals, with gsum for the Gini coefficient
+    """
+    tier = " ".join(f"WHEN rn <= greatest(1, ceil(n * {p})) THEN '{label}'" for label, p in CONC_TIERS)
+    return f"""{_predict_wallet_volume(start, end)},
+r AS (
+  SELECT vol, maker_vol,
+    row_number() OVER (ORDER BY vol DESC) AS rn,
+    count(*) OVER () AS n,
+    sum(vol) OVER (ORDER BY vol DESC ROWS UNBOUNDED PRECEDING) AS cum
+  FROM w
+),
+b AS (
+  SELECT r.*, CASE {tier} END AS tier,
+    CAST(floor(log10(greatest(vol, 1))) AS integer) AS band,
+    least(n, greatest(rn, CAST(ceil(power(10, ceil(40 * log10(rn)) / 40.0)) AS bigint))) AS pt
+  FROM r
+)
+SELECT grouping(tier, band, pt) AS g, tier, band, pt,
+  count(*) AS wallets, sum(vol) AS vol, sum(maker_vol) AS maker_vol, min(vol) AS lo, max(vol) AS hi,
+  max(n) AS n, max(rn) AS rn, max(cum) AS cum, sum((n - rn + 1) * vol) AS gsum
+FROM b
+GROUP BY GROUPING SETS ((tier), (band), (pt), ())
 """
 
 

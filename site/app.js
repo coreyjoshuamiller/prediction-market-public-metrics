@@ -702,7 +702,7 @@
   function weeklyNote(w) {
     if (!w?.weekly) return "";
     const last = new Date(w.end + "T00:00:00Z"); last.setUTCDate(last.getUTCDate() - 1);
-    return ` This window adds up ${w.weekly.weeks} complete Monday–Sunday weeks, ${w.start} to ${last.toISOString().slice(0, 10)}. Each week keeps its top ${fmtInt(w.weekly.per_week)} wallets, so a wallet's weeks outside that list aren't counted; that's at most ${fmtUsd(w.weekly.max_unlisted_week_volume)} in any one week, which only matters near the bottom of the table.`;
+    return ` This window adds up ${w.weekly.weeks} complete Monday–Sunday weeks, ${w.start} to ${last.toISOString().slice(0, 10)}. Each week keeps at least its top ${fmtInt(w.weekly.per_week)} wallets, so a wallet's weeks outside that list aren't counted; that's at most ${fmtUsd(w.weekly.max_unlisted_week_volume)} in any one week, which only matters near the bottom of the table.`;
   }
 
   function renderLeaders() {
