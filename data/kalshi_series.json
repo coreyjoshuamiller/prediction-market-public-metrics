@@ -631,6 +631,14 @@
   "title": "Gold Hourly",
   "category": "Commodities"
  },
+ "KXGOLDVSSILVERD": {
+  "asset": "Gold",
+  "asset_class": "Commodities",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "Gold vs. Silver daily",
+  "category": "Financials"
+ },
  "KXHSID": {
   "asset": "Hang Seng",
   "asset_class": "Equities",
