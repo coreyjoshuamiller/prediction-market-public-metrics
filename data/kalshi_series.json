@@ -316,7 +316,7 @@
   "asset_class": "Crypto",
   "duration": "15m",
   "ctype": "Up/Down",
-  "title": "BNB 15 Minute",
+  "title": "BNB 15 min",
   "category": "Crypto"
  },
  "KXBNBD": {
@@ -356,7 +356,7 @@
   "asset_class": "Crypto",
   "duration": "15m",
   "ctype": "Up/Down",
-  "title": "Bitcoin price up down",
+  "title": "BTC 15 min",
   "category": "Crypto"
  },
  "KXBTCD": {
@@ -420,7 +420,7 @@
   "asset_class": "Crypto",
   "duration": "15m",
   "ctype": "Up/Down",
-  "title": "Dogecoin 15 Minute",
+  "title": "DOGE 15 min",
   "category": "Crypto"
  },
  "KXDOGED": {
@@ -460,7 +460,7 @@
   "asset_class": "Crypto",
   "duration": "15m",
   "ctype": "Up/Down",
-  "title": "ETH 15M price up down",
+  "title": "ETH 15 min",
   "category": "Crypto"
  },
  "KXETHD": {
@@ -660,7 +660,7 @@
   "asset_class": "Crypto",
   "duration": "15m",
   "ctype": "Up/Down",
-  "title": "Hype 15 min",
+  "title": "HYPE 15 min",
   "category": "Crypto"
  },
  "KXHYPED": {
@@ -980,7 +980,7 @@
   "asset_class": "Crypto",
   "duration": "15m",
   "ctype": "Up/Down",
-  "title": "Solana 15 minutes",
+  "title": "SOL 15 min",
   "category": "Crypto"
  },
  "KXSOLD": {
@@ -1284,7 +1284,7 @@
   "asset_class": "Crypto",
   "duration": "15m",
   "ctype": "Up/Down",
-  "title": "XRP 15 Minute",
+  "title": "XRP 15 min",
   "category": "Crypto"
  },
  "KXXRPD": {

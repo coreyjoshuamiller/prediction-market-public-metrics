@@ -12,15 +12,21 @@
 "x": ""
 },
 "0x00c28f228853422f346c0e5fda225ad96193d72c": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "WeeklyStrainTrigger6",
+"name": "",
 "x": ""
 },
 "0x00cc8b64100425fcea7b72c250ed999f3ac63eac": {
 "fetched": "2026-10-22",
 "image": "",
 "name": "CoincidentStrikeBody888",
+"x": ""
+},
+"0x010699dd5236931350b00e42858aa65619b85019": {
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0x013b89025f0f15ccdc019011ac97f05e841a1f76": {
@@ -30,27 +36,27 @@
 "x": ""
 },
 "0x0187cd5f7bbb99080829436f965ae49aaad50aef": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "BaronMediumMargins",
+"name": "",
 "x": ""
 },
 "0x01910c48addb1766fc7785222c6bc1142832060f": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "spot-strip-rank",
+"name": "",
 "x": ""
 },
 "0x01db0bf10bcda7e76153fa13b473da18545f2b08": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ContrarianLoadReplenish2",
+"name": "",
 "x": ""
 },
 "0x025745e67e1d1363dc651e8396e4a4c28b719861": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "pollor",
+"name": "",
 "x": ""
 },
 "0x025b3054ec6f0c1afbe4373c7a8c4a7a999506be": {
@@ -60,21 +66,27 @@
 "x": ""
 },
 "0x027e248e9deb927a44fecedc39548891f24aab31": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Cestlavie",
+"name": "",
 "x": ""
 },
 "0x02a602243ab2d8a69d83333ea0e0498d099d9853": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "FlatWingWatch666",
+"name": "",
+"x": ""
+},
+"0x0337840999b792090247fdb262740c9c2274ac78": {
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0x033a9f07742b82eb2d71d3501ee7bfd83ea603e1": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "BottlesFromASide",
+"name": "",
 "x": ""
 },
 "0x041249547eb7619696a76929a23a95375ba07b4e": {
@@ -84,15 +96,15 @@
 "x": ""
 },
 "0x04e74e335acd4665cd4151a6f9301f8445e01d7f": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "BrokenBottle",
+"name": "",
 "x": ""
 },
 "0x050abba5f0b603c760c4550a5271cfc4c8268e8e": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "NearCarryRoll888",
+"name": "",
 "x": ""
 },
 "0x0547b0d0b456003e2cc8782e0a32282fa24bfb85": {
@@ -114,45 +126,45 @@
 "x": ""
 },
 "0x06c9a315a63442b7a7fac796a9b7d27b830bde00": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ClosedVelocityExhaust1314",
+"name": "",
 "x": ""
 },
 "0x06e94a70b172c538def15a09cddc989ccb0d9a61": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "moneycome",
+"name": "",
 "x": ""
 },
 "0x07c71ba93770dc73077f357ecd4f3e02fa21967e": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ShortFutureDeflect69",
+"name": "",
 "x": ""
 },
 "0x0833bc43942ae61c652241fbb85eed775ef22b73": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "3232323232",
+"name": "",
 "x": ""
 },
 "0x08684210141580ee0facf52c72f0b2401f90185f": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "poroa",
+"name": "",
 "x": ""
 },
 "0x08c72b7af764c9ed6bd2bd62c02af4d7a9a64e67": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ggs1",
+"name": "",
 "x": ""
 },
 "0x08fa0ee7516d47cee6028d8e5b242e7ba8354cb9": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "squeezedyieldsink",
+"name": "",
 "x": ""
 },
 "0x08fb004ec24ed27d1c77a46da59d765d9743f378": {
@@ -162,9 +174,9 @@
 "x": ""
 },
 "0x0918fe3b9ee7e576854e023f05419b524f64de60": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "BiBiBaBu",
+"name": "",
 "x": ""
 },
 "0x096212d6f7def522bbcd73537400e3296d0c3699": {
@@ -204,51 +216,51 @@
 "x": ""
 },
 "0x0b541350a034576a458a1f7f6f6c263f65a382af": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "SkewRunCycle69",
+"name": "",
 "x": ""
 },
 "0x0b6195a9591ccb78303102915fb746fdc5e3cc5c": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "BlindOhanDead110",
+"name": "",
 "x": ""
 },
 "0x0b7491bc0622cc9224bfe99d48937e144858837e": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "4ge",
+"name": "",
 "x": ""
 },
 "0x0bd175797f431dd26fc8eac2a7c3289db9375c3a": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Artex",
+"name": "",
 "x": ""
 },
 "0x0ccf72d0f646971adb346e3bcfe425847351669b": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "0x4e",
+"name": "",
 "x": ""
 },
 "0x0ce03f4061bce86d64712fe90cb9a42b312f30e9": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "StressedPnlTrigger520",
+"name": "",
 "x": ""
 },
 "0x0d3a7529e5eca6acf303ae7e655faf51285d9cec": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "collectormax",
+"name": "",
 "x": ""
 },
 "0x0d921fe3a63338b5c578c44cfbd43e4d0c27a43b": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "tableObsessed",
+"name": "",
 "x": ""
 },
 "0x0e1a29bbb1920fec95799ca96ceef69b979c4419": {
@@ -264,15 +276,15 @@
 "x": ""
 },
 "0x0e6e211292f1654494000a02b89299841e734bf1": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "charada",
+"name": "",
 "x": ""
 },
 "0x0e98cc34e44d87f2b0ed807a2f1d33a8cc845cfa": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "whimsical",
+"name": "",
 "x": ""
 },
 "0x0ed2d244afc317119216af3bc952ecc6c78c7ec8": {
@@ -282,9 +294,9 @@
 "x": ""
 },
 "0x0eded676250a39f6cb6680f9c86681c779e5c9b1": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "RollingFrictionFix520",
+"name": "",
 "x": ""
 },
 "0x0f14648f2fe4646cec5d4fedfd9faac39da4537c": {
@@ -294,28 +306,28 @@
 "x": ""
 },
 "0x0f1586c84e21529cdcb10eb99e5f207668d646ed": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "jiwerh",
+"name": "",
 "x": ""
 },
 "0x0fa41ff8c940c29f153550bae6c333e5eadaf52c": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ThinOracleStall8",
+"name": "",
 "x": ""
 },
 "0x0ff3509d456d0da11c27c486460b17eb112a3945": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Alpha2313-2",
+"name": "",
 "x": ""
 },
 "0x10e0567ba8c27c059abff229768338791b59ffb1": {
-"fetched": "2026-10-22",
-"image": "https://static.predict.fun/profile-pictures/0x10E0567ba8C27C059AbfF229768338791b59FfB1/8f9d8bec-3a8b-4b34-ac9a-dae8c0d7ec5c.jpg",
-"name": "missv",
-"x": "Gortj2015"
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
+"x": ""
 },
 "0x11216ef2570847e1ba71e1c1cbfd127550c5eea9": {
 "fetched": "2026-10-22",
@@ -330,9 +342,9 @@
 "x": ""
 },
 "0x11eecaec6aa40de64e35ddeb3f8376f2af25a927": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "PoorAppleListen9",
+"name": "",
 "x": ""
 },
 "0x120feefaf018f61092e668f58bc9ab5a28373b08": {
@@ -342,15 +354,15 @@
 "x": ""
 },
 "0x125f9fb5ed5850547b3135765bbf25ca5fba7f78": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "SyntheticRallySink168",
+"name": "",
 "x": ""
 },
 "0x126c416391509c7d0ed632d539aaf102a2feca71": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "dr_ass",
+"name": "",
 "x": ""
 },
 "0x12a1803a2a5c00fe9aea65ff7c3a8567083c41f9": {
@@ -360,21 +372,21 @@
 "x": ""
 },
 "0x12a294c099a8cf6fed1b47d870fc9579d9620c11": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ExoticFutureHold8",
+"name": "",
 "x": ""
 },
 "0x12db98ebd644aee4e517484100f0ef831e8b6db2": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "MomentumLiquidityLend168",
+"name": "",
 "x": ""
 },
 "0x12fafaf49bb53c91f22aa2eb57c53eeaeda46c7c": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "IrrationalPit",
+"name": "",
 "x": ""
 },
 "0x130d1daa96a6cc9f6bb5072870543a261c7e606a": {
@@ -390,15 +402,15 @@
 "x": ""
 },
 "0x13862c1fe9c07a4cf207c2a391b3f0fd895a2b8d": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "BlueSqueezeSettle420",
+"name": "",
 "x": ""
 },
 "0x13ba451f677ed260c55d866078a3d3ff3fffc7e3": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "crazyMan",
+"name": "",
 "x": ""
 },
 "0x13cbd76df6ac6a9543ac7d2bd029c2157dbe3eb0": {
@@ -408,9 +420,9 @@
 "x": ""
 },
 "0x1421b929e3d5e03332711c113bbc3542369651c3": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "EdgeWarrantMark9",
+"name": "",
 "x": ""
 },
 "0x145255ef944ac4a59282aa3d729cd6efd815ac8a": {
@@ -420,9 +432,9 @@
 "x": ""
 },
 "0x1501c8b3279179d7961c74ffe07e8b6e4182f188": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "PinnedBurstRelease6",
+"name": "",
 "x": ""
 },
 "0x150f55c81d75abbe044df4f9a21feb19458343e8": {
@@ -432,33 +444,33 @@
 "x": ""
 },
 "0x1525202c2e1355d03b3f62a1625a0ee1fc6b433a": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "bigbigrocket",
+"name": "",
 "x": ""
 },
 "0x15d5c01e6aa37795861a6dd2e979e832b3720309": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "BinaryMarketLose888",
+"name": "",
 "x": ""
 },
 "0x1632eca363210061c5c59a092e306ceb72243c85": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "SuperOracleBuild69",
+"name": "",
 "x": ""
 },
 "0x1670f17abca0d474874d182e15eb2bcf67a68748": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "AlphaAskClose2",
+"name": "",
 "x": ""
 },
 "0x16720c179b91e4637dd9e4554284903c1d966930": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "EfficientPushLoad9",
+"name": "",
 "x": ""
 },
 "0x1676f52ea88181af7b67ab8402f5e96253701736": {
@@ -468,9 +480,9 @@
 "x": ""
 },
 "0x16779a6f0ec37ee873825eab151ff1488a9cb9a4": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "0x16779a6f0Ec",
+"name": "",
 "x": ""
 },
 "0x167d18e3640339016ced35bced045644c171cfd8": {
@@ -492,27 +504,27 @@
 "x": ""
 },
 "0x17037a938518754042addb7f219d99eea280ad25": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "bianrensheng3",
+"name": "",
 "x": ""
 },
 "0x1720ca031d81a7aa5db11b27308a2f8912c98333": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "LoadedRoundHedge8",
+"name": "",
 "x": ""
 },
 "0x1769626335acde27c2407008fc604f1d17dd3525": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "GreedyRightFace69",
+"name": "",
 "x": ""
 },
 "0x1787e359f6f9f87303341761b59866a7e6cb7380": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Yang-",
+"name": "",
 "x": ""
 },
 "0x178af7f4081ea908456779774e609c4586d6edf3": {
@@ -534,9 +546,9 @@
 "x": ""
 },
 "0x17d83d2eac089508d8eec07b9ac424c6dd0a4482": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "crypto2026",
+"name": "",
 "x": ""
 },
 "0x17f4dfc7826ec487489c8f2b25c0456033bf0e71": {
@@ -552,15 +564,15 @@
 "x": ""
 },
 "0x18beaff1c574cb431930ec968d227941d0b0d882": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "MeanThresCrack69",
+"name": "",
 "x": ""
 },
 "0x192495cb5c3c8a43b18676e29706db34f6e828e8": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "moonbilly",
+"name": "",
 "x": ""
 },
 "0x195dd90b40783fa0275b9d40dbce6c7a1f212729": {
@@ -570,9 +582,9 @@
 "x": ""
 },
 "0x198d85bcb440cb5cb8bc790ed5e26988d6cb3231": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "MeanThresholdFlatten2",
+"name": "",
 "x": ""
 },
 "0x1a7304f8c4941b559510787f4bd397cebc4c4327": {
@@ -587,22 +599,28 @@
 "name": "SlowOrderTrigger8",
 "x": ""
 },
-"0x1aa6a10b560c87cf4770095def6b5cb0f78395f6": {
-"fetched": "2026-10-22",
+"0x1a8b1f6fddf3347b634da29acec6d581ea0b31cd": {
+"fetched": "2026-10-30",
 "image": "",
-"name": "r2r",
+"name": "",
+"x": ""
+},
+"0x1aa6a10b560c87cf4770095def6b5cb0f78395f6": {
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0x1aa9650cf03ac8d99fdad079fdd75fa20a974142": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "HelloWorId",
+"name": "",
 "x": ""
 },
 "0x1b5e12f4c8d26955168b6a72094387aea68ba8a4": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "H1de0nBush",
+"name": "",
 "x": ""
 },
 "0x1b8422ee67dd994f15f352608e1fe6d4663567db": {
@@ -624,9 +642,9 @@
 "x": ""
 },
 "0x1c027ac02c913695a2380e19b81acc02818748db": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "RawBasisGrind69",
+"name": "",
 "x": ""
 },
 "0x1cf44d88f1ac8c2f484b6f347ab982160828caf2": {
@@ -636,15 +654,15 @@
 "x": ""
 },
 "0x1cff961fd72316f849d196b00a5edb7a3c49336d": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "UncappedCompressionWrap1314",
+"name": "",
 "x": ""
 },
 "0x1d4be32e55b717aaf3811435c1904c730256bd49": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "SirFatDeals",
+"name": "",
 "x": ""
 },
 "0x1d80f4f1d4dc2ecd00ab7413818aeb4080d2a714": {
@@ -654,15 +672,15 @@
 "x": ""
 },
 "0x1da11b616dcc89356c7a1632b2c7260b3b0df420": {
-"fetched": "2026-10-22",
-"image": "https://static.predict.fun/profile-pictures/0x1DA11b616Dcc89356C7a1632B2C7260b3b0df420/6e1ebe32-ed8c-497d-b096-2ae7f5a830bf.png",
-"name": "macgruber69",
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0x1da3aea8c3c9cfb881a71716fc9a9c6f59b13314": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "PrimeFlowSurge520",
+"name": "",
 "x": ""
 },
 "0x1dac3c0a44a058ff4cfda3ea821f5a7bf524645f": {
@@ -672,15 +690,15 @@
 "x": ""
 },
 "0x1db083f44251bb82c48278e0a1f2b1a0f7e27aed": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "0x90",
+"name": "",
 "x": ""
 },
 "0x1db6110903fac3306d43085f9df1d392ee605d57": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "pipinstall",
+"name": "",
 "x": ""
 },
 "0x1dbe843412f7cc180da6ec10c7e236739b1f752c": {
@@ -690,15 +708,15 @@
 "x": ""
 },
 "0x1de3dd8de26acc138cfacf727191af10bfb90610": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ExpansionVelocityFace520",
+"name": "",
 "x": ""
 },
 "0x1e0a2985cd2e8dede328c493d9ca9552b9f0af05": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "beat45",
+"name": "",
 "x": ""
 },
 "0x1e370c866efa68039a2a9cc44f43db804b093b77": {
@@ -726,9 +744,9 @@
 "x": ""
 },
 "0x1eaec88a1790d5bb9723df379b4542e16ceccb06": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "FixedBendFront666",
+"name": "",
 "x": ""
 },
 "0x1ec126bd8c4be143206ad1f0562460579bd270fd": {
@@ -738,28 +756,28 @@
 "x": ""
 },
 "0x1f28f5395166a0baf498ea18675f30e34521e952": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "whyup",
+"name": "",
 "x": ""
 },
 "0x1f2eaed9fe5504413f4f9453152f84374c38855b": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "MicroBucketTop8",
+"name": "",
 "x": ""
 },
 "0x1f32160e358e0bf2386bf27a207ead12ce1e9e8e": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ReversalVolWrap2",
+"name": "",
 "x": ""
 },
 "0x1f4f870f82272e2633c9de3b4f6c3da50cd3713a": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Xindungnactoi",
-"x": "0xtian_"
+"name": "",
+"x": ""
 },
 "0x1f7716e584145e4efc61192a698a136afff620ce": {
 "fetched": "2026-10-22",
@@ -768,45 +786,45 @@
 "x": ""
 },
 "0x1fa302faad4311013107026046b3f03cc029d8e9": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "newtest",
+"name": "",
 "x": ""
 },
 "0x1fba2672f744dd4c707bf20acdf589912693692f": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Mewriick",
+"name": "",
 "x": ""
 },
 "0x1fe3f3b7edb019f5f6579c5a005ac779bf80d14c": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "xcxn",
+"name": "",
 "x": ""
 },
 "0x2032af9af44c8c32f584d5f2f75b28b3d7539890": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "olad",
+"name": "",
 "x": ""
 },
 "0x20544504a2df4e0d6c4ecebe65df61fb6c49cbcf": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "thatperfect",
+"name": "",
 "x": ""
 },
 "0x209f8d38de50d04d96d44d82d9078442020340bb": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "LaggingBetaConsolidate666",
+"name": "",
 "x": ""
 },
 "0x212f9bcc489cccc8b8a293904c5fdbc86ec90cbf": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "LockedRoundTrend69",
+"name": "",
 "x": ""
 },
 "0x21c90767aaa3f3ceaa19ccb1bc88c7229937fabd": {
@@ -828,45 +846,45 @@
 "x": ""
 },
 "0x2223b1a663c3601b8548757900a84c0393c0cfee": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "nifun",
+"name": "",
 "x": ""
 },
 "0x22376aa045d21e30b16c07dbfca52c0860293de8": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ColdBlockMint520",
+"name": "",
 "x": ""
 },
 "0x2248c646b9e547da6bda3259d7690b89877dbaf6": {
-"fetched": "2026-10-22",
-"image": "https://static.predict.fun/profile-pictures/0x2248C646b9E547dA6Bda3259D7690b89877dbAf6/82cc9d55-11e2-4aff-9c86-4ea9f13e3850.png",
-"name": "FuckPoly",
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0x2253d078a312aa62be72da7d9652697a16560bd8": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "poodle7",
+"name": "",
 "x": ""
 },
 "0x22ee0b771e624a62b38b6b6fffb2ba50fb4ee61a": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "taketaketake",
+"name": "",
 "x": ""
 },
 "0x232cd0d16f3dc470c0ee9a0bfef85e7c335df9b1": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "MrMerdoku",
+"name": "",
 "x": ""
 },
 "0x236eb30f93fa9fce021b4681aa85ced88fd27a99": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "0x76",
+"name": "",
 "x": ""
 },
 "0x23716192d4850eb0b1afe3e1a2931d6e39296327": {
@@ -876,33 +894,33 @@
 "x": ""
 },
 "0x23867874d66fe7413452f202c15803ffec492b72": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "StressedDriftWick1314",
+"name": "",
 "x": ""
 },
 "0x23a074785b747092da59cc454335a0f16af2187e": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "DaddyMiniDividends",
+"name": "",
 "x": ""
 },
 "0x23bf6e3fec818d102fd7f92774e0a0826b84f2b4": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "AVERIO",
+"name": "",
 "x": ""
 },
 "0x241378df5fc2ba24a5c1fb49e7143efd348136ab": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Bonerefer",
+"name": "",
 "x": ""
 },
 "0x24877cd3cd366fd398dad38262473d5b9ff7d0c5": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "pingpong",
+"name": "",
 "x": ""
 },
 "0x2492b5ddf16eaa3c269a3888e654fca42bb3fde5": {
@@ -918,15 +936,15 @@
 "x": ""
 },
 "0x24bd2e498a42cf9bc2d93b4522c4631ecde44aff": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "TrendYieldCompress520",
+"name": "",
 "x": ""
 },
 "0x2500b28a1fd5866a0df8562efebccf0b61e3ce2d": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "IrrationalSlipTag420",
+"name": "",
 "x": ""
 },
 "0x255173a10f7c5172202aed73843b13f907ef33e4": {
@@ -936,9 +954,9 @@
 "x": ""
 },
 "0x259e9c3af5b62602976bfed9a40396c9d5ac9766": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "dawei",
+"name": "",
 "x": ""
 },
 "0x25be6ef1e3cc750ca351621a54287ab0371e1ea4": {
@@ -948,9 +966,9 @@
 "x": ""
 },
 "0x25faf448601e78bbe14684b4652e01eda5086779": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "pxp",
+"name": "",
 "x": ""
 },
 "0x266204be6a604aefcd98b74ce43ee1cf84cfa624": {
@@ -960,9 +978,9 @@
 "x": ""
 },
 "0x266a99fd0e570a917bff4f6b62a6406375019b06": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "oneplus",
+"name": "",
 "x": ""
 },
 "0x26c0ff49e0fda6d3ec11c645ba81d3dae1c0173d": {
@@ -972,9 +990,9 @@
 "x": ""
 },
 "0x26de5cee1d30b02ad3d934c517b3b3047fa0d6ee": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "NearMomentumExpire666",
+"name": "",
 "x": ""
 },
 "0x26f38653c4eb7f43d0de691834c87af4196e3edf": {
@@ -984,9 +1002,9 @@
 "x": ""
 },
 "0x270df58fbe22321dbc35e27de93c4063ff63ef00": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Xvincent",
+"name": "",
 "x": ""
 },
 "0x274eb1a133995f39057d7264beb153c0b4f41b15": {
@@ -1002,15 +1020,15 @@
 "x": ""
 },
 "0x27d551c0b765ef25ae50eb1e854d3b6162cc24d9": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "LeanFenceScalp168",
+"name": "",
 "x": ""
 },
 "0x27fe4275d27d99166bf8f781e85d10acb9334181": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "FarOracleClose520",
+"name": "",
 "x": ""
 },
 "0x283fc8e8cca30fd89a136291e0e14440a8b75342": {
@@ -1019,10 +1037,16 @@
 "name": "RevertLadderFloor9",
 "x": ""
 },
-"0x2883c480eee1ba69711837e3e02288dcc1eb5d61": {
-"fetched": "2026-10-22",
+"0x287dcc38dc05a2cf99b20f4a3f8febc920b88cee": {
+"fetched": "2026-10-30",
 "image": "",
-"name": "jnxkxxz",
+"name": "",
+"x": ""
+},
+"0x2883c480eee1ba69711837e3e02288dcc1eb5d61": {
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0x29a95d7c489ea98a0cfffb22d447234dd8e2da31": {
@@ -1032,15 +1056,15 @@
 "x": ""
 },
 "0x29c24e272100bc4f48d2ec6a64855ac9267cf593": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "classic-batch-rank",
+"name": "",
 "x": ""
 },
 "0x29ddc7f21b71a9a92e0dbe2548053521c8c4dac3": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "SplitBandWick666",
+"name": "",
 "x": ""
 },
 "0x29f35f1fa12e0d3e5176b7e4954dfda1e0da14fc": {
@@ -1062,15 +1086,15 @@
 "x": ""
 },
 "0x2b15126f59894f76477dae4c17de0dbd539ae84d": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "fsadgfsdage",
+"name": "",
 "x": ""
 },
 "0x2b7586c99597778ae15022412f2d5627bccdfbcd": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "smallweiner",
+"name": "",
 "x": ""
 },
 "0x2bcb7c990811a795df5a9469b3fa00f029d52a69": {
@@ -1098,33 +1122,33 @@
 "x": ""
 },
 "0x2c93d3bbe1fdfaee4decd0684050ead7cdbad238": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "jmsoldier",
+"name": "",
 "x": ""
 },
 "0x2c94f6aaf5a9b82057ee84c528f367ac2fb63b69": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "DirtyEraDrift2",
+"name": "",
 "x": ""
 },
 "0x2c966347ed9d2fd930a828c188052835d2ae1fba": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "CrossBasketRetain2",
+"name": "",
 "x": ""
 },
 "0x2d170589f90972adcdec9c77f2a4ecfd27001e80": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Factos",
+"name": "",
 "x": ""
 },
 "0x2d29f5d16d69c4bdab4cec0fb7dac7d4e291e6ef": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ModerateRhoCap666",
+"name": "",
 "x": ""
 },
 "0x2d5c0937aa0f0a059f4a4b31edf877b2f7fcd30a": {
@@ -1134,15 +1158,15 @@
 "x": ""
 },
 "0x2d6fff4abf65cea2712778fc06274c3c63d762f2": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Curacbh",
+"name": "",
 "x": ""
 },
 "0x2dcf45e8bfd29c372100197dd3da19270f57e034": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "bp1",
+"name": "",
 "x": ""
 },
 "0x2ddd8409b013a3bcf9436e70f615e68f96d55f79": {
@@ -1151,10 +1175,16 @@
 "name": "",
 "x": ""
 },
-"0x2dfb21b3784889a8d898baa8687bcaedbeb36d8f": {
-"fetched": "2026-10-22",
+"0x2dddccd84293a335929131744ad2aa17e0515728": {
+"fetched": "2026-10-30",
 "image": "",
-"name": "LeveragedCrushScreen520",
+"name": "",
+"x": ""
+},
+"0x2dfb21b3784889a8d898baa8687bcaedbeb36d8f": {
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0x2f021ca3e5230b2c3f8426bd530d2b88a6e7725b": {
@@ -1164,15 +1194,21 @@
 "x": ""
 },
 "0x2f025e30b47179af57364494ab0d36886567925e": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "CnR89",
+"name": "",
+"x": ""
+},
+"0x2f1d176837263bb0c4175fa7c952e6e5849fd9d4": {
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0x2f68d9abc736fa491c7b1aacd081212c56de1379": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "poodle17",
+"name": "",
 "x": ""
 },
 "0x2f8c3ad7347c6f9bf3e693135cfb581b44f98e31": {
@@ -1188,15 +1224,15 @@
 "x": ""
 },
 "0x2fb85ea6207bb02bf4c5bd184aab2bb8b7b33a25": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "comingforit",
+"name": "",
 "x": ""
 },
 "0x30148259d5c500617d72ec5807e285cecd8e37dc": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Ster13",
+"name": "",
 "x": ""
 },
 "0x304cba9b3e571d811fd1fe7185a874d8c70b4dc1": {
@@ -1206,15 +1242,15 @@
 "x": ""
 },
 "0x3099fd7948738d6f387f21a7f5b06738b56ad976": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Aurora-Frog",
+"name": "",
 "x": ""
 },
 "0x30c3e57cecf24d48f75e7acf5c8d57191f4f9989": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ContinuationStreamDrift69",
+"name": "",
 "x": ""
 },
 "0x3123aba081b255074e936ef071f885b9115f157f": {
@@ -1224,15 +1260,15 @@
 "x": ""
 },
 "0x312b81e39b3ca7b6afe8c3853e2d9f137f13053e": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "0xAAA",
+"name": "",
 "x": ""
 },
 "0x313522f52c0f12196f67368e6da8bdc72e595ae9": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "PeakDeskBeat666",
+"name": "",
 "x": ""
 },
 "0x31460b12d33011d7675ad91cb7e6a6a53c44caab": {
@@ -1248,9 +1284,9 @@
 "x": ""
 },
 "0x31b562c51c4381464949da9b6942386b7b4b6411": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "moonboi2",
+"name": "",
 "x": ""
 },
 "0x3201429e429182f9c0138a7157c69f4c9e43b21e": {
@@ -1260,15 +1296,15 @@
 "x": ""
 },
 "0x32d56036d0235e80ff151523c308b53cfd4bbab5": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "RevertStripAccumulate2",
+"name": "",
 "x": ""
 },
 "0x32ed370d860cdcac145ec5d75bbe1374c702032b": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ToxicGrindWiden69",
+"name": "",
 "x": ""
 },
 "0x32ed44b27c9fe9b57c02ae4868101ac1161409d1": {
@@ -1278,15 +1314,15 @@
 "x": ""
 },
 "0x330d7ec05ab5d7a037ea15517366008ab0a76c95": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "RangeVelocityDrag1314",
+"name": "",
 "x": ""
 },
 "0x3333a337439bb4f59e328ad03c2b5b66ce689d00": {
-"fetched": "2026-10-22",
-"image": "https://static.predict.fun/profile-pictures/0x3333A337439bb4f59e328AD03c2b5B66Ce689D00/0509e2f9-628c-4873-83dc-8ae78d706b33.png",
-"name": "R2D2",
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0x3353520a09238f920c541dbf3534e34022086795": {
@@ -1296,21 +1332,27 @@
 "x": ""
 },
 "0x337ee246133a3c6907e4e903f6d9aecf4cfdbdb4": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "StretchedBondTrend2",
+"name": "",
 "x": ""
 },
 "0x34ac9ab3054629e3392eaba0f4b058b0bd6bc538": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "unclecherep",
+"name": "",
 "x": ""
 },
 "0x34d38afbf8d0436252cfd4a2abae50c7768962b5": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "MisterAverageSells",
+"name": "",
+"x": ""
+},
+"0x34e6f81645668fa4ed9ccea18efcc7591f2d29fb": {
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0x34ef9d364346e87d8b0df82ec04909da05023d58": {
@@ -1320,51 +1362,51 @@
 "x": ""
 },
 "0x3511b1b8a55c40492f9b218b5b02d214c4dff871": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "JSIndia",
+"name": "",
 "x": ""
 },
 "0x35670c6c37aaa1e6a5ed50d388cb7ce27ee69efd": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "HardExposureGain666",
+"name": "",
 "x": ""
 },
 "0x35702b6791dde64287dc19d8af0993488117f985": {
-"fetched": "2026-10-22",
-"image": "https://static.predict.fun/profile-pictures/0x35702B6791dDe64287dc19d8AF0993488117f985/d68f08ec-d6b0-49c7-865b-006b91be362c.png",
-"name": "DoggyStyIe",
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0x3580635ea6eec4a62900be3ce36a71aa57b1817a": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "hongmao",
+"name": "",
 "x": ""
 },
 "0x35b61122d23e72b141e0e89b405aa53b6ae2a080": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "RollingFlushSpike8",
+"name": "",
 "x": ""
 },
 "0x35d718e54d3080fedab44ae14071e943feb7fcc8": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "zouxb2048",
+"name": "",
 "x": ""
 },
 "0x364653d8938c77afb7ea97a2e046fe558001c676": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "MasterMediumGains",
+"name": "",
 "x": ""
 },
 "0x36551db1d5cfc89b54b661d2d8f488b897b45ddf": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "999-15",
+"name": "",
 "x": ""
 },
 "0x36889796c63415443250ccc627e59fbd7f8c36a0": {
@@ -1374,57 +1416,57 @@
 "x": ""
 },
 "0x37402073c0d7d3c2b45b7bbf73e175acb21c64b0": {
-"fetched": "2026-10-22",
-"image": "https://static.predict.fun/profile-pictures/0x37402073c0D7d3C2B45B7BBf73E175aCB21C64B0/52f0ca40-68d7-47b6-ade1-3d7636910edf.png",
-"name": "VarianceReaper",
-"x": "IHateVolatility"
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
+"x": ""
 },
 "0x3775b7b311c2e56bad67b484cada7709b0d0416c": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "grhjg",
+"name": "",
 "x": ""
 },
 "0x379af7a69c42e4b384ea243f2b799e05e742f990": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "rei_quant",
+"name": "",
 "x": ""
 },
 "0x37abb33099a171d23cf570ed0a961ef2a2ef3eae": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "henryloyd",
+"name": "",
 "x": ""
 },
 "0x37ad5104056f6c158d305c50577aca5515ca20ae": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "predictingfuture",
+"name": "",
 "x": ""
 },
 "0x38640cd682c53662306aec8e0c36787ff2bde909": {
-"fetched": "2026-10-22",
-"image": "https://static.predict.fun/profile-pictures/0x38640cd682C53662306AEc8e0c36787FF2BdE909/6da73edb-9163-462a-abb1-2047530daff1.jpg",
-"name": "0xKID9x9",
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0x3872eaf6ca6c4393e25fe360540ab793ca839d1d": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "FixedSignalRank666",
+"name": "",
 "x": ""
 },
 "0x3895ef2911c640ece189b51ef1b700429a6d1095": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "88855552",
+"name": "",
 "x": ""
 },
 "0x38a065d43e3827a9b9efd6592a4a3304d90b5c35": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "dank",
+"name": "",
 "x": ""
 },
 "0x38a4625e6130053fd8ae2e9744c468c688c3c33c": {
@@ -1440,15 +1482,15 @@
 "x": ""
 },
 "0x38da6732a14685fb26402ac1e3db6937f7427703": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "bulltick2",
+"name": "",
 "x": ""
 },
 "0x3928b173ee318fc2be9c7ac3c23690aee0f998a3": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "noisemasterminsu",
+"name": "",
 "x": ""
 },
 "0x3941f834b0bf288b947a5726069770d76263ce51": {
@@ -1458,75 +1500,75 @@
 "x": ""
 },
 "0x396387c116b2b6b8b19296c12ba217970e308637": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "DirtyRhoUnwrap69",
+"name": "",
 "x": ""
 },
 "0x399086f0acca98c5f1f82b3f307c4f671bc5f8e7": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Trader7777",
+"name": "",
 "x": ""
 },
 "0x39a1e1f945f55ba8589cb9384b39f7959fd5ced9": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "DigitalBarCrawl666",
+"name": "",
 "x": ""
 },
 "0x39b4ca3c5b1ec5189c612689483f44cd91bae202": {
-"fetched": "2026-10-22",
-"image": "https://static.predict.fun/profile-pictures/0x39B4cA3C5B1ec5189c612689483f44cd91BAe202/7a091a80-c5f3-4892-bba5-b221ca615cdb.png",
-"name": "IISweetHeartII",
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0x39da23bdd4d18ce89ce30941beec1fe8df1c038d": {
-"fetched": "2026-10-22",
-"image": "https://static.predict.fun/profile-pictures/0x39dA23BdD4D18cE89ce30941BeEC1FE8Df1c038d/409bb49e-c593-4c3a-a464-a550ae3e04d6.png",
-"name": "tiredQuant",
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0x39e1205daa66cc3baa0a8c9cb1e138f06ea47139": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "bianrensheng2",
+"name": "",
 "x": ""
 },
 "0x3a0c9a4da3f5d99200b58050d5a5d4d8f2d4081f": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "hybnyaaa",
+"name": "",
 "x": ""
 },
 "0x3a60f8be37e334e8fdf8ef9e97868628d1dd20bf": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "predictdotfunny",
+"name": "",
 "x": ""
 },
 "0x3a6f5ebe6af276dc41a221d9e641192475c967db": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Mahoraga1",
-"x": "bahopusa"
+"name": "",
+"x": ""
 },
 "0x3a8cab1ad854457de7322d55aff9133ae9eed53b": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "test5",
+"name": "",
 "x": ""
 },
 "0x3aa6ef684918b6f84c4a5120f88d13c835b1643e": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "CoincidentPopBody168",
+"name": "",
 "x": ""
 },
 "0x3ad9975fa3e986088f01a0ff46ec57de02ade6d4": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "youdianyisi",
+"name": "",
 "x": ""
 },
 "0x3b08aa16f9f917f9e2bc09e922e65c7a67051535": {
@@ -1536,21 +1578,21 @@
 "x": ""
 },
 "0x3b17199009d984550b963e263da46641f5296b0f": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "HyperMeltStake69",
+"name": "",
 "x": ""
 },
 "0x3b30fa8b4e29bde607b4a31d688bfda258ff3549": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "PresidentCrazyBuys",
+"name": "",
 "x": ""
 },
 "0x3b48d24b746110f345ba70b43371a209b4f9d40f": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "RealTradeSpike29",
+"name": "",
 "x": ""
 },
 "0x3b5b6414c6a430bae8bc14018b4da8149bee67ca": {
@@ -1566,15 +1608,15 @@
 "x": ""
 },
 "0x3c209378fa627e2284104d2593ee345d5fd4e528": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "tnun2",
+"name": "",
 "x": ""
 },
 "0x3c7226583a8768f8e37998522681fe54614aca20": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "justinsun1",
+"name": "",
 "x": ""
 },
 "0x3d61ed03c6fb424057f330041107f55874a7fef3": {
@@ -1584,21 +1626,27 @@
 "x": ""
 },
 "0x3d98e064cecfd27789c4c764d1c418fa691cdf36": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "akshare",
+"name": "",
 "x": ""
 },
 "0x3e22a5e5d0afa53f98010f84f1a7f1245965097f": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ImpliedNoiseTank420",
+"name": "",
+"x": ""
+},
+"0x3e33c32bdced35ec950db4f2e5a9689d58a047c0": {
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0x3e3581833674c03723935393f9afd67732517867": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "buysignal",
+"name": "",
 "x": ""
 },
 "0x3ebf62b22da9ebdfb187c511725e79f252e477d2": {
@@ -1608,9 +1656,9 @@
 "x": ""
 },
 "0x3f34cacdd967631b8d13a3cb942f62178a3fdcfd": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "GlobalLeakSlam2",
+"name": "",
 "x": ""
 },
 "0x3f39b20c817fd7df2ebeef97f3bd34b7ab71cbde": {
@@ -1620,15 +1668,15 @@
 "x": ""
 },
 "0x3f47dd4237690cadeebf2fd3821904275b43b161": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "bjjja",
+"name": "",
 "x": ""
 },
 "0x3f4c4dc77104bbeff18a8089c514d7d84fe8f051": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "predictxv",
+"name": "",
 "x": ""
 },
 "0x3ffea358015ca757c156c9b4a9a7acc9c426a8c4": {
@@ -1638,21 +1686,21 @@
 "x": ""
 },
 "0x40dc0ff2aa21620e3023a5d8603a455e22026dd0": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "RealizedImpactStall1314",
+"name": "",
 "x": ""
 },
 "0x40fdd78670ce26956e31438f636620b31d6aef7c": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "BrightPivotLayer520",
+"name": "",
 "x": ""
 },
 "0x42284cde0b875bd353903e9013181891dd290ea9": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "dooms",
+"name": "",
 "x": ""
 },
 "0x4229cfc388c61bd9cd440d154b01cfdd37c526d2": {
@@ -1662,33 +1710,33 @@
 "x": ""
 },
 "0x423c6d6114a59386449096ff893db9840513a733": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Dad-233-dasf321",
+"name": "",
 "x": ""
 },
 "0x42c633400e67639635a62da160f138d30e72b7e0": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ReversalNoiseNarrow666",
+"name": "",
 "x": ""
 },
 "0x42de907a3c33b697a5f6b47297261817884409fa": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "pdrobnjak95",
+"name": "",
 "x": ""
 },
 "0x42e41fcac07ebbd2823b7656f8fdccdd321134e1": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "MegaCycleRun9",
+"name": "",
 "x": ""
 },
 "0x43362a8d4711c545cadde428ec3e04391a674699": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "dad14new_pf",
+"name": "",
 "x": ""
 },
 "0x4359d50b3581239dd77e6b782a939a550dbe8cb2": {
@@ -1698,57 +1746,57 @@
 "x": ""
 },
 "0x43de7fd8065d616f8116d5af4cadd41e8867cd05": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "dagger",
+"name": "",
 "x": ""
 },
 "0x44046e902a0a9ad0cc09c828e90a4e504f24516d": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "GammaFloorRotate8",
+"name": "",
 "x": ""
 },
 "0x441129285be33a8d33bb9e7a9a043253bd9a4539": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "kdkdjd",
+"name": "",
 "x": ""
 },
 "0x441b844153af559aa5a0cefc6c1f62739e8b8eaa": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "OpenBreakDeflect888",
+"name": "",
 "x": ""
 },
 "0x442d5abe0a4bff539b1a57353e6d68dc7c4d0200": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "voidiamcoming",
+"name": "",
 "x": ""
 },
 "0x445df54372f7deb1495d47d64acac895c1647760": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "InterimCandleDrop8",
+"name": "",
 "x": ""
 },
 "0x44bb8e01d2a32211c92b72ef87b8bdcb2f4e24ee": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "blockp1h",
+"name": "",
 "x": ""
 },
 "0x44c9ab703783797500e2e74bc24a30ac0db50bb2": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "BoldCurveRun69",
+"name": "",
 "x": ""
 },
 "0x44d5063e9867aeb05645c6846ae10f9da1e4274c": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "auel",
+"name": "",
 "x": ""
 },
 "0x4517323142a6826aa14cdaf8c2a7c728a13aad69": {
@@ -1758,15 +1806,15 @@
 "x": ""
 },
 "0x451c27621c1bfefda22cc14063484fcc565ab963": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "LordHugeYields",
+"name": "",
 "x": ""
 },
 "0x455799df5ef2474fd743b1ed9b547cdc19a65058": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "HedgedPnlStake1314",
+"name": "",
 "x": ""
 },
 "0x45c67485942c487b89d542fa007d0df97e268d8f": {
@@ -1782,15 +1830,21 @@
 "x": ""
 },
 "0x46973b9fe140aa6cfc04772e554c93cd820d4941": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "yinchaokun2",
+"name": "",
+"x": ""
+},
+"0x46b689f67c2e4eb8bde1dd8aa0e3dca519fbc9b9": {
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0x47484f807209bdc32efc78b98375d59d2721318f": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "CZ_binance",
+"name": "",
 "x": ""
 },
 "0x4800bb78e0fa720a763f5cae89c7acc889e5591f": {
@@ -1812,15 +1866,15 @@
 "x": ""
 },
 "0x48ab4a1c4de4bac678be8e658fd0c76a8fc8817a": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "FlatVaultFace420",
+"name": "",
 "x": ""
 },
 "0x48b82abad724827893c5749d975b4fcabb90e401": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "MildRhoBuy888",
+"name": "",
 "x": ""
 },
 "0x48c9a8c778dd7842555c75482a513987f2c1e8fc": {
@@ -1836,15 +1890,15 @@
 "x": ""
 },
 "0x490cba95383ab2bb1de69d29e2dd7b2c264b9064": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "newbie0x",
+"name": "",
 "x": ""
 },
 "0x491790f0e85914f03467e0b1121ff89617e3e75d": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "CleanNoteSprint520",
+"name": "",
 "x": ""
 },
 "0x49a609ec2009f9bc0ea95cb231590148107be374": {
@@ -1854,15 +1908,15 @@
 "x": ""
 },
 "0x4a067443f5d3da07f4185bc91005804e072e8230": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "grew",
+"name": "",
 "x": ""
 },
 "0x4a223cb99bf3f7fe073c8c68681ac74950dac588": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "MarginalDecelerationRedeem1314",
+"name": "",
 "x": ""
 },
 "0x4a5aefc4c7d5660beebca63d2cb9572875ad7368": {
@@ -1872,15 +1926,15 @@
 "x": ""
 },
 "0x4a7783fb8fa2ced9dc4c4efe6382a30b8fc76a55": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "relentless",
+"name": "",
 "x": ""
 },
 "0x4a85e6d407bff6810b719685d2ef96bf1c2c39ce": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "JointDriftGap9",
+"name": "",
 "x": ""
 },
 "0x4ad3e6fe3ebcacf01302ac484c3953ed10e0a458": {
@@ -1890,27 +1944,27 @@
 "x": ""
 },
 "0x4af85444049a8d8c4431135900a88831affb091c": {
-"fetched": "2026-10-22",
-"image": "https://static.predict.fun/profile-pictures/0x4AF85444049a8d8c4431135900a88831aFfB091c/45c66cfd-a08d-43ba-9288-8b5b5d138535.jpg",
-"name": "Mei-11",
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0x4b1ea79ed825f5857f36aa4561141bc0ab48d52b": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Monster44232",
+"name": "",
 "x": ""
 },
 "0x4bf5f11d80efbe045a31202eed4fe51bb0787527": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "LazyMeltEnter2",
+"name": "",
 "x": ""
 },
 "0x4c33a415ccc65edc2f8a993a5253b90b9898132e": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "bake2",
+"name": "",
 "x": ""
 },
 "0x4c46d6bb4b4b774c39be7cbe0ae0698724219dec": {
@@ -1920,9 +1974,9 @@
 "x": ""
 },
 "0x4c60e4a304c37950c6fb15e9985500030bed2ced": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "SpotTradeStake9",
+"name": "",
 "x": ""
 },
 "0x4cf6a8d6eaca706ad7ba1cbb99968edb4f90eb13": {
@@ -1932,9 +1986,9 @@
 "x": ""
 },
 "0x4d6ac279cc5ae62dcf5f1f62dff33db32f8851e6": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ChocomelHaring",
+"name": "",
 "x": ""
 },
 "0x4dd85ec8055aba47219e3ff3669be2cd09c11b96": {
@@ -1944,9 +1998,9 @@
 "x": ""
 },
 "0x4ddbaa12713c7f19338617ca57bf3e2a729e80e8": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ForFreedom",
+"name": "",
 "x": ""
 },
 "0x4df807237960ada61dee340a8058f7f40ff5f737": {
@@ -1962,15 +2016,15 @@
 "x": ""
 },
 "0x4e6a13c987084a9cb66c964132d3d2e2def89a13": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "WeightedFlipStack9",
+"name": "",
 "x": ""
 },
 "0x4e956e2767daeb7605b889978895111ac9a4f1d5": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "bowbowpoodle",
+"name": "",
 "x": ""
 },
 "0x4edc815f281117090238d60f19fbff4c9466446b": {
@@ -1980,21 +2034,21 @@
 "x": ""
 },
 "0x4f0374ccbce8c4b80205cb38ea7953ffe8b06645": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "POISSON",
+"name": "",
 "x": ""
 },
 "0x4f03d73359f1883cdea7fc6071723e25da2a54bc": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "poodle12",
+"name": "",
 "x": ""
 },
 "0x4f138761bb69bf663805af803e4362fa27989b9b": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "GoldLoadBleed8",
+"name": "",
 "x": ""
 },
 "0x4f43d45df65862aa8914bea81c374170c63b752d": {
@@ -2010,9 +2064,9 @@
 "x": ""
 },
 "0x4fe819e1d79d2de0948570f7d0d5d54efd730741": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "MOMOT",
+"name": "",
 "x": ""
 },
 "0x5031f8707e6b59aa1bb2e4fafe7bcd3b485c7bef": {
@@ -2070,21 +2124,21 @@
 "x": ""
 },
 "0x515e4203d0ff169f9870390f9881e9258a21cb9f": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "HotVolumePop69",
+"name": "",
 "x": ""
 },
 "0x51aa08a5ec98737f68862a724e0b293b760596a9": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "realzerowander",
+"name": "",
 "x": ""
 },
 "0x51b761b0cdc46ffcc43e3865973e8c579eb2f7bb": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "phantom6",
+"name": "",
 "x": ""
 },
 "0x52056c47fd11ee07f9a07cc1ba03606cc98acd3b": {
@@ -2094,15 +2148,15 @@
 "x": ""
 },
 "0x522dc28737db2d4c758b573e05b18b055ec38506": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "BetaFlipHit168",
+"name": "",
 "x": ""
 },
 "0x527d4f890eeb84e9f002e659ed397da0a46ffcbb": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "poodle13",
+"name": "",
 "x": ""
 },
 "0x5295f4c35556ef9a08596129829293bce9173be4": {
@@ -2112,15 +2166,15 @@
 "x": ""
 },
 "0x5327de9ca785f79a99b0a855869eb450f6a5569b": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "forward-tail",
+"name": "",
 "x": ""
 },
 "0x532cd58a87ad3d1917d68962a51b3d7279e0266f": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "bagelmetropolis",
+"name": "",
 "x": ""
 },
 "0x5345e06f8c9223da893ae7c7d3826faf86d34917": {
@@ -2136,15 +2190,15 @@
 "x": ""
 },
 "0x538868790d2e0bdfc2a1dd1698a4b5754e28bef1": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "regas",
+"name": "",
 "x": ""
 },
 "0x53b7cd905eefae6286205e925f3030761d4106ff": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ZeroSlopeFlush168",
+"name": "",
 "x": ""
 },
 "0x53e21d0cfe57d8531d3a43db61c13c6f698ac22d": {
@@ -2160,9 +2214,9 @@
 "x": ""
 },
 "0x5426772d729fa71b2bbc6c63aae6b0e08320bd0c": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "niulaiTGE",
+"name": "",
 "x": ""
 },
 "0x5429ef99cd300a4418b417033c238cc3f18bc9fc": {
@@ -2172,9 +2226,9 @@
 "x": ""
 },
 "0x54532177c8b2d1f6d24f3e4c8574052a8b895a22": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "candlestick",
+"name": "",
 "x": ""
 },
 "0x54f57f1469ac5d2d7cca2ee6cada963dc260abc4": {
@@ -2184,21 +2238,21 @@
 "x": ""
 },
 "0x54f855bd4b3360647eb54944999c3ad2399b6eb7": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "milfhunter1",
+"name": "",
 "x": ""
 },
 "0x55717cb1fd4e69ca73f611ef62d0ff31d6a2cf7a": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "knbk",
+"name": "",
 "x": ""
 },
 "0x557efeaf65f69c9a07f30a9b54dffa3cbdc565ca": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "srskc",
+"name": "",
 "x": ""
 },
 "0x55ab00c8f175c324ba0d7c18bf2177c8599acf6f": {
@@ -2208,9 +2262,9 @@
 "x": ""
 },
 "0x55f61dd910cc9adc3eac0ee212f3691ae21535cb": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "fv7",
+"name": "",
 "x": ""
 },
 "0x5656e82f4c9f4a9fc1c8968d54d98b3535a4c6c6": {
@@ -2220,33 +2274,39 @@
 "x": ""
 },
 "0x569deb2c3a155d22d9adaf52ba60288720f188b5": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "BrightSnapWick420",
+"name": "",
 "x": ""
 },
 "0x56b579111e7492bc0f9d8dce0b521a6fa892c973": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "sfgsd232",
+"name": "",
 "x": ""
 },
 "0x57a27b6b585f06004ea203f0280d47b0b65c6bbc": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "basfriend",
+"name": "",
+"x": ""
+},
+"0x57d05f10ead1f4610810bfd57945f639702d3b18": {
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0x57fbc891e89184da071ae9d97e745531cd7f718a": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "onyxcaesar",
+"name": "",
 "x": ""
 },
 "0x580a40af9c7e3f7ab656c653c43836cd3584873f": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "phmk",
+"name": "",
 "x": ""
 },
 "0x582a3e1c6dc9b288aefae5e53953a159d8bc047e": {
@@ -2262,9 +2322,9 @@
 "x": ""
 },
 "0x58cd01f7b2d5a0b2aa6791ec671f6267740f0936": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "InterimLeakHold8",
+"name": "",
 "x": ""
 },
 "0x58d86086415bb7b36a3c5cde32f71dc00ed1b987": {
@@ -2286,9 +2346,9 @@
 "x": ""
 },
 "0x5919648fb0622d2aa879e52065c3d43c6bc73092": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "0x77722bbbd",
+"name": "",
 "x": ""
 },
 "0x5923e7f3a856c4333598fec2ef3ed06e944b43c1": {
@@ -2298,15 +2358,15 @@
 "x": ""
 },
 "0x594f7b718de4b5b04b27606a60d50004c9360c6c": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "firstDance",
+"name": "",
 "x": ""
 },
 "0x5950bf106b6773f4ee614bdffab8e1219e0af173": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "CappedMomentumBleed520",
+"name": "",
 "x": ""
 },
 "0x5986d2c8e6e5e8379d2321ccc5c2a82cbab156be": {
@@ -2316,9 +2376,9 @@
 "x": ""
 },
 "0x59952f9d1d05fba59b85185147c7b4ee11ceb94d": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "JointMarketClimb8",
+"name": "",
 "x": ""
 },
 "0x5a5f7eeb2e332de7a8ea8984aeb0bc7c340ded41": {
@@ -2334,9 +2394,9 @@
 "x": ""
 },
 "0x5acb21be9971cd5852e4ee7a9dbdc43227b9534c": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "BinaryWaveEnter420",
+"name": "",
 "x": ""
 },
 "0x5ae6924efb717529f07f74d1dca51a69b3a3183f": {
@@ -2346,39 +2406,39 @@
 "x": ""
 },
 "0x5b04b3884f1fa8ac3f814970d6a74f4ae287ab7c": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "DaddyColossalMargins",
+"name": "",
 "x": ""
 },
 "0x5b330887c70eca797bf4aacc71f612abeb5673a5": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "LaggingGrindYield9",
+"name": "",
 "x": ""
 },
 "0x5b47c706546a10bf6d0492edc127d52c5167921d": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "PrimeTradeHold9",
+"name": "",
 "x": ""
 },
 "0x5b499dd9d0bc214e2b32f27f4590effc85e0f340": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ForwardNoiseCap1314",
+"name": "",
 "x": ""
 },
 "0x5b51f3d88ff1af413fecf02f380bd742cc94c85e": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "rusaym",
+"name": "",
 "x": ""
 },
 "0x5b5dd955c7e61a51887424dc94eb8a1c77998c3e": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "dad17",
+"name": "",
 "x": ""
 },
 "0x5b5ffa7fd43971b459c42fbc06fae4f5ac41c321": {
@@ -2388,15 +2448,15 @@
 "x": ""
 },
 "0x5b790b306c2f26a6236a9c38dcb6377fe2f24d06": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "VoidStriper",
+"name": "",
 "x": ""
 },
 "0x5b83f5ce185e3fbd0b4690025666d4d8547f64b8": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "rodrigo",
+"name": "",
 "x": ""
 },
 "0x5ba44407593fb81d9eb73c3716747400203270f7": {
@@ -2406,15 +2466,15 @@
 "x": ""
 },
 "0x5bda9a078b1e22c65df563f59e5ba1667518b1e3": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "yang0",
+"name": "",
 "x": ""
 },
 "0x5be9c33266d580d11f663275c2b0493b01ae2d46": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "CoiledParPop1314",
+"name": "",
 "x": ""
 },
 "0x5bec39d2d562f4e3aeefdcca23026b12c373c84b": {
@@ -2424,9 +2484,9 @@
 "x": ""
 },
 "0x5c0de25cc8b4094f62f39fd70c1f7c9f1887a886": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "poodle11",
+"name": "",
 "x": ""
 },
 "0x5c7935e53c5c0dfe53e8451893989604eef35e78": {
@@ -2442,9 +2502,9 @@
 "x": ""
 },
 "0x5d3789b3d2880b4f2d7625beed1f62d489b493f2": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Fisher",
+"name": "",
 "x": ""
 },
 "0x5d43a698861499c6c787b04efd28c55b33268d28": {
@@ -2454,15 +2514,15 @@
 "x": ""
 },
 "0x5d48fa9ad25ff215caac4a5dc5cdeb2be87a7e8b": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "tonyjonsey123",
+"name": "",
 "x": ""
 },
 "0x5d4ad7fa26f5e960e3ffbf6beff22dd49006c527": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "DatedBreakFront9",
+"name": "",
 "x": ""
 },
 "0x5d53a2d791c358d8d3d918d14669ce48de3f42d1": {
@@ -2490,9 +2550,9 @@
 "x": ""
 },
 "0x5e498154448608c826e005c93533b827cbb6377e": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "quantbarbie",
+"name": "",
 "x": ""
 },
 "0x5e67130e3c9ed47fd8ae52f1a6bc8f900b35674a": {
@@ -2513,28 +2573,34 @@
 "name": "FatBreakWatch666",
 "x": ""
 },
-"0x5eea2286eb33026a3ac403fa015727b0113aa53f": {
-"fetched": "2026-10-22",
+"0x5eb900f3b4c798952cba67107750c4572071af72": {
+"fetched": "2026-10-30",
 "image": "",
-"name": "XAU9999",
+"name": "",
+"x": ""
+},
+"0x5eea2286eb33026a3ac403fa015727b0113aa53f": {
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0x5f65ef8a9bebaaedaa54358724a7e5e70be5d154": {
-"fetched": "2026-10-22",
-"image": "https://static.predict.fun/profile-pictures/0x5F65Ef8a9BebAaEDaa54358724A7e5e70bE5d154/0f5979b1-6463-485e-a037-4e8c483a4887.png",
-"name": "PowerCake6",
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0x5f78e0757914e5aa55d8c8b64729bd0c8d327ff2": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "BrightBrown",
+"name": "",
 "x": ""
 },
 "0x5f8545594cd1b7fe936543afba6bf90f2baba3fd": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "nikaido",
+"name": "",
 "x": ""
 },
 "0x5ffe4773e66a09982b456857b64744e227e1db75": {
@@ -2544,9 +2610,9 @@
 "x": ""
 },
 "0x60c104045e99cf09a86e6da93170ec5890227a5c": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "poodle14",
+"name": "",
 "x": ""
 },
 "0x60efbcfe9ababc67e1a6a09dda204db7bb1da9b3": {
@@ -2556,9 +2622,9 @@
 "x": ""
 },
 "0x6117337ad95fee886cc52bdf76c4bb587dc55856": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "LongBookBlow666",
+"name": "",
 "x": ""
 },
 "0x613d8ff2a363d3ccf676e09804d0c7005a24242c": {
@@ -2568,15 +2634,15 @@
 "x": ""
 },
 "0x61489edaa3ec24943f1af7fc3aa9f94345e201bd": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "NonStop",
+"name": "",
 "x": ""
 },
 "0x614aa41ec80d299ff0033dadea4345b2bcbc136c": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "tipo1235",
+"name": "",
 "x": ""
 },
 "0x6155bc59f9b155320391657c7a939c8b7c88eb1e": {
@@ -2586,15 +2652,15 @@
 "x": ""
 },
 "0x61c2d3f8ded7d40dfe2405dc512860059c8d276f": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "LittleFish",
+"name": "",
 "x": ""
 },
 "0x623edc1218d31591961609f65c51cf2c3279d4c1": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "addispoly",
+"name": "",
 "x": ""
 },
 "0x6240f21d1a26d298d7b69459011233c9ba34a4e0": {
@@ -2604,9 +2670,9 @@
 "x": ""
 },
 "0x6264d45e63b37635deab5c6ebb0a393b08ac82e8": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "RespectBian",
+"name": "",
 "x": ""
 },
 "0x62777c63a634024b52d23d91ef5ca778d8859196": {
@@ -2640,15 +2706,15 @@
 "x": ""
 },
 "0x630e9dea5a863d585759737737f1280f859e195a": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "JoeJoe",
+"name": "",
 "x": ""
 },
 "0x631300c9f50bce95557a6c737074b09130434719": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "test-003",
+"name": "",
 "x": ""
 },
 "0x638086b5837f62982ca6a8704134b5be70f44e2f": {
@@ -2658,15 +2724,15 @@
 "x": ""
 },
 "0x640bc32d3dafb1a481763f2f2248e28cbf6ecea2": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "MultiFlowFront2",
+"name": "",
 "x": ""
 },
 "0x641f0ff1648fb7e65312a1f2738b0d31acd38722": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "BB88",
+"name": "",
 "x": ""
 },
 "0x644ceb64a43bb88ecd9a6cb44a9520801f58afd2": {
@@ -2682,15 +2748,15 @@
 "x": ""
 },
 "0x648430123372efb67d76d0e6cfe5509b30dfa3a3": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "5mscour",
+"name": "",
 "x": ""
 },
 "0x64c8636c85605c9eaa824f14f97ea73f452c18d7": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "LowFundSink2",
+"name": "",
 "x": ""
 },
 "0x64ce7b68271f566fbbca941be0482592004979f3": {
@@ -2700,15 +2766,15 @@
 "x": ""
 },
 "0x65980bcdb9dc8ac297fd6f56c51bc8ff36926af7": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ShortStrainRetrace420",
+"name": "",
 "x": ""
 },
 "0x65a6e0b0ce577dcae6ea3e37386ce3d9399b62d9": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "dingdingupup",
+"name": "",
 "x": ""
 },
 "0x660041f3c81f6eb260e37d2eb5a8e2bfc86578ac": {
@@ -2718,9 +2784,9 @@
 "x": ""
 },
 "0x66027324a6126a821b2b02be7c585c0ecb946f87": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Snoopy",
+"name": "",
 "x": ""
 },
 "0x660c3d07f394aa9f4689c8552127e6c931a91c7a": {
@@ -2730,9 +2796,9 @@
 "x": ""
 },
 "0x66af429f3f2cb52afd67e018d29089c582e472fc": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "poodle15",
+"name": "",
 "x": ""
 },
 "0x66d59a43e5df31071e436514f61f620ede3dd0ff": {
@@ -2742,15 +2808,15 @@
 "x": ""
 },
 "0x66e8c66b05d5592f61677946a4e790f821e2d7b1": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "DatedThetaSink",
+"name": "",
 "x": ""
 },
 "0x671ae3813200f6409ac034a87c1f2386ca4d9f91": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Cousteau",
+"name": "",
 "x": ""
 },
 "0x67bcf928b8a2ed4dc3a22b24bb42e5fbc2af7146": {
@@ -2760,9 +2826,9 @@
 "x": ""
 },
 "0x67c22ab439591dc5c74014b356d477189c33844a": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "dad13",
+"name": "",
 "x": ""
 },
 "0x67e5f8cf7ea0e3d98059f4574f5fbcc80ebc1adc": {
@@ -2802,15 +2868,15 @@
 "x": ""
 },
 "0x68e4bbef6342b2f4e7facbbb3d008a3b0f8b8067": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "blackcock",
+"name": "",
 "x": ""
 },
 "0x6919012702aaed52691c77ac43d07f5788926423": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "womendejian",
+"name": "",
 "x": ""
 },
 "0x69397653df0186a673eb0b0fbbe2b361010ecc94": {
@@ -2820,15 +2886,15 @@
 "x": ""
 },
 "0x69e8a3ebbd8ce98880463ebe438073987a9a29e0": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ransaodan",
+"name": "",
 "x": ""
 },
 "0x6a17ca6c1feeabb4b1f8943e00f0dab94c51f1c7": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "alphanumerica",
+"name": "",
 "x": ""
 },
 "0x6a2c7a47856415f98b28d568f60de58474a37780": {
@@ -2844,21 +2910,21 @@
 "x": ""
 },
 "0x6ab716ca196227962a977a469eb5b7da4afb6753": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ChocoChoco",
+"name": "",
 "x": ""
 },
 "0x6acfbdd0746f2ca42c5104ed918bfb37d5422738": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "veyrith",
+"name": "",
 "x": ""
 },
 "0x6b040e4ca9f94fec635eb8c7591d1badd492790d": {
-"fetched": "2026-10-22",
-"image": "https://static.predict.fun/profile-pictures/0x6B040e4cA9F94FEC635Eb8C7591D1bAdd492790D/c019c92e-31c8-49d6-8778-083beef2262b.png",
-"name": "Kybernous",
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0x6b2a7b58b9ac21e4e79cde7542de15750b158e70": {
@@ -2868,33 +2934,33 @@
 "x": ""
 },
 "0x6b5c0f3255e9eecccfe882f0d5e6a38306187f50": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "yosooooo",
+"name": "",
 "x": ""
 },
 "0x6b7e9ca0c3fe97ac7ef90319e977f556c9ab0553": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "BlendedBookDeflect9",
+"name": "",
 "x": ""
 },
 "0x6b89b98dd17340108e5fb9bb1329fa16d2b383da": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "LaggingSpikeSink",
+"name": "",
 "x": ""
 },
 "0x6b9f82575b13ddf44aa5eb42618780080109dfee": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "SharpTrapDrop168",
+"name": "",
 "x": ""
 },
 "0x6c1135812bd7836030c7d4633ed87407b8470fa7": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "sc2",
+"name": "",
 "x": ""
 },
 "0x6c114483ed885661472b99280fa1f2290d347c41": {
@@ -2904,57 +2970,57 @@
 "x": ""
 },
 "0x6c45eba3ba1f1fbfd65ac1e6fb560efe9e29ccc7": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "UltraPushPivot520",
+"name": "",
 "x": ""
 },
 "0x6d15d43d492f5c12733a2d18a096aab5527bc540": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "peenman",
+"name": "",
 "x": ""
 },
 "0x6da6cb464f92ae7ad4ec3d239c81719cb1d0ae03": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "VoidStrider",
+"name": "",
 "x": ""
 },
 "0x6daf9ec2d5117d80d75b2684ba66ce03670aee94": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "cxzvcxz",
+"name": "",
 "x": ""
 },
 "0x6e347364c6b887cc8f0ae2550705c25583468e5c": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "BoldTorqueClose69",
+"name": "",
 "x": ""
 },
 "0x6eb34f2e3fa2defcd146cdda6bda5b6e6b2d5e43": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "NeoSharkLock2",
+"name": "",
 "x": ""
 },
 "0x6eb51a0de3e879bbb83ccaf3baa4dbaaeeb29120": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "OpenSwapCoil666",
+"name": "",
 "x": ""
 },
 "0x6edfe55d9ce9dc58c6988841ac145262b1e4a0f4": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "jimo68",
+"name": "",
 "x": ""
 },
 "0x6f0f662fb8097d813fdd065aea48954286bf6a19": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "MixedScoreFree9",
+"name": "",
 "x": ""
 },
 "0x6f32610120176ecaf0447dda466d8fd6304c43c5": {
@@ -2964,15 +3030,15 @@
 "x": ""
 },
 "0x6f7eb8d90d63ae0c5368e25b521f376230c9a2bc": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "0xCaoss",
+"name": "",
 "x": ""
 },
 "0x6f7fcd25b5be4b79e11c3c7814feac577adf70ea": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "dadingge",
+"name": "",
 "x": ""
 },
 "0x6f9e2be45cf6b1e24474330c0da9890a4bf30796": {
@@ -2994,21 +3060,21 @@
 "x": ""
 },
 "0x706f326f8ae5e74e21c0e9317072062364af0512": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Anti-Cul",
+"name": "",
 "x": ""
 },
 "0x70ac2467aa774b7a3105d3dbf6fcfff67390547a": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "SigmaLoadBounce6",
+"name": "",
 "x": ""
 },
 "0x7155c4626115ef404dc852a5996232dd8db42397": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "richmond",
+"name": "",
 "x": ""
 },
 "0x716ea96755ab1b80f3b9c2895bd86f74e7749638": {
@@ -3017,22 +3083,28 @@
 "name": "KingAverageGains",
 "x": ""
 },
-"0x7185de9c518d9d5526f075b5150618d88d9eefee": {
-"fetched": "2026-10-22",
+"0x717cceb250ad20f7fd0942d607b528e3ff2bdb7c": {
+"fetched": "2026-10-30",
 "image": "",
-"name": "JointCandleLog8",
+"name": "",
+"x": ""
+},
+"0x7185de9c518d9d5526f075b5150618d88d9eefee": {
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0x72025593c298191fafc95e9b40b8b38809e83bd1": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "WaterfowlDance",
+"name": "",
 "x": ""
 },
 "0x7254409f22f6e51e4f2474b83c01b2c2ebb5f768": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "MarginalTensionReflect2",
+"name": "",
 "x": ""
 },
 "0x7255980b5596878188b95c9923468214995a59f8": {
@@ -3042,15 +3114,15 @@
 "x": ""
 },
 "0x7270ab103483e22d344c3af35286739818afc08d": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "CrossTapeScalp9",
+"name": "",
 "x": ""
 },
 "0x728573e1c52ed69de7e1594a6dfae360236d49a8": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "DatedScoreNarrow6",
+"name": "",
 "x": ""
 },
 "0x72d54e8ab4f1a12cc7bf75a2153539e3fbee9088": {
@@ -3060,63 +3132,63 @@
 "x": ""
 },
 "0x731d50ddd128c15d98e6ee87f81c96f834744e25": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "claudebot",
+"name": "",
 "x": ""
 },
 "0x73437f118be0cc30cb161af9d5966d667c229796": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "DynamicRatioClimb8",
+"name": "",
 "x": ""
 },
 "0x73763e24d02672a456a2f0a4af95aca1811e71c0": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "pok1232",
+"name": "",
 "x": ""
 },
 "0x7389fb4029184c646841d91b3efd3b824d36322a": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "FiniteSharkBorrow666",
+"name": "",
 "x": ""
 },
 "0x73ab9933f2b3787ad3cbfd8bbbcd9d9d34b1fbdd": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "S1ngham",
+"name": "",
 "x": ""
 },
 "0x73c3f01aeb4bba65f8101907f10439e9565fa1c0": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "driftseatsink2",
+"name": "",
 "x": ""
 },
 "0x744b90cd600dcaffd9c7be9a5b3d680255c79aca": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "BoloY",
+"name": "",
 "x": ""
 },
 "0x744d26c60dc68e6c0c2a505828e882aef12aac65": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "lambogenie",
+"name": "",
 "x": ""
 },
 "0x74618bf7ff273400f111d31aa972bc5b413e0da4": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "jdsfsdg",
+"name": "",
 "x": ""
 },
 "0x74832e1ac2624f942e66f7326143d09ff4f44d71": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Trumppp",
+"name": "",
 "x": ""
 },
 "0x7486d2e82aa6a2b7441f6b0f9098f0d289a26803": {
@@ -3126,27 +3198,27 @@
 "x": ""
 },
 "0x74aa3740b1fc2067e54f25cc78d9aa2dbbb44a10": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "OpenRightReject6",
+"name": "",
 "x": ""
 },
 "0x74b8e45d0c967412a645bda230084806666056b7": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "CleanSlopePop1314",
+"name": "",
 "x": ""
 },
 "0x74d580c6a7731ce56cff59f58d510242c0d68693": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "MeatHook",
+"name": "",
 "x": ""
 },
 "0x74e314c9ceae92b140e895bff8af77581b257233": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ContrarianCurveOpen666",
+"name": "",
 "x": ""
 },
 "0x75451ee0abc9235763247bb3aa2760afc6d33985": {
@@ -3156,27 +3228,27 @@
 "x": ""
 },
 "0x75574088d3867d0d05a03ee7c283723fba0570c8": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "HighRegimeRelease666",
+"name": "",
 "x": ""
 },
 "0x75f97dec3bbb2e60d622d8349927b08ca4bf4933": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "kwant",
+"name": "",
 "x": ""
 },
 "0x75fcf9cd19533b10fcbff78f12ac2acf49c9a47c": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "QASIM",
+"name": "",
 "x": ""
 },
 "0x761573ad70428ede54245bbdff7bd666a4ed5271": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "BetaRateFail2",
+"name": "",
 "x": ""
 },
 "0x7642eae570d88c485217a211b873b33e0aa552b4": {
@@ -3186,9 +3258,9 @@
 "x": ""
 },
 "0x767ff5a184943cd5f643cc88c0268b9fd48d8b9a": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ReversalSwapConsolidate6",
+"name": "",
 "x": ""
 },
 "0x7686ee07967bba1f7d789583a31ca48c5c15037f": {
@@ -3198,15 +3270,15 @@
 "x": ""
 },
 "0x76eec7752e6920e52cee8430f2964581a655f96c": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "WeeklyNominalSurge6",
+"name": "",
 "x": ""
 },
 "0x76ef2064b7b346ebee44b96e0d1ddec808e27105": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "MixedPnlFix888",
+"name": "",
 "x": ""
 },
 "0x77206cd66c67769e3eb4f134346ac13e3a9c90f0": {
@@ -3216,9 +3288,9 @@
 "x": ""
 },
 "0x7728f40c13f8b214a2141324de9690c0f4d9271d": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "StressedIndexCrack9",
+"name": "",
 "x": ""
 },
 "0x773b2b07f2c7fcb23ad72394e18bcb9eec618e4a": {
@@ -3228,15 +3300,15 @@
 "x": ""
 },
 "0x77607f5e0113c917e1e83e49afbd1b01408350e1": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "LeanPipeCrawl2",
+"name": "",
 "x": ""
 },
 "0x7788d01eb7cfb22570e82827593ad6db5b5cc83f": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "GreedyAskAccumulate6",
+"name": "",
 "x": ""
 },
 "0x77953f6e68a614ca967bf500a6193bb514d7ea9d": {
@@ -3246,9 +3318,9 @@
 "x": ""
 },
 "0x77b7245b667ae3088d6478591fcf8853f447d0fe": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "aaapappqwwqqaa",
+"name": "",
 "x": ""
 },
 "0x77cf6d71b82938f180a9527ddaa16b878caa1665": {
@@ -3276,9 +3348,9 @@
 "x": ""
 },
 "0x78c7ce20bb82051f7187098edc369179840af129": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "xiaoxiao888",
+"name": "",
 "x": ""
 },
 "0x78cf4792457b85e22fc60b70dcd54d31ad6718f9": {
@@ -3288,15 +3360,15 @@
 "x": ""
 },
 "0x78d9ecd9a79cbd9ac931c3622dc54e2da7e26241": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "RedRoiBend9",
+"name": "",
 "x": ""
 },
 "0x791c12b55fcbc7781b1665ddf7b5a3d966278f7d": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ModerateModelSink2",
+"name": "",
 "x": ""
 },
 "0x795af719af2b3766600f7e064bd9279a10926496": {
@@ -3306,9 +3378,9 @@
 "x": ""
 },
 "0x7a1b9f9fe309dbbab68fad6ba92441ca159810cb": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ZhangPenghi",
+"name": "",
 "x": ""
 },
 "0x7a354294324762429a92a4cb09beb8d6122c4df5": {
@@ -3324,39 +3396,39 @@
 "x": ""
 },
 "0x7ab95cbf052b0fcbe02b90820756e8b621fde6f5": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "winwinwin111",
+"name": "",
 "x": ""
 },
 "0x7ad00833f5a43a4e474c3e182001e7b7ed02ecf1": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Observer",
+"name": "",
 "x": ""
 },
 "0x7aea1881a5fdc16d1c2ab904a2f22501dfc62afa": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "0x31",
+"name": "",
 "x": ""
 },
 "0x7afb52672209415efbb2600addd74f72d9b7ff52": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "SlowWindowCollar1314",
+"name": "",
 "x": ""
 },
 "0x7b01365f3d77cb5915937bceb4fdcbda85e54b13": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "dad7new",
+"name": "",
 "x": ""
 },
 "0x7b76035341a8e377727db95395bc2da2b66cdc7d": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "MeanThresholdCrack69",
+"name": "",
 "x": ""
 },
 "0x7c0d5234935ee0dfeea7c6b933b2618b94e5846e": {
@@ -3371,6 +3443,12 @@
 "name": "",
 "x": ""
 },
+"0x7c5fbf86ca370660948241d34ef4eab9af8529bf": {
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
+"x": ""
+},
 "0x7c75716aa0dcf2e8cb6a78f322b899f115d00bb1": {
 "fetched": "2026-10-22",
 "image": "",
@@ -3378,9 +3456,9 @@
 "x": ""
 },
 "0x7c88f29dddfd42828a5b2cd4eec6afbb59a69118": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "FarSlopeStretch9",
+"name": "",
 "x": ""
 },
 "0x7c9061135d1ba7086a34bd98328fdc55b642a4d6": {
@@ -3390,9 +3468,9 @@
 "x": ""
 },
 "0x7cab1c46a5b0557008198b92697f36df855ac0ad": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "niulai67",
+"name": "",
 "x": ""
 },
 "0x7cef1066639fbf71da7795d7e99dfbeb09699242": {
@@ -3402,15 +3480,21 @@
 "x": ""
 },
 "0x7d2b4b320369912fbf9677a430f7f3e163c610b9": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Sloth",
+"name": "",
 "x": ""
 },
 "0x7d32c568a9bea1714036972601c51f4902c67091": {
-"fetched": "2026-10-22",
-"image": "https://static.predict.fun/profile-pictures/0x7d32c568a9bEA1714036972601c51F4902C67091/d58a61bb-ff4e-4034-96ed-471526ceadfa.jpg",
-"name": "EmosNotDead",
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
+"x": ""
+},
+"0x7da429956ea0419177b5b8a300cca4eb55e159fb": {
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0x7dd039e1012228c7dc9c81931d03e236507955bf": {
@@ -3450,9 +3534,9 @@
 "x": ""
 },
 "0x7f4a8b61a14433d44050ace1068edee05df8c839": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "FreePivotTank",
+"name": "",
 "x": ""
 },
 "0x7f6afc1474d3c54e9873a7be2b60bb826cbd55fe": {
@@ -3462,9 +3546,9 @@
 "x": ""
 },
 "0x7f7cbdfdaae33c8be94b92642cb9bcb0c5a5d0bc": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "x317",
+"name": "",
 "x": ""
 },
 "0x7f896e9323c88c1ea3bb461a3049e3ae3c184eb3": {
@@ -3474,33 +3558,39 @@
 "x": ""
 },
 "0x7f937e22402986e6afd83f7d6631cf606d8b84a9": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "dontoverfit",
+"name": "",
 "x": ""
 },
 "0x7fafd492cf7d1f76a0fb0861604c49d81fd6d0a6": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "3E026",
+"name": "",
 "x": ""
 },
 "0x7fd9f6a613b9ff6f010ab5c7079aa875b812eda6": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "RangeSmileClaim520",
+"name": "",
 "x": ""
 },
 "0x80284c1cad736630f8f40e07ee6f39db467aabb1": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ExpansionRingFeed69",
+"name": "",
 "x": ""
 },
 "0x8051e6d6fe626b376d560dc59171eb82cc2716ed": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "BoldSeatFloor888",
+"name": "",
+"x": ""
+},
+"0x8064478842e606ec530b336e30c7839b1ca85ec7": {
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0x80955933729798e1532f56271c087260a9b01793": {
@@ -3510,9 +3600,9 @@
 "x": ""
 },
 "0x80b4108bb3658ce838b34e9dbbe1cc01d56c8580": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "kdai-23da-31lng3",
+"name": "",
 "x": ""
 },
 "0x80b7140e4c93f1389e1b9d8c9359f994262c1067": {
@@ -3522,9 +3612,9 @@
 "x": ""
 },
 "0x80c2e70f3e87c07529d8ccdd56f92fa0cdccd5ff": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "poodle2",
+"name": "",
 "x": ""
 },
 "0x80db34aceb663af2776dc3882842882eddbaf430": {
@@ -3558,9 +3648,9 @@
 "x": ""
 },
 "0x81a7777e85375fbb63b55854e7e756dd67f01bd5": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "CalmSurfaceExpand1314",
+"name": "",
 "x": ""
 },
 "0x81e00fb5b46c5bc699cd03afff3c06fa6387b560": {
@@ -3570,9 +3660,9 @@
 "x": ""
 },
 "0x81eeefe5ae23687b4330d8166010329b209eba02": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "0xBelong",
+"name": "",
 "x": ""
 },
 "0x82289387e59e786769f7061f7477514b4290fa8b": {
@@ -3582,21 +3672,21 @@
 "x": ""
 },
 "0x823287dc5bc64135ad7b7e9345220cd1f65011ca": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "pluto676",
+"name": "",
 "x": ""
 },
 "0x825b4468a02dda1119bf9f4e03a699c8336da053": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "negerxd",
+"name": "",
 "x": ""
 },
 "0x82947d847390e7b58f633cfa9e4c151bebc2fdf4": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "expiredpressurecrawl2",
+"name": "",
 "x": ""
 },
 "0x829e454cf25f8352403efa1ad246e9c3a202ce64": {
@@ -3606,15 +3696,15 @@
 "x": ""
 },
 "0x82b53d9b1aeb8fca5d63dfec9a51d39a71dbaecb": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "c788",
+"name": "",
 "x": ""
 },
 "0x82b91c10ce3a26417f52a42e46d9448ec0a8a0bd": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "RationalEraBottom888",
+"name": "",
 "x": ""
 },
 "0x82d610590d46c1a45bbb5cb3ceedd294d0d50084": {
@@ -3624,27 +3714,27 @@
 "x": ""
 },
 "0x82d742703dce1208de37c02930f72b9c28ee4ce8": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "PassivePipeReplenish69",
+"name": "",
 "x": ""
 },
 "0x82f942f36283f1a496ef60556ff44b0f12015cf9": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "OpenZoneQueue168",
+"name": "",
 "x": ""
 },
 "0x8301718872378be0d23c1e8866ba6432554b118f": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Agoston",
+"name": "",
 "x": ""
 },
 "0x8325afc2aa2b1c9191ee374169262c44f25bb50a": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "0x9c",
+"name": "",
 "x": ""
 },
 "0x83790e2ba2e2723061c74672b973bd2585e0b659": {
@@ -3660,9 +3750,9 @@
 "x": ""
 },
 "0x849aeb223bea7b7b432fbe49de7c6c1d7f82a287": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "PerpetualFlowLog520",
+"name": "",
 "x": ""
 },
 "0x84d7553bc848b0fe6b779990f0f37b122faf4df9": {
@@ -3672,9 +3762,9 @@
 "x": ""
 },
 "0x85228e263281248e9dad8fb049ff642127c70acf": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "dio",
+"name": "",
 "x": ""
 },
 "0x85428b8a895dcc30d06aacfaf2503fefa76bcf27": {
@@ -3684,15 +3774,15 @@
 "x": ""
 },
 "0x855dc33689e0f817a683a3131a20064f24a0ff25": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "p5promax",
+"name": "",
 "x": ""
 },
 "0x85c1ab5ff12a4f7fcf830a8c709f9515561f07ca": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "RevertZoneFlush9",
+"name": "",
 "x": ""
 },
 "0x85ca24e343631f7880cdf69fa816af9cfd4ef2a6": {
@@ -3702,27 +3792,27 @@
 "x": ""
 },
 "0x860152cb56cb8b2f2514b14999b46d9b9274fe12": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "xtremebotttle",
+"name": "",
 "x": ""
 },
 "0x86234ee4a22f0752c7dd37602f301659c6b696fd": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Michael1030",
+"name": "",
 "x": ""
 },
 "0x8638b2680863db95a6448656dd6eb93c9e951ae5": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "winMoney",
+"name": "",
 "x": ""
 },
 "0x864131db914939ea3fdec0444b05809c53c44949": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "8181",
+"name": "",
 "x": ""
 },
 "0x866fa63de5c8cea3ec05d60e7775be44a0205594": {
@@ -3732,21 +3822,21 @@
 "x": ""
 },
 "0x868621bece6b00e619cfe2ae5323d47926a4ab88": {
-"fetched": "2026-10-22",
-"image": "https://static.predict.fun/profile-pictures/0x868621beCE6b00E619cFE2Ae5323D47926A4Ab88/019dd9b9-c1d9-7773-9e62-3cc690195163.png",
-"name": "dethective",
-"x": "dethective"
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
+"x": ""
 },
 "0x86b8c89911edc1639d5449208fab2af153483175": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "PulseSpreadTake",
+"name": "",
 "x": ""
 },
 "0x86cf4984ed59fa9db78895613b7207fdb61908b0": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "XZR5U25",
+"name": "",
 "x": ""
 },
 "0x86e66c68bbc5b7432ac933a8c8b0e20bf63e5887": {
@@ -3768,9 +3858,9 @@
 "x": ""
 },
 "0x8797cd637d0a655e078a2242b0ed397955ff1e0a": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "JointFenceMiss888",
+"name": "",
 "x": ""
 },
 "0x87bb110b1929f6940a8184a5fcb5f2be376ee73e": {
@@ -3792,21 +3882,21 @@
 "x": ""
 },
 "0x88a7381ef6cbb0a8e4a8652ff90ce867e3f733bb": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "StaticModelDrop888",
+"name": "",
 "x": ""
 },
 "0x893941a3cec82c8c66396ca9407294b293b34ab0": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "UnlockedBarrierTrack2",
+"name": "",
 "x": ""
 },
 "0x898fa64d6ac35ac6d6edd3d1027d6b505e5511c3": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "FinalVolumeSnap168",
+"name": "",
 "x": ""
 },
 "0x8991a9509193408aac40649b873139117ec3f353": {
@@ -3822,9 +3912,9 @@
 "x": ""
 },
 "0x8a375e2f062cf39f988dd2661f91e0bb01bbb0e8": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "CrushSchool",
+"name": "",
 "x": ""
 },
 "0x8a431476f40317abafa04435e58b0a3bf5dbc8e1": {
@@ -3840,21 +3930,21 @@
 "x": ""
 },
 "0x8a9b0909577103e9ecf5fbe021b112b492d54c54": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "maxood",
+"name": "",
 "x": ""
 },
 "0x8ac073bf1ae245086bd6fdcd86f6d0fe26be400a": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "SqueezedWeightBuild6",
+"name": "",
 "x": ""
 },
 "0x8b1580583dd4d8a96b653f21aac09da77174fca8": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "RationalTriggerLose420",
+"name": "",
 "x": ""
 },
 "0x8b47169353662c2abd8ab0ae0444ef987bbf917b": {
@@ -3882,15 +3972,15 @@
 "x": ""
 },
 "0x8bb957f503453205f2b1037aa80ec2994f154ea5": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ReversalThetaRetrace9",
+"name": "",
 "x": ""
 },
 "0x8c2537948e6b76b828b0afb26f5735be8f760add": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "LoveYouChinesse",
+"name": "",
 "x": ""
 },
 "0x8ceb4130eb6342dd986f4561a21e400e2fde3157": {
@@ -3924,9 +4014,9 @@
 "x": ""
 },
 "0x8de54c273c848f7414e7f2d4c4b9bd74f37f628e": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "weightedfuture2",
+"name": "",
 "x": ""
 },
 "0x8dec5e8ad670f2ba4c11db465ce5143ad2396c32": {
@@ -3942,9 +4032,9 @@
 "x": ""
 },
 "0x8df8b5153b2be427760cff324e7be42655a1e54e": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "YBB2",
+"name": "",
 "x": ""
 },
 "0x8e65a72b3171e63d26e0ee3700bbbdd09fdb28a6": {
@@ -3954,15 +4044,15 @@
 "x": ""
 },
 "0x8e82d8ef04a6f77ce5bed1475f4e26e1e926e3cb": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "HEYI-BINANCE",
+"name": "",
 "x": ""
 },
 "0x8ebf45063096319589af8175647ef811941ec693": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "EdgeMeanEnter8",
+"name": "",
 "x": ""
 },
 "0x8ed230c72cb5660721ad0d1a164a68b8891a26e1": {
@@ -3972,9 +4062,9 @@
 "x": ""
 },
 "0x8ed2c114ad7ffae743076d5c3b55f4f07b1afd73": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "WildWeightAbsorb2",
+"name": "",
 "x": ""
 },
 "0x8f18858b499cd6ae1446bd873d44536fe0f33b23": {
@@ -3984,9 +4074,9 @@
 "x": ""
 },
 "0x8f36e2b90a6e57b35a509a32abe404100fd4aca4": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "YLSLF",
+"name": "",
 "x": ""
 },
 "0x8f568a7e261ed962899361a7bcf9694b78f881f0": {
@@ -3996,27 +4086,27 @@
 "x": ""
 },
 "0x8ff00231efeead2f148dd8d3dd2a9292443c01e4": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "AntKingSpeed888",
+"name": "",
 "x": ""
 },
 "0x903f395e8464541b07d0827407d615111f486506": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "tiaotiao1",
+"name": "",
 "x": ""
 },
 "0x90c6aead2cbb972c7ea8e9cbd5446779f758eecf": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "striker",
+"name": "",
 "x": ""
 },
 "0x90cbdb635c1b1dc64e089c4958b4761084528f03": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "biscuit",
+"name": "",
 "x": ""
 },
 "0x90d4cf36b68d73e85b0689819a8cd14d23e153f6": {
@@ -4026,9 +4116,9 @@
 "x": ""
 },
 "0x91091929c26aa5e38ae49e34766517f77fe0926d": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "SingleCandleReplenish9",
+"name": "",
 "x": ""
 },
 "0x912f5bc0d9306a6f49e41336fade8cc315bb3f31": {
@@ -4038,27 +4128,33 @@
 "x": ""
 },
 "0x915d9c1da34eb88c810eb13dd0cb8099c73a0b91": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Atomforge",
+"name": "",
+"x": ""
+},
+"0x91d3465cb69fb2cc9cb5c139e2870bbf7a221d8f": {
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0x91d456dbbe89906fc62c73df2d323ba39ea024c5": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ifjaoi3jfa",
+"name": "",
 "x": ""
 },
 "0x91f24164823a71b0261d12129d3290f6899dbdbc": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "MegaForceBack68",
+"name": "",
 "x": ""
 },
 "0x9247f34991ac417f536b763582ba27a46d105b0b": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "WeightedStrikeScreen9",
+"name": "",
 "x": ""
 },
 "0x92bd2ff4ce34a64e9de3994107c885ba366b3afc": {
@@ -4068,21 +4164,21 @@
 "x": ""
 },
 "0x9313bab6b620ea000596389f17637946df25b1ae": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Angry1",
+"name": "",
 "x": ""
 },
 "0x934e04969b2d850598a3b161b4b1f2fd981a0003": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "VanillaVegaTrack666",
+"name": "",
 "x": ""
 },
 "0x93585ad4ab9d7af96a785a0ccee4fa3e63fcb171": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "rainhiz",
+"name": "",
 "x": ""
 },
 "0x935f99664d7cf7381666a8bc5909f9916363c45c": {
@@ -4098,33 +4194,45 @@
 "x": ""
 },
 "0x940abf97576e66c891ead24add0b68341875a468": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "DatedUpColin960",
+"name": "",
+"x": ""
+},
+"0x94127b652c850d973b52edad969e45f6ed20603c": {
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0x9499c9fb952d0907e5ef0ec6cb439464dda8fa3a": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "pyton",
+"name": "",
 "x": ""
 },
 "0x94bec8bb4b49649549994d3ec2af60046b533605": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "SourDuckSee112",
+"name": "",
 "x": ""
 },
 "0x9522da7fb94f3e2a7fda73b61cd2b25884db53a8": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "lantu",
+"name": "",
 "x": ""
 },
 "0x95b9ca591e2f2bec090bd6081c923077d3e82ab7": {
 "fetched": "2026-10-22",
 "image": "",
 "name": "Scale",
+"x": ""
+},
+"0x963290d99d0bfbfdaae2075ba3d331a15a2a03bc": {
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0x96d53505a88e85a8c2afd246f2d932985cd4e7ca": {
@@ -4158,33 +4266,39 @@
 "x": ""
 },
 "0x97b9cb9fb011c45d027a9b4ca1bb28797b1a6d31": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "machinelearning",
+"name": "",
 "x": ""
 },
 "0x9814ab0358a5e0ce03746084a8fb4ab08d31a5d2": {
-"fetched": "2026-10-22",
-"image": "https://static.predict.fun/profile-pictures/0x9814ab0358a5e0Ce03746084A8Fb4aB08d31a5d2/26136d17-6869-46be-9dcb-e3499a9cb8de.png",
-"name": "Megin",
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0x986bda5cca4f21188db1c864989f8be3c3d12a24": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ibkr0001",
+"name": "",
 "x": ""
 },
 "0x986d006024781844577350ec6781e604da175598": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "dalk-4ds4-das",
+"name": "",
 "x": ""
 },
 "0x98c3d75f58c9e1c9013f39e84f1334c1868e5722": {
 "fetched": "2026-10-22",
 "image": "",
 "name": "DeadLiquidityLose69",
+"x": ""
+},
+"0x98dadd7a5ff41dac407a2016f78c1837bce9f24a": {
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0x98e13d035e9674ac832d84e1d8ffd09504f4acb4": {
@@ -4194,39 +4308,39 @@
 "x": ""
 },
 "0x98fcd9f35c06b11f71a185c3947970568e7c1f40": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ExpansionTensionRoll168",
+"name": "",
 "x": ""
 },
 "0x9948b149a9b562eb8c38644b9f18e11ad0aa367c": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Hdihr",
+"name": "",
 "x": ""
 },
 "0x99a0bd95726189ac2e327c1fefedbcfa8c790078": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "MeanSeatFeed520",
+"name": "",
 "x": ""
 },
 "0x99fd9ac9ac9efc8ea0d3825c2b59e8381067bd48": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "LocalIvBust168",
+"name": "",
 "x": ""
 },
 "0x9a117aba5b081676807367de1534bfbe5ba6d4be": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "BrokenWidthScan69",
+"name": "",
 "x": ""
 },
 "0x9a3f833b7c9227616cea755fec6a930491bdb872": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "WideStepBack9",
+"name": "",
 "x": ""
 },
 "0x9ae9ee8f8e0d697d77594bf0deeb5f299b4e6240": {
@@ -4242,21 +4356,21 @@
 "x": ""
 },
 "0x9b06a2326b0349a04af864983e85dc46e1b6e209": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "JSPls",
+"name": "",
 "x": ""
 },
 "0x9b18a93da790bd6cd8223d16ef4508f5b6903087": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "relentless2",
+"name": "",
 "x": ""
 },
 "0x9b3cab4f376cde4e5f31c868d848eb9c337ccf0d": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "StretchedVolumeWick666",
+"name": "",
 "x": ""
 },
 "0x9b53dbdca41014f48607251f795cc2614aa8aaa5": {
@@ -4272,21 +4386,21 @@
 "x": ""
 },
 "0x9bdff7c862f303d91d0cc15d15bfdd1aa08b7b2f": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "bfbf",
+"name": "",
 "x": ""
 },
 "0x9bea74a81b3b1ab1082ef2fe233abe985a3e2ef2": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "DatedBreakCrush888",
+"name": "",
 "x": ""
 },
 "0x9ce2b193f5404d68dc73f86b71b7f64e4fca793f": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "dickmunchking",
+"name": "",
 "x": ""
 },
 "0x9d3ece63c8b17e119f06f47c61cd7409935353e8": {
@@ -4296,27 +4410,27 @@
 "x": ""
 },
 "0x9d5e39957337d06e02e8e364b6dda10bad668f41": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "hook2",
+"name": "",
 "x": ""
 },
 "0x9d611bab7baa17d313090db9dcdb38b40121bbd7": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "maxoood",
+"name": "",
 "x": ""
 },
 "0x9dbbfe4095a8f7ba7a24c49f48206c452eb199d4": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "realmaker",
+"name": "",
 "x": ""
 },
 "0x9ddbdc8bdf41ec79cd4f5c4dec14050f4b591a18": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "justababy",
+"name": "",
 "x": ""
 },
 "0x9df972f69dfac1db5ad5b55aec5d3a1925ccb5ac": {
@@ -4332,15 +4446,15 @@
 "x": ""
 },
 "0x9e0e0e506cd1b0b64852bdb272cc2ecf91ec17e6": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "101w",
+"name": "",
 "x": ""
 },
 "0x9e4f58b19a707c30f587cb604785808db85eba31": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "SwingAskExpire2",
+"name": "",
 "x": ""
 },
 "0x9e615db0bb94d06b050353da9833202d4ea17ea5": {
@@ -4356,21 +4470,21 @@
 "x": ""
 },
 "0x9ee33a534c800bd24a82e85786165098ec01dbf1": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "DaddyBadYeets5",
+"name": "",
 "x": ""
 },
 "0x9f0925821d5177a10fecd4f0d97290b0b83b0fce": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "mhx",
+"name": "",
 "x": ""
 },
 "0x9f0de075fec5e810e96bd17ee395082cad6996b9": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "PinnedFutureBack520",
+"name": "",
 "x": ""
 },
 "0x9f27f58a2f552f6767cb830c4e94c6c6e2b4c8a1": {
@@ -4380,9 +4494,9 @@
 "x": ""
 },
 "0x9f5b5d9f85f0ba4b952ae4b99a0d3714901c1fdd": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "meowmeow67",
+"name": "",
 "x": ""
 },
 "0x9f8ba1454a8ee77b7f59526c989056ffa6bab9a0": {
@@ -4392,15 +4506,15 @@
 "x": ""
 },
 "0x9fdc35aaaf337f506ea31697559e5d10423055c5": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "traderwho",
+"name": "",
 "x": ""
 },
 "0x9ff75ef4f42873f71992b8f4f1013bdb500c3134": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "FixedCapCompress420",
+"name": "",
 "x": ""
 },
 "0xa0082bc3d0850e5a593d3d1af65b99e216c2949e": {
@@ -4410,25 +4524,31 @@
 "x": ""
 },
 "0xa05f518acb730694422e1d32b203bc5e69c39a9c": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "tt111",
+"name": "",
 "x": ""
 },
 "0xa068bd3087a3ed483b37a3b973dabb2a4ebd6f06": {
-"fetched": "2026-10-22",
-"image": "https://static.predict.fun/profile-pictures/0xA068BD3087A3ED483b37a3b973DAbB2A4eBD6F06/06caf94e-dfd9-4f32-b5dd-edf8409bd025.png",
-"name": "Phungus",
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0xa07653b6daeb141cd6a1aaf641cd941f1f92efbf": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "poodle10",
+"name": "",
 "x": ""
 },
 "0xa077553542b164a7bff5ceb6d26b4408fb32d92a": {
 "fetched": "2026-10-29",
+"image": "",
+"name": "",
+"x": ""
+},
+"0xa0b42b168cc6636e012e712951fe52e329a7a181": {
+"fetched": "2026-10-30",
 "image": "",
 "name": "",
 "x": ""
@@ -4440,9 +4560,9 @@
 "x": ""
 },
 "0xa1281483a3e246de4cbae6b709e5cce2ab30890c": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "CramSchool123",
+"name": "",
 "x": ""
 },
 "0xa168e6a98a26f07e7d922961444b8fe2b95bd8cb": {
@@ -4452,27 +4572,27 @@
 "x": ""
 },
 "0xa174e38608213911cd5f0150521067a123dacb32": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "MultiPulseCap888",
+"name": "",
 "x": ""
 },
 "0xa2274a58069600ca18cf362855c03dd586082df0": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "skhsvdk",
+"name": "",
 "x": ""
 },
 "0xa27d22701bf0f222467673f563e59aa0e38df847": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "catseye",
+"name": "",
 "x": ""
 },
 "0xa2c97c2943d9ebdb36c52ba1fc7e7d396baff298": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "GreedyRungUnwind168",
+"name": "",
 "x": ""
 },
 "0xa30b6418e7cdb1e964c89f4d621d6c3c5db8903a": {
@@ -4482,9 +4602,9 @@
 "x": ""
 },
 "0xa353bff14eb32602017feac9ae272726513ea26a": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "JointCollarOpen6",
+"name": "",
 "x": ""
 },
 "0xa3a2e869dcb4e91569c6b6506c3c7de8a3ee5139": {
@@ -4500,51 +4620,51 @@
 "x": ""
 },
 "0xa4ac33db0bda1e6b11345fa25faaeeb3956d2429": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "poodle16",
+"name": "",
 "x": ""
 },
 "0xa4b50b7b5e528691271a5913967a287bc8088b29": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Waitforit",
+"name": "",
 "x": ""
 },
 "0xa4c21a754d193fa7973dfed03f02fac2dcc056c2": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "yosokichi",
+"name": "",
 "x": ""
 },
 "0xa5162f5bb972a508dee6bb1092ceb22ebd1e4d40": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "laoguo",
+"name": "",
 "x": ""
 },
 "0xa516a0523cf7d487100cf7de51a1699aef073f26": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "CoincidentStripDump888",
+"name": "",
 "x": ""
 },
 "0xa523297c9db8f13fcd1e1a5b5fd1f9ec8731e168": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "quantbarbiee",
+"name": "",
 "x": ""
 },
 "0xa536a4872190d31e109475232e894c36d8a01d97": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "xiaoxiantongxue",
+"name": "",
 "x": ""
 },
 "0xa5398021b7a1601d3a6a7f211efddd7593b368c0": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "PerpetualBondBleed420",
+"name": "",
 "x": ""
 },
 "0xa5716f825b671000fd8ac4a030edae5e8003382e": {
@@ -4572,9 +4692,9 @@
 "x": ""
 },
 "0xa64ab15506e03e2e123e99f67be2348f15bcfd87": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "SUNFLOWER",
+"name": "",
 "x": ""
 },
 "0xa681086253dc68fa2d01bc7dae1db2854671b008": {
@@ -4584,15 +4704,15 @@
 "x": ""
 },
 "0xa6e377a785543c397bb641a12994f580934664a9": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "0xE69",
+"name": "",
 "x": ""
 },
 "0xa73647836f8af6145574804701b0a6cef42547e5": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "FastShadeLamp888",
+"name": "",
 "x": ""
 },
 "0xa76245aa2bc20f0de8efa24bc550b297fe09f950": {
@@ -4620,33 +4740,33 @@
 "x": ""
 },
 "0xa81594e5be51e634113126cd1c70b7744d25beb8": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Solth",
+"name": "",
 "x": ""
 },
 "0xa8160033a95be1524a87f117977e89b92f23ee55": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "SplitSwapTrap1314",
+"name": "",
 "x": ""
 },
 "0xa81af39de10175d8f3d58bc86c916f367f1bab31": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "318Labs",
+"name": "",
 "x": ""
 },
 "0xa8715e4a529110ce2f67d7e12e36ef7e796ffe3d": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "SqueezedSharkPop888",
+"name": "",
 "x": ""
 },
 "0xa8aa6bfb9fd0e9bb6a04fc6341a1e5807e5f245f": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "StaticFrameBreak9",
+"name": "",
 "x": ""
 },
 "0xa8e882afbe361c4b365a642562496873a39421a0": {
@@ -4656,15 +4776,15 @@
 "x": ""
 },
 "0xa92c49fb69e5c77596cdfea056d78db98d6f3e18": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "RealCycleCap1314",
+"name": "",
 "x": ""
 },
 "0xa9a15119c06d0319d6a256bfbe4f96190d0b8b56": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "LowRhoHedge2",
+"name": "",
 "x": ""
 },
 "0xa9cbf5c7a8132c35ece01b94e26f9ce4e132dada": {
@@ -4674,27 +4794,27 @@
 "x": ""
 },
 "0xaa066d0631da4347ad7238e9a7e4f860a1ccdc29": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "887383",
+"name": "",
 "x": ""
 },
 "0xaa4ea14e10cb7f7197a8a42d2fbba68c84807e21": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "SevereBreadthFlag420",
+"name": "",
 "x": ""
 },
 "0xaa75fd64ce807d4558c2656d7c2ec119e3a9c8dd": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "0xa9",
+"name": "",
 "x": ""
 },
 "0xaa964d2ed92a45f7b0c3372c9835380739c2c7ea": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "weightedcollarsprint2",
+"name": "",
 "x": ""
 },
 "0xab17f12df5e4cbdbbce5ad1b1d3cc5cf2b6c349f": {
@@ -4710,21 +4830,21 @@
 "x": ""
 },
 "0xabada4655ee4d5cbbfd148406f37df68a8de7a52": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ToDieInLondon",
+"name": "",
 "x": ""
 },
 "0xabc59056796312e2b32e46da19d48b2d69f61e25": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "GreenSlopeWick888",
+"name": "",
 "x": ""
 },
 "0xabeb55093c3a983e0a76a6175f02b33d8f9382fa": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "juansinimen",
+"name": "",
 "x": ""
 },
 "0xac270e627a5e145efcef4b5323278aac70b0ee11": {
@@ -4734,9 +4854,9 @@
 "x": ""
 },
 "0xac31b7c37478c1651cdffd915ad4ae7fdfc045a4": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "DeepDriftPass1314",
+"name": "",
 "x": ""
 },
 "0xac572b54b21a5d2c1add15cb4484fbe053263099": {
@@ -4764,15 +4884,15 @@
 "x": ""
 },
 "0xaca320c6447aff5df5a676c9bf064c065d679748": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "BrightIrrReflect",
+"name": "",
 "x": ""
 },
 "0xacb451d793647b676dd840ef0b2206c95eaac0c7": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "qibabae2",
+"name": "",
 "x": ""
 },
 "0xad12671c775659f83c2f8c45ca2cdbb33b455d2f": {
@@ -4782,21 +4902,27 @@
 "x": ""
 },
 "0xad7725fcaf0ed377b32cdf672fd1b99b362326c9": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "EarlySharkTrack8",
+"name": "",
+"x": ""
+},
+"0xada115d93b8212413b844ab150d4d175cb89cfe0": {
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0xadd747be51cbc9312617e42964f57295ab871d3f": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "LockedPushRedeem666",
+"name": "",
 "x": ""
 },
 "0xae060f4080727ff6992dcc2b37d4dc9c71c528db": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "f0001",
+"name": "",
 "x": ""
 },
 "0xae2fbccca56347633c3f1dfa3d2ca81a6774cc66": {
@@ -4812,9 +4938,9 @@
 "x": ""
 },
 "0xae5d977dd02c180b892b82d8aa22196f43dfb4e0": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Alpha99",
+"name": "",
 "x": ""
 },
 "0xae6cacb88895e439d7d229f4d15eae4f696a182a": {
@@ -4824,9 +4950,9 @@
 "x": ""
 },
 "0xaebf04ec46f48bc1b8787c2ba2180039d14b38c3": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "PassiveTunnelTighten420",
+"name": "",
 "x": ""
 },
 "0xaef5bcb08d1f7d3d4b46c53a1c83a6f5c47aea02": {
@@ -4836,33 +4962,33 @@
 "x": ""
 },
 "0xaf38b3c25e6291fc58b5e3fdd88204d0d6078f3b": {
-"fetched": "2026-10-22",
-"image": "https://static.predict.fun/profile-pictures/0xaf38b3C25E6291fC58B5e3FDD88204D0d6078f3b/57fc6e82-2d31-484a-ab45-f5399722c703.png",
-"name": "-ENA-",
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0xaf7951235c456daf087ced40b769c304ab25fa3e": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "BargeHorseBet888",
+"name": "",
 "x": ""
 },
 "0xaf8f3e97eb273bf9dc9e95e47621f5ab6ca7f9b7": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Junkman777",
+"name": "",
 "x": ""
 },
 "0xaffd2db6cf304b34e55bd9c96252b7c292ed0aea": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "RangeLeakAlert2",
+"name": "",
 "x": ""
 },
 "0xb031c3e276ef8a458fdfde4001e21f8286c62509": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "WeightedSpikeLayer888",
+"name": "",
 "x": ""
 },
 "0xb124367b227f36a91824208b03ae1a338cb36c31": {
@@ -4878,9 +5004,9 @@
 "x": ""
 },
 "0xb1c4da28de1fd71881d1ba3de1ea11c7b1dc59fd": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "User12649512",
+"name": "",
 "x": ""
 },
 "0xb1d427af56957983fbc7563755636e9e04547521": {
@@ -4890,27 +5016,27 @@
 "x": ""
 },
 "0xb2105d7c636f24f78d1d2d7cd22142f71c0cc519": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "RangeBucketCollar69",
+"name": "",
 "x": ""
 },
 "0xb21cd1420482dcb85590f98e525f5114b9466a9d": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "LowTickScalp6",
+"name": "",
 "x": ""
 },
 "0xb293e33621ccd4f00df86e69cbfba03d59971840": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "gansinimen2",
+"name": "",
 "x": ""
 },
 "0xb2a31dd8f428355a03910b6b5eae199468a6c66b": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Small_frog",
+"name": "",
 "x": ""
 },
 "0xb2af2b8f26c5c82f3729f4dce7aff31b315b6c74": {
@@ -4920,15 +5046,15 @@
 "x": ""
 },
 "0xb2d08e31130e124cfbdf4fd559555ca2f569ba8a": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "EdgeCyclePeel168",
+"name": "",
 "x": ""
 },
 "0xb2dd4b12c6c8e7dcc2938d36d680ed27fca53480": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "cadilo",
+"name": "",
 "x": ""
 },
 "0xb34ef14870877844a86b2e7d780b09f37e2211a1": {
@@ -4938,15 +5064,15 @@
 "x": ""
 },
 "0xb364441501a5223ad946063ed46e7f9cce498dfc": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Milktea",
+"name": "",
 "x": ""
 },
 "0xb39eed8a93ff08b0e1471b6c0571f44282abaca1": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "totoLolo",
+"name": "",
 "x": ""
 },
 "0xb41c7e6ee5ffb2b1f1ba7f74fe89243c93c14596": {
@@ -4956,9 +5082,9 @@
 "x": ""
 },
 "0xb42ff8a6fb24a67e855885133c7bf8667b83d90a": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "DenseCarryMint9",
+"name": "",
 "x": ""
 },
 "0xb43b47cbcbbedbbab2855d113d247455582cd9c7": {
@@ -4968,9 +5094,9 @@
 "x": ""
 },
 "0xb4517ad6476fc4f2b3a409467e58b42b2c2296ea": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "FundedPressureExit520",
+"name": "",
 "x": ""
 },
 "0xb45e3b4a6a2d8d7047ce9e2694bac5febfb47a38": {
@@ -4986,9 +5112,9 @@
 "x": ""
 },
 "0xb51f4c6c63c668d4c4ef9d686a445a668dcaa343": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Collector0",
+"name": "",
 "x": ""
 },
 "0xb535898e53e560b89e0b22f32c21d0b5f9a49fff": {
@@ -4998,9 +5124,9 @@
 "x": ""
 },
 "0xb57afa584e994b1dd36f6c054eaf4947f15e7d53": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "poodle6",
+"name": "",
 "x": ""
 },
 "0xb5cd0b7e40bb06d9e5874eab7b3ba18fc521e1c5": {
@@ -5016,15 +5142,15 @@
 "x": ""
 },
 "0xb62248e95c86c4a9a8b8c33d91c65127f3a150d8": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Blala",
+"name": "",
 "x": ""
 },
 "0xb6555bd7532ccee08964521d3a1e58689487a4be": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "CalmEdgeFetch88",
+"name": "",
 "x": ""
 },
 "0xb6576f3684c87c3bd2e3b09e0e975fd659c4518c": {
@@ -5034,9 +5160,9 @@
 "x": ""
 },
 "0xb68c8aeedcbfe16dff542ae488b45d136dcb533f": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Zzzy75683",
+"name": "",
 "x": ""
 },
 "0xb7519b80848574a02ab154088d8cf625715899bf": {
@@ -5052,39 +5178,39 @@
 "x": ""
 },
 "0xb7b71ce829d31f1597cc7daffe31be1af4c52027": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "DonkeyBoner",
+"name": "",
 "x": ""
 },
 "0xb8402c8c9cec3e9e219456a99c2b800d99926bf1": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "LaggedStrikeWrap520",
+"name": "",
 "x": ""
 },
 "0xb845dadb9e084ee56c6ae0f5bc1a9078f64b7529": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Choos98",
+"name": "",
 "x": ""
 },
 "0xb8536c8978cea4ba223c329454295c0d59955cd1": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "superlucky",
+"name": "",
 "x": ""
 },
 "0xb877b2b2ebe6cb6a65db1d4b3dba56a9ce6cfe8a": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "smartpullcrawl",
+"name": "",
 "x": ""
 },
 "0xb975a46b51919eefb55e4f8add825866d65c6b32": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "kjaat",
+"name": "",
 "x": ""
 },
 "0xb98b966a6aac178d16b81c5c476026b11b5c3c5e": {
@@ -5100,9 +5226,9 @@
 "x": ""
 },
 "0xb9df0e4b2ddb266edd61c8ab3b3f949771450f3e": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "LockedSlippageCall8",
+"name": "",
 "x": ""
 },
 "0xb9ff254ac9d9ad393797ed79c03aa5863a6204a3": {
@@ -5118,15 +5244,15 @@
 "x": ""
 },
 "0xba286eedded7d9e07c7205d67d7c4ff6291cab38": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "0xpppqqq",
+"name": "",
 "x": ""
 },
 "0xba374cab7d519315c86612a273e74bc8dccd4aa4": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "MacroModelRun666",
+"name": "",
 "x": ""
 },
 "0xba37b0e96c94e32d410ce5f93768fa50728a839d": {
@@ -5136,9 +5262,9 @@
 "x": ""
 },
 "0xbaa217dd369c41bec9d02a85567288846fa37c4b": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "DevHour",
+"name": "",
 "x": ""
 },
 "0xbaae83af9a63a9aa0745423de2dabd8a0877489b": {
@@ -5148,15 +5274,15 @@
 "x": ""
 },
 "0xbbb8ba7017f60ac2d3d264fdafe3035913d2889e": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Morfis",
-"x": "Morfis_crypto"
+"name": "",
+"x": ""
 },
 "0xbbd7e61c82429ed2557451bd8d4f57f81bf23595": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "kytopi",
+"name": "",
 "x": ""
 },
 "0xbc3aa9109ece8ee663e56c866f64c456451a0352": {
@@ -5171,22 +5297,28 @@
 "name": "SmartCurveLog520",
 "x": ""
 },
-"0xbd3459736ba2102789a6fbc0abded7be303851b5": {
-"fetched": "2026-10-22",
+"0xbd13fa4455acb5f65d87e5051509cf418c642c77": {
+"fetched": "2026-10-30",
 "image": "",
-"name": "StaticBendLend8",
+"name": "",
+"x": ""
+},
+"0xbd3459736ba2102789a6fbc0abded7be303851b5": {
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0xbd3bb25f5802e81daa750cd1579ae74eb5a2717e": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "DriftingTwistHedge69",
+"name": "",
 "x": ""
 },
 "0xbd8b1d725c85ba9a7a25af74991a3b7f4c74d727": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "HybridIvTrap6",
+"name": "",
 "x": ""
 },
 "0xbdc9d0f5b2a02f9388d9803a8129f0402bff6daa": {
@@ -5196,9 +5328,9 @@
 "x": ""
 },
 "0xbdd754a75d4083be1a12018af92c7effa1908417": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "DenseScoreLock666",
+"name": "",
 "x": ""
 },
 "0xbdeb9c45d6ba2eb39fceef5f1a076e4885f23613": {
@@ -5208,33 +5340,33 @@
 "x": ""
 },
 "0xbe50cb82d22744e7a66f6e88fd59bac276a2284c": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Fr33d",
+"name": "",
 "x": ""
 },
 "0xbe6e2ddea91a379341d2377025cf42f923bbb9c3": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "StressedDeskBeat1314",
+"name": "",
 "x": ""
 },
 "0xbea433b74b515aa337d650fe8a356f3b3b68c2cf": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "StretchedGapClimb1314",
+"name": "",
 "x": ""
 },
 "0xbea9081a418f8e3f986773123d2db0809e8fb4bb": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "thiswrong",
+"name": "",
 "x": ""
 },
 "0xbed89a2366d155303b9fc706562daefdf10b0bf1": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "morcel",
+"name": "",
 "x": ""
 },
 "0xbfbfe83cb775fa4810222a5c26d53a065d98e029": {
@@ -5250,9 +5382,9 @@
 "x": ""
 },
 "0xc035db512d9944a184e8b0d68811bb60df639d3e": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "poodle9",
+"name": "",
 "x": ""
 },
 "0xc0505c1540168937f3f837bf621f33d189e3a8ab": {
@@ -5262,9 +5394,9 @@
 "x": ""
 },
 "0xc0670626ed3ca122b6fd15279234b49c0b382531": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "WideAlphaChase888",
+"name": "",
 "x": ""
 },
 "0xc0693f67a3759a47d1b7b6629581ab2ad6bf691c": {
@@ -5280,21 +5412,21 @@
 "x": ""
 },
 "0xc0e46f372f513818b0ce428b72e3a0d05137f5c4": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "mr_morgan",
+"name": "",
 "x": ""
 },
 "0xc12746731466fac6d8a9ead9eff12c02ce371484": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "xuan008",
+"name": "",
 "x": ""
 },
 "0xc197e342da8bb00d00afcc5d2fe6880f1ccdaff9": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "MEGATRADER",
+"name": "",
 "x": ""
 },
 "0xc25af0a88add2b6748ec4d3468717b25df2779f0": {
@@ -5316,15 +5448,15 @@
 "x": ""
 },
 "0xc2c9db8b095b6adf9608deb25a8c5004a662a57c": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "pfwrld",
+"name": "",
 "x": ""
 },
 "0xc303e316cf2e11e0ea3dfcace2baee55d94ab72f": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "perbot",
+"name": "",
 "x": ""
 },
 "0xc3804da2e10f2d4a4aba69a2b39931c6123ebf68": {
@@ -5340,9 +5472,9 @@
 "x": ""
 },
 "0xc3fb113975b514a975575a522403f1eaa7403067": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ZeroPushUnwrap420",
+"name": "",
 "x": ""
 },
 "0xc3fd8ee7abd8e09f1f7ba73b94312a292da755a5": {
@@ -5352,21 +5484,27 @@
 "x": ""
 },
 "0xc42ed8590a39489557cadabf8d7883507dc154c7": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "LockedFadeCoil168",
+"name": "",
+"x": ""
+},
+"0xc47d4959ca3a1d7d87c1f4017b1d233bcd55dd86": {
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0xc48479bce3ad1155db6440c8a3f4c8f632245f2e": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "kangyage",
+"name": "",
 "x": ""
 },
 "0xc49c54dde2650ac092c96fa947fa5a9030b2cb73": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "MicroRun",
+"name": "",
 "x": ""
 },
 "0xc4a493d0373c8319b943e2427ba40b714104573b": {
@@ -5376,9 +5514,9 @@
 "x": ""
 },
 "0xc4cde989ccde88a9f3df2e0d1f0f8678bf906dbb": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Vlakal",
+"name": "",
 "x": ""
 },
 "0xc4d42d5e259e23220e6c4d346f8d6646524eb859": {
@@ -5388,21 +5526,21 @@
 "x": ""
 },
 "0xc50d442abc1cf6c4a828b4e913f517c9f72ff2f5": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "MegaPivotLayer8",
+"name": "",
 "x": ""
 },
 "0xc50ea29caa414c4e75bc6f3a392324382e51992b": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "LeveragedBasketQueue9",
+"name": "",
 "x": ""
 },
 "0xc5175b653a0293351f508f1d9f9294cb8f889ec1": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "DirtyPhaseAnchor520",
+"name": "",
 "x": ""
 },
 "0xc5287231e85f177f606eb38eaafff3480d77cb77": {
@@ -5412,9 +5550,9 @@
 "x": ""
 },
 "0xc564afe8c8ff7d222999bc6c3b2b42b265a015fd": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "uuuuzzz",
+"name": "",
 "x": ""
 },
 "0xc577c3126c165eb97bd37f94df2f3ef278c8f7ae": {
@@ -5423,22 +5561,28 @@
 "name": "MultiBetaDrift666",
 "x": ""
 },
-"0xc5e6cb7efa4eb9a7496e7a80c89b306aaddb0a8f": {
-"fetched": "2026-10-22",
+"0xc5be45abeecb7b685675d9a04731141ad37d191a": {
+"fetched": "2026-10-30",
 "image": "",
-"name": "dino123",
+"name": "",
+"x": ""
+},
+"0xc5e6cb7efa4eb9a7496e7a80c89b306aaddb0a8f": {
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0xc5f862af46ab846f11103cabe7191aa48a480f2c": {
-"fetched": "2026-10-22",
-"image": "https://static.predict.fun/profile-pictures/0xc5F862Af46AB846f11103cabe7191aA48A480f2c/8986661f-49ea-436f-8818-48c194c83821.png",
-"name": "Albedo",
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0xc5ffb4a834315edb36562257e2f014b1e5080dfa": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "goodluckyyy",
+"name": "",
 "x": ""
 },
 "0xc60f60cc54ed4e44bbba4232e15369e7cf02d149": {
@@ -5448,9 +5592,9 @@
 "x": ""
 },
 "0xc658ac704bff362f5f3c2584405194d5ef21de84": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ooprplkdl",
+"name": "",
 "x": ""
 },
 "0xc679afb01594665e068321f59d5b6ef5ea91ffca": {
@@ -5459,10 +5603,16 @@
 "name": "",
 "x": ""
 },
-"0xc6eb08e6851c454cc08263f33a0bd2839be2880c": {
-"fetched": "2026-10-22",
+"0xc6bd3bc23087b88cbcb751c9f1cf67298f189dab": {
+"fetched": "2026-10-30",
 "image": "",
-"name": "DynamicZoneCollar1314",
+"name": "",
+"x": ""
+},
+"0xc6eb08e6851c454cc08263f33a0bd2839be2880c": {
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0xc7024512329bc1156634bb9a5457d0bf8b726673": {
@@ -5472,9 +5622,9 @@
 "x": ""
 },
 "0xc7078663fcb87c9022dcca8e5d7dbf34b357415a": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Bossmei",
+"name": "",
 "x": ""
 },
 "0xc7148da529daf399b0c4e452d79f19c720c9a398": {
@@ -5484,9 +5634,9 @@
 "x": ""
 },
 "0xc78fed4867200ede21979eed8a984a4649ce393d": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "813lab",
+"name": "",
 "x": ""
 },
 "0xc8076397a3826952e23a911855092e84a6cf73f6": {
@@ -5496,33 +5646,33 @@
 "x": ""
 },
 "0xc8268a0bfc37df482f9043468c1e36d68bd03983": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "FarPumpScan1314",
+"name": "",
 "x": ""
 },
 "0xc834ec3dc19a57e240a42982d898b0178aba9c86": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "IKBTN4LIFE",
+"name": "",
 "x": ""
 },
 "0xc85c1816b95804f8fdd5ea51d05303d18f5c6433": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "NIULAI4",
+"name": "",
 "x": ""
 },
 "0xc867a96ba4977dd1aee6551b45ca003e5205fdce": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "theMagician",
+"name": "",
 "x": ""
 },
 "0xc8b34a9e7844a0648016681b95fa731f98d00662": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "SlowTickBreach8",
+"name": "",
 "x": ""
 },
 "0xc8b7f2d4f5d2635842bb0ba425c80a72eb8c83fb": {
@@ -5532,9 +5682,9 @@
 "x": ""
 },
 "0xc8cd7ec60e6690176582a73f24e28761ca475350": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Dohtak-41",
+"name": "",
 "x": ""
 },
 "0xc9153b708445d3d02d56237096e8f4e707aaf8a5": {
@@ -5556,21 +5706,21 @@
 "x": ""
 },
 "0xc953cd746f65432e87b7f7b9518d020c7e85a0f2": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "PapaTinyLosses",
+"name": "",
 "x": ""
 },
 "0xc95d4781b5335dbc56a21b36ea23a1a26f08de32": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "AIquant",
+"name": "",
 "x": ""
 },
 "0xc967901201d6d58da9f99ea0451cad7bbe905001": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Kamika",
+"name": "",
 "x": ""
 },
 "0xc9689c8b47c5877b0fad94bf737572e59728c2dd": {
@@ -5580,9 +5730,9 @@
 "x": ""
 },
 "0xc98f15aa6c970548541dbb05b6d10ab5e7d546e8": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "PureThreshold236",
+"name": "",
 "x": ""
 },
 "0xc997ccb747492fa3a76c041c954df72c797e024a": {
@@ -5597,22 +5747,28 @@
 "name": "",
 "x": ""
 },
+"0xc9c95f030884c5e04be3d3a6480bf9826bc38dff": {
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
+"x": ""
+},
 "0xc9d012bf6ad4510178434a204ee06e625f0e5b4f": {
-"fetched": "2026-10-22",
-"image": "https://static.predict.fun/profile-pictures/0xC9D012Bf6Ad4510178434A204ee06e625f0e5b4F/05b916e4-b955-4587-8bd2-c4ffb904d3e2.png",
-"name": "2357",
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0xc9da12795f8ccd23812f09dbd43f81e34babfe51": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "deepseeker",
+"name": "",
 "x": ""
 },
 "0xc9dc11da4abed2b552882830cc4448cc9900db90": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ExpiredIrrLift420",
+"name": "",
 "x": ""
 },
 "0xc9ee3b9c8fefb9279c38916c91feb0cd4b3e49aa": {
@@ -5622,21 +5778,21 @@
 "x": ""
 },
 "0xca0870b1ec930341e25ef4205df68c540d934c9f": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "SpiderMan2",
+"name": "",
 "x": ""
 },
 "0xca0cc87086ea35732129f7f8e4a01f34da14a0d4": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "weiweigood",
+"name": "",
 "x": ""
 },
 "0xca617662d2897697409d33acd39ab49a1e8fcba7": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "youuuknoooww",
+"name": "",
 "x": ""
 },
 "0xca6753db0da6add468c0565e357359b9c1b12cb5": {
@@ -5652,9 +5808,9 @@
 "x": ""
 },
 "0xcb09d99d8355902589eef28c7db57374f22d900f": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "LaggedSpikeBuy2",
+"name": "",
 "x": ""
 },
 "0xcb41755a1eac9762bd685b7d67fc1517db81466a": {
@@ -5664,9 +5820,9 @@
 "x": ""
 },
 "0xcbcf20300e97fb021cda73176043c1a29472e6cf": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "bianrensheng1",
+"name": "",
 "x": ""
 },
 "0xcbe2dddb4c82042e4217ac2b62b7cd75b1d25cc5": {
@@ -5676,27 +5832,27 @@
 "x": ""
 },
 "0xcc71865158607d28e023b32e4c945845ed5fe40e": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "NearSwapTrend8",
+"name": "",
 "x": ""
 },
 "0xcc7b0007570411d9013846a4e11d2d8540a5e922": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "feizhuliu",
+"name": "",
 "x": ""
 },
 "0xcc8a732777a7529ea70df18831fab1b148c22a9e": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "WaIterWhite",
+"name": "",
 "x": ""
 },
 "0xcc9c99034ce690d53b4401a32fb46e28270a8247": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "bake",
+"name": "",
 "x": ""
 },
 "0xccc0f1eaf9cb39cb831cb176419b5abdd5b599bf": {
@@ -5706,15 +5862,15 @@
 "x": ""
 },
 "0xccc593907827b310b882fdd66a3e0875641cf1a5": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "neosteprun2",
+"name": "",
 "x": ""
 },
 "0xccc718bb1b9c655c2defb7d3110001681b9db2a8": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "marginal-bond-tank-2",
+"name": "",
 "x": ""
 },
 "0xccec38c1283fea771ac799c8f53a66117d904868": {
@@ -5730,15 +5886,15 @@
 "x": ""
 },
 "0xcda1762561df792c212a2668a60942d22731f73e": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "dad12",
+"name": "",
 "x": ""
 },
 "0xcdabfcd0578311993a8f2953830d05165756d7bb": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "acc0untant",
+"name": "",
 "x": ""
 },
 "0xcdeb8b372a25cc06395e19056d8af488787f9b2e": {
@@ -5754,9 +5910,9 @@
 "x": ""
 },
 "0xce71ea9fbd967e5eb31083632747fe3171a08085": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Attention",
+"name": "",
 "x": ""
 },
 "0xce7f55c3e153f375630f251e1afe5fb2c29b8332": {
@@ -5766,9 +5922,9 @@
 "x": ""
 },
 "0xcec1f0fc8e2963bf72b68d149e16d99daafc5383": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "slopslop",
+"name": "",
 "x": ""
 },
 "0xcefcab7abb15873500216e716eb16e926bfbeb5c": {
@@ -5778,45 +5934,45 @@
 "x": ""
 },
 "0xcf25788b0dab47fc062e03f34b584161358a092c": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "BetaSmileAbsorb420",
+"name": "",
 "x": ""
 },
 "0xcf49797ecdc40c96bd4753bb06917a15a1beccad": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Shoutu",
+"name": "",
 "x": ""
 },
 "0xcf56d5d3b3301d182f88be5c5e3b6c19e2f11e69": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "SuperFlipRide8",
+"name": "",
 "x": ""
 },
 "0xcf6fc6055b04336d3d55956cc807b90674e8c9fd": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "SlowPitHedge6",
+"name": "",
 "x": ""
 },
 "0xcfe7fd7471263f0f374bb83852fb4c351ba7b394": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "eatShit",
+"name": "",
 "x": ""
 },
 "0xd122cd6e51468d13a90b4038c764b2676eba8169": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "RealizedGravityBend9",
+"name": "",
 "x": ""
 },
 "0xd1c4c48734a8bd700e87ae751d31616dfd96f5a8": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "poodle18",
+"name": "",
 "x": ""
 },
 "0xd1c9e8b22822db5653fc19bc1fcdcac11e5e57b1": {
@@ -5826,39 +5982,39 @@
 "x": ""
 },
 "0xd2041ffce5154be362b6b4af2b2acb9342445b90": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "killpig",
+"name": "",
 "x": ""
 },
 "0xd20e30daec01066a382595e892611b3c64707b8c": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "StretchedVaultFlag666",
+"name": "",
 "x": ""
 },
 "0xd22049b491ae868e2d2159db646b7eda6265bbfa": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "daben",
+"name": "",
 "x": ""
 },
 "0xd22614b1d0f957bd66a2c7b86d6b389891a26b11": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "star_dust",
+"name": "",
 "x": ""
 },
 "0xd260bbb064815b61c3f338499062eed656073c83": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "LocalGravityDeplete520",
+"name": "",
 "x": ""
 },
 "0xd28346e59d0424a79129c345f8614607e6402cf1": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Set-Fire",
+"name": "",
 "x": ""
 },
 "0xd2caf8e9e9e4046bcadb90cfd61905d85991de38": {
@@ -5868,27 +6024,33 @@
 "x": ""
 },
 "0xd33c54e10304a9b278910f5b03f5c7e081d7ab50": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "multimelt2",
+"name": "",
 "x": ""
 },
 "0xd36b699fe055aef5dd0ffe62245da8e8868069df": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ace01",
+"name": "",
 "x": ""
 },
 "0xd37e527db9ab4f2c151fc89c3683a4e8b683e5b7": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "spacerac3",
+"name": "",
 "x": ""
 },
 "0xd39b53ced08ef0bee191ece3d0bc9a8815709766": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "najsdmaosi",
+"name": "",
+"x": ""
+},
+"0xd3d1125f2f48fada769ae01dd300b7b061968b1d": {
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0xd44cb6b24f9776e39cf00ab74e54cebbcc09dd79": {
@@ -5898,9 +6060,9 @@
 "x": ""
 },
 "0xd47628abf8918dd2c7b4145e7f9e881764190b0f": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "UnfundedWhaleLoad9",
+"name": "",
 "x": ""
 },
 "0xd48692b9a9f6d3c36c3501f1843a2419d7fb3ccb": {
@@ -5922,27 +6084,27 @@
 "x": ""
 },
 "0xd5f4258b2c09d1f249d432f757ba491292fc1905": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "DirtyLegGap6",
+"name": "",
 "x": ""
 },
 "0xd621c66f32f891a23d0f6ba56b0084c8b5f9db4a": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ExtendedBucketMint420",
+"name": "",
 "x": ""
 },
 "0xd6b1644cb7160fd12ead8535dc245d43c2dcadf9": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "zeeera",
+"name": "",
 "x": ""
 },
 "0xd748a432fda34ccc08e65b57d098e3323b4efe8e": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "NeutralFeedCrush69",
+"name": "",
 "x": ""
 },
 "0xd74e697fa86e055b6e4f92864aa059495b2ba6af": {
@@ -5952,15 +6114,15 @@
 "x": ""
 },
 "0xd79f5894d6cb6cf47e7959e4aff82205f07efc8f": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "RealizedFactorExit6",
+"name": "",
 "x": ""
 },
 "0xd7bb4ea052dd3fb5b2fc1ca1ebec7ce919cd8f37": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "MasterHugeOrders",
+"name": "",
 "x": ""
 },
 "0xd7be05f9fa340c4a9f2829bf2ad2a3b16f0522f7": {
@@ -5970,51 +6132,51 @@
 "x": ""
 },
 "0xd7caed9c37fb288571580e2a4845eeb43ab8b8bd": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Ltoldthearnmovin",
+"name": "",
 "x": ""
 },
 "0xd7d0652ca814d9679acdf0eb58fed3e7a44ef0f1": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "MetaBarrierWiden888",
+"name": "",
 "x": ""
 },
 "0xd7e015c19b61f05d8f75328f8efb9c0da583e67a": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "DualAccelerationDrag9",
+"name": "",
 "x": ""
 },
 "0xd7f3c04fac83c15ac93b36543113c275e4082dc6": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "laot2",
+"name": "",
 "x": ""
 },
 "0xd84280951c407716fb705f8c3cfd4a785797dcd8": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "DatedLeakReplenish168",
+"name": "",
 "x": ""
 },
 "0xd86d3e6acefdd930fa1fdb392ad5f8593c1b2438": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Emuru",
+"name": "",
 "x": ""
 },
 "0xd92b65f54ee36fe4c5e0bc8748308ba57b563351": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "LiveStreamDrag69",
+"name": "",
 "x": ""
 },
 "0xd998c2de67f415a50a5ca192b291dcc67bb322c0": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "CrusadiaAvramax",
+"name": "",
 "x": ""
 },
 "0xd9cd119636cf25a126788d7dd937f54a3730a5f0": {
@@ -6024,9 +6186,9 @@
 "x": ""
 },
 "0xd9d067dd414a0049117d1b5965dd2953faeef364": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "RollingAccelerationLoad9",
+"name": "",
 "x": ""
 },
 "0xda3a6419816f040d258c9bd9e099b31a9fcc89de": {
@@ -6036,15 +6198,15 @@
 "x": ""
 },
 "0xda69eb880cf52d53a6616e4d99568331af7e3c24": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Henyhuni",
+"name": "",
 "x": ""
 },
 "0xdb10d0df293e9a79bc4933f0ac97f742adb003de": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "zhangjike",
+"name": "",
 "x": ""
 },
 "0xdb9a14ad3edaf0d240dd0b07109907549ddc9bb7": {
@@ -6054,15 +6216,15 @@
 "x": ""
 },
 "0xdb9e3bf558dd0ba8a64738c450e54bba3eefd59f": {
-"fetched": "2026-10-22",
-"image": "https://static.predict.fun/profile-pictures/0xDb9e3BF558dd0bA8A64738C450E54bba3EefD59F/a3a9460b-4492-45af-a00c-796245fb2ebd.jpg",
-"name": "potato2486",
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0xdba9215f494a276eaa184b6b61678f972889082c": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "profitAccount54",
+"name": "",
 "x": ""
 },
 "0xdc108089412a2e015180a96725861b90c6daa1af": {
@@ -6072,15 +6234,15 @@
 "x": ""
 },
 "0xdc112049ac5f8089543f1779444f3a27f17271a0": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "sigseg",
+"name": "",
 "x": ""
 },
 "0xdc54f9abad10216a84881947cb97258011f8b05a": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "rational-ask-stall",
+"name": "",
 "x": ""
 },
 "0xdc58e5e8f935da6f7f91da2bcebcaf8f143a9d7c": {
@@ -6090,27 +6252,27 @@
 "x": ""
 },
 "0xdc94df98ada4df2984064a1f1f86b36cfcdfcd75": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ponsceo",
+"name": "",
 "x": ""
 },
 "0xdd1d64bd2a30813d46bfd39e39c906072e07e355": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "BoundFeedCrash69",
+"name": "",
 "x": ""
 },
 "0xdd62ab01fc016151dbd38277b463a416aabb7c86": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "AlphaFeeFade9",
+"name": "",
 "x": ""
 },
 "0xddb3ba6cf509ce2ac7c34a5b5fc0cc6407df0ad3": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "1pzz",
+"name": "",
 "x": ""
 },
 "0xddc494fd81b87fd424bdef3a569e3045339c4e11": {
@@ -6120,9 +6282,9 @@
 "x": ""
 },
 "0xdde339515d8e57487e7859366abe81a411ba7718": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "15sui",
+"name": "",
 "x": ""
 },
 "0xddf038e9c8e1e807635f2355d3079b9319d9819a": {
@@ -6138,21 +6300,21 @@
 "x": ""
 },
 "0xde5ed2e691e51834f3c9e28661a4b15f17bb27f6": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ToxicTradeBounce9",
+"name": "",
 "x": ""
 },
 "0xdea8a0cc1337f2f82efe0ef2214210bc02475be9": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "poodle4",
+"name": "",
 "x": ""
 },
 "0xdefb4291c5b50468ee10be882fdc542b291ffec7": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Manipulator",
+"name": "",
 "x": ""
 },
 "0xdfce05d227dd84c023d1cdc6a763d2e10e179910": {
@@ -6162,21 +6324,21 @@
 "x": ""
 },
 "0xdfd7a01dd567f51b912b70b569c84afb0b8e8cc6": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "initialtick2",
+"name": "",
 "x": ""
 },
 "0xe004bc353599074acb4612c89c8725bf99177d9a": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "BoldLeakPull2",
+"name": "",
 "x": ""
 },
 "0xe02e0416ab4a16e33ff3fd6601a658c423d07504": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "resun",
+"name": "",
 "x": ""
 },
 "0xe0937d007eb7ce975accc5184915e9b18afb1ea4": {
@@ -6186,9 +6348,9 @@
 "x": ""
 },
 "0xe09e7f42f5f04e8b779f566000340ea3662308e7": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "poodle5",
+"name": "",
 "x": ""
 },
 "0xe0ba5e1d865a6a985f2d249d15601e5c126f3ec4": {
@@ -6204,15 +6366,15 @@
 "x": ""
 },
 "0xe12f4420a97778f66697a9aa0c4312d2169bb92f": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "ssssr12r1",
+"name": "",
 "x": ""
 },
 "0xe19b48c71843267cb9cb484bb69a1295ab5ca0ad": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "tt_trade",
+"name": "",
 "x": ""
 },
 "0xe1c16b3734850a32bb9c5df0534f0b4bcce4f701": {
@@ -6222,10 +6384,10 @@
 "x": ""
 },
 "0xe1d8b57fc8a371f11298dec61e21b10ace63e681": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "StevenAdams",
-"x": "boreaswu"
+"name": "",
+"x": ""
 },
 "0xe1e85b72d2194d527be19a5a716f154819cfc9de": {
 "fetched": "2026-10-22",
@@ -6233,22 +6395,28 @@
 "name": "shortzoneunlock",
 "x": ""
 },
-"0xe25bc7d16bc4e4915cf22d306d0e67a3024c5ab3": {
-"fetched": "2026-10-22",
+"0xe2107e6b4c98b50d57cd8bebb8c112d137fbd47a": {
+"fetched": "2026-10-30",
 "image": "",
-"name": "0xCaos",
+"name": "",
+"x": ""
+},
+"0xe25bc7d16bc4e4915cf22d306d0e67a3024c5ab3": {
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0xe2d07ae7a41ad7a4f309cc5144b9bfebdf3ec7bf": {
-"fetched": "2026-10-22",
-"image": "https://static.predict.fun/profile-pictures/0xE2D07Ae7a41aD7a4f309CC5144b9BFebdF3ec7Bf/ae4c9916-52bc-4786-8db0-aa7c19238546.jpg",
-"name": "LIME",
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0xe417dfab774f1b8889aac2f05aa7f6f985f5ce62": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "BullPositionScore666",
+"name": "",
 "x": ""
 },
 "0xe41c87fbcc58752b33a80ea23254adebfa7d19d6": {
@@ -6264,15 +6432,15 @@
 "x": ""
 },
 "0xe4ed30eb6ff07dfd13f328b4fbc13c9e0f910b1d": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "mc521",
+"name": "",
 "x": ""
 },
 "0xe525d3cdce228a9e8d85255fe91aa6b8ea1d1d67": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "neverlucky",
+"name": "",
 "x": ""
 },
 "0xe57a4b5c10769175c470b29ec7cdfbae0d8f9321": {
@@ -6282,9 +6450,9 @@
 "x": ""
 },
 "0xe58bd9a2c4befde1bdc1d02fe8920b0a4bc2332e": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "StretchedFrameFace420",
+"name": "",
 "x": ""
 },
 "0xe5aa110b4943586f7bddd1192f6f291f48d854a0": {
@@ -6300,10 +6468,10 @@
 "x": ""
 },
 "0xe5eb26f6f6657161e0a9e6daae97fa6d92975392": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "vladick",
-"x": "vlad_tarantino"
+"name": "",
+"x": ""
 },
 "0xe60a26576537753c84ea452f64f275f28f240fb2": {
 "fetched": "2026-10-22",
@@ -6312,15 +6480,15 @@
 "x": ""
 },
 "0xe6108c5a6c5ecc697c757a97811061b1ea4d214c": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "PresidentHugeLosses",
+"name": "",
 "x": ""
 },
 "0xe6225eb77cb12a803a586ba71f9ad497b47e6841": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "SlowCrushTighten888",
+"name": "",
 "x": ""
 },
 "0xe64ae48cba4a3bd800da3cd6bfe63276325e7899": {
@@ -6342,9 +6510,9 @@
 "x": ""
 },
 "0xe7c33f1cd032052d753aa563dfad0b7025fee0ee": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "yyhyggg",
+"name": "",
 "x": ""
 },
 "0xe7ef2790edfd14b86b630ad6129c7aa5fd120a27": {
@@ -6360,15 +6528,15 @@
 "x": ""
 },
 "0xe8aca6f0f98ddae1633e47a91544d30495e9ebdc": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "VanillaNotional2",
+"name": "",
 "x": ""
 },
 "0xe8e127418244edb8559f39e6c912009db1b3a7bd": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "kobe-231-dak23",
+"name": "",
 "x": ""
 },
 "0xe92dc9b883c3ab1dd9c1fedbcdd688de7f44af85": {
@@ -6378,9 +6546,9 @@
 "x": ""
 },
 "0xe9828ae2d6c7baaa26743cb46bfe52ed3856203d": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "DigitalSharkReject168",
+"name": "",
 "x": ""
 },
 "0xe9cae73587547339a9aad48412a7b9d02d4ecc38": {
@@ -6390,9 +6558,9 @@
 "x": ""
 },
 "0xe9d05ef07acc38c35b569d136368f678808c24d0": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "StretchedRegimeOpen1314",
+"name": "",
 "x": ""
 },
 "0xea44f53182ebb5bd512a0d4951097aef4ac61585": {
@@ -6402,9 +6570,9 @@
 "x": ""
 },
 "0xea4a1350d8fa9b13ebdeb6c6b219e17654a4d567": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "bws2",
+"name": "",
 "x": ""
 },
 "0xea6669eb1c0a289e2020fc55b75b74870fc1904a": {
@@ -6414,45 +6582,45 @@
 "x": ""
 },
 "0xea8e5951aa29a102a1ea6d98b01cf6ec0271c679": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "bnalpha",
+"name": "",
 "x": ""
 },
 "0xeacb56104382075921803e17d009381b83daf097": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "BreakoutVegaTest9",
+"name": "",
 "x": ""
 },
 "0xeb620622111d817ba4a2026e3606dfd0612bf349": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "AnchoredEraCycle69",
+"name": "",
 "x": ""
 },
 "0xeb72e18ab99a0a3a0a5b1f31c3f958c093f078c7": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "gansinimen",
+"name": "",
 "x": ""
 },
 "0xeb7737f7b01cd68a657e4358737ab8f96c9d8a78": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "JFLC",
+"name": "",
 "x": ""
 },
 "0xeb8df63d9ddcc081e12b75db4d66b04eb0ac650e": {
-"fetched": "2026-10-22",
-"image": "https://static.predict.fun/profile-pictures/0xEB8DF63d9dDcc081e12b75DB4d66B04EB0Ac650e/019c21d3-d36a-722e-81ed-1fea365db384.jpg",
-"name": "fuzzy_logic",
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0xeba154fa977c9686a81957853c62679710e4db3c": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "GeneralBigSells",
+"name": "",
 "x": ""
 },
 "0xebb845dfd9997ed9ae6a0ac96ef7bd91c495102a": {
@@ -6462,9 +6630,9 @@
 "x": ""
 },
 "0xec47015d93b7e2259fe72b19981d432f34c98638": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "XVentura",
+"name": "",
 "x": ""
 },
 "0xec9859923b6118e6895eab174ab393736b22b12b": {
@@ -6474,15 +6642,15 @@
 "x": ""
 },
 "0xecc47b55a7ecfcaa21b38cb157a408949301b610": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "MOLIGHT",
+"name": "",
 "x": ""
 },
 "0xecdc0415d04c5e1eb91b0118025a394e56550da2": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "oxgod66",
+"name": "",
 "x": ""
 },
 "0xed07a944449093fb083490ac8cb811dc3c9a790e": {
@@ -6492,15 +6660,15 @@
 "x": ""
 },
 "0xed38c6a80ae8827b105a0bc5925a301e98621a80": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "hedged-round",
+"name": "",
 "x": ""
 },
 "0xeda6a903cc758c88ab10e6540c2a0be39ac12108": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "RealRateSlam6",
+"name": "",
 "x": ""
 },
 "0xedd5139b1652e60d9a9556f001ed98562b403139": {
@@ -6516,15 +6684,15 @@
 "x": ""
 },
 "0xeed96fd6512ad819a51453c75c19b7ca04069410": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "LiquidPriceFree6",
+"name": "",
 "x": ""
 },
 "0xef5b401563ed18e9c87fb52598036385c3d2bfa5": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "thatsfun",
+"name": "",
 "x": ""
 },
 "0xefcae6771da788863751bf4ea9a741a1e6441ab2": {
@@ -6552,9 +6720,9 @@
 "x": ""
 },
 "0xf0fbec392707a69decb5ffe75d8cb28fda937d34": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "0xbc",
+"name": "",
 "x": ""
 },
 "0xf11590aa1a8fd2a263ab4055efbf07045e55a42d": {
@@ -6570,9 +6738,9 @@
 "x": ""
 },
 "0xf14d3ee830468d598106cb9f67bd729e89e0c5f0": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "baoji",
+"name": "",
 "x": ""
 },
 "0xf18571babaadb188f8be9faa93df0e404cbf255a": {
@@ -6588,27 +6756,27 @@
 "x": ""
 },
 "0xf2113926af8115f58a93408ee6cd4bafd1ccc133": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "GoldFlipFloor9",
+"name": "",
 "x": ""
 },
 "0xf2c69a3f986a9e826586485b6cf7588708dd567f": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "HedgedDepthReject666",
+"name": "",
 "x": ""
 },
 "0xf2ec748833a18eae77982d25fe5364f0ebdd6b4d": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "XiaoPao",
+"name": "",
 "x": ""
 },
 "0xf3243ab661b8907d6bc954e9d7f8c341d6f95f73": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "SplitEraDump666",
+"name": "",
 "x": ""
 },
 "0xf33f17766a20f5d9182f18628cf3a73d5d59641a": {
@@ -6618,45 +6786,51 @@
 "x": ""
 },
 "0xf3809e34fc1818085205f4c7f4f1bbe52af25859": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "BacktestMeuOvo",
+"name": "",
 "x": ""
 },
 "0xf3bc0ccba385ecfaa3e9480aaa996ed872cdcaa1": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "two2four4eight8",
+"name": "",
 "x": ""
 },
 "0xf3be18418fa17f98d0d8c7817651cd55334f5409": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "waterfall42",
+"name": "",
+"x": ""
+},
+"0xf3e69c15634db7ed6aed39583f60c57deb0d4510": {
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0xf417c661ff901e3ef3ed6ae941b1e8e505776eb8": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "F6D88",
+"name": "",
 "x": ""
 },
 "0xf4264a26f752a58815af21cb29f1b7de7b0dc77b": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "BoundedImpactFeed520",
+"name": "",
 "x": ""
 },
 "0xf4535235b968cfcb8d4451b7acdbef58c021bc27": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "LiveFundFront666",
+"name": "",
 "x": ""
 },
 "0xf46c73afb7d424eb21243c94fd91e7552da78e45": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "FarRiskUnlock6",
+"name": "",
 "x": ""
 },
 "0xf49d100dabdee46138ce86cf6c15fb317e3bdf58": {
@@ -6666,9 +6840,9 @@
 "x": ""
 },
 "0xf51a04610e87b58bbf67e61b8977b59668d7d58e": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "linjunjie",
+"name": "",
 "x": ""
 },
 "0xf51a34efb84a6ada9d58291703c89ca56fe9c47a": {
@@ -6678,9 +6852,9 @@
 "x": ""
 },
 "0xf53b3f067d15835dbea1b72b603f9b04c10b0259": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "poodle8",
+"name": "",
 "x": ""
 },
 "0xf549b66748d97a0fb75a1b2aed8ac7d9aae208b0": {
@@ -6690,15 +6864,15 @@
 "x": ""
 },
 "0xf59364cd39e008e07308fde93b017e3975b44f8e": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "pikachux",
+"name": "",
 "x": ""
 },
 "0xf59e259e35d33b255e8b30fd8299226594e9f891": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "preniubihong",
+"name": "",
 "x": ""
 },
 "0xf5de1b2e1bf899a0ca1ed01049322ae9868c1cf9": {
@@ -6708,9 +6882,9 @@
 "x": ""
 },
 "0xf6487909cf4ecb8cd6fd8a9d0cc05b4165b0b001": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "SyntheticWaveExit420",
+"name": "",
 "x": ""
 },
 "0xf662493abf458e96e2d712ffcba29dda6cd9f357": {
@@ -6720,15 +6894,15 @@
 "x": ""
 },
 "0xf69087c92a17f5ec7b4befd3a6c5042049402fdc": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "DynamicNominalCapture69",
+"name": "",
 "x": ""
 },
 "0xf6a0b4b03a3beeb0dbdfc2c3eb38b04057fcf7be": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "RevertSurface168",
+"name": "",
 "x": ""
 },
 "0xf6e760ce95f4ed7c0fa6a7df42864a4ec804a645": {
@@ -6738,15 +6912,15 @@
 "x": ""
 },
 "0xf6eab008fb3d59d70ebf117af16ddd867fefdad7": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "NearFrictionScalp420",
+"name": "",
 "x": ""
 },
 "0xf751952c957d3f2ca38fe44acc05c61139bec9cb": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "YBB3",
+"name": "",
 "x": ""
 },
 "0xf77b194642b09813676a172654dcea271230931b": {
@@ -6756,10 +6930,10 @@
 "x": ""
 },
 "0xf81b407d34c7a04b3901015ab11eca37f256e40f": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "flexer78",
-"x": "flexer_78"
+"name": "",
+"x": ""
 },
 "0xf83d853c6e32bf3c736abb2719e9b8f6629233da": {
 "fetched": "2026-10-22",
@@ -6786,9 +6960,9 @@
 "x": ""
 },
 "0xf9438c6efba74634249599017a851c8e25910e49": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "poodle3",
+"name": "",
 "x": ""
 },
 "0xf97e0e546359c360c1e2712f72b6314e87aa9df9": {
@@ -6798,9 +6972,9 @@
 "x": ""
 },
 "0xf9dd18a7f9dbdfe30d863d8bc4769ce5a7aba081": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "buddhism",
+"name": "",
 "x": ""
 },
 "0xfaaeab9774721eee7997e2332f9cc125dcc4fc4b": {
@@ -6810,15 +6984,15 @@
 "x": ""
 },
 "0xfab5f1279d693c7bb37b763c3f3efd876f3b88ce": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "Rodrigormf",
+"name": "",
 "x": ""
 },
 "0xfaf15d6e2381a95e396f7a29a33f12478dadbd05": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "LateGammaExhaust520",
+"name": "",
 "x": ""
 },
 "0xfc18d4db7f1f9f17d5fbf490df2a6a1aa7d1433b": {
@@ -6828,15 +7002,21 @@
 "x": ""
 },
 "0xfc24775567fc1433986f4c96601a53b357536d79": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "sha12345",
+"name": "",
 "x": ""
 },
 "0xfc2e3ab05f84bf5c539736ab90bbb97c7fa74af6": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "nessuper",
+"name": "",
+"x": ""
+},
+"0xfc9c3da4403e13c3089f54415c56a5f3dc568191": {
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
 "x": ""
 },
 "0xfd38b7849526a11c2bf2cc04f4db2cfebe3e55fc": {
@@ -6858,9 +7038,9 @@
 "x": ""
 },
 "0xfe1aeb266f838f0ad55cc1e246a0f50dc80f7f36": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "SilverRipFade6",
+"name": "",
 "x": ""
 },
 "0xfe34e021cc47d9b4fe63fb7d0608c77a971b77c1": {
@@ -6870,15 +7050,15 @@
 "x": ""
 },
 "0xfe7c1c58351d8dace002e4bc42f9a2adabd9b1e5": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "mysticek",
+"name": "",
 "x": ""
 },
 "0xfe917fb9f4fd51c9090742b8296260333ceaf83f": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "dotdotdot",
+"name": "",
 "x": ""
 },
 "0xff09d019ed2ddc4ba4d24413416922e84d9da7df": {
@@ -6888,21 +7068,21 @@
 "x": ""
 },
 "0xff21d71a3d5b2453940555544865da1ad7633719": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "CleanRunEscape666",
+"name": "",
 "x": ""
 },
 "0xff35af22bca916d6dd9dacf13d962dc2c164624a": {
-"fetched": "2026-10-22",
-"image": "https://pbs.twimg.com/profile_images/1751870736837578752/iNLj-5Yb_400x400.jpg",
-"name": "aditya",
-"x": "aditya_rmurali"
+"fetched": "2026-10-30",
+"image": "",
+"name": "",
+"x": ""
 },
 "0xffc87085826fc85447aff57dbbde1e5e9bb051cd": {
-"fetched": "2026-10-22",
+"fetched": "2026-10-30",
 "image": "",
-"name": "lordlord",
+"name": "",
 "x": ""
 }
 }
