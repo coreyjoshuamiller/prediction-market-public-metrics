@@ -127,14 +127,15 @@ def predict_profiles(addresses):
     def fetch(addr):
         try:
             p = gql(PREDICT_ACCOUNT, {"a": checksum_address(addr)}, retries=2).get("account") or {}
-        except Exception:
-            p = {}
+        except Exception:  # keep what we have (or nothing) and retry next run, don't cache a blank
+            return addr, None
         return addr, {"name": p.get("name") or "", "x": p.get("twitterUsername") or "",
                       "image": p.get("imageUrl") or "", "fetched": date.today().isoformat()}
 
     with ThreadPoolExecutor(4) as ex:  # their API is shared with the website; stay gentle
         for addr, prof in ex.map(fetch, todo):
-            cache[addr] = prof
+            if prof:
+                cache[addr] = prof
     with open(PREDICT_PROFILES, "w") as f:
         json.dump(cache, f, indent=0, sort_keys=True)
     return cache
