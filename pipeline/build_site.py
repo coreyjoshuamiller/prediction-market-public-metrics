@@ -7,6 +7,7 @@ from collections import defaultdict
 from datetime import date, datetime, timedelta, timezone
 
 from .kalshi_series import load as load_kalshi_series
+from .rebates import pmus_coef, poly_rate
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
 DATA = os.path.join(ROOT, "data")
@@ -28,6 +29,7 @@ def build():
     us = rows("pmus_daily.csv")
     pf = rows("poly_fees_daily.csv")
     prv, prt, prtot = rows("predict_volume_daily.csv"), rows("predict_traders.csv"), rows("predict_totals_daily.csv")
+    flows, poly_paid = rows("predict_fee_flows.csv"), rows("poly_rebates_daily.csv")
     ks = load_kalshi_series()
     all_days = sorted({r["d"] for r in pv} | {r["d"] for r in kv if r["series"] == "__TOTAL__"} | {r["d"] for r in ptot})
     if not all_days:
@@ -104,6 +106,50 @@ def build():
     us_combo = totals(us, lambda r: r["key"] == "__COMBO__", "notional", "cash")
     us_totals["combo_notional"], us_totals["combo_cash"] = us_combo["notional"], us_combo["cash"]
     predict_totals = totals(prtot, lambda r: True, "notional", "cash")
+
+    # --- net of maker rebates (fees_net); Kalshi has none, so the page uses its gross for net ---
+    for s_ in poly_series:
+        s_["fees_net"] = [round(v * (1 - poly_rate(days[i], s_["cls"]))) for i, v in enumerate(s_["fees"])]
+    paid = {r["d"]: f(r["rebates"]) for r in poly_paid}
+    # rebates are paid a day later, so the newest day may have no payout yet: use the last week's rate
+    tot_net, rates = [], []
+    for i, v in enumerate(poly_totals["fees"]):
+        if days[i] in paid and v:
+            rates = (rates + [paid[days[i]] / v])[-7:]
+        rate = paid[days[i]] / v if days[i] in paid and v else (sum(rates) / len(rates) if rates else 0)
+        tot_net.append(round(max(v - v * rate, 0)))
+    poly_totals["fees_net"] = tot_net
+
+    for s_ in us_series:
+        s_["fees_net"] = [round(v * (1 - pmus_coef(days[i]))) for i, v in enumerate(s_["fees"])]
+    # combos: no maker rebate since 2026-10-07 (and they're out of scope)
+    us_totals["fees_net"] = [round(v - (v - (us_combo["fees"][i] if days[i] >= "2026-10-07" else 0)) * pmus_coef(days[i]))
+                             for i, v in enumerate(us_totals["fees"])]
+
+    # Predict.fun: a fill records the most an order could be charged and the excess is refunded in
+    # the same transaction, so gross = recorded fee x (1 - refund share). Rebates are measured too.
+    # Shares per (day, duration), applied to the dollar fees; a day not measured yet uses the last.
+    fl = {(r["d"], r["dur"]): (f(r["fee_sh"]), f(r["refund_sh"]), f(r["rebate_sh"])) for r in flows}
+
+    def fee_shares(dur):
+        out, last = [], (0.0, 0.0)
+        for d in days:
+            a = fl.get((d, dur))
+            if a and a[0]:
+                last = (min(a[1] / a[0], 1.0), min(a[2] / a[0], 1.0))
+            out.append(last)
+        return out
+
+    def predict_net(item, dur):
+        sh, raw = fee_shares(dur), item["fees"]
+        item["fees"] = [round(v * (1 - sh[i][0])) for i, v in enumerate(raw)]
+        item["fees_net"] = [round(max(v * (1 - sh[i][0] - sh[i][1]), 0)) for i, v in enumerate(raw)]
+
+    if fl:
+        for s_ in predict_series:
+            predict_net(s_, s_["dur"])
+        predict_net(predict_totals, "__ALL__")
+
     # Polymarket US publishes 5pm-5pm ET sessions (file YYYYMMDD ends 21:00 UTC that day), so a
     # UTC day is only complete once the next session's file exists. Blank the incomplete tail.
     last_file = max((r["file"] for r in us), default=None)
@@ -111,7 +157,7 @@ def build():
         lf = date(int(last_file[:4]), int(last_file[4:6]), int(last_file[6:8]))
         complete = (lf - timedelta(days=1)).isoformat()
         for arrs in [us_totals] + us_series:
-            for m in ("notional", "cash", "trades", "fees", "combo_notional", "combo_cash"):
+            for m in ("notional", "cash", "trades", "fees", "fees_net", "combo_notional", "combo_cash"):
                 if m in arrs:
                     arrs[m] = [None if days[i] > complete else v for i, v in enumerate(arrs[m])]
         us_totals["complete_through"] = complete

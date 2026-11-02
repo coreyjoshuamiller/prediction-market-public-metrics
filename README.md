@@ -21,6 +21,7 @@ GitHub's cron is best-effort (runs can be hours late or dropped), which is why t
 - **Share of platform volume**: in-scope volume as a % of each venue's total (Polymarket Intl, Polymarket US, Kalshi, Predict.fun), plus a head-to-head of the venues.
 - **Volume concentration**: how Polymarket Intl and Predict.fun volume is spread across wallets (7d and 30d windows): share of volume by the top X% of wallets, percentile tiers, wallet-size bands, Gini, and a weekly trend of top 1% / 5% / 10% share. Refreshed weekly by `pipeline/concentration.py`.
 - **Top traders**: Polymarket and Predict.fun wallets ranked from on-chain fills, with realized PnL, contracts, maker %, and names / linked X handles from each venue's profiles. 7d (daily) and 30d (weekly) are exact rolling queries; 8 weeks, 13 weeks and all time are sums of stored weekly top lists (`data/leaders_weekly/`, each week queried once when it completes; top 1,000 per week, 2,000 for weeks before 2026-10-26), so a wallet's weeks outside a week's list aren't counted (the page shows the largest such cut-off). Kalshi uses its public Crypto and Financials leaderboards. Predict.fun has no outcome table on Dune, so its PnL reads each token's outcome from mint order (the exchange splits collateral as [Up, Down]; see `queries.predict_leaders`).
+- **Fees**: Gross or Net of maker rebates (`pipeline/rebates.py`). Net subtracts maker rebates only, not referrals, taker rebates, liquidity rewards or market-maker programmes. Polymarket Intl uses its rate by date (100% through 2026-01-14, then 20% crypto, 25% finance) and on-chain payouts for the platform total; Predict.fun uses rebates measured from its fee contracts; Polymarket US uses its filed coefficient, assuming the top tier since 2026-10-19; Kalshi has no per-fill maker rebate on in-scope series, so net = gross. Predict.fun's gross is the recorded fee minus the refund in the same transaction (`queries.predict_fee_flows`), since `OrderFilled.fee` is only the most an order could be charged.
 - **Order book liquidity**: dollars at the best bid and offer, depth within 5¢, spread, and how depth evolves through the 15-minute window.
 
 ## Data sources
@@ -91,6 +92,7 @@ about 35k datapoints and ~40 execution credits on Mondays (30-day leaderboards, 
 leaderboard piece per venue, concentration). Check `dune.com` usage (or `POST /api/v1/usage`)
 before any large backfill, and log its result size first.
 
+- **Fee flows:** Predict.fun's refunds and rebates add about 4 execution credits a day (last 5 days re-read); its one-time backfill cost about 170, with very few result rows. Polymarket's rebate payouts add about 1 a day.
 - **One-time backfills:** Predict.fun volume ~75 execution credits + ~170 for results; weekly
   leaderboard pieces ~240 execution + roughly 2,000 for results (2,000 wallets per week at the time).
 - **GitHub Actions:** free, because the repo is public.

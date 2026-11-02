@@ -160,6 +160,22 @@ SELECT d, '__TOTAL__', NULL, NULL, NULL, sum(fee) FROM t GROUP BY 1
 """
 
 
+def poly_rebates_paid(start, end):
+    """Maker rebates paid per day over [start, end), by payment date (a day's rebates are paid the
+    next day): the distributors' transfers of USDC.e/pUSD, without their sweeps to the protocol fee
+    wallet and the pUSD contract. Addresses as in DefiLlama's Polymarket adapter; a maker's total here
+    matches clob.polymarket.com/rebates/current to the cent."""
+    return f"""
+SELECT date(evt_block_time) AS paid, sum(cast(value AS double)) / 1e6 AS rebates
+FROM erc20_polygon.evt_Transfer
+WHERE evt_block_date >= DATE '{start}' AND evt_block_date < DATE '{end}'
+  AND "from" IN (0x3a9418b2651c8164DB5EBc56F12008137865e0f7, 0xfdB1b8dC7f5789a0c9A398026585B8B10FbA5507)
+  AND contract_address IN (0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174, 0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB)
+  AND "to" NOT IN (0x2d507657cA4EBCc8F9a38F6764c07310B66DEA54, 0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB)
+GROUP BY 1
+"""
+
+
 def _poly_wallet_volume(start, end, by_week=False):
     """CTEs ending in `w`: dollars each wallet traded in in-scope markets over [start, end),
     counting its own side of every fill (maker or taker), so wallets sum to 2x taker cash."""
@@ -653,4 +669,46 @@ agg AS (
 )
 SELECT wk, rk, trader, volume, notional, fills, markets, maker_vol, realized_pnl, top_market, top_market_vol
 FROM agg WHERE rk <= {per_week}
+"""
+
+
+_PREDICT_FEE_MODULES = ", ".join([
+    "0xF1f8F5C641F20C48526269EF7DFF19172Efa9783", "0xFBC2259Abb3f01c019ecE1d0200eE673Bb7BA34f",
+    "0xF2311C668aAA8dEc48D5da577d3018eb94b3132F", "0xd172f3fbabe763ee8e52d8b32421574236da6057",
+    "0x0989942f8E5b778E804858A0cC791b4469A5fD63", "0xf291a67165d751a2e7b4da4f0a012449eef0a279",
+    "0xdcffeb0c30263888a48485a664ec9563a54891a1"])
+
+
+def predict_fee_flows(start, end):
+    """Per day and duration: the fee recorded on fills, what the fee modules refunded to takers,
+    and what they paid makers as rebates. dur = '__ALL__' is every market on the platform.
+
+    OrderFilled's `fee` is the most the order could be charged; FeeRefunded returns the excess in
+    the same transaction, so the fee actually charged is fee - refund. Rebates come from
+    MakerRebateDistributed. All in shares of the outcome token (token id != 0): a seller's fee is
+    in USDT, which can't be traced to a market, so these are applied as ratios to the dollar fees.
+    """
+    window = f"block_date >= DATE '{start}' AND block_date < DATE '{end}' AND contract_address IN ({_PREDICT_FEE_MODULES})"
+    ev = lambda sig: f"keccak(to_utf8('{sig}'))"
+    fills = f"evt_block_date >= DATE '{start}' AND evt_block_date < DATE '{end}' AND fee > 0 AND takerAssetId <> 0"
+    return f"""
+WITH {_predict_markets_cte(start)},
+scope AS (SELECT token, max(dur) AS dur FROM mk GROUP BY 1),
+flows AS (
+  SELECT block_date AS d, varbinary_to_uint256(substr(data, 1, 32)) AS tok, 0e0 AS fee,
+    CAST(varbinary_to_uint256(substr(data, 33, 32)) AS double) / 1e18 AS refund, 0e0 AS rebate
+  FROM bnb.logs WHERE {window} AND topic0 = {ev('FeeRefunded(bytes32,address,uint256,uint256,uint256)')}
+  UNION ALL
+  SELECT block_date, varbinary_to_uint256(topic2), 0e0, 0e0, CAST(varbinary_to_uint256(substr(data, 1, 32)) AS double) / 1e18
+  FROM bnb.logs WHERE {window} AND topic0 = {ev('MakerRebateDistributed(address,uint256,uint256)')}
+  UNION ALL
+  SELECT evt_block_date, takerAssetId, CAST(fee AS double) / 1e18, 0e0, 0e0 FROM predict_bnb.ctfexchange_evt_orderfilled WHERE {fills}
+  UNION ALL
+  SELECT evt_block_date, takerAssetId, CAST(fee AS double) / 1e18, 0e0, 0e0 FROM predict_bnb.negriskctfexchange_evt_orderfilled WHERE {fills}
+)
+SELECT f.d, IF(grouping(s.dur) = 1, '__ALL__', s.dur) AS dur, sum(f.fee) AS fee_sh, sum(f.refund) AS refund_sh, sum(f.rebate) AS rebate_sh
+FROM flows f LEFT JOIN scope s ON s.token = f.tok
+WHERE f.tok <> 0
+GROUP BY GROUPING SETS ((f.d, s.dur), (f.d))
+HAVING grouping(s.dur) = 1 OR s.dur IS NOT NULL
 """

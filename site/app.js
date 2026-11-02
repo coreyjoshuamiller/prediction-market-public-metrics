@@ -6,7 +6,7 @@
   const state = {
     range: 90, gran: "day", group: "market", cls: "", measure: "notional",
     lbPlatform: "polymarket", lbWindow: "7d", obAsset: "BTC", obRes: "recent", obSide: "both", obBand: 2,
-    concWindow: "30d", concScale: "log", concVenue: "polymarket",
+    concWindow: "30d", concScale: "log", concVenue: "polymarket", feeBasis: "gross",
   };
   const PREF_KEY = "stpm-prefs";
   try { Object.assign(state, JSON.parse(localStorage.getItem(PREF_KEY) || "{}")); } catch (e) {}
@@ -504,25 +504,35 @@
     kalshi: "estimated from fee schedule",
     predict: "actual fees (on-chain)",
   };
+  // how each venue's net figure is reached, shown on its fee chart in the Net view
+  const NET_BASIS = {
+    polymarket: "net of maker rebates (published rate)",
+    polymarket_us: "net of maker rebates (assumes top tier)",
+    kalshi: "no maker rebate on these markets",
+    predict: "net of maker rebates (on-chain)",
+  };
   function renderFees(tf) {
+    const net = state.feeBasis === "net";
+    const feeKey = net ? "fees_net" : "fees", word = net ? "Net fees" : "Gross fees";
+    setPressed("#f-fee-basis", state.feeBasis);
     const n = tf.buckets.length;
     const tiles = [];
     for (const p of VENUES.filter(hasVenue)) {
       const f0 = firstScopeIdx(p);
       const launched = f0 > tf.from ? M.days[f0] : null;
       const vtf = launched ? { ...tf, idx: tf.idx.filter((i) => i >= f0) } : tf;
-      const fees = sumRange(scopeTotal(p, vtf, "fees"), 0, n - 1);
-      const allFees = sumRange(platformTotal(p, vtf, "fees"), 0, n - 1);
+      const fees = sumRange(scopeTotal(p, vtf, feeKey), 0, n - 1);
+      const allFees = sumRange(platformTotal(p, vtf, feeKey), 0, n - 1);
       const cash = sumRange(scopeTotal(p, vtf, "cash"), 0, n - 1);
       const since = launched ? `since ${fmtDate(launched, "day")} launch` : `last ${state.range} days`;
-      tiles.push({ label: `${PLATFORMS[p]} fees`, key: venueColor(p), value: fmtUsd(fees),
+      tiles.push({ label: `${PLATFORMS[p]} ${net ? "net fees" : "fees"}`, key: venueColor(p), value: fmtUsd(fees),
         note: `${cash ? `$${((fees / cash) * 100).toFixed(2)} per $100 traded` : "–"} · ${since}` });
       tiles.push({ label: `${PLATFORMS[p]} share of platform fees`, key: venueColor(p), value: fmtPct(allFees ? (fees / allFees) * 100 : null),
-        note: `of ${fmtUsd(allFees)} total · ${FEE_BASIS[p]}` });
+        note: `of ${fmtUsd(allFees)} total · ${net ? NET_BASIS[p] : FEE_BASIS[p]}` });
     }
     drawTiles($("#fee-tiles"), tiles);
-    renderStacks(tf, "fee", "fees", (p) => `Fees · ${FEE_BASIS[p]}`, "fees");
-    renderShareLines(tf, "fees", "fee-share", "Share of platform fees", "fee-totals", "Short-term price fees by venue", "Fees");
+    renderStacks(tf, "fee", feeKey, (p) => `${word} · ${net ? NET_BASIS[p] : FEE_BASIS[p]}`, "fees");
+    renderShareLines(tf, feeKey, "fee-share", "Share of platform fees", "fee-totals", "Short-term price fees by venue", word);
   }
 
   // ---------- concentration ----------
@@ -976,7 +986,7 @@
       <p><b>Scope.</b> Markets that settle on a financial price within one day: Polymarket Up/Down (5m, 15m, 1h, 4h, daily), “above X” strike ladders (hourly and daily), price-range and same-day “reach / dip to” markets; Kalshi 15-minute Up/Down plus hourly and daily above/below and range series; every Predict.fun Up/Down market (5m, 15m, 1h, daily). Covers crypto, equity indices and single stocks, commodities, and FX and Treasury yields. Weekly, monthly and longer-dated markets are excluded.</p>
       <p><b>Volume.</b> <i>Notional</i> counts contracts traded, each paying $1 if it wins. For Polymarket and Predict.fun that's shares on the taker side of each fill; for Kalshi it's contracts from Kalshi's daily market report. <i>Cash</i> is dollars paid: the taker's USDC on Polymarket Intl and USDT on Predict.fun, from on-chain fills. On Kalshi and Polymarket US it's the traded (yes-side) price × contracts, because neither publishes which side the taker was on. Polymarket's own site shows roughly 2× these numbers because it counts both sides of every trade.</p>
       <p><b>Venues.</b> <i>Polymarket Intl</i> is the on-chain exchange (Polygon), read from Dune. <i>Polymarket US</i> is the CFTC-regulated US exchange; it trades off-chain, so it comes from the exchange's public daily time-and-sales files. Its only short-term price markets today are BTC Up/Down 15m and 1h. Those files have no account IDs or taker side, so Polymarket US has no trader counts or leaderboard, and its cash is price × quantity. Its sessions run 5pm–5pm ET, so the most recent UTC day fills in a day later. <i>Predict.fun</i> is an on-chain exchange on BNB Chain, built on the same contract design as Polymarket and read from Dune. Its markets are identified on-chain: 5m and 15m rounds from its Chainlink Up/Down contract (by price feed), hourly and daily markets from the title stored with each UMA question. History starts with its first Up/Down market in November 2025; its 15m BTC series stopped on April 2, 2026 and relaunched on Chainlink pricing on April 27.</p>
-      <p><b>Fees.</b> Polymarket Intl and Predict.fun fees are the actual fees recorded on each on-chain fill. Takers pay them; makers pay none. Predict.fun charges a buyer's fee in shares, valued here at the fill price. Kalshi and Polymarket US don't publish fees, so they're estimated per trade from each venue's published formula, rate × contracts × price × (1 − price). Kalshi's rate is 7% for takers × the series' fee multiplier, plus 1.75% on series that also charge makers. Polymarket US uses its dated schedule, currently 6.95%. Both estimates slightly understate real fees: Kalshi rounds each order's fee up to the next cent, and neither estimate includes maker rebates or promotions. Kalshi's fee settings are today's, applied to all history. “Share of platform fees” divides short-term fees by the venue's total fees, calculated the same way.</p>
+      <p><b>Fees.</b> <i>Gross</i> is what takers are charged. Polymarket Intl fees are the actual fees recorded on each on-chain fill. Takers pay them; makers pay none. Predict.fun's fills record the most an order could be charged and the excess is refunded to the taker in the same transaction, so its gross is the recorded fee minus those refunds, measured per day from its fee contracts. Its fees are charged in shares when buying, valued here at the fill price. Kalshi and Polymarket US don't publish fees, so they're estimated per trade from each venue's published formula, rate × contracts × price × (1 − price). Kalshi's rate is 7% for takers × the series' fee multiplier, plus 1.75% on series that also charge makers. Polymarket US uses its dated schedule, currently 6.95%. Kalshi rounds each order's fee up to the next cent, so its estimate runs slightly low. Kalshi's fee settings are today's, applied to all history. <i>Net</i> is gross minus maker rebates, and nothing else: referral rewards, taker rebates, liquidity rewards and market-maker programmes aren't subtracted. Polymarket Intl: all crypto fees through January 14, 2026, then the published 20% for crypto and 25% for finance, checked against rebates paid on sample markets; its platform total uses the rebates actually paid on-chain. Predict.fun: rebates actually paid, measured per day on-chain (25% of fees on Up/Down markets since July 16, 2026). Polymarket US: its filed schedule, a coefficient of 0.0125 until October 19, 2026, then tiers by each maker's prior-month volume. Trades don't show who the maker was, so all maker volume is assumed to earn the top tier (0.0104, about 15% of the taker fee), which makes net a low estimate. Kalshi: its fee schedule has no per-fill maker rebate on these markets, so net equals gross. “Share of platform fees” uses the same basis for both the short-term fees and the venue's total. “Share of platform fees” divides short-term fees by the venue's total fees, calculated the same way.</p>
       <p><b>Traders.</b> Unique Polymarket Intl and Predict.fun wallets, makers and takers, from on-chain fills. Counts use approximate distinct counting, accurate to about 2%. Kalshi doesn't publish account-level trades.</p>
       <p><b>Concentration.</b> Each Polymarket Intl or Predict.fun wallet's volume is the dollars (USDC or USDT) it paid or received on its own side of every fill in these markets, as maker or taker, the same measure as the Top traders table. Every fill has two sides, so wallet volumes add up to about 2× the taker-side cash shown in the volume charts. Wallets are ranked by exact volume; percentile tiers round up, so the top 1% of 250 wallets is 3. A wallet isn't necessarily a person: one trader can run several wallets, which would make true concentration higher. The Gini coefficient is exact over all wallets. The 7-day and 30-day windows end on the date shown and refresh weekly; the trend uses complete Monday–Sunday weeks.</p>
       <p><b>Sources.</b> Polymarket Intl and Predict.fun on-chain trades and Kalshi daily reports via Dune; Polymarket US time-and-sales files from polymarketexchange.com; Polymarket profiles via the Gamma API; Kalshi series metadata and leaderboard via Kalshi's public API; order books from the Polymarket CLOB and Kalshi APIs and Predict.fun's public GraphQL API, which also supplies Predict.fun account names. History refreshes daily and order-book snapshots hourly. Days are UTC; the current partial day is excluded.</p>`;
@@ -987,6 +997,11 @@
     [M, L, OB, C] = await Promise.all([get("data/metrics.json"), get("data/leaders.json"), get("data/orderbook.json"), get("data/concentration.json")]);
     const upd = [M?.updated, OB?.updated].filter(Boolean).map((s) => s.replace("T", " ").slice(0, 16) + " UTC");
     $("#updated").textContent = M ? `History updated ${upd[0]}${upd[1] ? ` · order books ${upd[1]}` : ""}` : "No data yet";
+    // Kalshi has no in-scope maker rebate, so its net series are its gross series
+    if (M) for (const p of VENUES.filter(hasVenue)) {
+      for (const s of M[p].series) s.fees_net ||= s.fees;
+      M[p].totals.fees_net ||= M[p].totals.fees;
+    }
     renderNotes();
     renderAll();
     renderLeaders();
@@ -998,6 +1013,7 @@
   bindSeg("#f-group", "group", renderAll);
   bindSeg("#f-measure", "measure", renderAll);
   $("#f-cls").addEventListener("change", (e) => { state.cls = e.target.value; savePrefs(); renderAll(); });
+  bindSeg("#f-fee-basis", "feeBasis", () => renderFees(timeFrame()));
   bindSeg("#f-conc-window", "concWindow", renderConcentration);
   bindSeg("#f-conc-venue", "concVenue", renderConcentration);
   bindSeg("#f-conc-scale", "concScale", renderConcentration);

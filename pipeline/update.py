@@ -12,7 +12,8 @@ from datetime import date, datetime, timedelta, timezone
 from . import concentration, leaders, pmus
 from .dune import run_sql
 from .kalshi_series import build as build_kalshi_series, build_fees as build_kalshi_fees
-from .queries import kalshi_series_daily, poly_activity, poly_fees, poly_totals, predict_activity, predict_totals
+from .queries import (kalshi_series_daily, poly_activity, poly_fees, poly_rebates_paid, poly_totals, predict_activity,
+                      predict_fee_flows, predict_totals)
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
 DATA = os.path.join(ROOT, "data")
@@ -26,6 +27,8 @@ FILES = {
     "predict_volume": ("predict_volume_daily.csv", ["d", "asset", "asset_class", "dur", "ctype", "notional", "cash", "fees", "trades"], 5),
     "predict_traders": ("predict_traders.csv", ["period", "start", "dim", "key", "traders"], 4),
     "predict_totals": ("predict_totals_daily.csv", ["d", "notional", "cash", "fees", "traders"], 1),
+    "predict_flows": ("predict_fee_flows.csv", ["d", "dur", "fee_sh", "refund_sh", "rebate_sh"], 2),
+    "poly_rebates": ("poly_rebates_daily.csv", ["d", "rebates"], 1),
 }
 
 DUR_NORM = {"60m": "1h", "240m": "4h", "24h": "1d"}
@@ -143,6 +146,21 @@ def predict_totals_window(start, end):
     upsert("predict_totals", [{"d": r["d"], "notional": _r(r["notional"]), "cash": _r(r["cash"]), "fees": _r(r["fees"]),
                                "traders": r["traders"]} for r in tot],
            lambda x: str(start) <= x["d"] < str(end))
+
+
+def predict_flows_window(start, end):
+    rows = run_sql(predict_fee_flows(start, end), label=f"predict flows {start}")
+    upsert("predict_flows", [{"d": str(r["d"])[:10], "dur": r["dur"], "fee_sh": _r(r["fee_sh"]), "refund_sh": _r(r["refund_sh"]),
+                              "rebate_sh": _r(r["rebate_sh"])} for r in rows],
+           lambda x: str(start) <= x["d"] < str(end))
+
+
+def poly_rebates_window(start, end):
+    """Rebates paid on dates in [start, end), stored against the day they're for (the day before)."""
+    rows = run_sql(poly_rebates_paid(start, end), label=f"poly rebates {start}")
+    lo, hi = str(start - timedelta(days=1)), str(end - timedelta(days=1))
+    upsert("poly_rebates", [{"d": str(date.fromisoformat(str(r["paid"])[:10]) - timedelta(days=1)), "rebates": _r(r["rebates"])} for r in rows],
+           lambda x: lo <= x["d"] < hi)
 
 
 def _warn_unmapped(vol):
@@ -293,6 +311,7 @@ def predict_daily(today):
     start, end, keep = _daily_window(today)
     try:
         predict_window(start, end, **keep)
+        predict_flows_window(end - timedelta(days=5), end)
     except Exception as e:
         print(f"  predict.fun update failed: {e}")
 
@@ -302,6 +321,7 @@ def daily(run_leaders=True, today=None):
     start, end, keep = _daily_window(today)
     poly_window(start, end, **keep)
     poly_fees_window(end - timedelta(days=10), end)
+    poly_rebates_window(end - timedelta(days=10), end + timedelta(days=1))
     kalshi_window(end - timedelta(days=10), end)
     pmus.update(last_n=3)
     predict_daily(today)
