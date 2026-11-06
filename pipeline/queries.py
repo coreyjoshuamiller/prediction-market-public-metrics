@@ -551,28 +551,73 @@ GROUP BY GROUPING SETS ((tier), (band), (pt), ())
 """
 
 
-def predict_leaders(start, end, limit=150):
-    """predict.fun counterpart of poly_leaders, in one pass over the fills (Dune re-runs a CTE
-    for every reference, so everything is derived from one (wallet, token) aggregate).
+def _predict_pnl_ctes(start, end, by_week=False):
+    """CTEs through `j`: one row per wallet and outcome token (and week if by_week) with its
+    payout, in one pass over the fills (Dune re-runs a CTE for every reference).
 
     Realized PnL needs each token's outcome index, which no table records. The exchange mints
     a market's two tokens by splitting collateral with partition [1, 2], and the CTF mints them
     in that order (TransferBatch from 0x0), so ids[1] is outcome 1 ("Up") and ids[2] outcome 2.
-    ConditionResolution's payoutNumerators then give each token's payout. Cashflows are net of
-    fees: a buyer's fee comes out of the shares received, a seller's out of the USDT.
-    "Most traded" is the market of the wallet's largest single-outcome position.
+    ConditionResolution's payoutNumerators then give each token's payout.
+
+    Cashflows are net of the fee actually paid: a buyer's fee comes out of the shares received, a
+    seller's out of the USDT, and FeeRefunded gives back the excess in the same asset and the same
+    transaction (all of it for makers, 10% for takers). Maker rebates are added too, in the asset
+    of the taker's fee. Checked on four days from 2025-12 to 2026-10: refunds match fills 1:1 on
+    (tx, orderHash) and go to the order's owner; rebates are one per maker fill in the same tx.
+    Referral payouts go to the referrer and don't change what the trader paid, so they're left out.
+
+    Refunds and rebates in shares carry their token, and a maker's rebate can be in the outcome
+    it didn't trade, so they're rows of their own. Those in USDT (token id 0) name no market, so
+    they're looked up from the fill they belong to, which also keeps other markets' out of scope.
     """
     zero = "0x0000000000000000000000000000000000000000"
     mint_since = date.fromisoformat(str(start)) - timedelta(days=3)  # tokens are minted as they trade
-    extra = ",\n    f.makerAssetId = 0 AS is_buy, CAST(f.fee AS double) / 1e18 AS fee_raw"
-    return f"""{_predict_fills(start, end, extra=extra)},
+    wk = "wk, " if by_week else ""
+    keys = ", ".join(str(i) for i in range(1, 5 + by_week))
+    return f"""
+WITH {_predict_markets_cte(start)},
+lg AS (
+  SELECT block_time AS ts, tx_hash AS tx, topic0 = {_PREDICT_REFUNDED} AS is_refund, topic1,
+    substr(IF(topic0 = {_PREDICT_REFUNDED}, topic2, topic1), 13, 20) AS wallet,
+    IF(topic0 = {_PREDICT_REFUNDED}, varbinary_to_uint256(substr(data, 1, 32)), varbinary_to_uint256(topic2)) AS tok,
+    CAST(varbinary_to_uint256(IF(topic0 = {_PREDICT_REFUNDED}, substr(data, 33, 32), substr(data, 1, 32))) AS double) / 1e18 AS amt
+  FROM bnb.logs
+  WHERE block_date >= DATE '{start}' AND block_date < DATE '{end}' AND contract_address IN ({_PREDICT_FEE_MODULES})
+    AND topic0 IN ({_PREDICT_REFUNDED}, {_PREDICT_REBATED})
+),
+usdt AS (  -- per tx: USDT refund by orderHash, USDT rebate per maker fill by maker address
+  SELECT tx, map_agg(k, amt) AS m FROM (
+    SELECT tx, IF(is_refund, topic1, wallet) AS k, avg(amt) AS amt FROM lg WHERE tok = 0 GROUP BY 1, 2
+  ) GROUP BY 1
+),
+s AS (
+  SELECT f.evt_block_time AS ts, f.evt_tx_hash AS tx, f.orderHash AS oh, IF(f.makerAssetId = 0, f.takerAssetId, f.makerAssetId) AS token,
+    f.maker AS trader, f.taker = f.contract_address AS is_taker,
+    CAST(IF(f.makerAssetId = 0, f.takerAmountFilled, f.makerAmountFilled) AS double) / 1e18 AS shares,
+    CAST(IF(f.makerAssetId = 0, f.makerAmountFilled, f.takerAmountFilled) AS double) / 1e18 AS amount,
+    IF(f.makerAssetId = 0, -CAST(f.makerAmountFilled AS double), CAST(f.takerAmountFilled AS double) - CAST(f.fee AS double)) / 1e18 AS cash,
+    IF(f.makerAssetId = 0, CAST(f.takerAmountFilled AS double) - CAST(f.fee AS double), -CAST(f.makerAmountFilled AS double)) / 1e18 AS sh
+  FROM predict_bnb.ctfexchange_evt_orderfilled f
+  WHERE f.evt_block_date >= DATE '{start}' AND f.evt_block_date < DATE '{end}'
+  UNION ALL
+  SELECT ts, NULL, NULL, tok, wallet, NULL, 0e0, 0e0, 0e0, amt FROM lg WHERE tok <> 0
+),
+t AS (
+  SELECT date(date_trunc('week', s.ts)) AS wk, s.trader, s.token, mk.conditionId, mk.asset || ' ' || mk.dur AS market,
+    s.is_taker, s.shares, s.amount, s.sh,
+    s.cash + coalesce(element_at(u.m, s.oh), 0e0) + IF(s.is_taker, 0e0, coalesce(element_at(u.m, s.trader), 0e0)) AS cash
+  FROM s
+  JOIN mk ON mk.token = s.token
+  LEFT JOIN usdt u ON u.tx = s.tx
+),
 tt AS (  -- per wallet and outcome token
-  SELECT trader, token, conditionId, asset || ' ' || dur AS market,
-    sum(amount) AS vol, sum(shares) AS notional, count(*) AS fills,
+  SELECT {wk}trader, token, conditionId, market,
+    sum(amount) AS vol, sum(shares) AS notional, count(is_taker) AS fills,
     coalesce(sum(amount) FILTER (WHERE NOT is_taker), 0) AS maker_vol,
-    sum(IF(is_buy, -amount, amount - fee_raw)) AS cashflow,
-    sum(IF(is_buy, shares - fee_raw, -shares)) AS net_shares
-  FROM t GROUP BY 1, 2, 3, 4
+    sum(cash) AS cashflow,
+    sum(sh) AS net_shares
+  FROM t GROUP BY {keys}
 ),
 mints AS (
   SELECT ids FROM predict_bnb.conditionaltokens_evt_transferbatch
@@ -600,17 +645,25 @@ j AS (
   FROM tt
   LEFT JOIN idx ON idx.token = tt.token
   LEFT JOIN res r ON r.conditionId = tt.conditionId
-)
+)"""
+
+
+def predict_leaders(start, end, limit=150):
+    """predict.fun counterpart of poly_leaders; see _predict_pnl_ctes for the PnL. "Most traded"
+    is the market of the wallet's largest single-outcome position. A rebate with no fill behind
+    it in the window (fills = 0) adds to PnL but isn't a market traded."""
+    return f"""{_predict_pnl_ctes(start, end)}
 SELECT trader,
   sum(vol) AS volume,
   sum(notional) AS notional,
   sum(fills) AS fills,
-  count(DISTINCT conditionId) AS markets,
+  count(DISTINCT conditionId) FILTER (WHERE fills > 0) AS markets,
   sum(maker_vol) / nullif(sum(vol), 0) AS maker_share,
   sum(cashflow + net_shares * payout) FILTER (WHERE payout IS NOT NULL) AS realized_pnl,
   max_by(market, vol) AS top_market
 FROM j
 GROUP BY 1
+HAVING sum(vol) > 0
 ORDER BY volume DESC
 LIMIT {limit}
 """
@@ -619,53 +672,16 @@ LIMIT {limit}
 def predict_leaders_weekly(start, end, per_week=2000):
     """predict_leaders per Monday-start week in [start, end), each week's top `per_week`
     wallets, with maker and top-market volume so weeks add up (see poly_leaders_weekly)."""
-    zero = "0x0000000000000000000000000000000000000000"
-    mint_since = date.fromisoformat(str(start)) - timedelta(days=3)
-    extra = ",\n    f.makerAssetId = 0 AS is_buy, CAST(f.fee AS double) / 1e18 AS fee_raw"
-    return f"""{_predict_fills(start, end, extra=extra)},
-tt AS (
-  SELECT w AS wk, trader, token, conditionId, asset || ' ' || dur AS market,
-    sum(amount) AS vol, sum(shares) AS notional, count(*) AS fills,
-    coalesce(sum(amount) FILTER (WHERE NOT is_taker), 0) AS maker_vol,
-    sum(IF(is_buy, -amount, amount - fee_raw)) AS cashflow,
-    sum(IF(is_buy, shares - fee_raw, -shares)) AS net_shares
-  FROM t GROUP BY 1, 2, 3, 4, 5
-),
-mints AS (
-  SELECT ids FROM predict_bnb.conditionaltokens_evt_transferbatch
-  WHERE evt_block_date >= DATE '{mint_since}' AND evt_block_date < DATE '{end}' AND "from" = {zero} AND cardinality(ids) = 2
-  UNION ALL
-  SELECT ids FROM predict_bnb.yieldbearingconditionaltokens_evt_transferbatch
-  WHERE evt_block_date >= DATE '{mint_since}' AND evt_block_date < DATE '{end}' AND "from" = {zero} AND cardinality(ids) = 2
-),
-idx AS (
-  SELECT token, min(i) AS i FROM (
-    SELECT ids[1] AS token, 1 AS i FROM mints UNION ALL SELECT ids[2], 2 FROM mints
-  ) GROUP BY 1
-),
-res AS (
-  SELECT conditionId, max_by(p, ts) AS p FROM (
-    SELECT conditionId, evt_block_time AS ts, transform(payoutNumerators, x -> CAST(x AS double)) AS p
-    FROM predict_bnb.conditionaltokens_evt_conditionresolution
-    UNION ALL
-    SELECT conditionId, evt_block_time, transform(payoutNumerators, x -> CAST(x AS double))
-    FROM predict_bnb.yieldbearingconditionaltokens_evt_conditionresolution
-  ) GROUP BY 1
-),
-j AS (
-  SELECT tt.*, element_at(r.p, idx.i) / nullif(reduce(r.p, 0e0, (a, x) -> a + x, a -> a), 0) AS payout
-  FROM tt
-  LEFT JOIN idx ON idx.token = tt.token
-  LEFT JOIN res r ON r.conditionId = tt.conditionId
-),
+    return f"""{_predict_pnl_ctes(start, end, by_week=True)},
 agg AS (
   SELECT wk, trader,
     sum(vol) AS volume, sum(notional) AS notional, sum(fills) AS fills,
-    count(DISTINCT conditionId) AS markets, sum(maker_vol) AS maker_vol,
+    count(DISTINCT conditionId) FILTER (WHERE fills > 0) AS markets, sum(maker_vol) AS maker_vol,
     sum(cashflow + net_shares * payout) FILTER (WHERE payout IS NOT NULL) AS realized_pnl,
     max_by(market, vol) AS top_market, max(vol) AS top_market_vol,
     row_number() OVER (PARTITION BY wk ORDER BY sum(vol) DESC) AS rk
   FROM j GROUP BY 1, 2
+  HAVING sum(vol) > 0
 )
 SELECT wk, rk, trader, volume, notional, fills, markets, maker_vol, realized_pnl, top_market, top_market_vol
 FROM agg WHERE rk <= {per_week}
@@ -677,11 +693,13 @@ _PREDICT_FEE_MODULES = ", ".join([
     "0xF2311C668aAA8dEc48D5da577d3018eb94b3132F", "0xd172f3fbabe763ee8e52d8b32421574236da6057",
     "0x0989942f8E5b778E804858A0cC791b4469A5fD63", "0xf291a67165d751a2e7b4da4f0a012449eef0a279",
     "0xdcffeb0c30263888a48485a664ec9563a54891a1"])
+_PREDICT_REFUNDED = "keccak(to_utf8('FeeRefunded(bytes32,address,uint256,uint256,uint256)'))"
+_PREDICT_REBATED = "keccak(to_utf8('MakerRebateDistributed(address,uint256,uint256)'))"
 
 
 def predict_fee_flows(start, end):
-    """Per day and duration: the fee recorded on fills, what the fee modules refunded to takers,
-    and what they paid makers as rebates. dur = '__ALL__' is every market on the platform.
+    """Per day and duration: the fee recorded on fills, what the fee modules refunded to the
+    orders' owners (all of a maker's fee, 10% of a taker's), and what they paid makers as rebates. dur = '__ALL__' is every market on the platform.
 
     OrderFilled's `fee` is the most the order could be charged; FeeRefunded returns the excess in
     the same transaction, so the fee actually charged is fee - refund. Rebates come from
@@ -689,7 +707,6 @@ def predict_fee_flows(start, end):
     in USDT, which can't be traced to a market, so these are applied as ratios to the dollar fees.
     """
     window = f"block_date >= DATE '{start}' AND block_date < DATE '{end}' AND contract_address IN ({_PREDICT_FEE_MODULES})"
-    ev = lambda sig: f"keccak(to_utf8('{sig}'))"
     fills = f"evt_block_date >= DATE '{start}' AND evt_block_date < DATE '{end}' AND fee > 0 AND takerAssetId <> 0"
     return f"""
 WITH {_predict_markets_cte(start)},
@@ -697,10 +714,10 @@ scope AS (SELECT token, max(dur) AS dur FROM mk GROUP BY 1),
 flows AS (
   SELECT block_date AS d, varbinary_to_uint256(substr(data, 1, 32)) AS tok, 0e0 AS fee,
     CAST(varbinary_to_uint256(substr(data, 33, 32)) AS double) / 1e18 AS refund, 0e0 AS rebate
-  FROM bnb.logs WHERE {window} AND topic0 = {ev('FeeRefunded(bytes32,address,uint256,uint256,uint256)')}
+  FROM bnb.logs WHERE {window} AND topic0 = {_PREDICT_REFUNDED}
   UNION ALL
   SELECT block_date, varbinary_to_uint256(topic2), 0e0, 0e0, CAST(varbinary_to_uint256(substr(data, 1, 32)) AS double) / 1e18
-  FROM bnb.logs WHERE {window} AND topic0 = {ev('MakerRebateDistributed(address,uint256,uint256)')}
+  FROM bnb.logs WHERE {window} AND topic0 = {_PREDICT_REBATED}
   UNION ALL
   SELECT evt_block_date, takerAssetId, CAST(fee AS double) / 1e18, 0e0, 0e0 FROM predict_bnb.ctfexchange_evt_orderfilled WHERE {fills}
   UNION ALL
