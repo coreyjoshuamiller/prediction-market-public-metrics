@@ -2,6 +2,7 @@
 from datetime import date, timedelta
 
 from .markets import assets_values_sql, poly_classify_sql, predict_assets_values_sql
+from .rewards import poly_category_sql
 
 SLUG = "regexp_extract(polymarket_link, 'event/([^/?''\"]+)', 1)"
 
@@ -173,6 +174,48 @@ WHERE evt_block_date >= DATE '{start}' AND evt_block_date < DATE '{end}'
   AND contract_address IN (0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174, 0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB)
   AND "to" NOT IN (0x2d507657cA4EBCc8F9a38F6764c07310B66DEA54, 0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB)
 GROUP BY 1
+"""
+
+
+def poly_rewards_paid(start, end):
+    """Liquidity rewards paid on dates in [start, end), per day earned (a day's rewards are paid just
+    after midnight UTC) and estimated category. Distributors as in DefiLlama's Polymarket adapter, less
+    sweeps to the protocol fee wallet and pUSD. Each wallet's payout is split by its maker volume that
+    day; short-term Up/Down markets carry almost no rewards, so they don't count. A wallet with no
+    fills that day has no category."""
+    fills_from, fills_to = start - timedelta(days=1), end - timedelta(days=1)
+    return f"""
+WITH pay AS (
+  SELECT date(evt_block_time) - interval '1' day AS d, "to" AS wallet, sum(cast(value AS double)) / 1e6 AS usd
+  FROM erc20_polygon.evt_Transfer
+  WHERE evt_block_date >= DATE '{start}' AND evt_block_date < DATE '{end}'
+    AND "from" IN (0xc288480574783BD7615170660d71753378159c47, 0x2c2795EA295d5Eb51F9121B728eD2eA4e936a709)
+    AND contract_address IN (0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174, 0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB)
+    AND "to" NOT IN (0x2d507657cA4EBCc8F9a38F6764c07310B66DEA54, 0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB)
+  GROUP BY 1, 2
+),
+md AS (
+  SELECT from_hex(substr(condition_id, 3)) AS condition_id, arbitrary(tags) AS t
+  FROM polymarket_polygon.market_details
+  GROUP BY 1
+),
+cat AS (
+  SELECT condition_id, {poly_category_sql()} AS category FROM md WHERE NOT contains(t, 'Up or Down')
+),
+f AS (
+  SELECT date(tr.block_time) AS d, tr.maker AS wallet, c.category, sum(tr.amount) AS vol
+  FROM polymarket_polygon.market_trades tr
+  JOIN cat c ON c.condition_id = tr.condition_id
+  WHERE tr.block_time >= timestamp '{fills_from}' AND tr.block_time < timestamp '{fills_to}' AND NOT tr.is_taker_side
+  GROUP BY 1, 2, 3
+),
+s AS (
+  SELECT d, wallet, category, vol / sum(vol) OVER (PARTITION BY d, wallet) AS sh FROM f
+)
+SELECT p.d, coalesce(s.category, 'Not attributed') AS category, sum(p.usd * coalesce(s.sh, 1)) AS usd
+FROM pay p
+LEFT JOIN s ON s.d = p.d AND s.wallet = p.wallet
+GROUP BY 1, 2
 """
 
 

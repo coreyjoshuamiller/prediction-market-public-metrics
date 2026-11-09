@@ -95,6 +95,23 @@
     </div>
   </section>
 
+  <section id="rewards">
+    <h2>Liquidity rewards</h2>
+    <p class="lede">What Kalshi and Polymarket Intl pay traders for keeping resting orders on the book, across all of their markets rather than only short-term price markets. Kalshi amounts are the most its reward pools could have paid. Polymarket totals are actual payouts, with the category split estimated. See the notes at the bottom of the page.</p>
+    <div class="section-controls">
+      <div><label>Period</label> <span class="seg" id="f-rw-gran"><button data-v="day">Daily</button><button data-v="week">Weekly</button><button data-v="month">Monthly</button></span></div>
+    </div>
+    <div class="tiles" id="rw-tiles"></div>
+    <div class="pair" style="margin-top:12px">
+      <figure class="card" data-chart="rw-kalshi"></figure>
+      <figure class="card" data-chart="rw-polymarket"></figure>
+    </div>
+    <div class="pair" style="margin-top:12px">
+      <figure class="card" data-chart="rw-venues"></figure>
+      <figure class="card" data-chart="rw-categories"></figure>
+    </div>
+  </section>
+
   <section id="concentration">
     <h2>Volume concentration</h2>
     <p class="lede" id="conc-lede">How dollars traded in short-term price markets are spread across wallets: what share of volume the most active wallets account for. Kalshi and Polymarket US don't publish account-level trades, so this covers the on-chain venues, Polymarket Intl and Predict.fun.</p>

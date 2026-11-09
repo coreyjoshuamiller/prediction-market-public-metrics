@@ -6,7 +6,7 @@
   const state = {
     range: 90, gran: "day", group: "market", cls: "", measure: "notional",
     lbPlatform: "polymarket", lbWindow: "7d", obAsset: "BTC", obRes: "recent", obSide: "both", obBand: 2,
-    concWindow: "30d", concScale: "log", concVenue: "polymarket", feeBasis: "gross",
+    concWindow: "30d", concScale: "log", concVenue: "polymarket", feeBasis: "gross", rewardGran: "week",
   };
   const PREF_KEY = "stpm-prefs";
   try { Object.assign(state, JSON.parse(localStorage.getItem(PREF_KEY) || "{}")); } catch (e) {}
@@ -69,28 +69,27 @@
     return d.toISOString().slice(0, 10);
   };
 
-  function timeFrame() {
-    const days = M.days;
+  function timeFrame(days = M.days, gran = state.gran) {
     const last = days.length - 1;
     let from = Math.max(0, last - state.range + 1);
     // don't start on a partial week/month: skip ahead to the first bucket boundary
-    if (state.gran !== "day" && from > 0) {
-      while (from < last && bucketOf(days[from], state.gran) === bucketOf(days[from - 1], state.gran)) from++;
+    if (gran !== "day" && from > 0) {
+      while (from < last && bucketOf(days[from], gran) === bucketOf(days[from - 1], gran)) from++;
     }
     const idx = [];
     for (let i = from; i <= last; i++) idx.push(i);
     const buckets = [], bIndex = {}, dayToBucket = {};
     idx.forEach((i) => {
-      const b = bucketOf(days[i], state.gran);
+      const b = bucketOf(days[i], gran);
       if (!(b in bIndex)) { bIndex[b] = buckets.length; buckets.push(b); }
       dayToBucket[i] = bIndex[b];
     });
     // the trailing bucket is partial if the data doesn't reach the end of that week/month
     const nextDay = new Date(days[last] + "T00:00:00Z"); nextDay.setUTCDate(nextDay.getUTCDate() + 1);
-    const partialLast = state.gran !== "day" && bucketOf(nextDay.toISOString().slice(0, 10), state.gran) === buckets[buckets.length - 1];
-    return { idx, buckets, dayToBucket, from, last, partialLast };
+    const partialLast = gran !== "day" && bucketOf(nextDay.toISOString().slice(0, 10), gran) === buckets[buckets.length - 1];
+    return { idx, buckets, dayToBucket, from, last, partialLast, gran };
   }
-  const bucketLabels = (tf) => tf.buckets.map((b, i) => fmtDate(b) + (tf.partialLast && i === tf.buckets.length - 1 ? " (partial)" : ""));
+  const bucketLabels = (tf) => tf.buckets.map((b, i) => fmtDate(b, tf.gran) + (tf.partialLast && i === tf.buckets.length - 1 ? " (partial)" : ""));
   // dim the still-running bucket so a half-finished week doesn't read as a collapse
   function markPartial(series, tf) {
     if (!tf.partialLast) return series;
@@ -533,6 +532,88 @@
     drawTiles($("#fee-tiles"), tiles);
     renderStacks(tf, "fee", feeKey, (p) => `${word} · ${net ? NET_BASIS[p] : FEE_BASIS[p]}`, "fees");
     renderShareLines(tf, feeKey, "fee-share", "Share of platform fees", "fee-totals", "Short-term price fees by venue", word);
+  }
+
+  // ---------- liquidity rewards ----------
+  const REWARD_VENUES = ["kalshi", "polymarket"];
+  const REWARD_NOTE = { kalshi: "Most its pools could pay", polymarket: "Actual payouts · categories estimated" };
+  function renderRewards() {
+    const R = M.rewards;
+    if (!R) return;
+    setPressed("#f-rw-gran", state.rewardGran);
+    const tf = timeFrame(R.days, state.rewardGran);
+    const cats = bucketLabels(tf);
+    const color = (c) => (c === "Not attributed" ? css("--other") : paletteColor(R.categories.indexOf(c)));
+    const bucket = (vals) => {
+      const out = tf.buckets.map(() => 0);
+      for (const i of tf.idx) out[tf.dayToBucket[i]] += vals[i] || 0;
+      return out;
+    };
+    const perCat = {}, venueTotal = {}, catTotal = {};
+    for (const p of REWARD_VENUES) {
+      perCat[p] = Object.fromEntries(R.categories.map((c) => [c, bucket(R[p][c])]));
+      venueTotal[p] = tf.buckets.map((_, i) => R.categories.reduce((a, c) => a + perCat[p][c][i], 0));
+      catTotal[p] = Object.fromEntries(R.categories.map((c) => [c, perCat[p][c].reduce((a, b) => a + b, 0)]));
+    }
+    const sum = (a) => a.reduce((x, y) => x + y, 0);
+    const since = (p) => (R[`${p}_first`] > R.days[tf.from] ? `since ${fmtDate(R[`${p}_first`], "day")}` : `last ${state.range} days`);
+
+    const tiles = [];
+    for (const p of REWARD_VENUES) {
+      const total = sum(venueTotal[p]);
+      const named = R.categories.filter((c) => c !== "Not attributed");
+      const top = named.reduce((a, c) => (catTotal[p][c] > catTotal[p][a] ? c : a), named[0]);
+      tiles.push({ label: `${PLATFORMS[p]} liquidity rewards`, key: venueColor(p), value: fmtUsd(total), note: `${since(p)} · ${REWARD_NOTE[p].toLowerCase()}` });
+      tiles.push({ label: `${PLATFORMS[p]} largest category`, key: venueColor(p), value: top, note: `${fmtPct(total ? (catTotal[p][top] / total) * 100 : null)} of its rewards` });
+    }
+    drawTiles($("#rw-tiles"), tiles);
+
+    for (const p of REWARD_VENUES) {
+      const keys = R.categories.filter((c) => catTotal[p][c] > 0);
+      const opt = baseOption();
+      opt.xAxis.data = cats;
+      opt.yAxis.axisLabel.formatter = (v) => fmtUsd(v);
+      opt.tooltip.formatter = tooltipFormatter(fmtUsd, { pct: true });
+      opt.series = markPartial(roundTops(keys.map((c) => barSeries(c, perCat[p][c].slice(), color(c)))), tf);
+      const split = p === "polymarket" && R.poly_rates_from ? tf.buckets.indexOf(bucketOf(R.poly_rates_from, tf.gran)) : -1;
+      if (split >= 0 && opt.series[0]) {
+        opt.grid.top = 30;
+        opt.series[0].markLine = {
+          silent: true, symbol: "none", lineStyle: { color: css("--text-muted"), type: "dashed", width: 1 },
+          label: { formatter: "Posted rates →", color: css("--text-secondary"), fontSize: 11, position: "end", rotate: 0 },
+          data: [{ xAxis: split }],
+        };
+      }
+      renderChart(`rw-${p}`, { title: PLATFORMS[p], note: REWARD_NOTE[p], keyColor: venueColor(p), empty: keys.length ? null : `<strong>No ${PLATFORMS[p]} rewards in this range</strong>` }, opt, {
+        cols: ["Period", ...keys, "Total"],
+        rows: tf.buckets.map((b, i) => [b, ...keys.map((c) => fmtUsd(perCat[p][c][i])), fmtUsd(venueTotal[p][i])]),
+      });
+    }
+
+    const vOpt = baseOption();
+    vOpt.xAxis.data = cats;
+    vOpt.yAxis.axisLabel.formatter = (v) => fmtUsd(v);
+    vOpt.tooltip.formatter = tooltipFormatter(fmtUsd, { total: false });
+    vOpt.series = markPartial(REWARD_VENUES.map((p) => barSeries(PLATFORMS[p], venueTotal[p].slice(), venueColor(p), null)), tf);
+    renderChart("rw-venues", { title: "Kalshi and Polymarket Intl", note: `Total per ${state.rewardGran}` }, vOpt, {
+      cols: ["Period", ...REWARD_VENUES.map((p) => PLATFORMS[p])],
+      rows: tf.buckets.map((b, i) => [b, ...REWARD_VENUES.map((p) => fmtUsd(venueTotal[p][i]))]),
+    });
+
+    const order = R.categories.filter((c) => catTotal.kalshi[c] + catTotal.polymarket[c] > 0)
+      .sort((a, b) => (a === "Not attributed") - (b === "Not attributed") || catTotal.kalshi[b] + catTotal.polymarket[b] - catTotal.kalshi[a] - catTotal.polymarket[a]);
+    const cOpt = baseOption();
+    const muted = css("--text-muted");
+    cOpt.yAxis = { type: "category", inverse: true, data: order, axisLine: { lineStyle: { color: css("--axis") } }, axisTick: { show: false }, axisLabel: { color: muted, fontSize: 11 } };
+    cOpt.xAxis = { type: "value", splitLine: { lineStyle: { color: css("--grid"), width: 1 } }, axisLabel: { color: muted, fontSize: 11, hideOverlap: true, formatter: (v) => fmtUsd(v) } };
+    cOpt.grid.left = 20;
+    cOpt.tooltip.axisPointer = { type: "shadow", shadowStyle: { color: css("--grid"), opacity: 0.4 } };
+    cOpt.tooltip.formatter = tooltipFormatter(fmtUsd, { total: false });
+    cOpt.series = REWARD_VENUES.map((p) => ({ ...barSeries(PLATFORMS[p], order.map((c) => catTotal[p][c]), venueColor(p), null), barGap: "10%", barMaxWidth: 14 }));
+    renderChart("rw-categories", { title: "By category", note: `Last ${state.range} days` }, cOpt, {
+      cols: ["Category", ...REWARD_VENUES.map((p) => PLATFORMS[p])],
+      rows: order.map((c) => [c, ...REWARD_VENUES.map((p) => fmtUsd(catTotal[p][c]))]),
+    });
   }
 
   // ---------- concentration ----------
@@ -978,6 +1059,7 @@
     renderTraders(tf);
     renderShare(tf);
     renderFees(tf);
+    renderRewards();
     renderConcentration();
   }
 
@@ -987,6 +1069,7 @@
       <p><b>Volume.</b> <i>Notional</i> counts contracts traded, each paying $1 if it wins. For Polymarket and Predict.fun that's shares on the taker side of each fill; for Kalshi it's contracts from Kalshi's daily market report. <i>Cash</i> is dollars paid: the taker's USDC on Polymarket Intl and USDT on Predict.fun, from on-chain fills. On Kalshi and Polymarket US it's the traded (yes-side) price × contracts, because neither publishes which side the taker was on. Polymarket's own site shows roughly 2× these numbers because it counts both sides of every trade.</p>
       <p><b>Venues.</b> <i>Polymarket Intl</i> is the on-chain exchange (Polygon), read from Dune. <i>Polymarket US</i> is the CFTC-regulated US exchange; it trades off-chain, so it comes from the exchange's public daily time-and-sales files. Its only short-term price markets today are BTC Up/Down 15m and 1h. Those files have no account IDs or taker side, so Polymarket US has no trader counts or leaderboard, and its cash is price × quantity. Its sessions run 5pm–5pm ET, so the most recent UTC day fills in a day later. <i>Predict.fun</i> is an on-chain exchange on BNB Chain, built on the same contract design as Polymarket and read from Dune. Its markets are identified on-chain: 5m and 15m rounds from its Chainlink Up/Down contract (by price feed), hourly and daily markets from the title stored with each UMA question. History starts with its first Up/Down market in November 2025; its 15m BTC series stopped on April 2, 2026 and relaunched on Chainlink pricing on April 27.</p>
       <p><b>Fees.</b> <i>Gross</i> is what takers are charged. Polymarket Intl fees are the actual fees recorded on each on-chain fill. Takers pay them; makers pay none. Predict.fun's fills record the most an order could be charged and the excess is refunded to the taker in the same transaction, so its gross is the recorded fee minus those refunds, measured per day from its fee contracts. Its fees are charged in shares when buying, valued here at the fill price. Kalshi and Polymarket US don't publish fees, so they're estimated per trade from each venue's published formula, rate × contracts × price × (1 − price). Kalshi's rate is 7% for takers × the series' fee multiplier, plus 1.75% on series that also charge makers. Polymarket US uses its dated schedule, currently 6.95%. Kalshi rounds each order's fee up to the next cent, so its estimate runs slightly low. Kalshi's fee settings are today's, applied to all history. <i>Net</i> is gross minus maker rebates, and nothing else: referral rewards, taker rebates, liquidity rewards and market-maker programmes aren't subtracted. Polymarket Intl: all crypto fees through January 14, 2026, then the published 20% for crypto and 25% for finance, checked against rebates paid on sample markets; its platform total uses the rebates actually paid on-chain. Predict.fun: rebates actually paid, measured per day on-chain (25% of fees on Up/Down markets since July 16, 2026). Polymarket US: its filed schedule, a coefficient of 0.0125 until October 19, 2026, then tiers by each maker's prior-month volume. Trades don't show who the maker was, so all maker volume is assumed to earn the top tier (0.0104, about 15% of the taker fee), which makes net a low estimate. Kalshi: its fee schedule has no per-fill maker rebate on these markets, so net equals gross. “Share of platform fees” uses the same basis for both the short-term fees and the venue's total. “Share of platform fees” divides short-term fees by the venue's total fees, calculated the same way.</p>
+      <p><b>Liquidity rewards.</b> Rewards for resting orders across each venue's whole platform, not only the short-term price markets above. Maker rebates, referrals, holding rewards and volume incentives aren't included. <i>Kalshi</i> lists a reward pool for each market. Each pool that was marked paid, is still running or ended in the last two days is spread evenly over its period and assigned to its series' category. Kalshi publishes pool sizes but not amounts paid, and a market without two-sided depth pays less than its pool, so these are upper limits. Kalshi's list starts with pools from September 24, 2025. <i>Polymarket Intl</i> totals are actual on-chain payouts from its two reward wallets, dated to the day earned, without transfers to its own treasury. They include occasional extra batches paid to thousands of wallets, such as $563K on August 7, 2026. Payouts don't name a market, so the category split is an estimate made two ways, with a dashed line on the chart where the method changes. From November 9, 2026, each day's payouts are split by the reward rates Polymarket posts for each market, saved once a day, so markets that open and close between saves are missed. Polymarket doesn't keep those rates for closed markets, so before that date each wallet's payout is split by where it made markets that day. That favors markets that fill often: in a check in early November 2026, politics was 53% of this estimate and 38% of posted reward rates. Wallets with no fills that day are shown as <i>Not attributed</i>. Polymarket US rewards aren't public. Categories combine each venue's own labels, so they line up only approximately.</p>
       <p><b>Traders.</b> Unique Polymarket Intl and Predict.fun wallets, makers and takers, from on-chain fills. Counts use approximate distinct counting, accurate to about 2%. Kalshi doesn't publish account-level trades.</p>
       <p><b>Concentration.</b> Each Polymarket Intl or Predict.fun wallet's volume is the dollars (USDC or USDT) it paid or received on its own side of every fill in these markets, as maker or taker, the same measure as the Top traders table. Every fill has two sides, so wallet volumes add up to about 2× the taker-side cash shown in the volume charts. Wallets are ranked by exact volume; percentile tiers round up, so the top 1% of 250 wallets is 3. A wallet isn't necessarily a person: one trader can run several wallets, which would make true concentration higher. The Gini coefficient is exact over all wallets. The 7-day and 30-day windows end on the date shown and refresh weekly; the trend uses complete Monday–Sunday weeks.</p>
       <p><b>Sources.</b> Polymarket Intl and Predict.fun on-chain trades and Kalshi daily reports via Dune; Polymarket US time-and-sales files from polymarketexchange.com; Polymarket profiles via the Gamma API; Kalshi series metadata and leaderboard via Kalshi's public API; order books from the Polymarket CLOB and Kalshi APIs and Predict.fun's public GraphQL API, which also supplies Predict.fun account names. History refreshes daily and order-book snapshots hourly. Days are UTC; the current partial day is excluded.</p>`;
@@ -1014,6 +1097,7 @@
   bindSeg("#f-measure", "measure", renderAll);
   $("#f-cls").addEventListener("change", (e) => { state.cls = e.target.value; savePrefs(); renderAll(); });
   bindSeg("#f-fee-basis", "feeBasis", () => renderFees(timeFrame()));
+  bindSeg("#f-rw-gran", "rewardGran", renderRewards);
   bindSeg("#f-conc-window", "concWindow", renderConcentration);
   bindSeg("#f-conc-venue", "concVenue", renderConcentration);
   bindSeg("#f-conc-scale", "concScale", renderConcentration);

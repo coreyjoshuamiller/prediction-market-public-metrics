@@ -8,6 +8,7 @@ from datetime import date, datetime, timedelta, timezone
 
 from .kalshi_series import load as load_kalshi_series
 from .rebates import pmus_coef, poly_rate
+from .rewards import CATEGORIES as REWARD_CATEGORIES
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
 DATA = os.path.join(ROOT, "data")
@@ -22,6 +23,39 @@ def rows(name):
 
 def f(x):
     return float(x) if x not in ("", None) else 0.0
+
+
+def rewards_block():
+    """Daily liquidity rewards per venue and category, over the days both venues have."""
+    sources = {"kalshi": rows("kalshi_rewards_daily.csv"), "polymarket": rows("poly_rewards_daily.csv")}
+    if not all(sources.values()):
+        return None
+    start = date.fromisoformat(min(r["d"] for src in sources.values() for r in src))
+    end = date.fromisoformat(min(max(r["d"] for r in src) for src in sources.values()))
+    days = [str(start + timedelta(days=i)) for i in range((end - start).days + 1)]
+    at = {d: i for i, d in enumerate(days)}
+    block = {"days": days, "categories": REWARD_CATEGORIES}
+    for venue, src in sources.items():
+        block[venue] = {c: [0] * len(days) for c in REWARD_CATEGORIES}
+        block[f"{venue}_first"] = min(r["d"] for r in src)
+        for r in src:
+            if r["d"] in at:
+                block[venue][r["category"]][at[r["d"]]] = round(f(r["usd"]))
+    # from the first saved snapshot, split Polymarket's actual payouts by its posted reward rates;
+    # a day without a snapshot (a missed run) uses the latest one before it
+    snapshots = defaultdict(dict)
+    for r in rows("poly_reward_rates_daily.csv"):
+        snapshots[r["d"]][r["category"]] = f(r["rate"])
+    block["poly_rates_from"] = min(snapshots) if snapshots else None
+    poly, latest = block["polymarket"], None
+    for d, i in at.items():
+        latest = snapshots.get(d, latest)
+        if latest:
+            paid = sum(poly[c][i] for c in REWARD_CATEGORIES)
+            total_rate = sum(latest.values())
+            for c in REWARD_CATEGORIES:
+                poly[c][i] = round(paid * latest.get(c, 0) / total_rate)
+    return block
 
 
 def build():
@@ -191,6 +225,7 @@ def build():
         "polymarket_us": {"series": us_series, "totals": us_totals},
         "predict": {"series": predict_series, "totals": predict_totals, "traders": predict_traders},
         "kalshi_series_map": ks,
+        "rewards": rewards_block(),
     }
     os.makedirs(SITE, exist_ok=True)
     path = os.path.join(SITE, "metrics.json")

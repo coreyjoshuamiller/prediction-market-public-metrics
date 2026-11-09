@@ -9,10 +9,10 @@ import os
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date, datetime, timedelta, timezone
 
-from . import concentration, leaders, pmus
+from . import concentration, leaders, pmus, rewards
 from .dune import run_sql
 from .kalshi_series import build as build_kalshi_series, build_fees as build_kalshi_fees
-from .queries import (kalshi_series_daily, poly_activity, poly_fees, poly_rebates_paid, poly_totals, predict_activity,
+from .queries import (kalshi_series_daily, poly_activity, poly_fees, poly_rebates_paid, poly_rewards_paid, poly_totals, predict_activity,
                       predict_fee_flows, predict_totals)
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
@@ -29,6 +29,9 @@ FILES = {
     "predict_totals": ("predict_totals_daily.csv", ["d", "notional", "cash", "fees", "traders"], 1),
     "predict_flows": ("predict_fee_flows.csv", ["d", "dur", "fee_sh", "refund_sh", "rebate_sh"], 2),
     "poly_rebates": ("poly_rebates_daily.csv", ["d", "rebates"], 1),
+    "poly_rewards": ("poly_rewards_daily.csv", ["d", "category", "usd"], 2),
+    "kalshi_rewards": ("kalshi_rewards_daily.csv", ["d", "category", "usd"], 2),
+    "poly_reward_rates": ("poly_reward_rates_daily.csv", ["d", "category", "rate"], 2),
 }
 
 DUR_NORM = {"60m": "1h", "240m": "4h", "24h": "1d"}
@@ -161,6 +164,26 @@ def poly_rebates_window(start, end):
     lo, hi = str(start - timedelta(days=1)), str(end - timedelta(days=1))
     upsert("poly_rebates", [{"d": str(date.fromisoformat(str(r["paid"])[:10]) - timedelta(days=1)), "rebates": _r(r["rebates"])} for r in rows],
            lambda x: lo <= x["d"] < hi)
+
+
+def poly_rewards_window(start, end):
+    """Liquidity rewards paid on dates in [start, end), stored against the day they're for."""
+    rows = run_sql(poly_rewards_paid(start, end), label=f"poly rewards {start}")
+    lo, hi = str(start - timedelta(days=1)), str(end - timedelta(days=1))
+    upsert("poly_rewards", [{"d": str(r["d"])[:10], "category": r["category"], "usd": _r(r["usd"])} for r in rows],
+           lambda x: lo <= x["d"] < hi)
+
+
+def update_rewards(today, poly_start):
+    """Kalshi's history is re-read in full (free, about 5 minutes): pools change to paid after the fact."""
+    poly_rewards_window(poly_start, today + timedelta(days=1))
+    upsert("kalshi_rewards", rewards.kalshi_daily(today), lambda x: True)
+
+
+def poly_reward_rates_snapshot(today):
+    """Today's posted reward rates; there's no history to fetch, so a missed day stays missing."""
+    upsert("poly_reward_rates", [{"d": str(today), "category": c, "rate": _r(v)} for c, v in rewards.poly_posted_rates().items()],
+           lambda x: x["d"] == str(today))
 
 
 def _warn_unmapped(vol):
@@ -325,6 +348,14 @@ def daily(run_leaders=True, today=None):
     kalshi_window(end - timedelta(days=10), end)
     pmus.update(last_n=3)
     predict_daily(today)
+    try:  # not needed by anything else on the page: don't let it fail the refresh
+        update_rewards(today, end - timedelta(days=10))
+    except Exception as e:
+        print(f"  liquidity rewards update failed: {e}")
+    try:
+        poly_reward_rates_snapshot(today)
+    except Exception as e:
+        print(f"  reward rates snapshot failed: {e}")
     if run_leaders:
         leaders.update(today)
         try:  # a new, non-essential section: don't let it fail the refresh
@@ -340,6 +371,7 @@ def main():
     ap.add_argument("--no-leaders", action="store_true")
     ap.add_argument("--backfill-fees", help="YYYY-MM-DD: backfill only fees (Polymarket, Kalshi) from this date")
     ap.add_argument("--backfill-predict", help="YYYY-MM-DD: backfill predict.fun (month-aligned; it launched 2025-11)")
+    ap.add_argument("--backfill-rewards", help="YYYY-MM-DD: backfill liquidity rewards (Polymarket) from this date, and refresh Kalshi")
     args = ap.parse_args()
     if args.backfill:
         backfill(args.backfill)
@@ -349,6 +381,8 @@ def main():
         backfill_fees(args.backfill_fees)
     if args.backfill_predict:
         backfill_predict(args.backfill_predict)
+    if args.backfill_rewards:
+        update_rewards(datetime.now(timezone.utc).date(), date.fromisoformat(args.backfill_rewards) + timedelta(days=1))
     if args.daily:
         daily(run_leaders=not args.no_leaders)
     from .build_site import build
