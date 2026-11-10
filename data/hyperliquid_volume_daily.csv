@@ -1,2 +1,12 @@
 d,asset,asset_class,dur,ctype,notional,cash
-2026-11-10,BTC,Crypto,1d,Strike,525.0,19.43
+2026-11-10,BTC,Crypto,15m,Strike,6689.0,4571.29
+2026-11-10,BTC,Crypto,1d,Range,100.0,1.1
+2026-11-10,BTC,Crypto,1d,Strike,10298.0,417.48
+2026-11-10,BTC,Crypto,5m,Strike,875.0,437.49
+2026-11-10,ETH,Crypto,15m,Strike,871.0,243.17
+2026-11-10,ETH,Crypto,1d,Strike,1271.0,40.46
+2026-11-10,ETH,Crypto,1h,Strike,250.0,249.47
+2026-11-10,ETH,Crypto,5m,Strike,241.0,90.86
+2026-11-10,HYPE,Crypto,15m,Strike,1925.0,1150.33
+2026-11-10,HYPE,Crypto,1d,Strike,928.0,36.27
+2026-11-10,HYPE,Crypto,5m,Strike,704.0,492.8
