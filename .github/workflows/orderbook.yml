@@ -31,15 +31,19 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Sample order books
-        run: python -u -m pipeline.orderbook_snapshot --duration 3240 --interval 60
+      - name: Sample order books and Hyperliquid outcome volume
+        run: |
+          # Hyperliquid keeps no outcome-market volume history, so it's collected while the job runs
+          python -u -m pipeline.hyperliquid --duration 3240 --interval 10 &
+          python -u -m pipeline.orderbook_snapshot --duration 3240 --interval 60
+          wait
       - name: Rebuild order book chart data
         run: python -m pipeline.build_orderbook
       - name: Commit
         run: |
           git config user.name "pm-metrics-bot"
           git config user.email "pm-metrics-bot@users.noreply.github.com"
-          git add data/orderbook site/data/orderbook.json
+          git add data/orderbook site/data/orderbook.json data/hyperliquid data/hyperliquid_volume_daily.csv
           if ! git diff --cached --quiet; then
             git commit -q -m "orderbook snapshots $(date -u +%Y-%m-%dT%H:%MZ)"
             for i in 1 2 3; do git pull -q --rebase && git push -q && break; sleep 5; done

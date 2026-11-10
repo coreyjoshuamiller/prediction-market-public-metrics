@@ -64,6 +64,7 @@ def build():
     pf = rows("poly_fees_daily.csv")
     prv, prt, prtot = rows("predict_volume_daily.csv"), rows("predict_traders.csv"), rows("predict_totals_daily.csv")
     flows, poly_paid = rows("predict_fee_flows.csv"), rows("poly_rebates_daily.csv")
+    hv, htot = rows("hyperliquid_volume_daily.csv"), rows("hyperliquid_totals_daily.csv")
     ks = load_kalshi_series()
     all_days = sorted({r["d"] for r in pv} | {r["d"] for r in kv if r["series"] == "__TOTAL__"} | {r["d"] for r in ptot})
     if not all_days:
@@ -93,6 +94,15 @@ def build():
     poly_series = series_block(pv + [r for r in pf if r["asset"] != "__TOTAL__"],
                                lambda r: (r["asset"], r["dur"], r["ctype"], r["asset_class"]),
                                {"notional": "notional", "cash": "cash", "trades": "trades", "fees": "fees"})
+
+    # Hyperliquid volume is collected live from the first full UTC day of collection (pipeline/hyperliquid.py)
+    hl_state = os.path.join(DATA, "hyperliquid", "state.json")
+    hl_from = None
+    if hv and os.path.exists(hl_state):
+        started = datetime.fromtimestamp(json.load(open(hl_state))["started"], timezone.utc)
+        hl_from = (started.date() + timedelta(days=0 if started.time() == datetime.min.time() else 1)).isoformat()
+    hl_series = series_block([r for r in hv if hl_from and r["d"] >= hl_from], lambda r: (r["asset"], r["dur"], r["ctype"], r["asset_class"]),
+                             {"notional": "notional", "cash": "cash"})
 
     def kkey(r):
         m = ks.get(r["series"])
@@ -140,6 +150,8 @@ def build():
     us_combo = totals(us, lambda r: r["key"] == "__COMBO__", "notional", "cash")
     us_totals["combo_notional"], us_totals["combo_cash"] = us_combo["notional"], us_combo["cash"]
     predict_totals = totals(prtot, lambda r: True, "notional", "cash")
+    hl_totals = totals(htot, lambda r: hl_from and r["d"] >= hl_from, "notional", "cash")
+    hl_totals.pop("traders")
 
     # --- net of maker rebates (fees_net); Kalshi has none, so the page uses its gross for net ---
     for s_ in poly_series:
@@ -207,7 +219,7 @@ def build():
     # stable ordering of entities by total notional across both platforms (drives color slots)
     def order(field):
         tot = defaultdict(float)
-        for s in poly_series + kalshi_series + us_series + predict_series:
+        for s in poly_series + kalshi_series + us_series + predict_series + hl_series:
             k = f"{s['asset']} {s['dur']}" if field == "market" else s[field]
             tot[k] += sum(v or 0 for v in s["notional"])
         keys = sorted(tot, key=lambda k: -tot[k])
@@ -225,6 +237,8 @@ def build():
         "polymarket_us": {"series": us_series, "totals": us_totals},
         "predict": {"series": predict_series, "totals": predict_totals, "traders": predict_traders},
         "kalshi_series_map": ks,
+        **({"hyperliquid": {"series": hl_series, "totals": hl_totals, "collected_from": hl_from}}
+           if hl_from and hl_from <= days[-1] else {}),
         "rewards": rewards_block(),
     }
     os.makedirs(SITE, exist_ok=True)

@@ -9,7 +9,7 @@ import os
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date, datetime, timedelta, timezone
 
-from . import concentration, leaders, pmus, rewards
+from . import concentration, hyperliquid, leaders, pmus, rewards
 from .dune import run_sql
 from .kalshi_series import build as build_kalshi_series, build_fees as build_kalshi_fees
 from .queries import (kalshi_series_daily, poly_activity, poly_fees, poly_rebates_paid, poly_rewards_paid, poly_totals, predict_activity,
@@ -352,6 +352,10 @@ def daily(run_leaders=True, today=None):
         update_rewards(today, end - timedelta(days=10))
     except Exception as e:
         print(f"  liquidity rewards update failed: {e}")
+    try:
+        hyperliquid.platform_totals()
+    except Exception as e:
+        print(f"  hyperliquid platform totals failed: {e}")
     try:
         poly_reward_rates_snapshot(today)
     except Exception as e:

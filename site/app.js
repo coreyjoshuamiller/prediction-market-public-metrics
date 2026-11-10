@@ -21,12 +21,14 @@
   // ~20 series, past the 8 base hues, so the palette extends to 3 tones of each hue (24 slots).
   const OTHER_MAX = 0.03;
   const PALETTE_SIZE = 24;
-  const PLATFORMS = { polymarket: "Polymarket Intl", polymarket_us: "Polymarket US", kalshi: "Kalshi", predict: "Predict.fun" };
+  const PLATFORMS = { polymarket: "Polymarket Intl", polymarket_us: "Polymarket US", kalshi: "Kalshi", predict: "Predict.fun", hyperliquid: "Hyperliquid" };
   // venues with volume history (Polymarket US has no order-book or trader data)
-  const VENUES = ["polymarket", "polymarket_us", "kalshi", "predict"];
+  const VENUES = ["polymarket", "polymarket_us", "kalshi", "predict", "hyperliquid"];
+  // venues with fee data (Hyperliquid's outcome fees aren't published per market)
+  const FEE_VENUES = ["polymarket", "polymarket_us", "kalshi", "predict"];
   // venues with on-chain fills, so unique-wallet counts
   const TRADER_VENUES = ["polymarket", "predict"];
-  const VENUE_COLOR = { polymarket: "--poly", polymarket_us: "--poly-us", kalshi: "--kalshi", predict: "--predict" };
+  const VENUE_COLOR = { polymarket: "--poly", polymarket_us: "--poly-us", kalshi: "--kalshi", predict: "--predict", hyperliquid: "--hyperliquid" };
   const venueColor = (p) => css(VENUE_COLOR[p]);
   const hasVenue = (p) => !!M?.[p]?.series;
   // first day a venue had any short-term price volume (Polymarket US only listed BTC Up/Down on 2026-09-22)
@@ -395,7 +397,7 @@
       const cur = sumRange(scopeTotal(p, vtf), 0, n - 1);
       const prev = hasPrev && !launched ? scopeTotal(p, prevTf)[0] : null;
       const tot = sumRange(platformTotal(p, vtf), 0, n - 1);
-      const since = launched ? `since ${fmtDate(launched, "day")} launch` : null;
+      const since = launched ? `since ${fmtDate(launched, "day")} ${M[p].collected_from ? "(collection start)" : "launch"}` : null;
       tiles.push({ label: `${PLATFORMS[p]} volume`, key: venueColor(p), value: fmtUsd(cur), delta: prev ? (cur / prev - 1) * 100 : null, note: since });
       tiles.push({ label: `${PLATFORMS[p]} share of platform`, key: venueColor(p), value: fmtPct(tot ? (cur / tot) * 100 : null), note: since });
     }
@@ -414,10 +416,10 @@
     drawTiles(box, tiles);
   }
 
-  function renderStacks(tf, prefix, measure, note, noun) {
+  function renderStacks(tf, prefix, measure, note, noun, venues = VENUES) {
     const color = colorFor(state.group, tf);
     const cats = bucketLabels(tf);
-    for (const p of VENUES.filter(hasVenue)) {
+    for (const p of venues.filter(hasVenue)) {
       const shown = shownKeys(state.group, tf, [p], measure);
       const agg = aggregate(p, tf, state.group, shown, measure);
       const keys = [...shown.filter((k) => agg[k]), ...(agg.Other ? ["Other"] : [])];
@@ -463,10 +465,10 @@
     }
   }
 
-  function renderShareLines(tf, measure, shareChart, shareTitle, totalsChart, totalsTitle, note) {
+  function renderShareLines(tf, measure, shareChart, shareTitle, totalsChart, totalsTitle, note, allVenues = VENUES) {
     const cats = bucketLabels(tf);
     const share = {}, scope = {};
-    const venues = VENUES.filter(hasVenue);
+    const venues = allVenues.filter(hasVenue);
     for (const p of venues) {
       scope[p] = scopeTotal(p, tf, measure);
       const tot = platformTotal(p, tf, measure);
@@ -516,7 +518,7 @@
     setPressed("#f-fee-basis", state.feeBasis);
     const n = tf.buckets.length;
     const tiles = [];
-    for (const p of VENUES.filter(hasVenue)) {
+    for (const p of FEE_VENUES.filter(hasVenue)) {
       const f0 = firstScopeIdx(p);
       const launched = f0 > tf.from ? M.days[f0] : null;
       const vtf = launched ? { ...tf, idx: tf.idx.filter((i) => i >= f0) } : tf;
@@ -530,8 +532,8 @@
         note: `of ${fmtUsd(allFees)} total · ${net ? NET_BASIS[p] : FEE_BASIS[p]}` });
     }
     drawTiles($("#fee-tiles"), tiles);
-    renderStacks(tf, "fee", feeKey, (p) => `${word} · ${net ? NET_BASIS[p] : FEE_BASIS[p]}`, "fees");
-    renderShareLines(tf, feeKey, "fee-share", "Share of platform fees", "fee-totals", "Short-term price fees by venue", word);
+    renderStacks(tf, "fee", feeKey, (p) => `${word} · ${net ? NET_BASIS[p] : FEE_BASIS[p]}`, "fees", FEE_VENUES);
+    renderShareLines(tf, feeKey, "fee-share", "Share of platform fees", "fee-totals", "Short-term price fees by venue", word, FEE_VENUES);
   }
 
   // ---------- liquidity rewards ----------
@@ -1065,9 +1067,10 @@
 
   function renderNotes() {
     $("#notes").innerHTML = `
-      <p><b>Scope.</b> Markets that settle on a financial price within one day: Polymarket Up/Down (5m, 15m, 1h, 4h, daily), “above X” strike ladders (hourly and daily), price-range and same-day “reach / dip to” markets; Kalshi 15-minute Up/Down plus hourly and daily above/below and range series; every Predict.fun Up/Down market (5m, 15m, 1h, daily). Covers crypto, equity indices and single stocks, commodities, and FX and Treasury yields. Weekly, monthly and longer-dated markets are excluded.</p>
+      <p><b>Scope.</b> Markets that settle on a financial price within one day: Polymarket Up/Down (5m, 15m, 1h, 4h, daily), “above X” strike ladders (hourly and daily), price-range and same-day “reach / dip to” markets; Kalshi 15-minute Up/Down plus hourly and daily above/below and range series; every Predict.fun Up/Down market (5m, 15m, 1h, daily); Hyperliquid outcome markets on a price that settle within a day of listing: its own daily “above X” and price-range markets, and strike markets listed by other deployers on its exchange. Covers crypto, equity indices and single stocks, commodities, and FX and Treasury yields. Weekly, monthly and longer-dated markets are excluded.</p>
       <p><b>Volume.</b> <i>Notional</i> counts contracts traded, each paying $1 if it wins. For Polymarket and Predict.fun that's shares on the taker side of each fill; for Kalshi it's contracts from Kalshi's daily market report. <i>Cash</i> is dollars paid: the taker's USDC on Polymarket Intl and USDT on Predict.fun, from on-chain fills. On Kalshi and Polymarket US it's the traded (yes-side) price × contracts, because neither publishes which side the taker was on. Polymarket's own site shows roughly 2× these numbers because it counts both sides of every trade.</p>
       <p><b>Venues.</b> <i>Polymarket Intl</i> is the on-chain exchange (Polygon), read from Dune. <i>Polymarket US</i> is the CFTC-regulated US exchange; it trades off-chain, so it comes from the exchange's public daily time-and-sales files. Its only short-term price markets today are BTC Up/Down 15m and 1h. Those files have no account IDs or taker side, so Polymarket US has no trader counts or leaderboard, and its cash is price × quantity. Its sessions run 5pm–5pm ET, so the most recent UTC day fills in a day later. <i>Predict.fun</i> is an on-chain exchange on BNB Chain, built on the same contract design as Polymarket and read from Dune. Its markets are identified on-chain: 5m and 15m rounds from its Chainlink Up/Down contract (by price feed), hourly and daily markets from the title stored with each UMA question. History starts with its first Up/Down market in November 2025; its 15m BTC series stopped on April 2, 2026 and relaunched on Chainlink pricing on April 27.</p>
+      <p><b>Hyperliquid.</b> Hyperliquid's outcome markets (HIP-4) trade on its own exchange, and its public API keeps no volume history once a market settles. So volume is collected live: every 10 seconds, during the hourly order-book job, the page records how much each live market's 24-hour volume has grown. History starts with the first full day of collection, November 11, 2026. Markets that list and settle entirely between two runs of the job, a few minutes at most, are missed, as are trades in a market's last few seconds. Its Yes and No order books show the same trades, so contracts are counted once and cash values each contract at its Yes price. Durations are each market's time from listing to settlement, rounded up, so a 3-minute market counts as 5m. Platform totals, for the share charts, are every Hyperliquid outcome market (mostly sports), from DefiLlama; they value cash at each fill's price, so the cash share is approximate and the notional share is like for like. Hyperliquid isn't in the fee charts: its outcome fees, charged when a position closes or settles, aren't published per market.</p>
       <p><b>Fees.</b> <i>Gross</i> is what takers are charged. Polymarket Intl fees are the actual fees recorded on each on-chain fill. Takers pay them; makers pay none. Predict.fun's fills record the most an order could be charged and the excess is refunded to the taker in the same transaction, so its gross is the recorded fee minus those refunds, measured per day from its fee contracts. Its fees are charged in shares when buying, valued here at the fill price. Kalshi and Polymarket US don't publish fees, so they're estimated per trade from each venue's published formula, rate × contracts × price × (1 − price). Kalshi's rate is 7% for takers × the series' fee multiplier, plus 1.75% on series that also charge makers. Polymarket US uses its dated schedule, currently 6.95%. Kalshi rounds each order's fee up to the next cent, so its estimate runs slightly low. Kalshi's fee settings are today's, applied to all history. <i>Net</i> is gross minus maker rebates, and nothing else: referral rewards, taker rebates, liquidity rewards and market-maker programmes aren't subtracted. Polymarket Intl: all crypto fees through January 14, 2026, then the published 20% for crypto and 25% for finance, checked against rebates paid on sample markets; its platform total uses the rebates actually paid on-chain. Predict.fun: rebates actually paid, measured per day on-chain (25% of fees on Up/Down markets since July 16, 2026). Polymarket US: its filed schedule, a coefficient of 0.0125 until October 19, 2026, then tiers by each maker's prior-month volume. Trades don't show who the maker was, so all maker volume is assumed to earn the top tier (0.0104, about 15% of the taker fee), which makes net a low estimate. Kalshi: its fee schedule has no per-fill maker rebate on these markets, so net equals gross. “Share of platform fees” uses the same basis for both the short-term fees and the venue's total. “Share of platform fees” divides short-term fees by the venue's total fees, calculated the same way.</p>
       <p><b>Liquidity rewards.</b> Rewards for resting orders across each venue's whole platform, not only the short-term price markets above. Maker rebates, referrals, holding rewards and volume incentives aren't included. <i>Kalshi</i> lists a reward pool for each market. Each pool that was marked paid, is still running or ended in the last two days is spread evenly over its period and assigned to its series' category. Kalshi publishes pool sizes but not amounts paid, and a market without two-sided depth pays less than its pool, so these are upper limits. Kalshi's list starts with pools from September 24, 2025. <i>Polymarket Intl</i> totals are actual on-chain payouts from its two reward wallets, dated to the day earned, without transfers to its own treasury. They include occasional extra batches paid to thousands of wallets, such as $563K on August 7, 2026. Payouts don't name a market, so the category split is an estimate made two ways, with a dashed line on the chart where the method changes. From November 9, 2026, each day's payouts are split by the reward rates Polymarket posts for each market, saved once a day, so markets that open and close between saves are missed. Polymarket doesn't keep those rates for closed markets, so before that date each wallet's payout is split by where it made markets that day. That favors markets that fill often: in a check in early November 2026, politics was 53% of this estimate and 38% of posted reward rates. Wallets with no fills that day are shown as <i>Not attributed</i>. Polymarket US rewards aren't public. Categories combine each venue's own labels, so they line up only approximately.</p>
       <p><b>Traders.</b> Unique Polymarket Intl and Predict.fun wallets, makers and takers, from on-chain fills. Counts use approximate distinct counting, accurate to about 2%. Kalshi doesn't publish account-level trades.</p>
@@ -1081,7 +1084,7 @@
     const upd = [M?.updated, OB?.updated].filter(Boolean).map((s) => s.replace("T", " ").slice(0, 16) + " UTC");
     $("#updated").textContent = M ? `History updated ${upd[0]}${upd[1] ? ` · order books ${upd[1]}` : ""}` : "No data yet";
     // Kalshi has no in-scope maker rebate, so its net series are its gross series
-    if (M) for (const p of VENUES.filter(hasVenue)) {
+    if (M) for (const p of FEE_VENUES.filter(hasVenue)) {
       for (const s of M[p].series) s.fees_net ||= s.fees;
       M[p].totals.fees_net ||= M[p].totals.fees;
     }
