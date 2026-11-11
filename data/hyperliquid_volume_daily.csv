@@ -1,24 +1,29 @@
 d,asset,asset_class,dur,ctype,notional,cash
 2026-11-10,Anthropic,Equities,1d,Strike,148.0,66.45
-2026-11-10,BTC,Crypto,15m,Strike,19162.0,11134.78
+2026-11-10,BTC,Crypto,15m,Strike,22242.0,12721.64
 2026-11-10,BTC,Crypto,1d,Range,158.0,58.4
-2026-11-10,BTC,Crypto,1d,Strike,11685.0,528.68
+2026-11-10,BTC,Crypto,1d,Strike,12293.0,552.43
 2026-11-10,BTC,Crypto,1h,Strike,550.0,548.85
 2026-11-10,BTC,Crypto,4h,Strike,500.0,250.0
 2026-11-10,BTC,Crypto,5m,Strike,875.0,437.49
-2026-11-10,ETH,Crypto,15m,Strike,2583.0,1012.06
+2026-11-10,ETH,Crypto,15m,Strike,2923.0,1249.35
 2026-11-10,ETH,Crypto,1d,Strike,1543.0,48.38
-2026-11-10,ETH,Crypto,1h,Strike,2250.0,1000.58
+2026-11-10,ETH,Crypto,1h,Strike,2750.0,1250.59
 2026-11-10,ETH,Crypto,5m,Strike,241.0,90.86
-2026-11-10,Gold,Commodities,1d,Strike,60.0,29.58
-2026-11-10,HYPE,Crypto,15m,Strike,5413.0,2999.19
-2026-11-10,HYPE,Crypto,1d,Strike,1680.0,66.59
+2026-11-10,Gold,Commodities,1d,Strike,80.0,40.18
+2026-11-10,HYPE,Crypto,15m,Strike,7823.0,4119.09
+2026-11-10,HYPE,Crypto,1d,Strike,2849.0,102.82
 2026-11-10,HYPE,Crypto,5m,Strike,704.0,492.8
-2026-11-10,MU,Equities,1d,Strike,1130.0,574.19
-2026-11-10,NVDA,Equities,1d,Strike,73.0,39.18
-2026-11-10,S&P 500,Equities,1d,Strike,12641.0,7442.04
-2026-11-10,SNDK,Equities,1d,Strike,2154.0,1025.92
+2026-11-10,MU,Equities,1d,Strike,1202.0,612.85
+2026-11-10,NVDA,Equities,1d,Strike,98.0,52.81
+2026-11-10,S&P 500,Equities,1d,Strike,12661.0,7454.69
+2026-11-10,SNDK,Equities,1d,Strike,2298.0,1101.84
 2026-11-10,SOL,Crypto,1d,Strike,247.0,2.47
-2026-11-10,SPCX,Equities,1d,Strike,506.0,244.55
-2026-11-10,Silver,Commodities,1d,Strike,20.0,10.19
-2026-11-10,WTI Oil,Commodities,1d,Strike,182.0,88.53
+2026-11-10,SPCX,Equities,1d,Strike,530.0,258.14
+2026-11-10,Silver,Commodities,1d,Strike,288.0,140.18
+2026-11-10,WTI Oil,Commodities,1d,Strike,2260.0,1069.41
+2026-11-10,XYZ100,Equities,1d,Strike,118.0,65.9
+2026-11-11,ETH,Crypto,15m,Strike,14.0,3.58
+2026-11-11,Gold,Commodities,1d,Strike,230.0,126.5
+2026-11-11,HYPE,Crypto,15m,Strike,10.0,3.8
+2026-11-11,MU,Equities,1d,Strike,20.0,11.6
