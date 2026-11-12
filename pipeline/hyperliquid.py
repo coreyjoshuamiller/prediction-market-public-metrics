@@ -1,19 +1,22 @@
 """Hyperliquid HIP-4 outcome markets: collect volume for its short-term price markets.
 
 Hyperliquid's public API has no volume history for outcome markets: once a market settles its trades
-and candles are gone, and Dune doesn't carry them. But one call (spotMetaAndAssetCtxs) returns the
-rolling 24-hour volume of every live outcome side ("#<10 x outcome + side>"), so polling it every few
-seconds and adding up the increases gives each market's volume as it trades. The Yes and No sides
-print the same trades (No at 1 - the Yes price), so only the Yes side is read: contracts are its
-shares and dollars are valued at the Yes price. This runs alongside the order-book sampler in the
-hourly Action:
+and candles are gone, and Dune doesn't carry them. So this runs alongside the order-book sampler in
+the hourly Action and collects them live:
 
   python -m pipeline.hyperliquid --duration 3240 --interval 10
 
-A market's rolling volume only stops counting trades 24 hours after they happen, so the increases are
-exact for the short-term markets kept here (they settle within a day of listing). Gaps between runs
-are caught up on the next poll, except for markets that list and settle entirely inside a gap. Trades
-in a market's last seconds before it settles (up to one poll interval) are missed.
+- Every 10s, spotMetaAndAssetCtxs lists every live outcome side ("#<10 x outcome + side>") with its
+  rolling 24-hour volume; outcomeMeta says what each market is (classify()).
+- The public trades websocket gives every fill with both wallets. It's the volume source (since
+  2026-11-12): the 24h figures miss trades in a market's last seconds, often large buys near $1. When
+  the 24h figures run ahead of the feed (reconnects, the minutes between runs), the gap is added.
+- The Yes and No sides print the same trades (No at 1 - the Yes price), so only the Yes side is read:
+  contracts are its shares and dollars are valued at the Yes price.
+- Per wallet: net position per market (to tell closing fills, the only ones charged, from opening
+  ones), estimated fees, and PnL at settlement, totalled per day in data/hyperliquid/wallets/.
+
+Markets that list and settle entirely between two runs are missed.
 
 Platform totals (every outcome market, mostly sports) come from DefiLlama's Hyperliquid indexer.
 """
@@ -185,7 +188,7 @@ class Wallets:
         self.markets.clear()
 
 
-def _fill(t, state, outcomes, wallets, now):
+def _fill(t, state, outcomes, wallets, added):
     """Book one Yes-coin fill: users = [buyer, seller] of Yes. A seller with no Yes is buying No,
     so positions are net Yes shares (negative = No), and a fill that shrinks a position closes it."""
     coin, oid = t["coin"], str(int(t["coin"][1:]) // 10)
@@ -201,7 +204,12 @@ def _fill(t, state, outcomes, wallets, now):
     day, key = _day(ts), o["key"]
     tracked = o.get("tracked")  # the feed has seen this market since it listed: positions are complete
     pos = state["pos"].setdefault(oid, {})
-    o["fed_sz"] = o.get("fed_sz", 0) + sz
+    if ts >= state["feed_started"]:  # volume: earlier trades were counted from the 24h figures
+        o["fed_sz"] = o.get("fed_sz", 0) + sz
+        o["fed_ntl"] = o.get("fed_ntl", 0) + sz * px
+        a = added[(day, *key)]
+        a[0] += sz
+        a[1] += sz * px
     rate = {True: FEE_TAKER, False: FEE_MAKER}
     for i, (user, d) in enumerate(zip(t["users"], (1, -1))):
         p = pos.setdefault(user, [0.0, 0.0, 0.0])
@@ -331,14 +339,30 @@ def collect(duration, interval, meta_every=60, save_every=300):
                 dv, db = (v - prev["v"], b - prev["b"]) if prev else (v, b)
                 coins[coin] = {"v": v, "b": b, "t": now}
                 if o["key"] and not bootstrap and (dv > 0 or db > 0):
-                    a = added[(day, *o["key"])]
-                    a[0] += max(db, 0)
-                    a[1] += max(dv, 0)
                     o["ctx_sz"] = o.get("ctx_sz", 0) + max(db, 0)
+                    o["ctx_ntl"] = o.get("ctx_ntl", 0) + max(dv, 0)
             polls += 1
             bootstrap = False
             while not feed.q.empty():
-                fills += _fill(feed.q.get(), state, outcomes, wallets, now)
+                fills += _fill(feed.q.get(), state, outcomes, wallets, added)
+            # Volume comes from the trade feed, which also catches trades in a market's last seconds
+            # (often large buys near $1 just before settlement) that the 24h figures miss. Where the
+            # 24h figures have run ahead of the feed for 30s+ (a reconnect, or before the feed), add the gap.
+            for oid in live:
+                o = outcomes[oid]
+                if not o.get("key") or "ctx_sz" not in o:
+                    continue
+                gap_sz = o["ctx_sz"] - o.get("fed_sz", 0) - o.get("top_sz", 0)
+                gap_ntl = o.get("ctx_ntl", 0) - o.get("fed_ntl", 0) - o.get("top_ntl", 0)
+                if gap_sz <= 0:
+                    o.pop("gap_since", None)
+                elif now - o.setdefault("gap_since", now) >= 30:
+                    a = added[(day, *o["key"])]
+                    a[0] += gap_sz
+                    a[1] += max(gap_ntl, 0)
+                    o["top_sz"] = o.get("top_sz", 0) + gap_sz
+                    o["top_ntl"] = o.get("top_ntl", 0) + max(gap_ntl, 0)
+                    o.pop("gap_since", None)
             # a market that has left the live list for 30s has settled
             for oid in [k for k in state["pos"] if k not in live]:
                 o = outcomes.get(oid)
