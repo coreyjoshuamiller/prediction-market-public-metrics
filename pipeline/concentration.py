@@ -17,6 +17,7 @@ import json
 import os
 from datetime import date, datetime, timedelta, timezone
 
+from . import hyperliquid_stats
 from .dune import run_sql
 from .queries import CONC_TIERS, poly_concentration, poly_concentration_weekly, predict_concentration, predict_concentration_weekly
 
@@ -138,6 +139,13 @@ def update(today, force=False, since=None, venues=("polymarket", "predict")):
         except Exception as e:
             print(f"  predict.fun concentration failed: {e}")
         _save(data)
+    try:  # Hyperliquid: from the collector's wallet files (no Dune), rebuilt every run
+        hl = hyperliquid_stats.concentration(today)
+        if hl:
+            data["hyperliquid"] = hl
+            _save(data)
+    except Exception as e:
+        print(f"  hyperliquid concentration failed: {e}")
     print(f"  concentration.json written ({len(data['weekly'])} Polymarket weeks, "
           f"{len(data.get('predict', {}).get('weekly', []))} predict.fun weeks)")
 

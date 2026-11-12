@@ -9,7 +9,7 @@ The site is static (`site/`) and served by GitHub Pages. Two GitHub Actions keep
 | Workflow | Schedule | What it does |
 |---|---|---|
 | `daily.yml` | triggered from cron (13:40, 16:40, 19:40, 22:40 UTC) and by the order-book chain when data is stale | Runs `pipeline/refresh.py`, which picks **full** (first run of the UTC day: Dune history, fees, Kalshi, Polymarket US, Predict.fun, leaderboards), **light** (a source is still missing yesterday: re-pull Kalshi and Polymarket US, ~1 credit, plus Predict.fun if it's the one missing; max 4 attempts/day) or **skip**. Then commits and deploys |
-| `orderbook.yml` | continuous: each run dispatches the next (cron every 3h restarts the chain if it breaks) | Also collects Hyperliquid outcome-market volume every 10s (`pipeline/hyperliquid.py`), since its API keeps no history. Samples the live 15m BTC/ETH/SOL/XRP/BNB order books (Polymarket, Kalshi, Predict.fun) once a minute for ~54 minutes, commits, deploys, and after 13:40 UTC triggers `daily.yml` if data is stale |
+| `orderbook.yml` | continuous: each run dispatches the next (cron every 3h restarts the chain if it breaks) | Also collects Hyperliquid outcome-market volume every 10s and follows its trade feed (`pipeline/hyperliquid.py`), since its API keeps no history. Samples the live 15m BTC/ETH/SOL/XRP/BNB order books (Polymarket, Kalshi, Predict.fun) once a minute for ~54 minutes, commits, deploys, and after 13:40 UTC triggers `daily.yml` if data is stale |
 | `deploy.yml` | on pushes to `site/` code | Redeploys the page |
 
 GitHub's cron is best-effort (runs can be hours late or dropped), which is why the daily refresh has several triggers and decides for itself whether to do anything. State lives in `data/refresh_state.json`. To force a run, use **Actions → Daily refresh → Run workflow** and pick a mode.
@@ -35,7 +35,9 @@ GitHub's cron is best-effort (runs can be hours late or dropped), which is why t
 | Predict.fun (BNB Chain) fills, Up/Down markets, platform totals | Dune `predict_bnb.*` (decoded contracts): `ctfexchange_evt_orderfilled`, the Chainlink Up/Down adapter's `roundcreated`, UMA `questioninitialized` titles, `conditionpreparation`, `tokenregistered` |
 | Kalshi series metadata | `api.elections.kalshi.com/trade-api/v2/series` |
 | Hyperliquid outcome-market volume (HIP-4) | Collected live from `api.hyperliquid.xyz/info` `spotMetaAndAssetCtxs` (24h volume per market) and `outcomeMeta`; state in `data/hyperliquid/state.json` |
-| Hyperliquid outcome platform totals | DefiLlama `api.llama.fi/summary/dexs/hyperliquid-outcomes` |
+| Hyperliquid wallets, trader counts, top traders, concentration, estimated fees | Public trades websocket (`wss://api.hyperliquid.xyz/ws`, both wallets on every fill) followed by the same job; per-wallet daily totals in `data/hyperliquid/wallets/`, positions in `state.json`; `pipeline/hyperliquid_stats.py` |
+| Hyperliquid outcome platform totals and fees | DefiLlama `api.llama.fi/summary/dexs/hyperliquid-outcomes` and `summary/fees/hyperliquid-outcomes` |
+| Hyperliquid 15-minute order books | `l2Book` for the busiest 15m strike market per asset (BTC, ETH) |
 | Kalshi liquidity reward pools | `api.elections.kalshi.com/trade-api/v2/incentive_programs` (public; liquidity pools from 2025-09-24) |
 | Polymarket Intl liquidity rewards | Dune `erc20_polygon.evt_Transfer` from its two reward wallets, split using `market_trades_raw` and `polymarket.markets_raw` tags |
 | Polymarket Intl posted reward rates (saved daily) | `clob.polymarket.com/rewards/markets/current`, with tags from `gamma-api.polymarket.com/markets` |

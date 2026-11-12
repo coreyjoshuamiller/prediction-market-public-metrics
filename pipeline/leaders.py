@@ -23,7 +23,7 @@ from datetime import date, datetime, timedelta, timezone
 
 from .dune import run_sql
 from .net import get_json
-from . import reach
+from . import hyperliquid_stats, reach
 from .predict_api import checksum_address, gql
 from .queries import poly_leaders, poly_leaders_weekly, predict_leaders, predict_leaders_weekly
 
@@ -323,6 +323,12 @@ def update(today, force_all=False):
         update_long_windows(data, "predict", today)
     except Exception as e:
         print(f"  predict.fun leaders failed: {e}")
+    try:  # Hyperliquid: ranked from the collector's wallet files (no Dune)
+        hl = hyperliquid_stats.leaders(today)
+        if hl:
+            data["hyperliquid"] = hl
+    except Exception as e:
+        print(f"  hyperliquid leaders failed: {e}")
     data["kalshi"] = {
         f"{cat}|{per}": kalshi_board(cat, per)
         for cat in ("Crypto", "Financials")

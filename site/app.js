@@ -25,9 +25,9 @@
   // venues with volume history (Polymarket US has no order-book or trader data)
   const VENUES = ["polymarket", "polymarket_us", "kalshi", "predict", "hyperliquid"];
   // venues with fee data (Hyperliquid's outcome fees aren't published per market)
-  const FEE_VENUES = ["polymarket", "polymarket_us", "kalshi", "predict"];
+  const FEE_VENUES = ["polymarket", "polymarket_us", "kalshi", "predict", "hyperliquid"];
   // venues with on-chain fills, so unique-wallet counts
-  const TRADER_VENUES = ["polymarket", "predict"];
+  const TRADER_VENUES = ["polymarket", "predict", "hyperliquid"];
   const VENUE_COLOR = { polymarket: "--poly", polymarket_us: "--poly-us", kalshi: "--kalshi", predict: "--predict", hyperliquid: "--hyperliquid" };
   const venueColor = (p) => css(VENUE_COLOR[p]);
   const hasVenue = (p) => !!M?.[p]?.series;
@@ -38,6 +38,13 @@
     let first = Infinity;
     for (const s of M[p].series) { const i = s.notional.findIndex((v) => v > 0); if (i >= 0 && i < first) first = i; }
     return (firstScopeCache[p] = first);
+  }
+  // first day with fee figures: Hyperliquid's are estimated from its trade feed, which started after its volume
+  function firstFeeIdx(p) {
+    const from = M[p].fees_from;
+    if (!from) return firstScopeIdx(p);
+    const i = M.days.indexOf(from);
+    return i >= 0 ? i : from > M.days[M.days.length - 1] ? Infinity : 0;
   }
   const GROUP_LABEL = { market: "market", asset: "asset", dur: "duration", cls: "asset class", ctype: "contract type" };
   const TRADER_DIM = { market: "market", asset: "asset", dur: "duration", cls: "class", ctype: "type" };
@@ -465,14 +472,14 @@
     }
   }
 
-  function renderShareLines(tf, measure, shareChart, shareTitle, totalsChart, totalsTitle, note, allVenues = VENUES) {
+  function renderShareLines(tf, measure, shareChart, shareTitle, totalsChart, totalsTitle, note, allVenues = VENUES, startIdx = firstScopeIdx) {
     const cats = bucketLabels(tf);
     const share = {}, scope = {};
     const venues = allVenues.filter(hasVenue);
     for (const p of venues) {
-      scope[p] = scopeTotal(p, tf, measure);
       const tot = platformTotal(p, tf, measure);
-      const firstBucket = tf.dayToBucket[firstScopeIdx(p)] ?? (firstScopeIdx(p) > tf.last ? Infinity : 0);
+      const firstBucket = tf.dayToBucket[startIdx(p)] ?? (startIdx(p) > tf.last ? Infinity : 0);
+      scope[p] = scopeTotal(p, tf, measure).map((v, i) => (i >= firstBucket ? v : null));
       share[p] = scope[p].map((v, i) => (tot[i] && i >= firstBucket ? +((v / tot[i]) * 100).toFixed(2) : null));
     }
     const opt = baseOption();
@@ -504,6 +511,7 @@
     polymarket_us: "estimated from fee schedule",
     kalshi: "estimated from fee schedule",
     predict: "actual fees (on-chain)",
+    hyperliquid: "estimated from the trade feed",
   };
   // how each venue's net figure is reached, shown on its fee chart in the Net view
   const NET_BASIS = {
@@ -511,6 +519,7 @@
     polymarket_us: "net of maker rebates (assumes top tier)",
     kalshi: "no maker rebate on these markets",
     predict: "net of maker rebates (on-chain)",
+    hyperliquid: "no maker rebates on outcome markets",
   };
   function renderFees(tf) {
     const net = state.feeBasis === "net";
@@ -518,22 +527,23 @@
     setPressed("#f-fee-basis", state.feeBasis);
     const n = tf.buckets.length;
     const tiles = [];
-    for (const p of FEE_VENUES.filter(hasVenue)) {
-      const f0 = firstScopeIdx(p);
+    const venues = FEE_VENUES.filter((p) => hasVenue(p) && firstFeeIdx(p) <= tf.last);
+    for (const p of venues) {
+      const f0 = firstFeeIdx(p);
       const launched = f0 > tf.from ? M.days[f0] : null;
       const vtf = launched ? { ...tf, idx: tf.idx.filter((i) => i >= f0) } : tf;
       const fees = sumRange(scopeTotal(p, vtf, feeKey), 0, n - 1);
       const allFees = sumRange(platformTotal(p, vtf, feeKey), 0, n - 1);
       const cash = sumRange(scopeTotal(p, vtf, "cash"), 0, n - 1);
-      const since = launched ? `since ${fmtDate(launched, "day")} launch` : `last ${state.range} days`;
+      const since = launched ? `since ${fmtDate(launched, "day")} ${M[p].fees_from ? "(first full day of fee data)" : "launch"}` : `last ${state.range} days`;
       tiles.push({ label: `${PLATFORMS[p]} ${net ? "net fees" : "fees"}`, key: venueColor(p), value: fmtUsd(fees),
         note: `${cash ? `$${((fees / cash) * 100).toFixed(2)} per $100 traded` : "–"} · ${since}` });
       tiles.push({ label: `${PLATFORMS[p]} share of platform fees`, key: venueColor(p), value: fmtPct(allFees ? (fees / allFees) * 100 : null),
         note: `of ${fmtUsd(allFees)} total · ${net ? NET_BASIS[p] : FEE_BASIS[p]}` });
     }
     drawTiles($("#fee-tiles"), tiles);
-    renderStacks(tf, "fee", feeKey, (p) => `${word} · ${net ? NET_BASIS[p] : FEE_BASIS[p]}`, "fees", FEE_VENUES);
-    renderShareLines(tf, feeKey, "fee-share", "Share of platform fees", "fee-totals", "Short-term price fees by venue", word, FEE_VENUES);
+    renderStacks(tf, "fee", feeKey, (p) => `${word} · ${net ? NET_BASIS[p] : FEE_BASIS[p]}`, "fees", venues);
+    renderShareLines(tf, feeKey, "fee-share", "Share of platform fees", "fee-totals", "Short-term price fees by venue", word, venues, firstFeeIdx);
   }
 
   // ---------- liquidity rewards ----------
@@ -704,7 +714,7 @@
       `From ${span}, ${fmtInt(n)} wallets traded ${fmtUsd(w.volume)}. Half of it came from just ${fmtInt(k50)} wallets (${pctSmart((k50 / n) * 100)}). ` +
       `The top 1% (${fmtInt(top1n)} wallets) traded ${fmtPct(top1 * 100)}, and ${fmtPct(top1Maker * 100, 0)} of their volume came from resting (maker) orders, the signature of market makers. ` +
       `Half of all wallets traded under ${fmtUsd(bottom.max)} each and together made up ${pctSmart((bottom.volume / w.volume) * 100)} of volume. ` +
-      `${PLATFORMS[state.concVenue]}. Kalshi and Polymarket US don't publish account-level trades.`;
+      `${PLATFORMS[state.concVenue]}${state.concVenue === "hyperliquid" ? `, from its public trade feed since ${CV.since}` : ""}. Kalshi and Polymarket US don't publish account-level trades.`;
 
     drawTiles($("#conc-tiles"), [
       { label: "Wallets that traded", value: fmtInt(n), note: `${fmtUsd(w.volume)} traded · ${span}` },
@@ -788,6 +798,7 @@
   const LB_WINDOWS = {
     polymarket: [["7d", "7 days"], ["30d", "30 days"], ["8w", "8 weeks"], ["13w", "13 weeks"], ["all", "All time"]],
     predict: [["7d", "7 days"], ["30d", "30 days"], ["8w", "8 weeks"], ["13w", "13 weeks"], ["all", "All time"]],
+    hyperliquid: [["7d", "7 days"], ["30d", "30 days"], ["all", "Since collection began"]],
     kalshi: [["Crypto|monthly", "Crypto · month"], ["Crypto|all_time", "Crypto · all time"], ["Financials|monthly", "Financials · month"], ["Financials|all_time", "Financials · all time"]],
   };
   let lbSort = { key: "volume", dir: -1 };
@@ -844,6 +855,21 @@
         { k: "rank", t: "#", num: true },
         { k: "name", t: "Trader", render: traderCell },
         { k: "x", t: "X", render: (r) => (r.x ? link(`https://x.com/${r.x}`, `@${r.x}`) : dash()) },
+        { k: "volume", t: "Volume", num: true, f: fmtUsd },
+        { k: "notional", t: "Contracts", num: true, f: fmtCompact },
+        { k: "pnl", t: "Realized PnL", num: true, f: fmtUsd, cls: (r) => (r.pnl > 0 ? "pos" : r.pnl < 0 ? "neg" : "") },
+        { k: "fills", t: "Fills", num: true, f: fmtInt },
+        { k: "markets", t: "Markets", num: true, f: fmtInt },
+        { k: "maker_share", t: "Maker %", num: true, f: (v) => (v == null ? "–" : `${Math.round(v * 100)}%`) },
+        { k: "top_market", t: "Most traded", f: (v) => v || "–" },
+      ];
+    } else if (state.lbPlatform === "hyperliquid") {
+      const w = L.hyperliquid?.[state.lbWindow];
+      rows = w?.rows || [];
+      lede.textContent = `Wallets ranked by dollars traded in Hyperliquid's short-term price outcome markets, ${w ? `${w.start} to ${w.end}` : "once the trade feed has a full day"}. Hyperliquid keeps no history of these trades, so this is built from its public trade feed, collected since ${w ? w.start : "November 2026"} while the hourly job runs. “Volume” is the dollars on the wallet's own side of every fill (a No buyer pays 1 minus the Yes price); “Contracts” is the shares on those fills, each worth $1 at settlement. PnL is realized on markets that settled: trade cashflows plus the payout, net of estimated fees, and only for markets the feed saw from listing to settlement. “Maker %” is the share of a wallet's volume from resting orders. Hyperliquid accounts have no public names; the link opens the wallet in Hyperliquid's explorer.`;
+      cols = [
+        { k: "rank", t: "#", num: true },
+        { k: "name", t: "Trader", render: traderCell },
         { k: "volume", t: "Volume", num: true, f: fmtUsd },
         { k: "notional", t: "Contracts", num: true, f: fmtCompact },
         { k: "pnl", t: "Realized PnL", num: true, f: fmtUsd, cls: (r) => (r.pnl > 0 ? "pos" : r.pnl < 0 ? "neg" : "") },
@@ -931,8 +957,8 @@
 
   // ---------- liquidity ----------
   const BANDS = [1, 2, 5];
-  const OB_VENUES = ["polymarket", "kalshi", "predict"];
-  const OB_ASSETS = { predict: ["BTC", "ETH", "BNB"] }; // venues without a 15m market for every asset
+  const OB_VENUES = ["polymarket", "kalshi", "predict", "hyperliquid"];
+  const OB_ASSETS = { predict: ["BTC", "ETH", "BNB"], hyperliquid: ["BTC", "ETH"] }; // venues without a 15m market for every asset
   const SIDE_LABEL = { both: "bid + offer", bid: "bid", ask: "offer" };
 
   function renderLiquidity() {
@@ -975,7 +1001,7 @@
       return opt;
     };
 
-    const notListed = (p) => `<strong>No ${state.obAsset} 15m market on ${PLATFORMS[p]}</strong><span>It lists 15-minute Up/Down markets on ${OB_ASSETS[p].join(", ")}.</span>`;
+    const notListed = (p) => `<strong>No ${state.obAsset} 15m market on ${PLATFORMS[p]}</strong><span>It lists 15-minute ${p === "hyperliquid" ? "strike" : "Up/Down"} markets on ${OB_ASSETS[p].join(", ")}.</span>`;
     for (const p of OB_VENUES) {
       const d = pair[p];
       const missing = OB_ASSETS[p] && !OB_ASSETS[p].includes(state.obAsset) ? notListed(p) : noData;
@@ -1070,10 +1096,10 @@
       <p><b>Scope.</b> Markets that settle on a financial price within one day: Polymarket Up/Down (5m, 15m, 1h, 4h, daily), “above X” strike ladders (hourly and daily), price-range and same-day “reach / dip to” markets; Kalshi 15-minute Up/Down plus hourly and daily above/below and range series; every Predict.fun Up/Down market (5m, 15m, 1h, daily); Hyperliquid outcome markets on a price that settle within a day of listing: its own daily “above X” and price-range markets, and strike markets listed by other deployers on its exchange. Covers crypto, equity indices and single stocks, commodities, and FX and Treasury yields. Weekly, monthly and longer-dated markets are excluded.</p>
       <p><b>Volume.</b> <i>Notional</i> counts contracts traded, each paying $1 if it wins. For Polymarket and Predict.fun that's shares on the taker side of each fill; for Kalshi it's contracts from Kalshi's daily market report. <i>Cash</i> is dollars paid: the taker's USDC on Polymarket Intl and USDT on Predict.fun, from on-chain fills. On Kalshi and Polymarket US it's the traded (yes-side) price × contracts, because neither publishes which side the taker was on. Polymarket's own site shows roughly 2× these numbers because it counts both sides of every trade.</p>
       <p><b>Venues.</b> <i>Polymarket Intl</i> is the on-chain exchange (Polygon), read from Dune. <i>Polymarket US</i> is the CFTC-regulated US exchange; it trades off-chain, so it comes from the exchange's public daily time-and-sales files. Its only short-term price markets today are BTC Up/Down 15m and 1h. Those files have no account IDs or taker side, so Polymarket US has no trader counts or leaderboard, and its cash is price × quantity. Its sessions run 5pm–5pm ET, so the most recent UTC day fills in a day later. <i>Predict.fun</i> is an on-chain exchange on BNB Chain, built on the same contract design as Polymarket and read from Dune. Its markets are identified on-chain: 5m and 15m rounds from its Chainlink Up/Down contract (by price feed), hourly and daily markets from the title stored with each UMA question. History starts with its first Up/Down market in November 2025; its 15m BTC series stopped on April 2, 2026 and relaunched on Chainlink pricing on April 27.</p>
-      <p><b>Hyperliquid.</b> Hyperliquid's outcome markets (HIP-4) trade on its own exchange, and its public API keeps no volume history once a market settles. So volume is collected live: every 10 seconds, during the hourly order-book job, the page records how much each live market's 24-hour volume has grown. History starts with the first full day of collection, November 11, 2026. Markets that list and settle entirely between two runs of the job, a few minutes at most, are missed, as are trades in a market's last few seconds. Its Yes and No order books show the same trades, so contracts are counted once and cash values each contract at its Yes price. Durations are each market's time from listing to settlement, rounded up, so a 3-minute market counts as 5m. Platform totals, for the share charts, are every Hyperliquid outcome market (mostly sports), from DefiLlama; they value cash at each fill's price, so the cash share is approximate and the notional share is like for like. Hyperliquid isn't in the fee charts: its outcome fees, charged when a position closes or settles, aren't published per market.</p>
+      <p><b>Hyperliquid.</b> Hyperliquid's outcome markets (HIP-4) trade on its own exchange, and its public API keeps no volume history once a market settles. So volume is collected live: every 10 seconds, during the hourly order-book job, the page records how much each live market's 24-hour volume has grown. History starts with the first full day of collection, November 11, 2026. Markets that list and settle entirely between two runs of the job, a few minutes at most, are missed, as are trades in a market's last few seconds. Its Yes and No order books show the same trades, so contracts are counted once and cash values each contract at its Yes price. Durations are each market's time from listing to settlement, rounded up to the nearest of 5m, 15m, 1h, 4h and 1d, with a few minutes' slack because markets are listed shortly before their window opens (until November 13, 2026, without the slack, so some 15m and 1h markets were counted one bucket longer). Platform totals, for the share charts, are every Hyperliquid outcome market (mostly sports), from DefiLlama; they value cash at each fill's price, so the cash share is approximate and the notional share is like for like. Wallets come from Hyperliquid's public trade feed, which the same job follows (it shows both wallets on every fill), from ${M?.hyperliquid?.traders_from ? fmtDate(M.hyperliquid.traders_from, "day") : "the start of collection"}: they drive the trader counts, concentration and top traders. Fees are estimated. Outcome markets charge only when a position is closed or settled, with no maker rebates, so the feed tracks each wallet's position in each market and applies the typical rates seen on real fills: 0.07% of value for a taker closing, 0.06% for a maker, 0.14% of the payout at settlement, times the market's fee scale. Actual rates fall with a wallet's volume tier and staking, so this likely overstates fees a little for the largest traders. Estimates start the day after the feed's first full day, when every market in scope has been seen from listing. The platform fee total, for the share charts, is DefiLlama's (all outcome markets, including front-ends' builder fees).</p>
       <p><b>Fees.</b> <i>Gross</i> is what takers are charged. Polymarket Intl fees are the actual fees recorded on each on-chain fill. Takers pay them; makers pay none. Predict.fun's fills record the most an order could be charged and the excess is refunded to the taker in the same transaction, so its gross is the recorded fee minus those refunds, measured per day from its fee contracts. Its fees are charged in shares when buying, valued here at the fill price. Kalshi and Polymarket US don't publish fees, so they're estimated per trade from each venue's published formula, rate × contracts × price × (1 − price). Kalshi's rate is 7% for takers × the series' fee multiplier, plus 1.75% on series that also charge makers. Polymarket US uses its dated schedule, currently 6.95%. Kalshi rounds each order's fee up to the next cent, so its estimate runs slightly low. Kalshi's fee settings are today's, applied to all history. <i>Net</i> is gross minus maker rebates, and nothing else: referral rewards, taker rebates, liquidity rewards and market-maker programmes aren't subtracted. Polymarket Intl: all crypto fees through January 14, 2026, then the published 20% for crypto and 25% for finance, checked against rebates paid on sample markets; its platform total uses the rebates actually paid on-chain. Predict.fun: rebates actually paid, measured per day on-chain (25% of fees on Up/Down markets since July 16, 2026). Polymarket US: its filed schedule, a coefficient of 0.0125 until October 19, 2026, then tiers by each maker's prior-month volume. Trades don't show who the maker was, so all maker volume is assumed to earn the top tier (0.0104, about 15% of the taker fee), which makes net a low estimate. Kalshi: its fee schedule has no per-fill maker rebate on these markets, so net equals gross. “Share of platform fees” uses the same basis for both the short-term fees and the venue's total. “Share of platform fees” divides short-term fees by the venue's total fees, calculated the same way.</p>
       <p><b>Liquidity rewards.</b> Rewards for resting orders across each venue's whole platform, not only the short-term price markets above. Maker rebates, referrals, holding rewards and volume incentives aren't included. <i>Kalshi</i> lists a reward pool for each market. Each pool that was marked paid, is still running or ended in the last two days is spread evenly over its period and assigned to its series' category. Kalshi publishes pool sizes but not amounts paid, and a market without two-sided depth pays less than its pool, so these are upper limits. Kalshi's list starts with pools from September 24, 2025. <i>Polymarket Intl</i> totals are actual on-chain payouts from its two reward wallets, dated to the day earned, without transfers to its own treasury. They include occasional extra batches paid to thousands of wallets, such as $563K on August 7, 2026. Payouts don't name a market, so the category split is an estimate made two ways, with a dashed line on the chart where the method changes. From November 9, 2026, each day's payouts are split by the reward rates Polymarket posts for each market, saved once a day, so markets that open and close between saves are missed. Polymarket doesn't keep those rates for closed markets, so before that date each wallet's payout is split by where it made markets that day. That favors markets that fill often: in a check in early November 2026, politics was 53% of this estimate and 38% of posted reward rates. Wallets with no fills that day are shown as <i>Not attributed</i>. Polymarket US rewards aren't public. Categories combine each venue's own labels, so they line up only approximately.</p>
-      <p><b>Traders.</b> Unique Polymarket Intl and Predict.fun wallets, makers and takers, from on-chain fills. Counts use approximate distinct counting, accurate to about 2%. Kalshi doesn't publish account-level trades.</p>
+      <p><b>Traders.</b> Unique Polymarket Intl and Predict.fun wallets, makers and takers, from on-chain fills. Counts use approximate distinct counting, accurate to about 2%. Hyperliquid counts are exact over its public trade feed, which misses trades in the minute or two between hourly runs, so they can be slightly low. Kalshi doesn't publish account-level trades.</p>
       <p><b>Concentration.</b> Each Polymarket Intl or Predict.fun wallet's volume is the dollars (USDC or USDT) it paid or received on its own side of every fill in these markets, as maker or taker, the same measure as the Top traders table. Every fill has two sides, so wallet volumes add up to about 2× the taker-side cash shown in the volume charts. Wallets are ranked by exact volume; percentile tiers round up, so the top 1% of 250 wallets is 3. A wallet isn't necessarily a person: one trader can run several wallets, which would make true concentration higher. The Gini coefficient is exact over all wallets. The 7-day and 30-day windows end on the date shown and refresh weekly; the trend uses complete Monday–Sunday weeks.</p>
       <p><b>Sources.</b> Polymarket Intl and Predict.fun on-chain trades and Kalshi daily reports via Dune; Polymarket US time-and-sales files from polymarketexchange.com; Polymarket profiles via the Gamma API; Kalshi series metadata and leaderboard via Kalshi's public API; order books from the Polymarket CLOB and Kalshi APIs and Predict.fun's public GraphQL API, which also supplies Predict.fun account names. History refreshes daily and order-book snapshots hourly. Days are UTC; the current partial day is excluded.</p>`;
   }

@@ -6,6 +6,7 @@ import shutil
 from collections import defaultdict
 from datetime import date, datetime, timedelta, timezone
 
+from . import hyperliquid_stats
 from .kalshi_series import load as load_kalshi_series
 from .rebates import pmus_coef, poly_rate
 from .rewards import CATEGORIES as REWARD_CATEGORIES
@@ -102,7 +103,11 @@ def build():
         started = datetime.fromtimestamp(json.load(open(hl_state))["started"], timezone.utc)
         hl_from = (started.date() + timedelta(days=0 if started.time() == datetime.min.time() else 1)).isoformat()
     hl_series = series_block([r for r in hv if hl_from and r["d"] >= hl_from], lambda r: (r["asset"], r["dur"], r["ctype"], r["asset_class"]),
-                             {"notional": "notional", "cash": "cash"})
+                             {"notional": "notional", "cash": "cash", "fees": "fees"})
+    # wallets, and so fees, come from the trade feed: fees need positions seen from a market's
+    # listing, so they start the day after the feed's first full day (daily markets list a day ahead)
+    hl_feed = hyperliquid_stats.feed_from()
+    hl_fees_from = (hl_feed + timedelta(days=1)).isoformat() if hl_feed else None
 
     def kkey(r):
         m = ks.get(r["series"])
@@ -152,6 +157,9 @@ def build():
     predict_totals = totals(prtot, lambda r: True, "notional", "cash")
     hl_totals = totals(htot, lambda r: hl_from and r["d"] >= hl_from, "notional", "cash")
     hl_totals.pop("traders")
+    for arrs in [hl_totals] + hl_series:  # no fee figures before the feed could estimate them
+        arrs["fees"] = [v if hl_fees_from and days[i] >= hl_fees_from else None for i, v in enumerate(arrs["fees"])]
+        arrs["fees_net"] = list(arrs["fees"])  # outcome trading has no maker rebates
 
     # --- net of maker rebates (fees_net); Kalshi has none, so the page uses its gross for net ---
     for s_ in poly_series:
@@ -237,7 +245,9 @@ def build():
         "polymarket_us": {"series": us_series, "totals": us_totals},
         "predict": {"series": predict_series, "totals": predict_totals, "traders": predict_traders},
         "kalshi_series_map": ks,
-        **({"hyperliquid": {"series": hl_series, "totals": hl_totals, "collected_from": hl_from}}
+        **({"hyperliquid": {"series": hl_series, "totals": hl_totals, "collected_from": hl_from,
+                            "traders": hyperliquid_stats.traders(hl_feed, date.fromisoformat(days[-1])) if hl_feed and str(hl_feed) <= days[-1] else {},
+                            "traders_from": str(hl_feed) if hl_feed else None, "fees_from": hl_fees_from}}
            if hl_from and hl_from <= days[-1] else {}),
         "rewards": rewards_block(),
     }

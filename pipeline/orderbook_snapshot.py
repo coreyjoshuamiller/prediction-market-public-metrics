@@ -1,5 +1,5 @@
 """Sample top-of-book liquidity for the live 15-minute Up/Down markets on Polymarket, Kalshi
-and predict.fun.
+and predict.fun, and Hyperliquid's 15-minute strike markets.
 
 Each sample records, for the "Up"/YES side of the currently-live 15m window:
 best bid/ask, $ resting at the best bid/ask, and $ resting on each side within 1c, 2c and 5c
@@ -13,15 +13,16 @@ import argparse
 import csv
 import json
 import os
+import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 
-from .net import get_json
+from .net import get_json, post_json
 from .predict_api import gql
 
 ASSETS = ["BTC", "ETH", "SOL", "XRP", "BNB"]
-PLATFORM_ASSETS = {"predict": ["BTC", "ETH", "BNB"]}  # venues that don't list every asset
+PLATFORM_ASSETS = {"predict": ["BTC", "ETH", "BNB"], "hyperliquid": ["BTC", "ETH"]}  # venues that don't list every asset
 WINDOW = 900  # 15 minutes
 DEPTH_BANDS = (1, 2, 5)  # cents from the midpoint
 OUT_DIR = os.path.join(os.path.dirname(__file__), "..", "data", "orderbook")
@@ -129,7 +130,44 @@ def predict_sample(asset, window_start):
     return s and {"market": slug, **s}
 
 
-SAMPLERS = {"polymarket": polymarket_sample, "kalshi": kalshi_sample, "predict": predict_sample}
+HL_INFO = "https://api.hyperliquid.xyz/info"
+_hl_lock = threading.Lock()
+_hl_cache = {}
+
+
+def _hl_markets(window_start):
+    """{asset: Yes coin} for Hyperliquid's busiest 15-minute strike market on each asset that settles
+    at the end of this window. Deployers list several at different strikes; Hyperliquid's books for
+    Yes and No are merged, so the Yes book is the whole book."""
+    with _hl_lock:
+        if _hl_cache.get("window") != window_start or time.time() - _hl_cache.get("at", 0) > 50:
+            meta = post_json(HL_INFO, {"type": "outcomeMeta"}, timeout=30)
+            vol = {c["coin"]: float(c["dayNtlVlm"]) for c in post_json(HL_INFO, {"type": "spotMetaAndAssetCtxs"}, timeout=30)[1]
+                   if c["coin"].startswith("#")}
+            expiry = datetime.fromtimestamp(window_start + WINDOW, timezone.utc).strftime("%Y%m%d-%H%M")
+            best = {}
+            for o in meta["outcomes"]:
+                f = dict(x.split(":", 1) for x in (o.get("description") or "").split("|") if ":" in x)
+                coin = f"#{o['outcome'] * 10}"
+                if o["name"] == "template:binaryPrice" and f.get("time") == expiry and coin in vol:
+                    asset = (f.get("perp") or "").split(":")[-1].upper()
+                    if vol[coin] >= best.get(asset, (None, -1))[1]:
+                        best[asset] = (coin, vol[coin])
+            _hl_cache.update(window=window_start, at=time.time(), coins={a: c for a, (c, _) in best.items()})
+        return _hl_cache["coins"]
+
+
+def hyperliquid_sample(asset, window_start):
+    coin = _hl_markets(window_start).get(asset)
+    if not coin:
+        return None
+    bids, asks = post_json(HL_INFO, {"type": "l2Book", "coin": coin}, timeout=30)["levels"]
+    s = _summarize([(float(x["px"]), float(x["sz"])) for x in bids], [(float(x["px"]), float(x["sz"])) for x in asks])
+    return s and {"market": coin, **s}
+
+
+SAMPLERS = {"polymarket": polymarket_sample, "kalshi": kalshi_sample, "predict": predict_sample,
+            "hyperliquid": hyperliquid_sample}
 
 
 def _migrate_header(path):
