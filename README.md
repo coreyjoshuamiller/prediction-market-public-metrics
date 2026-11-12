@@ -29,7 +29,7 @@ GitHub's cron is best-effort (runs can be hours late or dropped), which is why t
 
 | Data | Source |
 |---|---|
-| Polymarket Intl (on-chain) trades, markets, resolutions | Dune `polymarket_polygon.market_trades` / `market_details` |
+| Polymarket Intl (on-chain) trades, markets, resolutions | Dune `polymarket_polygon.market_trades_raw`, `polymarket.gamma_markets_0001` (event and market slugs), `polymarket.markets_raw` (tags, winning tokens) |
 | Polymarket US (CFTC-regulated, off-chain) trades | Public daily time-and-sales files: `polymarketexchange.com/files/time-and-sales/manifest.json` |
 | Kalshi per-series daily contracts and cash volume, platform totals | Dune `kalshi.market_report` / `kalshi.trade_report` |
 | Predict.fun (BNB Chain) fills, Up/Down markets, platform totals | Dune `predict_bnb.*` (decoded contracts): `ctfexchange_evt_orderfilled`, the Chainlink Up/Down adapter's `roundcreated`, UMA `questioninitialized` titles, `conditionpreparation`, `tokenregistered` |
@@ -37,7 +37,7 @@ GitHub's cron is best-effort (runs can be hours late or dropped), which is why t
 | Hyperliquid outcome-market volume (HIP-4) | Collected live from `api.hyperliquid.xyz/info` `spotMetaAndAssetCtxs` (24h volume per market) and `outcomeMeta`; state in `data/hyperliquid/state.json` |
 | Hyperliquid outcome platform totals | DefiLlama `api.llama.fi/summary/dexs/hyperliquid-outcomes` |
 | Kalshi liquidity reward pools | `api.elections.kalshi.com/trade-api/v2/incentive_programs` (public; liquidity pools from 2025-09-24) |
-| Polymarket Intl liquidity rewards | Dune `erc20_polygon.evt_Transfer` from its two reward wallets, split using `market_trades` / `market_details` tags |
+| Polymarket Intl liquidity rewards | Dune `erc20_polygon.evt_Transfer` from its two reward wallets, split using `market_trades_raw` and `polymarket.markets_raw` tags |
 | Polymarket Intl posted reward rates (saved daily) | `clob.polymarket.com/rewards/markets/current`, with tags from `gamma-api.polymarket.com/markets` |
 | Kalshi leaderboard | `api.elections.kalshi.com/v1/social/leaderboard` (unofficial) |
 | Polymarket profiles (name, X handle) | `gamma-api.polymarket.com/public-profile` |

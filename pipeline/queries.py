@@ -4,16 +4,36 @@ from datetime import date, timedelta
 from .markets import assets_values_sql, poly_classify_sql, predict_assets_values_sql
 from .rewards import poly_category_sql
 
-SLUG = "regexp_extract(polymarket_link, 'event/([^/?''\"]+)', 1)"
+# Dune's public Polymarket tables (polymarket_polygon.market_details and market_trades went private
+# on 2026-11-12): market_trades_raw has the same fills; polymarket.gamma_markets_0001 and
+# polymarket.markets_raw are Polymarket's own market listings (slugs, tags, outcome tokens, winners).
+TRADES = "polymarket_polygon.market_trades_raw"
+
+# per outcome token, its payout once the market has resolved (1 = winner, 0 = loser, 0.5 = 50/50)
+_RES = """res AS (
+  SELECT tok, max(payout) AS payout FROM (
+    SELECT token_1_id AS tok, CASE WHEN is_50_50_outcome THEN 0.5 WHEN token_1_winner THEN 1.0 ELSE 0.0 END AS payout
+    FROM polymarket.markets_raw WHERE token_1_winner OR token_2_winner OR is_50_50_outcome
+    UNION ALL
+    SELECT token_2_id, CASE WHEN is_50_50_outcome THEN 0.5 WHEN token_2_winner THEN 1.0 ELSE 0.0 END
+    FROM polymarket.markets_raw WHERE token_1_winner OR token_2_winner OR is_50_50_outcome
+  ) GROUP BY 1
+)"""
 
 
 def _poly_markets_cte():
     tok, dur, typ = poly_classify_sql("slug")
+    ev_tok = poly_classify_sql("event_slug")[0]
     return f"""
 mk AS (
-  -- market_details keys are hex strings; market_trades keys are varbinary
-  SELECT from_hex(substr(condition_id, 3)) AS condition_id, max({SLUG}) AS slug
-  FROM polymarket_polygon.market_details
+  -- the listing's keys are hex strings; the trades' keys are varbinary. Classify by the event's
+  -- slug, or by the market's own when the event's doesn't fit a pattern (e.g. the daily
+  -- "will-bitcoin-reach-X-on-<day>" markets sit in "what-price-will-bitcoin-hit-..." events).
+  -- Weekly markets ("nvda-above-170-week-november-13") can sit in daily-looking events: out of scope.
+  SELECT from_hex(substr(condition_id, 3)) AS condition_id,
+    max(CASE WHEN market_slug LIKE '%-week-%' THEN market_slug
+             WHEN {ev_tok} IS NOT NULL THEN event_slug ELSE market_slug END) AS slug
+  FROM polymarket.gamma_markets_0001
   GROUP BY 1
 ),
 cls AS (
@@ -36,7 +56,7 @@ def _recent_days(days_from):
 def poly_activity(start, end, days_from=None):
     """Volume + unique traders for in-scope markets, plus platform totals, over [start, end).
 
-    Each row of market_trades is one trader's side of a fill: `maker` is that trader.
+    Each row of the trades table is one trader's side of a fill: `maker` is that trader.
     Notional = shares on the taker leg (one row per match), cash = USDC on the taker leg.
     """
     dims = ["asset, dur", "asset", "dur", "asset_class", "ctype", ""]
@@ -55,7 +75,7 @@ t AS (
     date(date_trunc('month', tr.block_time)) AS mo,
     cm.asset, cm.asset_class, cm.dur, cm.ctype,
     tr.maker AS trader, tr.is_taker_side, tr.shares, tr.amount
-  FROM polymarket_polygon.market_trades tr
+  FROM {TRADES} tr
   JOIN cm ON cm.condition_id = tr.condition_id
   WHERE tr.block_time >= timestamp '{start}' AND tr.block_time < timestamp '{end}'
 )
@@ -79,7 +99,7 @@ SELECT date(block_time) AS d,
   sum(shares) FILTER (WHERE is_taker_side) AS notional,
   sum(amount) FILTER (WHERE is_taker_side) AS cash,
   approx_distinct(maker) AS traders
-FROM polymarket_polygon.market_trades
+FROM {TRADES}
 WHERE block_time >= timestamp '{start}' AND block_time < timestamp '{end}'
 GROUP BY 1
 """
@@ -151,7 +171,7 @@ def poly_fees(start, end):
 WITH {_poly_markets_cte()},
 t AS (
   SELECT date(tr.block_time) AS d, cm.asset, cm.asset_class, cm.dur, cm.ctype, coalesce(tr.fee, 0) AS fee
-  FROM polymarket_polygon.market_trades tr
+  FROM {TRADES} tr
   LEFT JOIN cm ON cm.condition_id = tr.condition_id
   WHERE tr.block_time >= timestamp '{start}' AND tr.block_time < timestamp '{end}'
 )
@@ -196,7 +216,7 @@ WITH pay AS (
 ),
 md AS (
   SELECT from_hex(substr(condition_id, 3)) AS condition_id, arbitrary(tags) AS t
-  FROM polymarket_polygon.market_details
+  FROM polymarket.markets_raw
   GROUP BY 1
 ),
 cat AS (
@@ -204,7 +224,7 @@ cat AS (
 ),
 f AS (
   SELECT date(tr.block_time) AS d, tr.maker AS wallet, c.category, sum(tr.amount) AS vol
-  FROM polymarket_polygon.market_trades tr
+  FROM {TRADES} tr
   JOIN cat c ON c.condition_id = tr.condition_id
   WHERE tr.block_time >= timestamp '{fills_from}' AND tr.block_time < timestamp '{fills_to}' AND NOT tr.is_taker_side
   GROUP BY 1, 2, 3
@@ -227,7 +247,7 @@ def _poly_wallet_volume(start, end, by_week=False):
 WITH {_poly_markets_cte()},
 t AS (
   SELECT {wk}tr.maker AS trader, tr.amount, tr.is_taker_side
-  FROM polymarket_polygon.market_trades tr
+  FROM {TRADES} tr
   JOIN cm ON cm.condition_id = tr.condition_id
   WHERE tr.block_time >= timestamp '{start}' AND tr.block_time < timestamp '{end}'
 ),
@@ -316,22 +336,16 @@ def poly_leaders(start, end, limit=150):
     and realized PnL on markets that have resolved (cashflows + $1 per winning share held)."""
     return f"""
 WITH {_poly_markets_cte()},
-res AS (  -- settlement_value is the per-token payout (1 = winning outcome, 0 = losing)
-  SELECT from_hex(substr(condition_id, 3)) AS condition_id, lower(token_outcome) AS tok_out,
-    max(cast(settlement_value AS double)) AS payout
-  FROM polymarket_polygon.market_details
-  WHERE settlement_value IS NOT NULL
-  GROUP BY 1, 2
-),
+{_RES},
 t AS (
-  SELECT tr.maker AS trader, tr.condition_id, lower(tr.token_outcome) AS tok_out,
+  SELECT tr.maker AS trader, tr.condition_id, tr.asset_id AS tok,
     cm.asset, cm.dur, tr.is_taker_side, tr.maker_side, tr.shares, tr.amount, coalesce(tr.fee, 0) AS fee
-  FROM polymarket_polygon.market_trades tr
+  FROM {TRADES} tr
   JOIN cm ON cm.condition_id = tr.condition_id
   WHERE tr.block_time >= timestamp '{start}' AND tr.block_time < timestamp '{end}'
 ),
 pos AS (  -- per trader, per market outcome token
-  SELECT trader, condition_id, tok_out,
+  SELECT trader, condition_id, tok,
     sum(CASE WHEN maker_side = 'BUY' THEN -amount ELSE amount END) - sum(fee) AS cashflow,
     sum(CASE WHEN maker_side = 'BUY' THEN shares ELSE -shares END) AS net_shares
   FROM t GROUP BY 1, 2, 3
@@ -339,7 +353,7 @@ pos AS (  -- per trader, per market outcome token
 pnl AS (
   SELECT p.trader,
     sum(p.cashflow + p.net_shares * r.payout) AS realized_pnl
-  FROM pos p JOIN res r ON r.condition_id = p.condition_id AND r.tok_out = p.tok_out
+  FROM pos p JOIN res r ON r.tok = p.tok
   GROUP BY 1
 ),
 agg AS (
@@ -371,29 +385,23 @@ def poly_leaders_weekly(start, end, per_week=2000):
     PnL is linear in fills and these markets resolve within a day, so weekly PnL sums too."""
     return f"""
 WITH {_poly_markets_cte()},
-res AS (
-  SELECT from_hex(substr(condition_id, 3)) AS condition_id, lower(token_outcome) AS tok_out,
-    max(cast(settlement_value AS double)) AS payout
-  FROM polymarket_polygon.market_details
-  WHERE settlement_value IS NOT NULL
-  GROUP BY 1, 2
-),
+{_RES},
 t AS (
-  SELECT date(date_trunc('week', tr.block_time)) AS wk, tr.maker AS trader, tr.condition_id, lower(tr.token_outcome) AS tok_out,
+  SELECT date(date_trunc('week', tr.block_time)) AS wk, tr.maker AS trader, tr.condition_id, tr.asset_id AS tok,
     cm.asset, cm.dur, tr.is_taker_side, tr.maker_side, tr.shares, tr.amount, coalesce(tr.fee, 0) AS fee
-  FROM polymarket_polygon.market_trades tr
+  FROM {TRADES} tr
   JOIN cm ON cm.condition_id = tr.condition_id
   WHERE tr.block_time >= timestamp '{start}' AND tr.block_time < timestamp '{end}'
 ),
 pos AS (
-  SELECT wk, trader, condition_id, tok_out,
+  SELECT wk, trader, condition_id, tok,
     sum(CASE WHEN maker_side = 'BUY' THEN -amount ELSE amount END) - sum(fee) AS cashflow,
     sum(CASE WHEN maker_side = 'BUY' THEN shares ELSE -shares END) AS net_shares
   FROM t GROUP BY 1, 2, 3, 4
 ),
 pnl AS (
   SELECT p.wk, p.trader, sum(p.cashflow + p.net_shares * r.payout) AS realized_pnl
-  FROM pos p JOIN res r ON r.condition_id = p.condition_id AND r.tok_out = p.tok_out
+  FROM pos p JOIN res r ON r.tok = p.tok
   GROUP BY 1, 2
 ),
 agg AS (
