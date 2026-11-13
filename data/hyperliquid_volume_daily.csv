@@ -72,23 +72,23 @@ d,asset,asset_class,dur,ctype,notional,cash,fees
 2026-11-12,WTI Oil,Commodities,1d,Strike,15800.0,9621.1,0.0
 2026-11-12,XYZ100,Equities,1d,Strike,9875.0,1756.06,0.0
 2026-11-13,Anthropic,Equities,1d,Strike,130.0,57.64,0.0
-2026-11-13,BTC,Crypto,15m,Strike,8163.0,3034.63,7.63
-2026-11-13,BTC,Crypto,1d,Strike,10036.0,24.31,0.0
-2026-11-13,BTC,Crypto,1h,Strike,491.0,58.58,0.68
+2026-11-13,BTC,Crypto,15m,Strike,11761.0,4585.05,11.41
+2026-11-13,BTC,Crypto,1d,Strike,20257.0,35.97,0.0
+2026-11-13,BTC,Crypto,1h,Strike,850.0,84.62,0.69
 2026-11-13,BTC,Crypto,4h,Strike,297.0,48.27,0.0
 2026-11-13,BTC,Crypto,5m,Strike,1413.0,417.96,1.58
-2026-11-13,ETH,Crypto,15m,Strike,21873.0,8620.59,30.75
+2026-11-13,ETH,Crypto,15m,Strike,22347.0,8748.47,31.36
 2026-11-13,ETH,Crypto,1d,Strike,560.0,17.32,0.0
-2026-11-13,Gold,Commodities,1d,Strike,5733.0,3320.58,0.0
-2026-11-13,HYPE,Crypto,15m,Strike,3017.0,1358.63,3.79
-2026-11-13,HYPE,Crypto,1d,Strike,4455.0,3942.83,0.0
-2026-11-13,MU,Equities,1d,Strike,1046.0,728.08,0.0
-2026-11-13,NVDA,Equities,1d,Strike,3053.0,1799.9,0.0
+2026-11-13,Gold,Commodities,1d,Strike,6305.0,3768.61,0.0
+2026-11-13,HYPE,Crypto,15m,Strike,5085.0,2112.04,5.94
+2026-11-13,HYPE,Crypto,1d,Strike,6466.0,5020.82,0.0
+2026-11-13,MU,Equities,1d,Strike,2214.0,1280.85,0.0
+2026-11-13,NVDA,Equities,1d,Strike,3130.0,1837.99,0.0
 2026-11-13,S&P 500,Equities,1d,Strike,156.0,108.84,0.0
-2026-11-13,SKHY,Equities,1d,Strike,489.0,376.5,0.0
-2026-11-13,SNDK,Equities,1d,Strike,2058.0,1395.47,0.0
-2026-11-13,SOL,Crypto,1d,Strike,418.0,25.38,0.0
+2026-11-13,SKHY,Equities,1d,Strike,829.0,530.63,0.0
+2026-11-13,SNDK,Equities,1d,Strike,2994.0,1812.07,0.0
+2026-11-13,SOL,Crypto,1d,Strike,7089.0,52.71,0.0
 2026-11-13,SPCX,Equities,1d,Strike,3205.0,1947.01,0.0
-2026-11-13,Silver,Commodities,1d,Strike,4922.0,2767.59,0.0
-2026-11-13,WTI Oil,Commodities,1d,Strike,754.0,338.61,0.0
-2026-11-13,XYZ100,Equities,1d,Strike,6899.0,4695.91,0.0
+2026-11-13,Silver,Commodities,1d,Strike,5144.0,2914.61,0.0
+2026-11-13,WTI Oil,Commodities,1d,Strike,870.0,385.85,0.0
+2026-11-13,XYZ100,Equities,1d,Strike,7140.0,4835.05,0.0
