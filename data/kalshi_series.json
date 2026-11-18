@@ -167,6 +167,22 @@
   "title": "US 10Y Treasury yield hourly",
   "category": "Financials"
  },
+ "KX20YRRATED": {
+  "asset": "UST Yields",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "US 20Y Treasury yield daily",
+  "category": "Financials"
+ },
+ "KX20YRRATEH": {
+  "asset": "UST Yields",
+  "asset_class": "FX & Rates",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "US 20Y Treasury yield hourly",
+  "category": "Financials"
+ },
  "KX2YRRATE15M": {
   "asset": "UST Yields",
   "asset_class": "FX & Rates",
@@ -230,6 +246,14 @@
   "ctype": "Up/Down",
   "title": "Cardano 15 Minute",
   "category": "Crypto"
+ },
+ "KXAMZNCCD": {
+  "asset": "AMZN",
+  "asset_class": "Equities",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "Amazon Daily Credit Card Spend",
+  "category": "Financials"
  },
  "KXAUDUSD15M": {
   "asset": "AUD/USD",
