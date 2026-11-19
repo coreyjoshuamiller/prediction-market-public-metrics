@@ -247,14 +247,6 @@
   "title": "Cardano 15 Minute",
   "category": "Crypto"
  },
- "KXAMZNCCD": {
-  "asset": "AMZN",
-  "asset_class": "Equities",
-  "duration": "1d",
-  "ctype": "Strike",
-  "title": "Amazon Daily Credit Card Spend",
-  "category": "Financials"
- },
  "KXAUDUSD15M": {
   "asset": "AUD/USD",
   "asset_class": "FX & Rates",

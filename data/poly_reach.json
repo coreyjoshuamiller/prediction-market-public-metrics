@@ -112,7 +112,7 @@
 "xmtp": false
 },
 "0x028befe0ccc0afc67c17e9e9301996b191987959": {
-"checked": "2026-11-11",
+"checked": "2026-11-19",
 "profiles": [],
 "signer": null,
 "type": "email",
@@ -231,7 +231,7 @@
 "xmtp": false
 },
 "0x04786799b120e9f7641e23f883397252c5e99041": {
-"checked": "2026-11-11",
+"checked": "2026-11-19",
 "profiles": [],
 "signer": null,
 "type": "email",
@@ -916,6 +916,13 @@
 "type": "email",
 "xmtp": false
 },
+"0x1302ecf3ff2f772baad547547da6b364c19ec6bb": {
+"checked": "2026-11-19",
+"profiles": [],
+"signer": null,
+"type": "email",
+"xmtp": false
+},
 "0x1355c2a3878fa30845f5fe30185beab8a04b9fda": {
 "checked": "2026-10-13",
 "profiles": [],
@@ -966,7 +973,7 @@
 "xmtp": false
 },
 "0x14767de7346a328d71f8fd4aed260d1cd67dec90": {
-"checked": "2026-11-11",
+"checked": "2026-11-19",
 "profiles": [],
 "signer": null,
 "type": "email",
@@ -1064,7 +1071,7 @@
 "xmtp": false
 },
 "0x17dbae6fecba1c02bd673887b3cd94b75529c1e8": {
-"checked": "2026-11-11",
+"checked": "2026-11-19",
 "profiles": [],
 "signer": null,
 "type": "email",
@@ -2173,7 +2180,7 @@
 "xmtp": false
 },
 "0x31429923cd75c0a1b5fb0e2b74af266b59a98cbc": {
-"checked": "2026-11-11",
+"checked": "2026-11-19",
 "profiles": [],
 "signer": null,
 "type": "email",
@@ -2635,7 +2642,7 @@
 "xmtp": false
 },
 "0x3a8f1438c109dfaae3c1e3e14a67956f058b43eb": {
-"checked": "2026-11-11",
+"checked": "2026-11-19",
 "profiles": [],
 "signer": null,
 "type": "email",
@@ -3453,6 +3460,13 @@
 "type": "email",
 "xmtp": false
 },
+"0x4d6a54288ac7f797033de898b2bfadfff45ff6bf": {
+"checked": "2026-11-19",
+"profiles": [],
+"signer": null,
+"type": "email",
+"xmtp": false
+},
 "0x4d8bc628487bbc9931b4d039e6a7529b8ae1a00d": {
 "checked": "2026-11-14",
 "profiles": [],
@@ -3609,6 +3623,13 @@
 },
 "0x515ccbfef54237723a4fca9acac146f5ca5d3e91": {
 "checked": "2026-11-14",
+"profiles": [],
+"signer": null,
+"type": "email",
+"xmtp": false
+},
+"0x51602be6f69db4cbbec322b5bb2e93886ed2a157": {
+"checked": "2026-11-19",
 "profiles": [],
 "signer": null,
 "type": "email",
@@ -4190,6 +4211,13 @@
 "profiles": [],
 "signer": "0xa22a496e2ab1fb1577e7400497721958b86cf698",
 "type": "safe",
+"xmtp": false
+},
+"0x5c6006b58d32ec3f7019af5583f5135b6bb4e4a3": {
+"checked": "2026-11-19",
+"profiles": [],
+"signer": null,
+"type": "email",
 "xmtp": false
 },
 "0x5c6ec9d90a5bde7a09dd1fad6a33ab9d7f024d5b": {
@@ -5353,7 +5381,14 @@
 "xmtp": false
 },
 "0x73d04955fb554aba05451f57598812b8f2e0239c": {
-"checked": "2026-11-11",
+"checked": "2026-11-19",
+"profiles": [],
+"signer": null,
+"type": "email",
+"xmtp": false
+},
+"0x73d4ef75f5d784a32e88611652de62076cf19006": {
+"checked": "2026-11-19",
 "profiles": [],
 "signer": null,
 "type": "email",
@@ -6263,7 +6298,7 @@
 "xmtp": false
 },
 "0x8630bbd847c9b9e8bba60af8228ec0137041d019": {
-"checked": "2026-11-11",
+"checked": "2026-11-19",
 "profiles": [],
 "signer": null,
 "type": "email",
@@ -6351,6 +6386,13 @@
 "profiles": [],
 "signer": null,
 "type": "email",
+"xmtp": false
+},
+"0x880bc1ad15f035c69fdacd4a0efd5429fa3190a8": {
+"checked": "2026-11-19",
+"profiles": [],
+"signer": "0x0568b436509b3a91c4adf31f7dcb2b3ac620bf7b",
+"type": "safe",
 "xmtp": false
 },
 "0x8818d81653a790e056100da8da1525a5d589f8ac": {
@@ -6570,6 +6612,13 @@
 "type": "email",
 "xmtp": false
 },
+"0x8c3202e2616d2667ca636d8b414c446daae16381": {
+"checked": "2026-11-19",
+"profiles": [],
+"signer": "0x0aba7b2fef0d6babc19cab2bc7a8d4d43af9f520",
+"type": "safe",
+"xmtp": false
+},
 "0x8c67c1e84c9a6803f21fde0a74da521a265a63fc": {
 "checked": "2026-11-16",
 "profiles": [],
@@ -6726,6 +6775,13 @@
 },
 "0x90e33303022844d772e3f67df0f9d3b2de4034ad": {
 "checked": "2026-11-16",
+"profiles": [],
+"signer": null,
+"type": "email",
+"xmtp": false
+},
+"0x9104a88305bcb8e5d3f811214cbc97368e235290": {
+"checked": "2026-11-19",
 "profiles": [],
 "signer": null,
 "type": "email",
@@ -7523,7 +7579,7 @@
 "xmtp": false
 },
 "0xa02adbd872221e037153026ccf3901739ab2baa3": {
-"checked": "2026-11-11",
+"checked": "2026-11-19",
 "profiles": [],
 "signer": null,
 "type": "email",
@@ -7858,6 +7914,13 @@
 "type": "email",
 "xmtp": false
 },
+"0xa7349eac1895b021443ce742e1bd4586d3b081fd": {
+"checked": "2026-11-19",
+"profiles": [],
+"signer": null,
+"type": "email",
+"xmtp": false
+},
 "0xa7614974faca5be9a1b809c978d0a8fc532a866b": {
 "checked": "2026-11-14",
 "profiles": [],
@@ -7964,7 +8027,7 @@
 "xmtp": false
 },
 "0xa98a9d23e7211c22d2259b68b1bc9d47b3013b92": {
-"checked": "2026-11-11",
+"checked": "2026-11-19",
 "profiles": [],
 "signer": null,
 "type": "email",
@@ -8251,7 +8314,7 @@
 "xmtp": false
 },
 "0xb04cc306baa987ce871a63e2fa1f91619ac3c7b6": {
-"checked": "2026-11-11",
+"checked": "2026-11-19",
 "profiles": [],
 "signer": null,
 "type": "email",
@@ -8297,6 +8360,19 @@
 "profiles": [],
 "signer": null,
 "type": "email",
+"xmtp": false
+},
+"0xb0a3c4d6f10301fc393421d92a3deabc0900cc69": {
+"checked": "2026-11-19",
+"profiles": [
+{
+"name": "saintoswald.base.eth",
+"platform": "basenames",
+"url": "https://www.base.org/name/saintoswald.base.eth"
+}
+],
+"signer": "0xfe3726ef537df1e7cad3327447defb80c74c8a03",
+"type": "safe",
 "xmtp": false
 },
 "0xb0c078c893300f44d341f4e854d8964b47dce88f": {
@@ -8356,7 +8432,7 @@
 "xmtp": false
 },
 "0xb1caa75ab63c5791b6a9c35ab6e397d0fd998a8b": {
-"checked": "2026-11-09",
+"checked": "2026-11-19",
 "profiles": [],
 "signer": null,
 "type": "email",
@@ -8409,6 +8485,13 @@
 "profiles": [],
 "signer": "0x33f6438a373f4c7a2fc4adce1e5b00f222514f18",
 "type": "safe",
+"xmtp": false
+},
+"0xb2cf5b771b3f9efc5b2793fd5d88d9ea1c8e52e3": {
+"checked": "2026-11-19",
+"profiles": [],
+"signer": null,
+"type": "email",
 "xmtp": false
 },
 "0xb2f42b8eaa7c44a338ff57ca03d81c75ec2b3721": {
@@ -8475,7 +8558,7 @@
 "xmtp": false
 },
 "0xb4c56fec06b1936fdc55bc982b03c19ff022d67e": {
-"checked": "2026-11-11",
+"checked": "2026-11-19",
 "profiles": [],
 "signer": "0x191b05dd84469ffa310f214389edc36af6955c61",
 "type": "safe",
@@ -8860,7 +8943,7 @@
 "xmtp": false
 },
 "0xbd050887b28ef80590e25b0d0e4110154d930a55": {
-"checked": "2026-10-13",
+"checked": "2026-11-19",
 "profiles": [],
 "signer": "0xaad9164a5ceb09930ba1f6a26d2378b79f93aaaa",
 "type": "safe",
@@ -9067,6 +9150,13 @@
 "profiles": [],
 "signer": "0x336d1a170128ecc829ac49768b8a75a7ece125af",
 "type": "safe",
+"xmtp": false
+},
+"0xc1cba8af684ab882f8ed7c2734b54db564b36424": {
+"checked": "2026-11-19",
+"profiles": [],
+"signer": null,
+"type": "email",
 "xmtp": false
 },
 "0xc216552db3dbc79926b6208e467783ec42fb7071": {
@@ -9813,6 +9903,13 @@
 "type": "safe",
 "xmtp": false
 },
+"0xd2ee09eb4e46778f1fc821143bebe2a9ffbcfc6c": {
+"checked": "2026-11-19",
+"profiles": [],
+"signer": null,
+"type": "email",
+"xmtp": false
+},
 "0xd30d67e84ab372cde3990cb2500177f4a3104f6d": {
 "checked": "2026-10-29",
 "profiles": [],
@@ -9947,7 +10044,7 @@
 "xmtp": false
 },
 "0xd5ce277b6e22cb22dfc790309408cd3f9745ab05": {
-"checked": "2026-11-11",
+"checked": "2026-11-19",
 "profiles": [],
 "signer": null,
 "type": "email",
@@ -9969,6 +10066,13 @@
 },
 "0xd648910d049b73172597cbcd761b9c12ef166af4": {
 "checked": "2026-11-02",
+"profiles": [],
+"signer": null,
+"type": "email",
+"xmtp": false
+},
+"0xd660f14287f85c283f86d9794169ba1c6bbde8d9": {
+"checked": "2026-11-19",
 "profiles": [],
 "signer": null,
 "type": "email",
@@ -10681,7 +10785,7 @@
 "xmtp": false
 },
 "0xe6393e266b0da8ef68a8dc0ed16af421d6c5ccac": {
-"checked": "2026-11-11",
+"checked": "2026-11-19",
 "profiles": [],
 "signer": null,
 "type": "email",
@@ -10738,6 +10842,13 @@
 },
 "0xe7c4dfeaa83e6e283611113041e7b9f3ee29c45a": {
 "checked": "2026-11-06",
+"profiles": [],
+"signer": null,
+"type": "email",
+"xmtp": false
+},
+"0xe7c65c210add40c321c0da2a1d9fed4587142b25": {
+"checked": "2026-11-19",
 "profiles": [],
 "signer": null,
 "type": "email",
@@ -11214,6 +11325,13 @@
 },
 "0xf27d40745542dc871e127acff3a1c9d3910d9a88": {
 "checked": "2026-11-16",
+"profiles": [],
+"signer": null,
+"type": "email",
+"xmtp": false
+},
+"0xf3238cc8d3ef945c39b36712040886e3847eb0d7": {
+"checked": "2026-11-19",
 "profiles": [],
 "signer": null,
 "type": "email",
