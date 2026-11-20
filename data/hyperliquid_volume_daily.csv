@@ -227,25 +227,26 @@ d,asset,asset_class,dur,ctype,notional,cash,fees
 2026-11-19,Silver,Commodities,1d,Strike,19908.0,9443.91,8.8
 2026-11-19,WTI Oil,Commodities,1d,Strike,12046.0,8211.94,5.33
 2026-11-19,XYZ100,Equities,1d,Strike,30108.0,20323.2,34.09
-2026-11-20,Anthropic,Equities,15m,Strike,1349.0,781.96,0.94
+2026-11-20,Anthropic,Equities,15m,Strike,1405.0,827.88,1.02
 2026-11-20,Anthropic,Equities,1d,Strike,319.0,91.48,0.0
 2026-11-20,Anthropic,Equities,1h,Strike,100.0,21.3,0.21
-2026-11-20,BTC,Crypto,15m,Strike,28174.0,14073.3,31.34
-2026-11-20,BTC,Crypto,1d,Range,194061.0,91882.03,84.09
-2026-11-20,BTC,Crypto,1d,Strike,105336.0,5010.06,92.33
+2026-11-20,BTC,Crypto,15m,Strike,33003.0,17266.72,37.05
+2026-11-20,BTC,Crypto,1d,Range,205679.0,95223.01,84.71
+2026-11-20,BTC,Crypto,1d,Strike,110763.0,7644.71,93.0
 2026-11-20,BTC,Crypto,1h,Strike,100.0,99.98,0.14
 2026-11-20,BTC,Crypto,4h,Strike,59.0,58.88,0.08
-2026-11-20,BTC,Crypto,5m,Strike,3738.0,2384.17,4.91
-2026-11-20,ETH,Crypto,15m,Strike,6451.0,3004.32,8.61
-2026-11-20,ETH,Crypto,1d,Strike,112992.0,6950.55,129.76
-2026-11-20,Gold,Commodities,1d,Strike,2028.0,584.18,0.28
-2026-11-20,HYPE,Crypto,15m,Strike,13044.0,5371.57,18.22
-2026-11-20,HYPE,Crypto,1d,Strike,9186.0,1468.26,12.54
-2026-11-20,MU,Equities,1d,Strike,2795.0,970.77,0.96
-2026-11-20,NVDA,Equities,1d,Strike,1368.0,570.99,0.35
+2026-11-20,BTC,Crypto,5m,Strike,3775.0,2394.52,4.97
+2026-11-20,ETH,Crypto,15m,Strike,6980.0,3375.03,9.34
+2026-11-20,ETH,Crypto,1d,Strike,115900.0,8397.02,130.13
+2026-11-20,Gold,Commodities,1d,Strike,2115.0,602.01,0.28
+2026-11-20,HYPE,Crypto,15m,Strike,15202.0,6396.51,20.45
+2026-11-20,HYPE,Crypto,1d,Strike,11513.0,2565.21,12.56
+2026-11-20,MU,Equities,1d,Strike,2953.0,1019.66,1.03
+2026-11-20,NVDA,Equities,1d,Strike,1420.0,588.54,0.36
 2026-11-20,S&P 500,Equities,1d,Strike,1405.0,595.63,0.18
-2026-11-20,SOL,Crypto,1d,Strike,0.0,0.0,0.66
-2026-11-20,SPCX,Equities,1d,Strike,1018.0,328.63,0.13
-2026-11-20,Silver,Commodities,1d,Strike,2554.0,1017.43,0.65
-2026-11-20,WTI Oil,Commodities,1d,Strike,2314.0,990.45,0.61
+2026-11-20,SKHY,Equities,1d,Strike,95.0,46.36,1.0
+2026-11-20,SOL,Crypto,1d,Strike,80.0,40.0,0.66
+2026-11-20,SPCX,Equities,1d,Strike,1205.0,375.37,0.2
+2026-11-20,Silver,Commodities,1d,Strike,2614.0,1032.71,0.68
+2026-11-20,WTI Oil,Commodities,1d,Strike,2704.0,1177.09,0.72
 2026-11-20,XYZ100,Equities,1d,Strike,1641.0,633.57,0.44
