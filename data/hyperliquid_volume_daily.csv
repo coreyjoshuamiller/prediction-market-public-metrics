@@ -230,19 +230,20 @@ d,asset,asset_class,dur,ctype,notional,cash,fees
 2026-11-20,Anthropic,Equities,15m,Strike,988.0,579.82,0.44
 2026-11-20,Anthropic,Equities,1d,Strike,319.0,91.48,0.0
 2026-11-20,Anthropic,Equities,1h,Strike,0.0,0.0,0.07
-2026-11-20,BTC,Crypto,15m,Strike,12508.0,5268.02,13.48
-2026-11-20,BTC,Crypto,1d,Range,84795.0,36296.41,26.0
-2026-11-20,BTC,Crypto,1d,Strike,61618.0,3131.81,9.78
-2026-11-20,BTC,Crypto,5m,Strike,2548.0,1842.23,3.36
-2026-11-20,ETH,Crypto,15m,Strike,3676.0,822.66,4.85
-2026-11-20,ETH,Crypto,1d,Strike,110815.0,6795.77,16.71
-2026-11-20,Gold,Commodities,1d,Strike,1600.0,525.08,0.26
-2026-11-20,HYPE,Crypto,15m,Strike,5441.0,663.71,7.99
-2026-11-20,HYPE,Crypto,1d,Strike,1056.0,271.21,0.19
-2026-11-20,MU,Equities,1d,Strike,1588.0,595.37,0.52
+2026-11-20,BTC,Crypto,15m,Strike,17739.0,9925.32,20.77
+2026-11-20,BTC,Crypto,1d,Range,123881.0,55489.33,40.81
+2026-11-20,BTC,Crypto,1d,Strike,100774.0,3867.11,15.43
+2026-11-20,BTC,Crypto,1h,Strike,100.0,99.98,0.14
+2026-11-20,BTC,Crypto,5m,Strike,2892.0,2064.24,3.85
+2026-11-20,ETH,Crypto,15m,Strike,4006.0,1014.23,5.28
+2026-11-20,ETH,Crypto,1d,Strike,112425.0,6854.24,16.77
+2026-11-20,Gold,Commodities,1d,Strike,1946.0,575.91,0.28
+2026-11-20,HYPE,Crypto,15m,Strike,7977.0,2828.76,11.75
+2026-11-20,HYPE,Crypto,1d,Strike,4904.0,474.04,0.4
+2026-11-20,MU,Equities,1d,Strike,1848.0,674.05,0.63
 2026-11-20,NVDA,Equities,1d,Strike,1293.0,546.08,0.34
-2026-11-20,S&P 500,Equities,1d,Strike,748.0,329.82,0.08
+2026-11-20,S&P 500,Equities,1d,Strike,891.0,390.22,0.1
 2026-11-20,SPCX,Equities,1d,Strike,658.0,230.24,0.11
-2026-11-20,Silver,Commodities,1d,Strike,2291.0,972.83,0.64
-2026-11-20,WTI Oil,Commodities,1d,Strike,1149.0,451.17,0.15
-2026-11-20,XYZ100,Equities,1d,Strike,1324.0,535.93,0.34
+2026-11-20,Silver,Commodities,1d,Strike,2504.0,1009.68,0.65
+2026-11-20,WTI Oil,Commodities,1d,Strike,1817.0,748.42,0.41
+2026-11-20,XYZ100,Equities,1d,Strike,1354.0,546.13,0.34
