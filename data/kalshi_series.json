@@ -1199,6 +1199,14 @@
   "title": "USDMXN Daily",
   "category": "Financials"
  },
+ "KXUSDMXNAH": {
+  "asset": "USD/MXN",
+  "asset_class": "FX & Rates",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "USDMXN Hourly",
+  "category": "Financials"
+ },
  "KXUSDNOKAD": {
   "asset": "USD/NOK",
   "asset_class": "FX & Rates",

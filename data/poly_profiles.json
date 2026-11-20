@@ -183,6 +183,14 @@
 "verified": false,
 "x": ""
 },
+"0x037de52b65b14ba2b50c0776f6d0aa57ff871cb0": {
+"fetched": "2026-11-20",
+"image": "",
+"name": "leafyiyi",
+"pseudonym": "Yummy-Spectrum-Impression",
+"verified": false,
+"x": ""
+},
 "0x0389362a989f33544316fae92f8e60337bc2e5f7": {
 "fetched": "2026-11-15",
 "image": "",
@@ -336,10 +344,18 @@
 "x": ""
 },
 "0x0567e29d38639457037e61e7cf17eecea06c5e16": {
-"fetched": "2026-11-01",
+"fetched": "2026-11-20",
 "image": "",
 "name": "Prepy",
 "pseudonym": "Equatorial-Patio",
+"verified": false,
+"x": ""
+},
+"0x0593d6d2048bf8bab7bb1c31fa66ce1ee62a4892": {
+"fetched": "2026-11-20",
+"image": "",
+"name": "0x0593D6d2048BF8BAb7Bb1c31fa66Ce1eE62A4892-1762373640525",
+"pseudonym": "Skinny-Tilt",
 "verified": false,
 "x": ""
 },
@@ -700,6 +716,14 @@
 "image": "",
 "name": "tmsd-test",
 "pseudonym": "Irritating-Ball",
+"verified": false,
+"x": ""
+},
+"0x0cd8f8c080a3c32cbe3713bf3ff2ecc4f06f3a8d": {
+"fetched": "2026-11-20",
+"image": "",
+"name": "cndnew",
+"pseudonym": "Coarse-Eve-Genetics",
 "verified": false,
 "x": ""
 },
@@ -1228,6 +1252,14 @@
 "image": "",
 "name": "BOOOST",
 "pseudonym": "Simple-Director",
+"verified": false,
+"x": ""
+},
+"0x17d61717665618647b5051f0ca856e19c81ac531": {
+"fetched": "2026-11-20",
+"image": "",
+"name": "0x0b73BE946e04755a70Fa1e5283DB3BB31a0dDB5C-1769551974822",
+"pseudonym": "Black-And-White-Cash",
 "verified": false,
 "x": ""
 },
@@ -2127,6 +2159,14 @@
 "verified": false,
 "x": ""
 },
+"0x2a0847e7e4e42f9a235f4f1a43236b44856859d9": {
+"fetched": "2026-11-20",
+"image": "",
+"name": "ylw1111",
+"pseudonym": "Lovely-Double-Yellowjacket",
+"verified": false,
+"x": ""
+},
 "0x2a4e00e43232136ed816a5439a3ae9c4ca4a653b": {
 "fetched": "2026-11-12",
 "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/profile-image-9987437-ece3fc0e-8b36-4965-822c-2cf537b77fe4.gif",
@@ -2272,9 +2312,9 @@
 "x": ""
 },
 "0x2d39498ceff5867e2059a9b2717dd6567e8d876e": {
-"fetched": "2026-11-12",
+"fetched": "2026-11-20",
 "image": "",
-"name": "cesar977",
+"name": "riskaversion",
 "pseudonym": "Simplistic-Dress",
 "verified": false,
 "x": ""
@@ -2968,7 +3008,7 @@
 "x": ""
 },
 "0x3955f21c21bc0ad6089b184151c243043a6f74ca": {
-"fetched": "2026-11-12",
+"fetched": "2026-11-20",
 "image": "",
 "name": "DoWhatItPapes",
 "pseudonym": "Aching-Tug",
@@ -3256,7 +3296,7 @@
 "x": ""
 },
 "0x409add9d9fcf7cd12a975f7fbccb156e4ecdb58d": {
-"fetched": "2026-11-12",
+"fetched": "2026-11-20",
 "image": "",
 "name": "thisissomuchfun",
 "pseudonym": "Dangerous-Supporter",
@@ -4064,7 +4104,7 @@
 "x": ""
 },
 "0x50421cc4cd0f184f346f4eb1d66e29656aaff296": {
-"fetched": "2026-11-08",
+"fetched": "2026-11-20",
 "image": "",
 "name": "Rocker42026",
 "pseudonym": "Vicious-Bowl",
@@ -5424,7 +5464,7 @@
 "x": ""
 },
 "0x671511149dd39b8fd770bfc7404caf5153a61761": {
-"fetched": "2026-11-12",
+"fetched": "2026-11-20",
 "image": "",
 "name": "metallica222",
 "pseudonym": "Old-Machine-Wealth",
@@ -6095,6 +6135,14 @@
 "verified": false,
 "x": ""
 },
+"0x72ca0e1437e5cc5972aefab8429a359b02e5b78e": {
+"fetched": "2026-11-20",
+"image": "",
+"name": "0x72CA0e1437E5CC5972aEFab8429A359B02E5b78E-1774795574166",
+"pseudonym": "Glittering-Cupcake",
+"verified": false,
+"x": ""
+},
 "0x731a241767938bb23d1b2fac4c9cd2f3cea9033f": {
 "fetched": "2026-11-14",
 "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/profile-image-3308274-9505b702-ffef-4ab7-b7c1-4dba8902f31d.png",
@@ -6200,7 +6248,7 @@
 "x": ""
 },
 "0x747c201bf69558c93b74da89ea7bb8bc34633f82": {
-"fetched": "2026-11-12",
+"fetched": "2026-11-20",
 "image": "",
 "name": "ply-shv",
 "pseudonym": "Luminous-Farmer-Offramp",
@@ -8007,6 +8055,14 @@
 "verified": false,
 "x": ""
 },
+"0x93e9f29db97b95f414682bd2a3a5721f695722a6": {
+"fetched": "2026-11-20",
+"image": "",
+"name": "impots.gouv",
+"pseudonym": "Unlawful-Hole",
+"verified": false,
+"x": ""
+},
 "0x940063e955bbd7e9f44bd05dc750d3f0f2826ec0": {
 "fetched": "2026-10-22",
 "image": "",
@@ -8776,7 +8832,7 @@
 "x": "Coolnyul1"
 },
 "0xa2fdba6ea8c71bcbd5c76533da03b61104c55f63": {
-"fetched": "2026-11-08",
+"fetched": "2026-11-20",
 "image": "",
 "name": "",
 "pseudonym": "",
@@ -9384,7 +9440,7 @@
 "x": ""
 },
 "0xac73d16c424724405f483f406d9075a4cbbc7f25": {
-"fetched": "2026-11-12",
+"fetched": "2026-11-20",
 "image": "",
 "name": "capitalalley569",
 "pseudonym": "Canine-Quicksand-Scimitar",
@@ -9572,6 +9628,14 @@
 "image": "",
 "name": "0xNuttawut",
 "pseudonym": "Harmless-Region",
+"verified": false,
+"x": ""
+},
+"0xb078d8bbea2822c0250f714c1ef02489d73c34b8": {
+"fetched": "2026-11-20",
+"image": "",
+"name": "Alpharo21",
+"pseudonym": "Lazy-Cilantro-Rivulet",
 "verified": false,
 "x": ""
 },
@@ -10264,7 +10328,7 @@
 "x": ""
 },
 "0xbd0d0c4bfc88dad382674c9d5ae483dae8261fb4": {
-"fetched": "2026-11-07",
+"fetched": "2026-11-20",
 "image": "",
 "name": "Perfectly-Spherical-Gum-Boat",
 "pseudonym": "Spherical-Casement-Violence",
@@ -10580,6 +10644,14 @@
 "image": "",
 "name": "Konstantinopl",
 "pseudonym": "Insubstantial-Wrong",
+"verified": false,
+"x": ""
+},
+"0xc4b5a673f69683a5e58730755ed51a49ed59171e": {
+"fetched": "2026-11-20",
+"image": "",
+"name": "johnpudricion",
+"pseudonym": "Playful-Iridescence",
 "verified": false,
 "x": ""
 },
@@ -11208,7 +11280,7 @@
 "x": ""
 },
 "0xd15696efc99cf15c3e2f070769780c90917de56f": {
-"fetched": "2026-11-12",
+"fetched": "2026-11-20",
 "image": "",
 "name": "0xd15696EFC99CF15c3e2f070769780C90917de56f-1775546561453",
 "pseudonym": "Imperturbable-Burden",
@@ -11300,6 +11372,14 @@
 "image": "",
 "name": "Lauzcrazy",
 "pseudonym": "Ignorant-Anesthesiology",
+"verified": false,
+"x": ""
+},
+"0xd29f49c5496aa47ac2f121b9c0a1051015a94ac3": {
+"fetched": "2026-11-20",
+"image": "",
+"name": "RootFoundation",
+"pseudonym": "Lustrous-Calico-Jalape\u00f1o",
 "verified": false,
 "x": ""
 },
@@ -11632,7 +11712,7 @@
 "x": ""
 },
 "0xd802150c3d946d72b5364646386505e70919c076": {
-"fetched": "2026-11-12",
+"fetched": "2026-11-20",
 "image": "",
 "name": "0xd802150C3D946D72b5364646386505e70919c076-1774491084547",
 "pseudonym": "Kind-Enrollment",
@@ -11872,7 +11952,7 @@
 "x": ""
 },
 "0xdd853a29043f95c1c790471cc0155135f94ecd25": {
-"fetched": "2026-11-12",
+"fetched": "2026-11-20",
 "image": "",
 "name": "0xdd853A29043f95c1C790471cC0155135f94ECd25-1773210562113",
 "pseudonym": "Well-Groomed-Cranky",
@@ -11908,6 +11988,14 @@
 "image": "",
 "name": "0xdE17f7144fbD0eddb2679132C10ff5e74B120988-1772205225932",
 "pseudonym": "Attentive-Silica",
+"verified": false,
+"x": ""
+},
+"0xde2748c4fad71cb70a4b3a81d7ddb4249e93a849": {
+"fetched": "2026-11-20",
+"image": "",
+"name": "vqerbve42q5",
+"pseudonym": "Gleeful-Foodstuffs-Airmail",
 "verified": false,
 "x": ""
 },
@@ -12327,6 +12415,14 @@
 "verified": false,
 "x": ""
 },
+"0xe5efd6543002653b2eef940d8254911862ad9e7a": {
+"fetched": "2026-11-20",
+"image": "",
+"name": "0xE5efD6543002653B2EEF940d8254911862aD9e7A-1729599643232",
+"pseudonym": "Shocked-Yoke",
+"verified": false,
+"x": ""
+},
 "0xe5f85d076f0b1edd4ec89bfb95e123a9036a8d75": {
 "fetched": "2026-11-15",
 "image": "",
@@ -12600,7 +12696,7 @@
 "x": ""
 },
 "0xeb942f0fc3f100cd729d7937afc6c48773cf205e": {
-"fetched": "2026-11-12",
+"fetched": "2026-11-20",
 "image": "",
 "name": "Howard.Anderson",
 "pseudonym": "Assured-Diam",
@@ -12988,6 +13084,14 @@
 "image": "",
 "name": "0xF27d40745542Dc871e127acFf3A1c9D3910d9a88-1775505016568",
 "pseudonym": "Extra-Small-Implement",
+"verified": false,
+"x": ""
+},
+"0xf2d9ded67d4eed50073fe2d828b142c2a468e144": {
+"fetched": "2026-11-20",
+"image": "",
+"name": "Eea01",
+"pseudonym": "Zigzag-Hundred",
 "verified": false,
 "x": ""
 },
