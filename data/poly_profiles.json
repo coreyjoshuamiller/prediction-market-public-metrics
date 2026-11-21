@@ -8,7 +8,7 @@
 "x": ""
 },
 "0x000933254969671e0ebebed369e6c20266dcabf2": {
-"fetched": "2026-11-09",
+"fetched": "2026-11-21",
 "image": "",
 "name": "BKKCC",
 "pseudonym": "Buttery-Centimeter-Subprime",
@@ -232,7 +232,7 @@
 "x": ""
 },
 "0x03ebab6f03e2f1134bc19425ffb6d8f52469f1e6": {
-"fetched": "2026-11-13",
+"fetched": "2026-11-21",
 "image": "",
 "name": "0x03ebab6f03e2f1134bc19425ffb6d8f52469f1e6-1793985363454",
 "pseudonym": "Definitive-Nick-Smoking",
@@ -688,7 +688,7 @@
 "x": ""
 },
 "0x0c211a0f1b5b2749328c8dae19ab47ce6c1f2ee2": {
-"fetched": "2026-11-13",
+"fetched": "2026-11-21",
 "image": "",
 "name": "0xbcbB711A7A059D69A73E292B43eaD7dfa28f9006-1772633859843",
 "pseudonym": "Plush-Vogue",
@@ -776,7 +776,7 @@
 "x": ""
 },
 "0x0dbd0e1d5999a401263dc26cbf1597f2be0cfcd5": {
-"fetched": "2026-11-13",
+"fetched": "2026-11-21",
 "image": "",
 "name": "0x0dbd0e1d5999a401263dc26cbf1597f2be0cfcd5-1793622023710",
 "pseudonym": "Icky-Humour-Senator",
@@ -1784,7 +1784,7 @@
 "x": ""
 },
 "0x2384e8cabd742c0ad33f72fe07a635f88c694e5c": {
-"fetched": "2026-11-13",
+"fetched": "2026-11-21",
 "image": "",
 "name": "0x8EF98EFDB8Bf18721B347814560b7544E20640c7-1774357861102",
 "pseudonym": "Attached-Gradient",
@@ -2326,6 +2326,14 @@
 "pseudonym": "Wild-Hospital",
 "verified": false,
 "x": "CrocodileFx"
+},
+"0x2d8b22cfbff903a00aee31834c515e0b0aad302d": {
+"fetched": "2026-11-21",
+"image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/profile-image-10095179-b3b253ce-b70a-454f-a98e-4862c9dd6e7a.png",
+"name": "test-tube",
+"pseudonym": "Spry-Excellence-Claim",
+"verified": false,
+"x": ""
 },
 "0x2d8b401d2f0e6937afebf18e19e11ca568a5260a": {
 "fetched": "2026-11-15",
@@ -3028,6 +3036,14 @@
 "image": "",
 "name": "edgelurking",
 "pseudonym": "Scared-Screwdriver-Curtailment",
+"verified": false,
+"x": ""
+},
+"0x3a09bdd34609d041e236235b31691279e2ef5192": {
+"fetched": "2026-11-21",
+"image": "",
+"name": "largecog",
+"pseudonym": "Glistening-Bush-Context",
 "verified": false,
 "x": ""
 },
@@ -4024,10 +4040,18 @@
 "x": ""
 },
 "0x4e51772290ba359303adeb72918aa0b0fbaed214": {
-"fetched": "2026-11-09",
+"fetched": "2026-11-21",
 "image": "",
 "name": "Barometer12Extrovert9",
 "pseudonym": "Valid-Textual-Winery",
+"verified": false,
+"x": ""
+},
+"0x4ea710a28766585342213d603fee4d187c52e13f": {
+"fetched": "2026-11-21",
+"image": "",
+"name": "edges",
+"pseudonym": "Immaterial-Thunderstorm",
 "verified": false,
 "x": ""
 },
@@ -4768,7 +4792,7 @@
 "x": ""
 },
 "0x5b39cce139ea738ef15c2e2f3d48424f048c8529": {
-"fetched": "2026-10-30",
+"fetched": "2026-11-21",
 "image": "",
 "name": "0x5B39CCE139ea738ef15c2e2F3d48424F048c8529-1783036729133",
 "pseudonym": "Brisk-Stopsign-Cap",
@@ -5751,6 +5775,14 @@
 "verified": false,
 "x": ""
 },
+"0x6bc7940eee8b245d6b7b370804b6a070162e4e3d": {
+"fetched": "2026-11-21",
+"image": "",
+"name": "lousy-llama",
+"pseudonym": "Dangerous-Cookbook-Hurdle",
+"verified": false,
+"x": ""
+},
 "0x6bef4ccbadd3892ecdbb0cc186b8db8966f251ca": {
 "fetched": "2026-11-14",
 "image": "",
@@ -6592,7 +6624,7 @@
 "x": ""
 },
 "0x7b7ab681a573387597803893aedfa57469f69bdb": {
-"fetched": "2026-11-13",
+"fetched": "2026-11-21",
 "image": "",
 "name": "0x7B7ab681a573387597803893aedFA57469F69Bd",
 "pseudonym": "Male-Pair-Ikebana",
@@ -7416,7 +7448,7 @@
 "x": ""
 },
 "0x8899d775e6d3cd6ae11fc26905d4e92afba4e743": {
-"fetched": "2026-11-12",
+"fetched": "2026-11-21",
 "image": "",
 "name": "0xEnrgyQuntumVbration",
 "pseudonym": "Bleak-Chart-Boyhood",
@@ -7456,7 +7488,7 @@
 "x": ""
 },
 "0x89444672a5a62914b721900714eb14cc5961093b": {
-"fetched": "2026-11-13",
+"fetched": "2026-11-21",
 "image": "",
 "name": "bbmazing",
 "pseudonym": "Ragged-Profession-Phosphate",
@@ -8336,7 +8368,7 @@
 "x": ""
 },
 "0x97d8c0a35cb0449520982bee19716a27ac410a12": {
-"fetched": "2026-10-30",
+"fetched": "2026-11-21",
 "image": "",
 "name": "0x97D8C0A35cb0449520982beE19716A27AC410A12-1783269092070",
 "pseudonym": "Embellished-Cruise",
@@ -8408,7 +8440,7 @@
 "x": ""
 },
 "0x98e530ea6da807610c725fad69d77cb028e85d92": {
-"fetched": "2026-11-13",
+"fetched": "2026-11-21",
 "image": "",
 "name": "",
 "pseudonym": "",
@@ -8432,7 +8464,7 @@
 "x": ""
 },
 "0x998fc57bfcf07daba6130adbc2190483356cf31d": {
-"fetched": "2026-11-13",
+"fetched": "2026-11-21",
 "image": "",
 "name": "",
 "pseudonym": "",
@@ -8783,6 +8815,14 @@
 "verified": false,
 "x": ""
 },
+"0xa13f1f6ae6d5f8437da50a574f479e32a34feb0b": {
+"fetched": "2026-11-21",
+"image": "",
+"name": "dfcasw",
+"pseudonym": "Key-Takeout-Shame",
+"verified": false,
+"x": ""
+},
 "0xa17d7d7bf28e26f0214f442907c85adc3ad87941": {
 "fetched": "2026-11-14",
 "image": "",
@@ -8992,7 +9032,7 @@
 "x": ""
 },
 "0xa51e6e9ebe66dac018d0cd2f1d4c1fcee9d430dd": {
-"fetched": "2026-11-13",
+"fetched": "2026-11-21",
 "image": "",
 "name": "0xf563a0Bac5A27004B2C8FBeb4a378Bc23C6eC4a6-1773857293835",
 "pseudonym": "Zigzag-Emery",
@@ -9052,6 +9092,14 @@
 "image": "",
 "name": "0x883Ee943ffdeeaAB652E402E7C5E",
 "pseudonym": "Frilly-Contractor",
+"verified": false,
+"x": ""
+},
+"0xa5d0c79c5bb70ac874b1c1975679c971022ed2de": {
+"fetched": "2026-11-21",
+"image": "",
+"name": "duneprd1",
+"pseudonym": "Barren-Yolk-Report",
 "verified": false,
 "x": ""
 },
@@ -9408,7 +9456,7 @@
 "x": ""
 },
 "0xabf97c34977b8b9bb204eccf9ae030ff0db68214": {
-"fetched": "2026-11-13",
+"fetched": "2026-11-21",
 "image": "",
 "name": "Trader2024",
 "pseudonym": "Admirable-Pomegranate",
@@ -9532,6 +9580,14 @@
 "image": "",
 "name": "0xaE8B08AAEa2DC6e93a9f89a834aD73954C34D21a-1790725524752",
 "pseudonym": "Mad-Minibus",
+"verified": false,
+"x": ""
+},
+"0xae935b50f386da926d98f5b5a7e7e9ec6d4fbb1e": {
+"fetched": "2026-11-21",
+"image": "",
+"name": "NexaraV21",
+"pseudonym": "Wonderful-Lye",
 "verified": false,
 "x": ""
 },
@@ -9839,6 +9895,14 @@
 "verified": false,
 "x": ""
 },
+"0xb3b4c5e0aaaab2617dcb07709fab708f4c12a9d7": {
+"fetched": "2026-11-21",
+"image": "",
+"name": "winurself666",
+"pseudonym": "Which-Miscommunication-Paragraph",
+"verified": false,
+"x": ""
+},
 "0xb4077d7ecb09e5478305fb0c71bc176a5eda252c": {
 "fetched": "2026-11-15",
 "image": "",
@@ -9984,9 +10048,9 @@
 "x": ""
 },
 "0xb5eaf1b5cd5c5fc6a8bbe07b8f19ff8fff496945": {
-"fetched": "2026-10-25",
+"fetched": "2026-11-21",
 "image": "",
-"name": "0xb5eAf1B5CD5c5fc6a8BbE07b8F19fF8fff496945-1782675517306",
+"name": "Hero-B",
 "pseudonym": "Embellished-Revenue",
 "verified": false,
 "x": ""
@@ -10028,6 +10092,14 @@
 "image": "",
 "name": "ResurrectionPower2",
 "pseudonym": "Comfortable-Glow-Authorization",
+"verified": false,
+"x": ""
+},
+"0xb6c7fab1ebb76029e815e2d8cf8d0f73b820f1f3": {
+"fetched": "2026-11-21",
+"image": "",
+"name": "DomarLu",
+"pseudonym": "Noted-Homework",
 "verified": false,
 "x": ""
 },
@@ -10224,7 +10296,7 @@
 "x": ""
 },
 "0xbadb9af986ee66437bd39e6cd3d3036cbbdc31a7": {
-"fetched": "2026-11-03",
+"fetched": "2026-11-21",
 "image": "",
 "name": "0xBadB9af986EE66437BD39E6cd3D3036CbbDc31a",
 "pseudonym": "Swift-Census",
@@ -10415,6 +10487,14 @@
 "verified": false,
 "x": ""
 },
+"0xbe36989dfa851cd6f4bfb572ff4f5ed5c86aafbd": {
+"fetched": "2026-11-21",
+"image": "",
+"name": "simonsun1990",
+"pseudonym": "Majestic-Nightmare",
+"verified": false,
+"x": ""
+},
 "0xbe5339e9423a3b893cd6825518e45cfca73d1707": {
 "fetched": "2026-11-14",
 "image": "",
@@ -10464,7 +10544,7 @@
 "x": ""
 },
 "0xbf462a1cd3812efa2726760947d245db2bfe4d80": {
-"fetched": "2026-11-13",
+"fetched": "2026-11-21",
 "image": "",
 "name": "Alex698",
 "pseudonym": "Personal-Baby",
@@ -10687,6 +10767,14 @@
 "verified": false,
 "x": ""
 },
+"0xc51e6e61b3d6659a9471be691619d16769b30745": {
+"fetched": "2026-11-21",
+"image": "",
+"name": "aceblue3",
+"pseudonym": "Nippy-Depot-Underclothes",
+"verified": false,
+"x": ""
+},
 "0xc53375ff94e96100f2b30a4b5775db35218d69a9": {
 "fetched": "2026-11-16",
 "image": "",
@@ -10772,6 +10860,14 @@
 "image": "",
 "name": "deepmoat",
 "pseudonym": "Pleased-Flock",
+"verified": false,
+"x": ""
+},
+"0xc6ae4cdece4be7f21b747eb11f6eaaa37972afe9": {
+"fetched": "2026-11-21",
+"image": "",
+"name": "RoadTo1MillionUsd",
+"pseudonym": "Kosher-Wrong",
 "verified": false,
 "x": ""
 },
@@ -12032,7 +12128,7 @@
 "x": ""
 },
 "0xdf0810107d35335b2bacc0682180e0f24889d24a": {
-"fetched": "2026-11-13",
+"fetched": "2026-11-21",
 "image": "",
 "name": "rayray916",
 "pseudonym": "Gaseous-Mankind",
@@ -12156,6 +12252,14 @@
 "image": "",
 "name": "bblackk",
 "pseudonym": "Concrete-State-Spat",
+"verified": false,
+"x": ""
+},
+"0xe08416f4a5629e8b2c8cba88214408e97088702f": {
+"fetched": "2026-11-21",
+"image": "",
+"name": "tu345gggjsz",
+"pseudonym": "Hairy-Tailbud",
 "verified": false,
 "x": ""
 },
@@ -12576,7 +12680,7 @@
 "x": ""
 },
 "0xe8ada32e53487a607b17a6be3659f18a838c00b8": {
-"fetched": "2026-10-30",
+"fetched": "2026-11-21",
 "image": "",
 "name": "3e5140c4a04a2b4a28c7f4d4fdc1243a",
 "pseudonym": "Speedy-Facsimile",
