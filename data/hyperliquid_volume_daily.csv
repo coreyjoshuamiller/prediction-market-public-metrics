@@ -254,23 +254,23 @@ d,asset,asset_class,dur,ctype,notional,cash,fees
 2026-11-21,Anthropic,Equities,15m,Strike,621.0,109.27,0.83
 2026-11-21,Anthropic,Equities,1d,Strike,4240.0,2081.73,1.07
 2026-11-21,Anthropic,Equities,1h,Strike,781.0,234.61,0.6
-2026-11-21,BTC,Crypto,15m,Strike,103138.0,50441.35,96.88
+2026-11-21,BTC,Crypto,15m,Strike,105593.0,51833.44,98.93
 2026-11-21,BTC,Crypto,1d,Range,33098.0,6898.2,54.58
-2026-11-21,BTC,Crypto,1d,Strike,108213.0,72644.94,94.62
-2026-11-21,BTC,Crypto,1h,Strike,2050.0,769.21,2.18
-2026-11-21,BTC,Crypto,5m,Strike,13750.0,8253.08,15.83
-2026-11-21,ETH,Crypto,15m,Strike,15070.0,10204.24,18.5
-2026-11-21,ETH,Crypto,1d,Strike,26645.0,21632.08,10.77
-2026-11-21,Gold,Commodities,1d,Strike,20091.0,10359.72,6.07
-2026-11-21,HYPE,Crypto,15m,Strike,35645.0,18072.86,39.89
+2026-11-21,BTC,Crypto,1d,Strike,116395.0,80731.35,94.83
+2026-11-21,BTC,Crypto,1h,Strike,2100.0,810.38,2.25
+2026-11-21,BTC,Crypto,5m,Strike,14019.0,8425.76,16.21
+2026-11-21,ETH,Crypto,15m,Strike,15785.0,10457.92,19.44
+2026-11-21,ETH,Crypto,1d,Strike,27671.0,22631.28,10.77
+2026-11-21,Gold,Commodities,1d,Strike,20363.0,10622.2,6.07
+2026-11-21,HYPE,Crypto,15m,Strike,37293.0,19130.49,42.01
 2026-11-21,HYPE,Crypto,1d,Strike,10948.0,7807.06,6.04
 2026-11-21,MU,Equities,1d,Strike,18720.0,10274.36,4.33
-2026-11-21,NVDA,Equities,1d,Strike,220.0,202.76,0.07
-2026-11-21,S&P 500,Equities,1d,Strike,571.0,496.54,0.01
+2026-11-21,NVDA,Equities,1d,Strike,720.0,700.26,0.37
+2026-11-21,S&P 500,Equities,1d,Strike,3822.0,3731.7,1.81
 2026-11-21,SKHY,Equities,1d,Strike,2307.0,1187.48,1.62
 2026-11-21,SNDK,Equities,1d,Strike,2128.0,1238.75,0.41
 2026-11-21,SOL,Crypto,1d,Strike,1826.0,1233.91,0.76
 2026-11-21,SPCX,Equities,1d,Strike,5448.0,3722.14,2.17
-2026-11-21,Silver,Commodities,1d,Strike,18491.0,9145.35,5.41
-2026-11-21,WTI Oil,Commodities,1d,Strike,9719.0,5007.94,3.09
+2026-11-21,Silver,Commodities,1d,Strike,19036.0,9614.05,5.41
+2026-11-21,WTI Oil,Commodities,1d,Strike,9833.0,5079.96,3.15
 2026-11-21,XYZ100,Equities,1d,Strike,1900.0,1761.83,0.39
