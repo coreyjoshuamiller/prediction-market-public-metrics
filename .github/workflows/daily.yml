@@ -38,7 +38,7 @@ jobs:
     timeout-minutes: 45
     environment:
       name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
+      url: ${{ steps.deploy.outputs.page_url || steps.deploy_retry.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -81,6 +81,27 @@ jobs:
         if: steps.plan.outputs.mode != 'skip'
         with:
           path: site
+      # deploy-pages looks the artifact up the moment the upload ends and fails when GitHub's
+      # listing hasn't caught up ("No artifacts named github-pages were found"). So wait until
+      # the artifact is listed, and try the deploy once more if it still fails.
+      - name: Wait for the Pages artifact to be listed
+        if: steps.plan.outputs.mode != 'skip'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for i in $(seq 1 12); do
+            n=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/artifacts?name=github-pages" --jq .total_count 2>/dev/null || echo 0)
+            if [ "${n:-0}" -gt 0 ]; then exit 0; fi
+            sleep 5
+          done
+          echo "github-pages artifact still not listed after 60s; deploying anyway"
       - id: deploy
         if: steps.plan.outputs.mode != 'skip'
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+      - name: Wait before retrying the deploy
+        if: steps.deploy.outcome == 'failure'
+        run: sleep 30
+      - id: deploy_retry
+        if: steps.deploy.outcome == 'failure'
         uses: actions/deploy-pages@v4
