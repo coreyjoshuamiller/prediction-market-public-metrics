@@ -1,0 +1,8 @@
+/* Additions to ../styles.css for the overlap page */
+section > h2 { display: flex; align-items: center; gap: 8px; }
+section > h3 { font-size: 15px; font-weight: 650; margin: 28px 0 2px; }
+section > h3 + p.lede { margin-bottom: 12px; }
+.tile .value small { font-size: 14px; font-weight: 500; color: var(--text-secondary); margin-left: 6px; }
+.tile .delta { line-height: 1.35; }
+.updated a { white-space: nowrap; }
+figure.card .note { text-align: right; }

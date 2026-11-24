@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prediction Markets × Perps: Trader Overlap</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="overlap.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/6.1.0/echarts.min.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>Prediction Markets × Perps: Trader Overlap</h1>
+      <div class="sub">How many traders use both products on the same venue: Polymarket (prediction markets and Perps) and Hyperliquid (perps and outcome markets)</div>
+    </div>
+    <div class="updated"><span id="updated">Loading…</span> · <a href="../">Short-term price markets dashboard</a></div>
+  </header>
+
+  <section id="headline" style="margin-top:8px">
+    <div class="tiles" id="tiles"></div>
+  </section>
+
+  <section id="polymarket">
+    <h2><span class="key" style="background:var(--poly)"></span> Polymarket: prediction markets and Perps</h2>
+    <p class="lede">Polymarket Perps opened to the public on 3 September 2026 after an early-access period. A Perps account is funded from the same Polymarket wallet that trades prediction markets, so every Perps account can be matched to its prediction-market history. Weeks run Monday to Sunday (UTC); the current week is left out until it is complete.</p>
+    <div class="tiles" id="poly-tiles" style="margin-bottom:12px"></div>
+    <div class="pair">
+      <figure class="card" data-chart="poly-perps-share"></figure>
+      <figure class="card" data-chart="poly-pred-share"></figure>
+      <figure class="card" data-chart="poly-perps-bars"></figure>
+      <figure class="card" data-chart="poly-vol-share"></figure>
+    </div>
+
+    <h3>Where Perps traders come from</h3>
+    <p class="lede">Whether a Perps trader was already trading prediction markets when they placed their first Perps trade, and how long they had been on Polymarket.</p>
+    <div class="pair">
+      <figure class="card" data-chart="poly-new"></figure>
+      <figure class="card" data-chart="poly-gaps"></figure>
+    </div>
+
+    <h3>Who overlaps</h3>
+    <p class="lede">Overlap by trader size on each side, and what Perps traders trade when they trade prediction markets.</p>
+    <div class="pair">
+      <figure class="card" data-chart="poly-bands"></figure>
+      <figure class="card" data-chart="poly-size"></figure>
+      <figure class="card" data-chart="poly-cats"></figure>
+      <figure class="card" data-chart="poly-joined"></figure>
+    </div>
+  </section>
+
+  <section id="hyperliquid">
+    <h2><span class="key" style="background:var(--hyperliquid)"></span> Hyperliquid: outcome markets and perps</h2>
+    <p class="lede" id="hl-lede"></p>
+    <div class="tiles" id="hl-tiles" style="margin-bottom:12px"></div>
+    <div class="pair">
+      <figure class="card" data-chart="hl-hist-share"></figure>
+      <figure class="card" data-chart="hl-hist"></figure>
+      <figure class="card" data-chart="hl-daily-share"></figure>
+      <figure class="card" data-chart="hl-daily"></figure>
+      <figure class="card" data-chart="hl-groups"></figure>
+      <figure class="card" data-chart="hl-bands"></figure>
+      <figure class="card" data-chart="hl-age"></figure>
+      <figure class="card" data-chart="hl-firsts"></figure>
+      <figure class="card" data-chart="hl-ratio"></figure>
+      <figure class="card" data-chart="hl-reverse"></figure>
+    </div>
+  </section>
+
+  <footer id="notes"></footer>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

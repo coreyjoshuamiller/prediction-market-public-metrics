@@ -4,7 +4,7 @@ name: Deploy site
 on:
   push:
     branches: [main]
-    paths: ["site/*.html", "site/*.js", "site/*.css"]
+    paths: ["site/*.html", "site/*.js", "site/*.css", "site/overlap/**"]
   workflow_dispatch:
 
 concurrency:

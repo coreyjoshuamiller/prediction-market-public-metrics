@@ -25,6 +25,44 @@ GitHub's cron is best-effort (runs can be hours late or dropped), which is why t
 - **Liquidity rewards**: what Kalshi and Polymarket Intl pay for resting orders across their whole platforms, daily, weekly or monthly, by category (`pipeline/rewards.py`). Kalshi is the size of its reward pools (an upper limit). Polymarket is actual on-chain payouts; the category split comes from its posted reward rates (saved daily since 2026-11-09) and, before that, each paid wallet's maker volume.
 - **Order book liquidity**: dollars at the best bid and offer, depth within 5¢, spread, and how depth evolves through the 15-minute window.
 
+## Trader overlap page (`site/overlap/`)
+
+A second page, served at `/overlap/`, asks how many traders use both prediction markets and perps on
+the same venue. It is built by hand, not by the scheduled workflows:
+
+```bash
+python3 -m pipeline.overlap_poly deposits    # Dune: every Perps account and the wallet that funded it (~25 credits)
+python3 -m pipeline.overlap_poly wallets     # Dune: every Polymarket wallet each account owns (~25 credits)
+python3 -m pipeline.overlap_poly crawl       # Perps API: weekly fills per account (resumable, ~100 minutes)
+python3 -m pipeline.overlap_poly queries     # Dune: overlap against prediction-market trades (~4 queries)
+python3 -m pipeline.overlap_hl sample        # Hyperliquid: latest trades on every live outcome market
+python3 -m pipeline.overlap_hl portfolios    # Hyperliquid: perps volume per outcome wallet (60 a minute)
+python3 -m pipeline.overlap_hl leaderboard
+python3 -m pipeline.overlap_hl holders       # Hyperliquid: which active perps accounts hold outcome positions (~40 minutes)
+python3 -m pipeline.overlap_hl firsts        # Hyperliquid: each outcome wallet's own fill history, by week (several hours)
+python3 -m pipeline.overlap_build            # -> site/overlap/data/overlap.json
+```
+
+- **Polymarket.** Perps match off-chain, but collateral only enters through the Perps exchange
+  contract on Polygon (`0xDCa4…17d2`, from `/v1/info/exchange`). Its Deposit event names the paying
+  wallet and the Perps account credited, which lists every account. A Perps account is the user's
+  signer address, and a user can own several wallets, so `wallets` finds them all on-chain: deposit
+  wallets (factory `0x0000…cc07`, whose creation event carries the owner), Safes
+  (`polymarket_polygon.users_safe_proxies`) and email-login proxies (address derived with CREATE2,
+  then checked against `users_magic_wallet_proxies`, which has no owner column). Each account's
+  weekly activity comes from the public Perps API (`/v1/info/fills?address=`); the leaderboard there
+  only lists the top 1,000 per window, so it can't enumerate accounts.
+- **Dune limits that shaped the queries.** This plan can't upload private tables and a query can't
+  exceed about 1 MB, so the account list travels inside the SQL as 6-byte wallet prefixes (base64)
+  and weekly bitmasks (`overlap_poly._cte`). Results are billed by size (about 10 credits per MB), so
+  per-account results come back packed, 1,000 accounts to a row.
+- **Hyperliquid.** Outcome markets and perps share one account. Outcome traders come from this
+  repo's trade feed (price markets, since 2026-11-12) plus one snapshot of the trades the websocket
+  replays for every live outcome market. `portfolio` gives each wallet's perps volume over the
+  trailing day, week, month and all time. For the other direction, `spotClearinghouseState` lists
+  outcome positions as `+<id>` balances at 2 weight a request, so every leaderboard account with
+  perps volume in the last month is checked for a current outcome position.
+
 ## Data sources
 
 | Data | Source |
