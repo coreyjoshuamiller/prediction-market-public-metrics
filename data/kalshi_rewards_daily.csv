@@ -281,13 +281,13 @@ d,category,usd
 2025-11-23,Politics & world,2595.15
 2025-11-23,Sports,279.97
 2025-11-23,Weather,1260.0
-2025-11-24,Culture & entertainment,4930.97
+2025-11-24,Culture & entertainment,4762.58
 2025-11-24,Finance & economy,230.52
 2025-11-24,Politics & world,2568.96
 2025-11-24,Sports,279.97
 2025-11-24,Weather,1260.0
 2025-11-25,Crypto,12.26
-2025-11-25,Culture & entertainment,6127.76
+2025-11-25,Culture & entertainment,5696.15
 2025-11-25,Finance & economy,230.52
 2025-11-25,Politics & world,2807.02
 2025-11-25,Sports,225.16
@@ -2450,58 +2450,64 @@ d,category,usd
 2026-11-13,Tech & science,6065.24
 2026-11-13,Weather,1368.3
 2026-11-14,Crypto,7995.49
-2026-11-14,Culture & entertainment,43713.82
-2026-11-14,Finance & economy,72308.69
-2026-11-14,Politics & world,68380.77
-2026-11-14,Sports,4953.16
+2026-11-14,Culture & entertainment,43510.25
+2026-11-14,Finance & economy,71641.43
+2026-11-14,Politics & world,68312.91
+2026-11-14,Sports,4907.92
 2026-11-14,Tech & science,7485.25
-2026-11-14,Weather,1483.59
+2026-11-14,Weather,1460.97
 2026-11-15,Crypto,1665.73
-2026-11-15,Culture & entertainment,40675.46
-2026-11-15,Finance & economy,38359.95
-2026-11-15,Politics & world,39729.42
-2026-11-15,Sports,4698.68
+2026-11-15,Culture & entertainment,40418.32
+2026-11-15,Finance & economy,37517.09
+2026-11-15,Politics & world,39643.71
+2026-11-15,Sports,4641.54
 2026-11-15,Tech & science,5896.22
-2026-11-15,Weather,2317.18
-2026-11-16,Culture & entertainment,37809.41
-2026-11-16,Finance & economy,30546.16
-2026-11-16,Politics & world,31655.66
-2026-11-16,Sports,4560.12
+2026-11-15,Weather,2288.61
+2026-11-16,Culture & entertainment,37552.27
+2026-11-16,Finance & economy,29703.31
+2026-11-16,Politics & world,31569.95
+2026-11-16,Sports,4502.98
 2026-11-16,Tech & science,4819.72
-2026-11-16,Weather,1799.42
-2026-11-17,Culture & entertainment,32649.43
-2026-11-17,Finance & economy,31858.38
-2026-11-17,Politics & world,30243.08
-2026-11-17,Sports,4509.72
+2026-11-16,Weather,1770.85
+2026-11-17,Culture & entertainment,32392.28
+2026-11-17,Finance & economy,31019.8
+2026-11-17,Politics & world,30157.37
+2026-11-17,Sports,4452.58
 2026-11-17,Tech & science,4876.22
-2026-11-17,Weather,1673.05
-2026-11-18,Culture & entertainment,30135.17
-2026-11-18,Finance & economy,34763.53
-2026-11-18,Politics & world,29305.92
-2026-11-18,Sports,5386.91
+2026-11-17,Weather,1644.48
+2026-11-18,Culture & entertainment,29878.03
+2026-11-18,Finance & economy,33936.91
+2026-11-18,Politics & world,29205.69
+2026-11-18,Sports,5329.77
 2026-11-18,Tech & science,6864.21
-2026-11-18,Weather,1929.46
-2026-11-19,Culture & entertainment,38880.69
-2026-11-19,Finance & economy,44742.15
-2026-11-19,Politics & world,32369.41
-2026-11-19,Sports,6835.66
+2026-11-18,Weather,1900.89
+2026-11-19,Culture & entertainment,38623.54
+2026-11-19,Finance & economy,43925.53
+2026-11-19,Politics & world,32234.32
+2026-11-19,Sports,6813.37
 2026-11-19,Tech & science,6942.48
-2026-11-19,Weather,1999.89
-2026-11-20,Culture & entertainment,50639.55
-2026-11-20,Finance & economy,68612.38
-2026-11-20,Politics & world,40442.36
-2026-11-20,Sports,5408.51
+2026-11-19,Weather,1971.32
+2026-11-20,Culture & entertainment,48007.41
+2026-11-20,Finance & economy,67813.77
+2026-11-20,Politics & world,38698.44
+2026-11-20,Sports,5395.38
 2026-11-20,Tech & science,8207.43
-2026-11-20,Weather,2055.9
-2026-11-21,Culture & entertainment,43011.97
-2026-11-21,Finance & economy,88720.52
-2026-11-21,Politics & world,45203.13
-2026-11-21,Sports,5453.12
+2026-11-20,Weather,2027.33
+2026-11-21,Culture & entertainment,42333.4
+2026-11-21,Finance & economy,88589.17
+2026-11-21,Politics & world,44402.38
+2026-11-21,Sports,5485.23
 2026-11-21,Tech & science,7402.32
-2026-11-21,Weather,2409.85
+2026-11-21,Weather,2403.9
 2026-11-22,Culture & entertainment,30295.3
-2026-11-22,Finance & economy,56505.24
+2026-11-22,Finance & economy,56837.16
 2026-11-22,Politics & world,38957.04
-2026-11-22,Sports,5527.26
+2026-11-22,Sports,5571.28
 2026-11-22,Tech & science,6501.84
 2026-11-22,Weather,2226.31
+2026-11-23,Culture & entertainment,27884.51
+2026-11-23,Finance & economy,36172.41
+2026-11-23,Politics & world,34965.26
+2026-11-23,Sports,5975.51
+2026-11-23,Tech & science,4935.48
+2026-11-23,Weather,2221.27
