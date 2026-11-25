@@ -1119,6 +1119,14 @@
   "title": "USDCHF Hourly",
   "category": "Financials"
  },
+ "KXUSDINR15M": {
+  "asset": "USD/INR",
+  "asset_class": "FX & Rates",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "15-minute USDINR",
+  "category": "Financials"
+ },
  "KXUSDINRAD": {
   "asset": "USD/INR",
   "asset_class": "FX & Rates",
@@ -1183,6 +1191,30 @@
   "title": "USD/JPY daily up/down",
   "category": "Financials"
  },
+ "KXUSDKRW15M": {
+  "asset": "USD/KRW",
+  "asset_class": "FX & Rates",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "15-minute USDKRW",
+  "category": "Financials"
+ },
+ "KXUSDKRWAD": {
+  "asset": "USD/KRW",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "USDKRW Daily",
+  "category": "Financials"
+ },
+ "KXUSDKRWAH": {
+  "asset": "USD/KRW",
+  "asset_class": "FX & Rates",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "USDKRW Hourly",
+  "category": "Financials"
+ },
  "KXUSDMXN15M": {
   "asset": "USD/MXN",
   "asset_class": "FX & Rates",
@@ -1221,6 +1253,54 @@
   "duration": "1h",
   "ctype": "Strike",
   "title": "USDNOK Hourly",
+  "category": "Financials"
+ },
+ "KXUSDTRY15M": {
+  "asset": "USD/TRY",
+  "asset_class": "FX & Rates",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "15-minute USDTRY",
+  "category": "Financials"
+ },
+ "KXUSDTRYAD": {
+  "asset": "USD/TRY",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "USDTRY Daily",
+  "category": "Financials"
+ },
+ "KXUSDTRYAH": {
+  "asset": "USD/TRY",
+  "asset_class": "FX & Rates",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "USDTRY Hourly",
+  "category": "Financials"
+ },
+ "KXUSDZAR15M": {
+  "asset": "USD/ZAR",
+  "asset_class": "FX & Rates",
+  "duration": "15m",
+  "ctype": "Up/Down",
+  "title": "15-minute USDZAR",
+  "category": "Financials"
+ },
+ "KXUSDZARAD": {
+  "asset": "USD/ZAR",
+  "asset_class": "FX & Rates",
+  "duration": "1d",
+  "ctype": "Strike",
+  "title": "USDZAR Daily",
+  "category": "Financials"
+ },
+ "KXUSDZARAH": {
+  "asset": "USD/ZAR",
+  "asset_class": "FX & Rates",
+  "duration": "1h",
+  "ctype": "Strike",
+  "title": "USDZAR Hourly",
   "category": "Financials"
  },
  "KXUST10A": {
