@@ -31692,7 +31692,7 @@ d,asset,asset_class,dur,ctype,fees
 2026-11-24,USD/SEK,FX & Rates,1d,Up/Down,0.01
 2026-11-24,USD/TRY,FX & Rates,1d,Up/Down,0.0
 2026-11-24,USD/ZAR,FX & Rates,1d,Up/Down,0.01
-2026-11-24,WTI Oil,Commodities,15m,Up/Down,11.0
+2026-11-24,WTI Oil,Commodities,15m,Up/Down,11.03
 2026-11-24,WTI Oil,Commodities,1h,Up/Down,1.84
 2026-11-24,XRP,Crypto,15m,Up/Down,90.66
 2026-11-24,XRP,Crypto,1d,Range,2.64
@@ -31704,3 +31704,98 @@ d,asset,asset_class,dur,ctype,fees
 2026-11-24,ZEC,Crypto,4h,Up/Down,0.0
 2026-11-24,ZEC,Crypto,5m,Up/Down,0.13
 2026-11-24,__TOTAL__,,,,1076598.39
+2026-11-25,AAPL,Equities,1d,Strike,51.85
+2026-11-25,AAPL,Equities,1d,Up/Down,13.09
+2026-11-25,ABNB,Equities,1d,Up/Down,2.22
+2026-11-25,AMZN,Equities,1d,Strike,26.52
+2026-11-25,AMZN,Equities,1d,Up/Down,2.95
+2026-11-25,BNB,Crypto,15m,Up/Down,29.86
+2026-11-25,BNB,Crypto,1h,Up/Down,6.97
+2026-11-25,BNB,Crypto,4h,Up/Down,2.12
+2026-11-25,BNB,Crypto,5m,Up/Down,81.11
+2026-11-25,BTC,Crypto,15m,Up/Down,18301.42
+2026-11-25,BTC,Crypto,1d,Range,181.15
+2026-11-25,BTC,Crypto,1d,Strike,1258.72
+2026-11-25,BTC,Crypto,1h,Strike,35.78
+2026-11-25,BTC,Crypto,1h,Up/Down,1033.85
+2026-11-25,BTC,Crypto,4h,Up/Down,122.91
+2026-11-25,BTC,Crypto,5m,Up/Down,98294.57
+2026-11-25,COIN,Equities,1d,Up/Down,2.09
+2026-11-25,DAX,Equities,1d,Up/Down,0.0
+2026-11-25,DOGE,Crypto,15m,Up/Down,125.41
+2026-11-25,DOGE,Crypto,1h,Up/Down,5.78
+2026-11-25,DOGE,Crypto,4h,Up/Down,1.92
+2026-11-25,DOGE,Crypto,5m,Up/Down,132.42
+2026-11-25,DXY,FX & Rates,1d,Up/Down,0.26
+2026-11-25,Dow,Equities,1d,Up/Down,3.25
+2026-11-25,ETH,Crypto,15m,Up/Down,1155.59
+2026-11-25,ETH,Crypto,1d,Range,23.22
+2026-11-25,ETH,Crypto,1d,Strike,207.85
+2026-11-25,ETH,Crypto,1h,Strike,15.09
+2026-11-25,ETH,Crypto,1h,Up/Down,126.94
+2026-11-25,ETH,Crypto,4h,Up/Down,17.13
+2026-11-25,ETH,Crypto,5m,Up/Down,2791.74
+2026-11-25,EUR/USD,FX & Rates,1d,Up/Down,0.01
+2026-11-25,EWY,Equities,1d,Up/Down,0.13
+2026-11-25,FTSE 100,Equities,1d,Up/Down,0.0
+2026-11-25,GBP/USD,FX & Rates,1d,Up/Down,0.0
+2026-11-25,GOOGL,Equities,1d,Strike,8.66
+2026-11-25,GOOGL,Equities,1d,Up/Down,0.09
+2026-11-25,Gold,Commodities,1d,Up/Down,188.83
+2026-11-25,HOOD,Equities,1d,Up/Down,0.42
+2026-11-25,HYPE,Crypto,15m,Up/Down,49.2
+2026-11-25,HYPE,Crypto,1h,Up/Down,0.68
+2026-11-25,HYPE,Crypto,4h,Up/Down,0.25
+2026-11-25,HYPE,Crypto,5m,Up/Down,138.95
+2026-11-25,Hang Seng,Equities,1d,Up/Down,0.0
+2026-11-25,META,Equities,1d,Strike,20.2
+2026-11-25,META,Equities,1d,Up/Down,8.41
+2026-11-25,MSFT,Equities,1d,Strike,86.08
+2026-11-25,MSFT,Equities,1d,Up/Down,2.82
+2026-11-25,MU,Equities,1d,Up/Down,7.11
+2026-11-25,NFLX,Equities,1d,Up/Down,2.37
+2026-11-25,NVDA,Equities,1d,Strike,189.4
+2026-11-25,NVDA,Equities,1d,Up/Down,13.09
+2026-11-25,NYSE Comp,Equities,1d,Up/Down,0.0
+2026-11-25,Nat Gas,Commodities,15m,Up/Down,13.5
+2026-11-25,Nat Gas,Commodities,1d,Up/Down,0.0
+2026-11-25,Nat Gas,Commodities,1h,Up/Down,0.29
+2026-11-25,Nikkei,Equities,1d,Up/Down,0.02
+2026-11-25,OPEN,Equities,1d,Up/Down,1.26
+2026-11-25,PLTR,Equities,1d,Up/Down,1.89
+2026-11-25,RKLB,Equities,1d,Up/Down,1.08
+2026-11-25,Russell 2000,Equities,1d,Up/Down,2.77
+2026-11-25,S&P 500,Equities,1d,Strike,164.14
+2026-11-25,S&P 500,Equities,1d,Up/Down,653.25
+2026-11-25,SOL,Crypto,15m,Up/Down,210.87
+2026-11-25,SOL,Crypto,1d,Range,2.79
+2026-11-25,SOL,Crypto,1d,Strike,21.68
+2026-11-25,SOL,Crypto,1h,Up/Down,28.24
+2026-11-25,SOL,Crypto,4h,Up/Down,7.05
+2026-11-25,SOL,Crypto,5m,Up/Down,844.18
+2026-11-25,SPCX,Equities,1d,Strike,4.25
+2026-11-25,SPCX,Equities,1d,Up/Down,9.73
+2026-11-25,Silver,Commodities,1d,Up/Down,40.23
+2026-11-25,TSLA,Equities,1d,Strike,31.4
+2026-11-25,TSLA,Equities,1d,Up/Down,7.63
+2026-11-25,USD/BRL,FX & Rates,1d,Up/Down,0.01
+2026-11-25,USD/CHF,FX & Rates,1d,Up/Down,0.01
+2026-11-25,USD/JPY,FX & Rates,1d,Up/Down,0.0
+2026-11-25,USD/KRW,FX & Rates,1d,Up/Down,0.01
+2026-11-25,USD/MXN,FX & Rates,1d,Up/Down,0.01
+2026-11-25,USD/NOK,FX & Rates,1d,Up/Down,0.74
+2026-11-25,USD/SEK,FX & Rates,1d,Up/Down,0.0
+2026-11-25,USD/TRY,FX & Rates,1d,Up/Down,0.0
+2026-11-25,USD/ZAR,FX & Rates,1d,Up/Down,0.0
+2026-11-25,WTI Oil,Commodities,15m,Up/Down,6.07
+2026-11-25,WTI Oil,Commodities,1h,Up/Down,0.69
+2026-11-25,XRP,Crypto,15m,Up/Down,107.57
+2026-11-25,XRP,Crypto,1d,Range,0.62
+2026-11-25,XRP,Crypto,1d,Strike,9.5
+2026-11-25,XRP,Crypto,1h,Up/Down,19.14
+2026-11-25,XRP,Crypto,4h,Up/Down,4.64
+2026-11-25,XRP,Crypto,5m,Up/Down,312.87
+2026-11-25,ZEC,Crypto,15m,Up/Down,1.38
+2026-11-25,ZEC,Crypto,4h,Up/Down,0.0
+2026-11-25,ZEC,Crypto,5m,Up/Down,1.02
+2026-11-25,__TOTAL__,,,,907792.28
