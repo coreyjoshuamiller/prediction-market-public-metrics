@@ -372,23 +372,24 @@ d,asset,asset_class,dur,ctype,notional,cash,fees
 2026-11-25,Silver,Commodities,1d,Strike,41862.0,18451.7,21.19
 2026-11-25,WTI Oil,Commodities,1d,Strike,15871.0,8490.36,7.64
 2026-11-25,XYZ100,Equities,1d,Strike,12558.0,4320.77,6.41
-2026-11-26,Anthropic,Equities,15m,Strike,524.0,323.42,0.67
+2026-11-26,Anthropic,Equities,15m,Strike,755.0,436.32,0.91
 2026-11-26,Anthropic,Equities,1h,Strike,158.0,94.31,0.13
-2026-11-26,BTC,Crypto,15m,Strike,11535.0,6542.52,13.21
-2026-11-26,BTC,Crypto,1d,Strike,21458.0,20766.88,4.55
+2026-11-26,BTC,Crypto,15m,Strike,15195.0,8588.27,16.72
+2026-11-26,BTC,Crypto,1d,Strike,24234.0,23475.13,4.84
+2026-11-26,BTC,Crypto,1h,Strike,181.0,0.05,0.25
 2026-11-26,BTC,Crypto,4h,Strike,0.0,0.0,0.25
-2026-11-26,BTC,Crypto,5m,Strike,202.0,72.12,0.26
-2026-11-26,ETH,Crypto,15m,Strike,2270.0,1374.62,3.06
+2026-11-26,BTC,Crypto,5m,Strike,322.0,109.79,0.42
+2026-11-26,ETH,Crypto,15m,Strike,2784.0,1525.64,3.65
 2026-11-26,ETH,Crypto,1d,Strike,1219.0,1150.63,0.04
-2026-11-26,Gold,Commodities,1d,Strike,1203.0,540.5,0.6
-2026-11-26,HYPE,Crypto,15m,Strike,5250.0,2257.36,6.58
+2026-11-26,Gold,Commodities,1d,Strike,3373.0,1649.06,1.28
+2026-11-26,HYPE,Crypto,15m,Strike,6714.0,3454.6,8.45
 2026-11-26,HYPE,Crypto,1d,Strike,400.0,390.12,0.17
-2026-11-26,MU,Equities,1d,Strike,5649.0,3510.42,0.53
+2026-11-26,MU,Equities,1d,Strike,5836.0,3636.31,0.65
 2026-11-26,NVDA,Equities,1d,Strike,36.0,20.88,0.0
-2026-11-26,S&P 500,Equities,1d,Strike,468.0,287.37,0.17
-2026-11-26,SKHY,Equities,1d,Strike,564.0,444.13,0.04
+2026-11-26,S&P 500,Equities,1d,Strike,608.0,380.06,0.17
+2026-11-26,SKHY,Equities,1d,Strike,724.0,581.51,0.04
 2026-11-26,SOL,Crypto,1d,Strike,4273.0,4069.14,0.21
-2026-11-26,SPCX,Equities,1d,Strike,1568.0,959.85,0.55
-2026-11-26,Silver,Commodities,1d,Strike,10288.0,4985.27,3.32
-2026-11-26,WTI Oil,Commodities,1d,Strike,2188.0,1052.97,0.93
+2026-11-26,SPCX,Equities,1d,Strike,2279.0,1369.3,0.86
+2026-11-26,Silver,Commodities,1d,Strike,11508.0,5777.21,3.44
+2026-11-26,WTI Oil,Commodities,1d,Strike,2928.0,1406.7,1.19
 2026-11-26,XYZ100,Equities,1d,Strike,834.0,453.02,0.27
